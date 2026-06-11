@@ -120,8 +120,8 @@ export default function HeroSection() {
             display: "block",
 
           }}>
-          <span style={{ display: "block" }}>Meet Yael,</span>
-          <span style={{ display: "block" }}>your front desk on autopilot.</span>
+          <span style={{ display: "block", fontWeight: 600 }}>Meet Yael.</span>
+          <span style={{ display: "block", fontWeight: 300, fontStyle: "italic" }}>Your front desk on autopilot.</span>
         </h1>
 
         {/* Subline */}
