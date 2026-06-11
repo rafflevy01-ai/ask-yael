@@ -187,7 +187,13 @@ export default function ProblemSection() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.55, delay: 0.6, ease: "easeOut" }}
-          style={{ marginTop: "48px", textAlign: "center" }}>
+          style={{
+            marginTop: "60px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "120px",
+          }}>
           
           <a
             href="#solution"
