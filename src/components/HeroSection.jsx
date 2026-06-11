@@ -9,9 +9,9 @@ export default function HeroSection() {
           maxWidth: "1440px",
           width: "100%",
           margin: "0 auto",
-          padding: "80px 40px",
-        }}
-      >
+          padding: "80px 40px"
+        }}>
+        
         {/* Headline */}
         <h1
           style={{
@@ -22,9 +22,9 @@ export default function HeroSection() {
             letterSpacing: "-0.96px",
             lineHeight: 1.08,
             margin: 0,
-            maxWidth: "14ch",
-          }}
-        >
+            maxWidth: "14ch"
+          }} className="text-4xl">
+          
           Your clinic never misses a call again.
         </h1>
 
@@ -38,9 +38,9 @@ export default function HeroSection() {
             lineHeight: 1.5,
             maxWidth: "54ch",
             marginTop: "24px",
-            marginBottom: 0,
-          }}
-        >
+            marginBottom: 0
+          }}>
+          
           Yael answers every call in Hebrew, French, or English. Books appointments. Registers new patients. Handles emergencies. 24/7 — your front desk without a desk.
         </p>
 
@@ -62,9 +62,9 @@ export default function HeroSection() {
               justifyContent: "center",
               textDecoration: "none",
               border: "none",
-              cursor: "pointer",
-            }}
-          >
+              cursor: "pointer"
+            }}>
+            
             Book a Free Demo
           </a>
 
@@ -74,13 +74,13 @@ export default function HeroSection() {
               fontFamily: "'Geist Mono', 'Courier New', ui-monospace, monospace",
               fontSize: "13px",
               color: "#a59f97",
-              margin: 0,
-            }}
-          >
+              margin: 0
+            }}>
+            
             Live at Les Experts Netanya · 0 missed calls since deployment
           </p>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }
