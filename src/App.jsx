@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
 import Navbar from '@/components/Navbar';
+import HeroSection from '@/components/HeroSection';
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -50,6 +51,7 @@ function App() {
         <Router>
           <ScrollToTop />
           <Navbar />
+          <HeroSection />
           <AuthenticatedApp />
         </Router>
         <Toaster />
