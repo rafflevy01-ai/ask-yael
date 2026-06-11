@@ -61,6 +61,7 @@ export default function HeroSection() {
 
         {/* Headline */}
         <h1
+          className="hero-headline"
           style={{
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 300,
@@ -130,6 +131,10 @@ export default function HeroSection() {
 
       {/* Responsive styles */}
       <style>{`
+        @media (min-width: 769px) {
+          .hero-content { max-width: 900px !important; }
+          .hero-headline { white-space: nowrap !important; }
+        }
         @media (max-width: 768px) {
           .hero-content {
             padding: 60px 24px !important;
