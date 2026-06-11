@@ -15,9 +15,9 @@ export default function Navbar() {
         borderBottom: "1px solid #e5e5e5",
         height: "64px",
         display: "flex",
-        alignItems: "center",
-      }}
-    >
+        alignItems: "center"
+      }}>
+      
       <div
         style={{
           maxWidth: "1440px",
@@ -26,9 +26,9 @@ export default function Navbar() {
           padding: "0 40px",
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
+          justifyContent: "space-between"
+        }}>
+        
         {/* Logo */}
         <span
           style={{
@@ -37,9 +37,9 @@ export default function Navbar() {
             fontSize: "14px",
             letterSpacing: "0.05em",
             textTransform: "uppercase",
-            color: "#000000",
-          }}
-        >
+            color: "#000000"
+          }} className="[font-family:'Inter',_sans-serif] font-medium">
+          
           Ask Yael
         </span>
 
@@ -47,29 +47,29 @@ export default function Navbar() {
         <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
           {/* Language switcher */}
           <div style={{ display: "flex", alignItems: "center", gap: "0" }}>
-            {LANGUAGES.map((lang, i) => (
-              <span key={lang} style={{ display: "flex", alignItems: "center" }}>
+            {LANGUAGES.map((lang, i) =>
+            <span key={lang} style={{ display: "flex", alignItems: "center" }}>
                 <button
-                  onClick={() => setActiveLang(lang)}
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontWeight: activeLang === lang ? 700 : 400,
-                    fontSize: "14px",
-                    color: activeLang === lang ? "#000000" : "#00000080",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    padding: "0 4px",
-                    lineHeight: 1,
-                  }}
-                >
+                onClick={() => setActiveLang(lang)}
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontWeight: activeLang === lang ? 700 : 400,
+                  fontSize: "14px",
+                  color: activeLang === lang ? "#000000" : "#00000080",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: "0 4px",
+                  lineHeight: 1
+                }}>
+                
                   {lang}
                 </button>
-                {i < LANGUAGES.length - 1 && (
-                  <span style={{ color: "#00000030", margin: "0 4px", fontSize: "14px" }}>|</span>
-                )}
+                {i < LANGUAGES.length - 1 &&
+              <span style={{ color: "#00000030", margin: "0 4px", fontSize: "14px" }}>|</span>
+              }
               </span>
-            ))}
+            )}
           </div>
 
           {/* CTA Button */}
@@ -90,13 +90,13 @@ export default function Navbar() {
               textDecoration: "none",
               whiteSpace: "nowrap",
               border: "none",
-              cursor: "pointer",
-            }}
-          >
+              cursor: "pointer"
+            }}>
+            
             Book a Free Demo
           </a>
         </div>
       </div>
-    </nav>
-  );
+    </nav>);
+
 }
