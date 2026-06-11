@@ -1,5 +1,12 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const PHRASES = [
+  "never misses a call.",
+  "books every appointment.",
+  "runs without a front desk.",
+];
+
 
 const orbs = [
   { width: 600, height: 600, color: "rgba(4,71,255,0.10)", top: "-15%", left: "-10%", duration: 14, x: [0, 50, 20, 0], y: [0, 30, -20, 0] },
@@ -9,6 +16,15 @@ const orbs = [
 ];
 
 export default function HeroSection() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((i) => (i + 1) % PHRASES.length);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section
       className="hero-section"
@@ -68,12 +84,40 @@ export default function HeroSection() {
             fontSize: "clamp(2rem, 5vw, 4rem)",
             color: "#000000",
             letterSpacing: "-0.96px",
-            lineHeight: 1.08,
+            lineHeight: 1.15,
             margin: 0,
-            whiteSpace: "normal",
-            wordBreak: "break-word",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "0.05em",
           }}>
-          Your clinic never misses a call again.
+          <span>Your clinic:</span>
+          <span style={{ position: "relative", display: "inline-block", height: "1.15em", overflow: "hidden" }}>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={index}
+                initial={{ opacity: 0, y: "60%" }}
+                animate={{ opacity: 1, y: "0%" }}
+                exit={{ opacity: 0, y: "-60%" }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  display: "inline-block",
+                  color: "#0447FF",
+                  whiteSpace: "nowrap",
+                  position: "absolute",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  top: 0,
+                }}
+              >
+                {PHRASES[index]}
+              </motion.span>
+            </AnimatePresence>
+            {/* Invisible sizer so the container doesn't collapse */}
+            <span style={{ visibility: "hidden", whiteSpace: "nowrap" }}>
+              runs without a front desk.
+            </span>
+          </span>
         </h1>
 
         {/* Subline */}
@@ -133,7 +177,6 @@ export default function HeroSection() {
       <style>{`
         @media (min-width: 769px) {
           .hero-content { max-width: 900px !important; }
-          .hero-headline { white-space: nowrap !important; }
         }
         @media (max-width: 768px) {
           .hero-content {
