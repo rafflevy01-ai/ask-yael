@@ -8,6 +8,7 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
+import Home from '@/pages/Home';
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -36,6 +37,7 @@ const AuthenticatedApp = () => {
   // Render the main app
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
       {/* Add your page Route elements here */}
       <Route path="*" element={<PageNotFound />} />
     </Routes>
@@ -51,7 +53,6 @@ function App() {
         <Router>
           <ScrollToTop />
           <Navbar />
-          <HeroSection />
           <AuthenticatedApp />
         </Router>
         <Toaster />
