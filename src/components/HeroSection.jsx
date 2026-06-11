@@ -9,7 +9,11 @@ export default function HeroSection() {
           maxWidth: "1440px",
           width: "100%",
           margin: "0 auto",
-          padding: "80px 40px"
+          padding: "80px 40px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
         }}>
         
         {/* Headline */}
@@ -45,7 +49,7 @@ export default function HeroSection() {
         </p>
 
         {/* CTA */}
-        <div style={{ marginTop: "36px", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "12px" }}>
+        <div style={{ marginTop: "36px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
           <a
             href="#book-demo"
             style={{
