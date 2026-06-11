@@ -139,7 +139,7 @@ export default function ProblemSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          style={{ marginBottom: "56px" }} className="px-1">
+          style={{ marginBottom: "56px" }}>
           
           <h2
             style={{
