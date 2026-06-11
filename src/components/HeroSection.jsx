@@ -117,13 +117,10 @@ export default function HeroSection() {
             letterSpacing: "-0.96px",
             lineHeight: 1.15,
             margin: 0,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "0.05em",
+            display: "block",
           }}>
-          <span>Your clinic:</span>
-          <span style={{ display: "inline-flex", alignItems: "baseline", justifyContent: "center", whiteSpace: "nowrap" }}>
+          <span style={{ display: "inline" }}>Your clinic </span>
+          <span style={{ display: "inline-flex", alignItems: "baseline" }}>
             <span style={{ color: "#0447FF" }}>{typed}</span>
             <motion.span
               animate={{ opacity: [1, 0, 1] }}
