@@ -19,15 +19,15 @@ export default function Navbar() {
       }}>
       
       <div
-        style={{
-          maxWidth: "1440px",
-          width: "100%",
-          margin: "0 auto",
-          padding: "0 40px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between"
-        }}>
+      style={{
+        maxWidth: "1440px",
+        width: "100%",
+        margin: "0 auto",
+        padding: "0 24px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between"
+        }} className="navbar-inner">
         
         {/* Logo */}
         <span
@@ -75,6 +75,7 @@ export default function Navbar() {
           {/* CTA Button */}
           <a
             href="#book-demo"
+            className="navbar-cta"
             style={{
               fontFamily: "Inter, sans-serif",
               fontWeight: 500,
@@ -97,6 +98,14 @@ export default function Navbar() {
           </a>
         </div>
       </div>
+      <style>{`
+        @media (min-width: 768px) {
+          .navbar-inner { padding: 0 48px !important; }
+        }
+        @media (max-width: 480px) {
+          .navbar-cta { display: none !important; }
+        }
+      `}</style>
     </nav>);
 
 }
