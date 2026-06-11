@@ -56,12 +56,12 @@ export default function HeroSection() {
           style={{
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 300,
-            fontSize: "clamp(36px, 5vw, 48px)",
+            fontSize: "clamp(48px, 7vw, 72px)",
             color: "#000000",
             letterSpacing: "-0.96px",
             lineHeight: 1.08,
             margin: 0,
-            maxWidth: "14ch"
+            whiteSpace: "nowrap"
           }} className="text-4xl">
           
           Your clinic never misses a call again.
