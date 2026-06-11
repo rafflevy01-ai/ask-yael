@@ -118,6 +118,7 @@ export default function HeroSection() {
             lineHeight: 1.15,
             margin: 0,
             display: "block",
+            whiteSpace: "nowrap",
           }}>
           Meet Yael, your front desk on autopilot.
         </h1>
