@@ -110,7 +110,9 @@ export default function HeroSection() {
           {/* Proof line */}
           <p
             style={{
-              fontFamily: "'Geist Mono', 'Courier New', ui-monospace, monospace",
+              fontFamily: "Inter, sans-serif",
+              fontWeight: 400,
+              fontStyle: "italic",
               fontSize: "13px",
               color: "#a59f97",
               margin: 0
