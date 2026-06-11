@@ -119,15 +119,7 @@ export default function HeroSection() {
             margin: 0,
             display: "block",
           }}>
-          <span style={{ display: "inline" }}>Your clinic </span>
-          <span style={{ display: "inline-flex", alignItems: "baseline" }}>
-            <span style={{ color: "#0447FF" }}>{typed}</span>
-            <motion.span
-              animate={{ opacity: [1, 0, 1] }}
-              transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
-              style={{ color: "#0447FF", marginLeft: "2px", fontWeight: 300 }}
-            >|</motion.span>
-          </span>
+          Meet Yael, your front desk on autopilot.
         </h1>
 
         {/* Subline */}
