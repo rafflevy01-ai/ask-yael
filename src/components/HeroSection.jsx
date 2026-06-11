@@ -1,11 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
 const PHRASES = [
   "never misses a call.",
   "books every appointment.",
   "runs without a front desk.",
 ];
+
+const CHAR_SPEED = 45;   // ms per character typed
+const HOLD_MS   = 1800;  // ms to hold after fully typed
+const ERASE_SPEED = 28;  // ms per character erased
+
+function useTypewriter(phrases) {
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const [displayed, setDisplayed] = useState("");
+  const [typing, setTyping] = useState(true);
+  const timeout = useRef(null);
+
+  useEffect(() => {
+    const phrase = phrases[phraseIdx];
+
+    if (typing) {
+      if (displayed.length < phrase.length) {
+        timeout.current = setTimeout(() => {
+          setDisplayed(phrase.slice(0, displayed.length + 1));
+        }, CHAR_SPEED);
+      } else {
+        timeout.current = setTimeout(() => setTyping(false), HOLD_MS);
+      }
+    } else {
+      if (displayed.length > 0) {
+        timeout.current = setTimeout(() => {
+          setDisplayed(displayed.slice(0, -1));
+        }, ERASE_SPEED);
+      } else {
+        setPhraseIdx((i) => (i + 1) % phrases.length);
+        setTyping(true);
+      }
+    }
+
+    return () => clearTimeout(timeout.current);
+  }, [displayed, typing, phraseIdx, phrases]);
+
+  return displayed;
+}
 
 
 const orbs = [
@@ -16,14 +54,7 @@ const orbs = [
 ];
 
 export default function HeroSection() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((i) => (i + 1) % PHRASES.length);
-    }, 2500);
-    return () => clearInterval(timer);
-  }, []);
+  const typed = useTypewriter(PHRASES);
 
   return (
     <section
@@ -92,31 +123,13 @@ export default function HeroSection() {
             gap: "0.05em",
           }}>
           <span>Your clinic:</span>
-          <span style={{ position: "relative", display: "inline-block", height: "1.15em", overflow: "hidden" }}>
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: "60%" }}
-                animate={{ opacity: 1, y: "0%" }}
-                exit={{ opacity: 0, y: "-60%" }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                style={{
-                  display: "inline-block",
-                  color: "#0447FF",
-                  whiteSpace: "nowrap",
-                  position: "absolute",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  top: 0,
-                }}
-              >
-                {PHRASES[index]}
-              </motion.span>
-            </AnimatePresence>
-            {/* Invisible sizer so the container doesn't collapse */}
-            <span style={{ visibility: "hidden", whiteSpace: "nowrap" }}>
-              runs without a front desk.
-            </span>
+          <span style={{ display: "inline-flex", alignItems: "baseline", justifyContent: "center", whiteSpace: "nowrap" }}>
+            <span style={{ color: "#0447FF" }}>{typed}</span>
+            <motion.span
+              animate={{ opacity: [1, 0, 1] }}
+              transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
+              style={{ color: "#0447FF", marginLeft: "2px", fontWeight: 300 }}
+            >|</motion.span>
           </span>
         </h1>
 
