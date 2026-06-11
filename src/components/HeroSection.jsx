@@ -2,41 +2,84 @@ import React from "react";
 
 export default function HeroSection() {
   return (
-    <section className="hero-section min-h-screen flex items-center justify-center">
-      <div className="hero-content w-full max-w-[1440px] mx-auto px-6 md:px-10 py-32 flex flex-col items-center text-center">
-
+    <section className="hero-section" style={{ minHeight: "calc(100vh - 64px)", display: "flex", alignItems: "center" }}>
+      <div
+        className="hero-content"
+        style={{
+          maxWidth: "1440px",
+          width: "100%",
+          margin: "0 auto",
+          padding: "80px 40px",
+        }}
+      >
         {/* Headline */}
         <h1
-          className="font-bold text-[#0E1B18] leading-[1.1] tracking-tight max-w-4xl"
-          style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 300,
+            fontSize: "clamp(36px, 5vw, 48px)",
+            color: "#000000",
+            letterSpacing: "-0.96px",
+            lineHeight: 1.08,
+            margin: 0,
+            maxWidth: "14ch",
+          }}
         >
           Your clinic never misses a call again.
         </h1>
 
         {/* Subline */}
         <p
-          className="mt-6 text-[#5C6B68] leading-[1.65] max-w-2xl"
-          style={{ fontSize: "clamp(1rem, 1.8vw, 1.25rem)" }}
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 400,
+            fontSize: "16px",
+            color: "#777169",
+            lineHeight: 1.5,
+            maxWidth: "54ch",
+            marginTop: "24px",
+            marginBottom: 0,
+          }}
         >
           Yael answers every call in Hebrew, French, or English. Books appointments. Registers new patients. Handles emergencies. 24/7 — your front desk without a desk.
         </p>
 
         {/* CTA */}
-        <a
-          href="#book-demo"
-          className="mt-10 inline-flex items-center justify-center rounded-full bg-[#00C49A] text-[#003D30] font-bold text-[16px] tracking-[0.5px] px-9 min-h-[52px] transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00C49A] focus-visible:ring-offset-2"
-        >
-          Book a Free Demo
-        </a>
+        <div style={{ marginTop: "36px", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "12px" }}>
+          <a
+            href="#book-demo"
+            style={{
+              fontFamily: "Inter, sans-serif",
+              fontWeight: 500,
+              fontSize: "15px",
+              color: "#ffffff",
+              backgroundColor: "#000000",
+              borderRadius: "9999px",
+              height: "40px",
+              padding: "0 20px",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              textDecoration: "none",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Book a Free Demo
+          </a>
 
-        {/* Proof line */}
-        <p
-          className="mt-5 text-[#5C6B68]/70 italic text-[13px] tracking-wide"
-          style={{ fontFamily: "'Fragment Mono', 'Courier New', ui-monospace, monospace" }}
-        >
-          Live at Les Experts Netanya · 0 missed calls since deployment
-        </p>
-
+          {/* Proof line */}
+          <p
+            style={{
+              fontFamily: "'Geist Mono', 'Courier New', ui-monospace, monospace",
+              fontSize: "13px",
+              color: "#a59f97",
+              margin: 0,
+            }}
+          >
+            Live at Les Experts Netanya · 0 missed calls since deployment
+          </p>
+        </div>
       </div>
     </section>
   );
