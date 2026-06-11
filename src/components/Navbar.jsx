@@ -1,68 +1,97 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-const LANGUAGES = [
-  { code: "EN", label: "Switch to English" },
-  { code: "FR", label: "Switch to French" },
-  { code: "עב", label: "Switch to Hebrew" },
-];
+const LANGUAGES = ["EN", "FR", "עב"];
 
 export default function Navbar() {
   const [activeLang, setActiveLang] = useState("EN");
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
-        backgroundColor: scrolled ? "rgba(255,255,255,0.8)" : "transparent",
+        position: "sticky",
+        top: 0,
+        zIndex: 50,
+        backgroundColor: "#fdfcfc",
+        borderBottom: "1px solid #e5e5e5",
+        height: "64px",
+        display: "flex",
+        alignItems: "center",
       }}
     >
-      <div className="max-w-[1440px] mx-auto flex items-center justify-between px-6 md:px-10 h-[72px]">
-        {/* Brand */}
-        <a
-          href="/"
-          className="text-[#0A0A0A] font-semibold tracking-[1.2px] uppercase text-[20px] leading-none select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00C49A] rounded"
-          style={{ fontFamily: "var(--font-heading)" }}
+      <div
+        style={{
+          maxWidth: "1440px",
+          width: "100%",
+          margin: "0 auto",
+          padding: "0 40px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        {/* Logo */}
+        <span
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 700,
+            fontSize: "14px",
+            letterSpacing: "0.05em",
+            textTransform: "uppercase",
+            color: "#000000",
+          }}
         >
           Ask Yael
-        </a>
+        </span>
 
         {/* Right cluster */}
-        <div className="flex items-center gap-6 md:gap-8">
+        <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
           {/* Language switcher */}
-          <div className="hidden sm:flex items-center gap-0 text-[14px] leading-[1.5]" role="group" aria-label="Language selector">
+          <div style={{ display: "flex", alignItems: "center", gap: "0" }}>
             {LANGUAGES.map((lang, i) => (
-              <span key={lang.code} className="flex items-center">
+              <span key={lang} style={{ display: "flex", alignItems: "center" }}>
                 <button
-                  onClick={() => setActiveLang(lang.code)}
-                  aria-label={lang.label}
-                  className={`transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00C49A] rounded px-1 ${
-                    activeLang === lang.code
-                      ? "font-bold text-[#0A0A0A]"
-                      : "font-medium text-[#0A0A0A]/50 hover:text-[#0A0A0A]/80"
-                  }`}
+                  onClick={() => setActiveLang(lang)}
+                  style={{
+                    fontFamily: "Inter, sans-serif",
+                    fontWeight: activeLang === lang ? 700 : 400,
+                    fontSize: "14px",
+                    color: activeLang === lang ? "#000000" : "#00000080",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "0 4px",
+                    lineHeight: 1,
+                  }}
                 >
-                  {lang.code}
+                  {lang}
                 </button>
                 {i < LANGUAGES.length - 1 && (
-                  <span className="text-[#0A0A0A]/20 mx-1.5 select-none" aria-hidden="true">|</span>
+                  <span style={{ color: "#00000030", margin: "0 4px", fontSize: "14px" }}>|</span>
                 )}
               </span>
             ))}
           </div>
 
-          {/* CTA */}
+          {/* CTA Button */}
           <a
             href="#book-demo"
-            className="inline-flex items-center justify-center rounded-full bg-[#00C49A] text-[#003D30] font-bold text-[16px] tracking-[1px] px-7 min-h-[48px] transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00C49A] focus-visible:ring-offset-2"
+            style={{
+              fontFamily: "Inter, sans-serif",
+              fontWeight: 500,
+              fontSize: "15px",
+              color: "#ffffff",
+              backgroundColor: "#000000",
+              borderRadius: "9999px",
+              height: "36px",
+              padding: "0 16px",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              textDecoration: "none",
+              whiteSpace: "nowrap",
+              border: "none",
+              cursor: "pointer",
+            }}
           >
             Book a Free Demo
           </a>
