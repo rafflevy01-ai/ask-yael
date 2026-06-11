@@ -51,6 +51,7 @@ export default function Navbar() {
             <span key={lang} style={{ display: "flex", alignItems: "center" }}>
                 <button
                 onClick={() => setActiveLang(lang)}
+                dir={lang === "עב" ? "rtl" : "ltr"}
                 style={{
                   fontFamily: "Inter, sans-serif",
                   fontWeight: activeLang === lang ? 700 : 400,
@@ -60,9 +61,9 @@ export default function Navbar() {
                   border: "none",
                   cursor: "pointer",
                   padding: "0 4px",
-                  lineHeight: 1
+                  lineHeight: 1,
+                  textAlign: "center",
                 }}>
-                
                   {lang}
                 </button>
                 {i < LANGUAGES.length - 1 &&
