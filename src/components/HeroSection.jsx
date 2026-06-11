@@ -118,9 +118,10 @@ export default function HeroSection() {
             lineHeight: 1.15,
             margin: 0,
             display: "block",
-            whiteSpace: "nowrap",
+
           }}>
-          Meet Yael, your front desk on autopilot.
+          <span style={{ display: "block" }}>Meet Yael,</span>
+          <span style={{ display: "block" }}>your front desk on autopilot.</span>
         </h1>
 
         {/* Subline */}
