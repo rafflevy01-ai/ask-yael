@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import FractalGlassBackground from "@/components/FractalGlassBackground";
 
 const PHRASES = [
   "never misses a call.",
@@ -55,9 +56,11 @@ const orbs = [
 
 export default function HeroSection() {
   const typed = useTypewriter(PHRASES);
+  const sectionRef = useRef(null);
 
   return (
     <section
+      ref={sectionRef}
       className="hero-section"
       style={{
         minHeight: "calc(100vh - 64px)",
@@ -68,6 +71,9 @@ export default function HeroSection() {
         width: "100%",
         backgroundColor: "#fdfcfc",
       }}>
+
+      {/* Fractal glass background — sits behind everything */}
+      <FractalGlassBackground sectionRef={sectionRef} />
 
       {/* Animated background orbs */}
       {orbs.map((orb, i) => (
