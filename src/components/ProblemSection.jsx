@@ -64,21 +64,34 @@ export default function ProblemSection() {
       function createCard(data) {
         const card = document.createElement("div");
         card.style.cssText =
-          "position:absolute;width:100%;background:rgba(236,236,236,0.85);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-radius:14px;padding:10px 12px;box-sizing:border-box;transition:transform 0.45s cubic-bezier(0.34,1.2,0.64,1),opacity 0.45s ease;transform:translateY(-70px) scale(1);opacity:0;";
+          "position:absolute;top:0;left:0;right:0;" +
+          "background:rgba(255,255,255,0.82);" +
+          "backdrop-filter:blur(40px) saturate(180%);" +
+          "-webkit-backdrop-filter:blur(40px) saturate(180%);" +
+          "border-radius:20px;padding:12px 14px;box-sizing:border-box;" +
+          "box-shadow:inset 0 0 0 0.5px rgba(255,255,255,0.6),0 4px 24px rgba(0,0,0,0.06);" +
+          "font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;" +
+          "transition:transform 0.42s cubic-bezier(0.34,1.1,0.64,1),opacity 0.42s ease;" +
+          "transform:translateY(-80px) scale(1);opacity:0;";
         card.innerHTML =
-          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">' +
-          '<div style="display:flex;align-items:center">' +
-          '<div style="width:14px;height:14px;background:#ff3b30;border-radius:4px;flex-shrink:0"></div>' +
-          '<span style="font-family:-apple-system,BlinkMacSystemFont,Inter,sans-serif;font-size:10px;font-weight:500;color:#3a3a3c;margin-left:6px">Phone</span>' +
-          "</div>" +
-          '<span style="font-family:-apple-system,BlinkMacSystemFont,Inter,sans-serif;font-size:10px;color:#8e8e93">' +
-          data.time +
-          "</span>" +
-          "</div>" +
-          '<div style="font-family:-apple-system,BlinkMacSystemFont,Inter,sans-serif;font-size:13px;font-weight:600;color:#1c1c1e">New Patient Missed Call</div>' +
-          '<div style="font-family:-apple-system,BlinkMacSystemFont,Inter,sans-serif;font-size:12px;color:#3a3a3c;margin-top:2px">' +
-          data.number +
-          "</div>";
+          // Row 1 — header
+          '<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">' +
+            '<div style="width:18px;height:18px;background:#34c759;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.73a16 16 0 006.72 6.72l1.06-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>' +
+            '</div>' +
+            '<span style="font-size:12px;font-weight:600;color:rgba(60,60,67,0.6);flex:1">Phone</span>' +
+            '<span style="font-size:12px;font-weight:400;color:rgba(60,60,67,0.4)">' + data.time + '</span>' +
+            '<span style="font-size:14px;color:rgba(60,60,67,0.3);margin-left:4px">›</span>' +
+          '</div>' +
+          // Row 2
+          '<div style="font-size:15px;font-weight:600;color:#000000">Missed Call</div>' +
+          // Row 3
+          '<div style="font-size:15px;font-weight:400;color:#3c3c3c;margin-top:1px">New Patient · ' + data.number + '</div>' +
+          // Row 4 — actions
+          '<div style="display:flex;gap:8px;margin-top:10px">' +
+            '<div style="flex:1;height:32px;background:rgba(0,0,0,0.05);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#007aff">Call Back</div>' +
+            '<div style="flex:1;height:32px;background:rgba(0,0,0,0.05);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#007aff">Message</div>' +
+          '</div>';
         return card;
       }
 
@@ -93,12 +106,13 @@ export default function ProblemSection() {
             );
             activeCards.splice(i, 1);
           } else if (np === 1) {
-            card.style.transform = "translateY(9px) scale(0.96)";
+            card.style.transform = "translateY(9px) scale(0.95)";
             card.style.zIndex = "2";
+            card.style.opacity = "0.85";
           } else {
-            card.style.transform = "translateY(16px) scale(0.92)";
+            card.style.transform = "translateY(16px) scale(0.90)";
             card.style.zIndex = "1";
-            card.style.opacity = "0.8";
+            card.style.opacity = "0.6";
           }
         });
         const card = createCard(notifData[notifIndex % notifData.length]);
@@ -109,6 +123,7 @@ export default function ProblemSection() {
             card.style.transform = "translateY(0) scale(1)";
             card.style.opacity = "1";
             card.style.zIndex = "3";
+            card.style.transition = "transform 0.42s cubic-bezier(0.34,1.1,0.64,1), opacity 0.42s ease";
           })
         );
         notifIndex++;
@@ -362,39 +377,15 @@ export default function ProblemSection() {
                 </p>
               </div>
 
-              {/* Right column — iPhone */}
+              {/* Right column — iOS notification stack */}
               <div
                 className="iphone-col"
                 style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}
               >
                 <div
-                  id="iphone-frame"
-                  style={{
-                    width: "260px",
-                    height: "520px",
-                    background: "#1c1c1e",
-                    borderRadius: "50px",
-                    border: "8px solid #2a2a2c",
-                    boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.08), 0 32px 64px rgba(0,0,0,0.3)",
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
-                >
-                  {/* Dynamic Island */}
-                  <div style={{ width: "86px", height: "26px", background: "#000", borderRadius: "20px", position: "absolute", top: "12px", left: "50%", transform: "translateX(-50%)", zIndex: 10 }} />
-
-                  {/* Lock screen bg */}
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(175deg, #1a1f3a 0%, #0d1226 50%, #1a0d2e 100%)" }} />
-
-                  {/* Time */}
-                  <div style={{ position: "absolute", top: "55px", width: "100%", textAlign: "center" }}>
-                    <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, sans-serif", fontSize: "44px", fontWeight: 200, color: "rgba(255,255,255,0.9)" }}>22:44</div>
-                    <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, sans-serif", fontSize: "13px", fontWeight: 400, color: "rgba(255,255,255,0.5)", marginTop: "4px" }}>Thursday 8 June</div>
-                  </div>
-
-                  {/* Notification stack */}
-                  <div id="notif-stack" style={{ position: "absolute", top: "150px", left: "10px", right: "10px", pointerEvents: "none" }} />
-                </div>
+                  id="notif-stack"
+                  style={{ position: "relative", width: "340px", height: "220px", pointerEvents: "none" }}
+                />
               </div>
             </div>
 
