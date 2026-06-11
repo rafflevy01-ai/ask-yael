@@ -12,8 +12,16 @@ export default function HeroSection() {
   return (
     <section
       className="hero-section"
-      style={{ minHeight: "calc(100vh - 64px)", display: "flex", alignItems: "center", position: "relative", overflow: "hidden", backgroundColor: "#fdfcfc" }}>
-      
+      style={{
+        minHeight: "calc(100vh - 64px)",
+        display: "flex",
+        alignItems: "center",
+        position: "relative",
+        overflow: "hidden",
+        width: "100%",
+        backgroundColor: "#fdfcfc",
+      }}>
+
       {/* Animated background orbs */}
       {orbs.map((orb, i) => (
         <motion.div
@@ -39,31 +47,31 @@ export default function HeroSection() {
       <div
         className="hero-content"
         style={{
-          maxWidth: "1440px",
+          maxWidth: "680px",
           width: "100%",
           margin: "0 auto",
-          padding: "80px 40px",
+          padding: "80px 48px",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
+          alignItems: "flex-start",
+          textAlign: "left",
           position: "relative",
           zIndex: 1,
         }}>
-        
+
         {/* Headline */}
         <h1
           style={{
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 300,
-            fontSize: "clamp(48px, 7vw, 72px)",
+            fontSize: "clamp(2rem, 5vw, 4rem)",
             color: "#000000",
             letterSpacing: "-0.96px",
             lineHeight: 1.08,
             margin: 0,
-            whiteSpace: "nowrap"
-          }} className="text-4xl">
-          
+            whiteSpace: "normal",
+            wordBreak: "break-word",
+          }}>
           Your clinic never misses a call again.
         </h1>
 
@@ -77,14 +85,13 @@ export default function HeroSection() {
             lineHeight: 1.5,
             maxWidth: "54ch",
             marginTop: "24px",
-            marginBottom: 0
+            marginBottom: 0,
           }}>
-          
           Yael answers every call in Hebrew, French, or English. Books appointments. Registers new patients. Handles emergencies. 24/7 — your front desk without a desk.
         </p>
 
         {/* CTA */}
-        <div style={{ marginTop: "36px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+        <div style={{ marginTop: "36px", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "12px" }}>
           <a
             href="#book-demo"
             style={{
@@ -101,9 +108,8 @@ export default function HeroSection() {
               justifyContent: "center",
               textDecoration: "none",
               border: "none",
-              cursor: "pointer"
+              cursor: "pointer",
             }}>
-            
             Book a Free Demo
           </a>
 
@@ -115,13 +121,29 @@ export default function HeroSection() {
               fontStyle: "italic",
               fontSize: "13px",
               color: "#a59f97",
-              margin: 0
+              margin: 0,
             }}>
-            
             Live at Les Experts Netanya · 0 missed calls since deployment
           </p>
         </div>
       </div>
+
+      {/* Responsive styles */}
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-content {
+            padding: 60px 24px !important;
+            align-items: center !important;
+            text-align: center !important;
+          }
+          .hero-content > div {
+            align-items: center !important;
+          }
+          .hero-content a[href="#book-demo"] {
+            height: 36px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
