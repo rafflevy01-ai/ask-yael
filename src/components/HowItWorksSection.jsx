@@ -182,17 +182,17 @@ export default function HowItWorksSection() {
                     transition: "opacity 0.7s ease",
                   }}>
                     <span style={{
-                      fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "11px",
+                      fontFamily: "'Geist Mono', monospace", fontWeight: i >= 1 ? 500 : 400, fontSize: "11px",
                       textTransform: "uppercase", letterSpacing: "0.1em",
                       color: "#a59f97", display: "block", marginBottom: "12px",
                     }}>Step {step.number}</span>
                     <h3 style={{
-                      fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
+                      fontFamily: "'DM Sans', sans-serif", fontWeight: i >= 1 ? 400 : 300,
                       fontSize: "1.4rem", color: "#000000", letterSpacing: "-0.04em",
                       lineHeight: 1.15, margin: "0 0 8px 0",
                     }}>{step.title}</h3>
                     <p style={{
-                      fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
+                      fontFamily: "Inter, sans-serif", fontWeight: i >= 1 ? 500 : 400, fontSize: "15px",
                       color: "#66605a", lineHeight: 1.6, margin: "0 0 20px 0",
                     }}>{step.description}</p>
                   </div>
