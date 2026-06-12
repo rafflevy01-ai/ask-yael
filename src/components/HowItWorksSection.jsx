@@ -51,7 +51,7 @@ export default function HowItWorksSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ background: "#fdfcfc", padding: "100px 48px" }}>
+    <section ref={sectionRef} data-how-works style={{ background: "#fdfcfc", padding: "100px 48px" }}>
       <div style={{ maxWidth: "900px", margin: "0 auto" }}>
 
         {/* Header */}
@@ -167,7 +167,7 @@ export default function HowItWorksSection() {
       </div>
 
       {/* Callout strip */}
-      <div style={{
+      <div className="how-callout" style={{
         marginTop: "80px",
         borderTop: "1px solid #e5e5e5",
         borderBottom: "1px solid #e5e5e5",
@@ -188,13 +188,14 @@ export default function HowItWorksSection() {
 
       <style>{`
         @media (max-width: 768px) {
-          section { padding: 64px 24px !important; }
+          [data-how-works] { padding: 48px 16px !important; }
           .how-steps-track { flex-direction: column !important; }
           .how-line-col { display: none !important; }
-          .how-card-col > div { padding-left: 0 !important; }
+          .how-card-col > div { padding-left: 0 !important; padding-top: 32px !important; padding-bottom: 32px !important; }
+          .how-callout { padding: 16px 16px !important; margin-top: 48px !important; }
         }
         @media (max-width: 1024px) {
-          section { padding: 80px 32px !important; }
+          [data-how-works] { padding: 64px 24px !important; }
         }
       `}</style>
     </section>

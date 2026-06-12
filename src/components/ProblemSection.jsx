@@ -231,6 +231,7 @@ export default function ProblemSection() {
           #problem-sticky {
             position: relative !important;
             height: auto !important;
+            overflow: visible !important;
           }
           #panels-track {
             flex-direction: column !important;
@@ -240,22 +241,30 @@ export default function ProblemSection() {
           }
           .problem-panel {
             width: 100% !important;
-            min-height: 100svh;
+            min-height: auto !important;
             height: auto !important;
-            padding: 80px 24px 64px !important;
+            padding: 40px 16px 48px !important;
+          }
+          .panel-card {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+            padding: 32px 20px !important;
+            justify-content: flex-start !important;
+            border-radius: 20px !important;
+          }
+          .section-label {
+            position: relative !important;
+            top: auto !important;
+            left: auto !important;
+            transform: none !important;
+            padding: 24px 16px 8px !important;
           }
           .problem-dots {
             display: none !important;
           }
-          .problem-label {
-            left: 24px !important;
-          }
           .iphone-col {
             display: none !important;
-          }
-          .panel1-left {
-            align-items: center !important;
-            text-align: center !important;
           }
         }
       `}</style>
@@ -263,7 +272,7 @@ export default function ProblemSection() {
       <section id="problem-section">
         <div id="problem-sticky">
           {/* Section label */}
-          <div style={{ position: "absolute", top: "40px", left: "50%", transform: "translateX(-50%)", zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", textAlign: "center", width: "100%" }}>
+          <div className="section-label" style={{ position: "absolute", top: "40px", left: "50%", transform: "translateX(-50%)", zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", textAlign: "center", width: "100%", padding: "0 16px", boxSizing: "border-box" }}>
             <h1 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.6rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.05em", lineHeight: 1.1, margin: 0 }}>Sound familiar?</h1>
             <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "14px", color: "#a59f97", margin: 0 }}>Calls go unanswered. Patients don't wait. Your front desk can't be everywhere at once.</p>
           </div>
@@ -282,17 +291,17 @@ export default function ProblemSection() {
             <div className="problem-panel">
               <div className="panel-card" style={{ background: "linear-gradient(135deg, #f0f9ff 0%, #faf5ff 100%)" }}>
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#a59f97", marginBottom: "8px", letterSpacing: "-0.02em" }}>01</span>
-                <div id="stat-revenue" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>₪0</div>
+                <div id="stat-revenue" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "clamp(2.8rem, 8vw, 5rem)", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>₪0</div>
                 <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>in unrealized revenue per year</div>
-                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.84px", lineHeight: 1.1, margin: 0, maxWidth: "520px", textAlign: "center" }}>
+                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.25rem, 4vw, 2.25rem)", color: "#000", letterSpacing: "-0.84px", lineHeight: 1.15, margin: 0, maxWidth: "520px", textAlign: "center" }}>
                   Every missed call is a lost patient.
                 </h2>
-                <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px", color: "#777169", lineHeight: 1.6, margin: "16px 0 0 0", maxWidth: "480px", textAlign: "center" }}>
+                <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "14px", color: "#777169", lineHeight: 1.6, margin: "12px 0 0 0", maxWidth: "480px", textAlign: "center" }}>
                   Five missed calls a day at ₪900 each, 250 working days.
                 </p>
 
                 {/* Notification stack */}
-                <div style={{ height: "240px", width: "360px", flexShrink: 0, position: "relative", overflow: "hidden", marginTop: "24px" }}>
+                <div style={{ height: "200px", width: "100%", maxWidth: "340px", flexShrink: 0, position: "relative", overflow: "hidden", marginTop: "16px" }}>
                   <NotifStack />
                 </div>
               </div>
@@ -302,15 +311,15 @@ export default function ProblemSection() {
             <div className="problem-panel">
               <div className="panel-card" style={{ background: "linear-gradient(135deg, #ecfdf5 0%, #f0f9ff 100%)" }}>
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#a59f97", marginBottom: "8px", letterSpacing: "-0.02em" }}>02</span>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>40%</div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "clamp(2.8rem, 8vw, 5rem)", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>40%</div>
                 <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>of appointment requests come after hours</div>
-                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "520px", margin: 0 }}>
+                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.25rem, 4vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "520px", margin: 0 }}>
                   Your receptionist leaves at 18:00. Patients don't.
                 </h2>
 
                 {/* Bar chart */}
-                <div style={{ width: "min(640px, 100%)", marginTop: "24px" }}>
-                  <div id="bar-chart" style={{ width: "100%", height: "140px", display: "flex", alignItems: "flex-end", gap: "4px" }}>
+                <div style={{ width: "min(640px, 100%)", marginTop: "16px" }}>
+                  <div id="bar-chart" style={{ width: "100%", height: "clamp(80px, 16vw, 140px)", display: "flex", alignItems: "flex-end", gap: "3px" }}>
                     {businessBars.map((b) =>
                     <div
                       key={b.time}
@@ -345,9 +354,9 @@ export default function ProblemSection() {
             <div className="problem-panel">
               <div className="panel-card" style={{ background: "linear-gradient(135deg, #f0f4ff 0%, #fafef9 100%)" }}>
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#a59f97", marginBottom: "8px", letterSpacing: "-0.02em" }}>03</span>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>30,000+</div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "clamp(2.8rem, 8vw, 5rem)", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>30,000+</div>
                 <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>French-speaking residents in Netanya</div>
-                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
+                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.25rem, 4vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
                   Your receptionist speaks one language.<br />Your patients speak three.
                 </h2>
 
@@ -406,12 +415,12 @@ export default function ProblemSection() {
             <div className="problem-panel">
               <div className="panel-card" style={{ background: "linear-gradient(135deg, #f8fafc 0%, #f5f9ff 100%)" }}>
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#a59f97", marginBottom: "8px", letterSpacing: "-0.02em" }}>04</span>
-                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
+                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.25rem, 4vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
                   You're paying a full salary just to answer the phone.
                 </h2>
 
                 {/* Calculator card */}
-                <div style={{ width: "min(480px, 90%)", background: "#ffffff", borderRadius: "20px", boxShadow: "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.04) 0px 2px 4px 0px", padding: "32px", display: "flex", flexDirection: "column", gap: "28px", marginTop: "24px" }}>
+                <div style={{ width: "min(480px, 95%)", background: "#ffffff", borderRadius: "20px", boxShadow: "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.04) 0px 2px 4px 0px", padding: "clamp(20px, 5vw, 32px)", display: "flex", flexDirection: "column", gap: "22px", marginTop: "16px" }}>
                   {/* Slider 1 */}
                   <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

@@ -189,11 +189,11 @@ export default function HeroSection() {
           .hero-content { max-width: 900px !important; }
         }
         @media (min-width: 769px) and (max-width: 1024px) {
-          .hero-content { padding: 80px 40px !important; }
+          .hero-content { padding: 60px 32px !important; }
         }
         @media (max-width: 768px) {
           .hero-content {
-            padding: 60px 24px !important;
+            padding: 48px 20px !important;
             align-items: center !important;
             text-align: center !important;
           }
@@ -202,6 +202,7 @@ export default function HeroSection() {
           }
           .hero-content a[href="#book-demo"] {
             height: 36px !important;
+            font-size: 14px !important;
           }
         }
       `}</style>

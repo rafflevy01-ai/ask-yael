@@ -96,7 +96,7 @@ export default function ProofBar() {
   }, []);
 
   return (
-    <section style={{ padding: "0 24px 40px", backgroundColor: "#fdfcfc" }}>
+    <section data-proof-bar style={{ padding: "0 24px 40px", backgroundColor: "#fdfcfc" }}>
       <div
         ref={ref}
         style={{
@@ -156,7 +156,7 @@ export default function ProofBar() {
       </div>
       <style>{`
         @media (max-width: 1024px) {
-          section { padding: 0 16px 32px !important; }
+          [data-proof-bar] { padding: 0 16px 32px !important; }
         }
         @media (max-width: 480px) {
           .proof-cell { flex: 1 1 calc(50%) !important; }
