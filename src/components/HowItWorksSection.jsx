@@ -182,7 +182,7 @@ export default function HowItWorksSection() {
                 <div style={{ maxWidth: "340px", margin: "0 auto" }}>
                   <IosNotifCard
                     stepIndex={i}
-                    visible={visible}
+                    visible={true}
                     cardStyle={{}}
                   />
                 </div>
