@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const STEPS = [
   {
@@ -23,70 +23,139 @@ const STEPS = [
   },
 ];
 
-export default function HowItWorksSection() {
+function StepCard({ step, index, isVisible }) {
   return (
-    <section style={{ background: "#f5f3f1" }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "100px 48px 0" }}>
-        {/* Headline */}
-        <h2 style={{
+    <div
+      style={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "stretch",
+        gap: "24px",
+        background: "#ffffff",
+        borderRadius: "20px",
+        padding: "28px 24px",
+        boxShadow: "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.04) 0px 2px 8px 0px",
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(20px)",
+        transition: `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`,
+      }}
+    >
+      {/* Left column: number + progress bar */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", flexShrink: 0 }}>
+        <span style={{
+          fontFamily: "'Geist Mono', monospace",
+          fontWeight: 400,
+          fontSize: "13px",
+          color: "#a59f97",
+          lineHeight: 1,
+        }}>
+          {step.number}
+        </span>
+        {/* Progress bar track */}
+        <div style={{
+          width: "2px",
+          flex: 1,
+          background: "#e5e5e5",
+          borderRadius: "9999px",
+          position: "relative",
+          overflow: "hidden",
+          minHeight: "60px",
+        }}>
+          <div style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            background: "#000000",
+            borderRadius: "9999px",
+            height: isVisible ? "100%" : "0%",
+            transition: `height 0.7s cubic-bezier(0.22,1,0.36,1) ${index * 0.15 + 0.3}s`,
+          }} />
+        </div>
+      </div>
+
+      {/* Right column: title + description */}
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: "8px" }}>
+        <div style={{
           fontFamily: "'DM Sans', sans-serif",
           fontWeight: 300,
-          fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)",
+          fontSize: "clamp(1.1rem, 1.8vw, 1.35rem)",
           color: "#000000",
-          letterSpacing: "-0.72px",
-          margin: "0 0 64px 0",
+          letterSpacing: "-0.03em",
+          lineHeight: 1.2,
         }}>
-          How Yael works.
-        </h2>
+          {step.title}
+        </div>
+        <div style={{
+          fontFamily: "Inter, sans-serif",
+          fontWeight: 400,
+          fontSize: "14px",
+          color: "#777169",
+          lineHeight: 1.65,
+        }}>
+          {step.description}
+        </div>
+      </div>
+    </div>
+  );
+}
 
-        {/* Steps row */}
-        <div className="how-it-works-steps">
+export default function HowItWorksSection() {
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.15 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section ref={sectionRef} style={{ background: "#fdfcfc", padding: "100px 48px" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+
+        {/* Header */}
+        <div style={{ marginBottom: "48px" }}>
+          <span style={{
+            fontFamily: "'Geist Mono', monospace",
+            fontSize: "11px",
+            textTransform: "uppercase",
+            letterSpacing: "0.12em",
+            color: "#a59f97",
+            display: "block",
+            marginBottom: "12px",
+          }}>
+            How it works
+          </span>
+          <h2 style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 300,
+            fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)",
+            color: "#000000",
+            letterSpacing: "-0.05em",
+            lineHeight: 1.1,
+            margin: 0,
+          }}>
+            How Yael works.
+          </h2>
+        </div>
+
+        {/* Step cards grid */}
+        <div className="how-it-works-grid">
           {STEPS.map((step, i) => (
-            <React.Fragment key={step.number}>
-              <div className="how-it-works-step">
-                <div style={{
-                  fontFamily: "'Geist Mono', monospace",
-                  fontWeight: 400,
-                  fontSize: "2rem",
-                  color: "#a59f97",
-                  marginBottom: "16px",
-                  lineHeight: 1,
-                }}>
-                  {step.number}
-                </div>
-                <div style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontWeight: 500,
-                  fontSize: "16px",
-                  color: "#000000",
-                  marginBottom: "10px",
-                }}>
-                  {step.title}
-                </div>
-                <div style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontWeight: 400,
-                  fontSize: "14px",
-                  color: "#777169",
-                  lineHeight: 1.7,
-                }}>
-                  {step.description}
-                </div>
-              </div>
-
-              {/* Connector line between steps (desktop only) */}
-              {i < STEPS.length - 1 && (
-                <div className="how-it-works-connector" />
-              )}
-            </React.Fragment>
+            <StepCard key={step.number} step={step} index={i} isVisible={isVisible} />
           ))}
         </div>
+
       </div>
 
       {/* Callout strip */}
       <div style={{
         marginTop: "80px",
-        background: "#fdfcfc",
         borderTop: "1px solid #e5e5e5",
         borderBottom: "1px solid #e5e5e5",
         padding: "20px 48px",
@@ -105,34 +174,24 @@ export default function HowItWorksSection() {
       </div>
 
       <style>{`
-        .how-it-works-steps {
-          display: flex;
-          flex-direction: row;
-          align-items: flex-start;
-          gap: 0;
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300&family=Geist+Mono:wght@400&display=swap');
+
+        .how-it-works-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
         }
-        .how-it-works-step {
-          flex: 1;
-          padding-right: 32px;
-        }
-        .how-it-works-connector {
-          width: 1px;
-          height: 80px;
-          background: #e5e5e5;
-          margin-top: 8px;
-          flex-shrink: 0;
-          margin-right: 32px;
-        }
-        @media (max-width: 768px) {
-          .how-it-works-steps {
-            flex-direction: column;
-            gap: 40px;
+        @media (max-width: 900px) {
+          .how-it-works-grid {
+            grid-template-columns: repeat(2, 1fr);
           }
-          .how-it-works-step {
-            padding-right: 0;
+        }
+        @media (max-width: 560px) {
+          .how-it-works-grid {
+            grid-template-columns: 1fr;
           }
-          .how-it-works-connector {
-            display: none;
+          section {
+            padding: 64px 24px !important;
           }
         }
       `}</style>
