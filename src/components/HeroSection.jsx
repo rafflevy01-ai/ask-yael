@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import FractalGlassBackground from "@/components/FractalGlassBackground";
 
 const PHRASES = [
   "never misses a call.",
@@ -72,10 +71,25 @@ export default function HeroSection() {
         backgroundColor: "#fdfcfc",
       }}>
 
-      {/* Fractal glass background — sits behind everything */}
-      <FractalGlassBackground sectionRef={sectionRef} />
+      {/* Glass gradient background — subtle, low opacity */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        background: "radial-gradient(ellipse at 30% 20%, rgba(90, 110, 180, 0.06) 0%, transparent 45%), radial-gradient(ellipse at 70% 80%, rgba(160, 90, 130, 0.05) 0%, transparent 45%)",
+        pointerEvents: "none",
+        zIndex: 0,
+      }} />
+      
+      {/* Subtle noise texture */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        backgroundImage: "url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\"><filter id=\"n\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.9\" numOctaves=\"3\" stitchTiles=\"stitch\"/></filter><rect width=\"100%25\" height=\"100%25\" filter=\"url(%23n)\" opacity=\"0.025\"/></svg>')",
+        pointerEvents: "none",
+        zIndex: 0,
+      }} />
 
-      {/* Animated background orbs */}
+      {/* Animated gradient orbs — very subtle */}
       {orbs.map((orb, i) => (
         <motion.div
           key={i}
