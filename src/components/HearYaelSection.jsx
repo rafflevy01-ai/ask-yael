@@ -1,0 +1,221 @@
+import React from "react";
+
+const CARDS = [
+  {
+    id: 1,
+    title: "Language Detection",
+    description: "Yael opens in Hebrew and switches to French mid-call.",
+    featured: false,
+  },
+  {
+    id: 2,
+    title: "Patient Recognition",
+    description: "A returning patient is identified before they finish saying hello.",
+    featured: true,
+  },
+  {
+    id: 3,
+    title: "Full Booking",
+    description: "Slot offered, confirmed, and written to the booking system in one call.",
+    featured: false,
+  },
+  {
+    id: 4,
+    title: "New Patient Intake",
+    description: "Name, date of birth, health fund, and reason registered during the call.",
+    featured: false,
+  },
+];
+
+function WaveformPlaceholder({ featured }) {
+  const bars = [
+    { height: 18, duration: "0.7s", delay: "0s" },
+    { height: 32, duration: "0.9s", delay: "0.15s" },
+    { height: 24, duration: "0.6s", delay: "0.05s" },
+    { height: 40, duration: "1.0s", delay: "0.25s" },
+    { height: 28, duration: "0.75s", delay: "0.1s" },
+    { height: 20, duration: "0.85s", delay: "0.2s" },
+    { height: 36, duration: "0.65s", delay: "0.3s" },
+    { height: 22, duration: "0.95s", delay: "0.08s" },
+    { height: 30, duration: "0.8s", delay: "0.18s" },
+    { height: 16, duration: "0.7s", delay: "0.35s" },
+    { height: 38, duration: "0.9s", delay: "0.12s" },
+    { height: 26, duration: "0.6s", delay: "0.28s" },
+  ];
+
+  return (
+    <div style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "3px",
+      height: "52px",
+      background: featured ? "#f9f9f9" : "#f5f5f5",
+      borderRadius: "10px",
+      padding: "0 16px",
+    }}>
+      {bars.map((bar, i) => (
+        <div
+          key={i}
+          style={{
+            width: "3px",
+            height: `${bar.height}px`,
+            borderRadius: "9999px",
+            background: featured ? "#c0c0c0" : "#e0e0e0",
+            animation: `waveform-pulse ${bar.duration} ${bar.delay} ease-in-out infinite alternate`,
+          }}
+        />
+      ))}
+      <style>{`
+        @keyframes waveform-pulse {
+          from { transform: scaleY(0.3); opacity: 0.5; }
+          to   { transform: scaleY(1);   opacity: 1; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function AudioCard({ card }) {
+  return (
+    <div style={{
+      background: "#ffffff",
+      borderRadius: "16px",
+      padding: "24px",
+      display: "flex",
+      flexDirection: "column",
+      gap: "14px",
+      boxShadow: card.featured
+        ? "0 4px 24px rgba(0,0,0,0.10), 0 0 0 1px #000000"
+        : "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.05) 0px 4px 12px 0px",
+      border: card.featured ? "1px solid #000000" : "none",
+      position: "relative",
+    }}>
+      {card.featured && (
+        <div style={{
+          position: "absolute",
+          top: "-10px",
+          left: "20px",
+          background: "#000000",
+          color: "#ffffff",
+          fontFamily: "Inter, sans-serif",
+          fontWeight: 500,
+          fontSize: "10px",
+          textTransform: "uppercase",
+          letterSpacing: "0.1em",
+          padding: "3px 10px",
+          borderRadius: "9999px",
+        }}>
+          Featured
+        </div>
+      )}
+
+      <div>
+        <div style={{
+          fontFamily: "Inter, sans-serif",
+          fontWeight: 600,
+          fontSize: "15px",
+          color: "#000000",
+          marginBottom: "4px",
+        }}>
+          {card.title}
+        </div>
+        <div style={{
+          fontFamily: "Inter, sans-serif",
+          fontStyle: "italic",
+          fontWeight: 400,
+          fontSize: "13px",
+          color: "#a59f97",
+          lineHeight: 1.5,
+        }}>
+          {card.description}
+        </div>
+      </div>
+
+      <WaveformPlaceholder featured={card.featured} />
+    </div>
+  );
+}
+
+export default function HearYaelSection() {
+  return (
+    <section style={{
+      background: "#fdfcfc",
+      padding: "100px 48px",
+    }}>
+      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+        {/* Headline */}
+        <div style={{ marginBottom: "48px", textAlign: "center" }}>
+          <span style={{
+            fontFamily: "'Geist Mono', monospace",
+            fontSize: "11px",
+            textTransform: "uppercase",
+            letterSpacing: "0.12em",
+            color: "#a59f97",
+            display: "block",
+            marginBottom: "16px",
+          }}>
+            Real Calls
+          </span>
+          <h2 style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 300,
+            fontSize: "clamp(2rem, 4vw, 3rem)",
+            color: "#000000",
+            letterSpacing: "-0.6px",
+            lineHeight: 1.15,
+            margin: 0,
+          }}>
+            Hear Yael on a real call.
+          </h2>
+        </div>
+
+        {/* 2×2 Grid */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 1fr)",
+          gap: "16px",
+        }}
+          className="hear-yael-grid"
+        >
+          {CARDS.map((card) => (
+            <AudioCard key={card.id} card={card} />
+          ))}
+        </div>
+
+        {/* Note */}
+        <p style={{
+          fontFamily: "Inter, sans-serif",
+          fontWeight: 400,
+          fontStyle: "italic",
+          fontSize: "13px",
+          color: "#a59f97",
+          textAlign: "center",
+          marginTop: "32px",
+          lineHeight: 1.6,
+        }}>
+          Recordings coming soon. To hear Yael live, call{" "}
+          <a
+            href="tel:+97293762131"
+            style={{ color: "#000000", textDecoration: "none", fontStyle: "normal", fontWeight: 500 }}
+          >
+            +972 93 762 131
+          </a>.
+        </p>
+      </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .hear-yael-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 768px) {
+          section[data-hear-yael] {
+            padding: 64px 24px !important;
+          }
+        }
+      `}</style>
+    </section>
+  );
+}
