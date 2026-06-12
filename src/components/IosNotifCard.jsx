@@ -135,6 +135,7 @@ export default function IosNotifCard({ stepIndex, visible = true, cardStyle }) {
         ...cardBase,
         ...cardStyle,
         opacity: visible ? 1 : 0,
+        transition: "opacity 0.7s ease",
         pointerEvents: "none",
       }}
     >
