@@ -32,15 +32,13 @@ export default function Navbar() {
         {/* Logo */}
         <span
           style={{
-            fontFamily: "Inter, sans-serif",
-            fontWeight: 700,
-            fontSize: "14px",
-            letterSpacing: "0.05em",
-            textTransform: "uppercase",
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 400,
+            fontSize: "16px",
+            letterSpacing: "-0.02em",
             color: "#000000"
-          }} className="[font-family:'Roboto',_sans-serif] font-light">
-          
-          Ask Yael
+          }}>
+          AskYael
         </span>
 
         {/* Right cluster */}
