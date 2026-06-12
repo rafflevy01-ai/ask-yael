@@ -9,10 +9,10 @@ export default function ProblemSection() {
     initRef.current = true;
 
     // --- Bar animations (defined first so scroll handler can call them) ---
-    window.animateBarsEnter = function() {
+    window.animateBarsEnter = function () {
       const bars = document.querySelectorAll('[data-height]');
       // Reset all to 0 instantly
-      bars.forEach((bar) => { bar.style.transition = 'none'; bar.style.height = '0%'; });
+      bars.forEach((bar) => {bar.style.transition = 'none';bar.style.height = '0%';});
       requestAnimationFrame(() => requestAnimationFrame(() => {
         bars.forEach((bar, i) => {
           // Each bar rises one at a time: 120ms stagger, 500ms rise
@@ -23,12 +23,12 @@ export default function ProblemSection() {
         });
       }));
     };
-    window.animateBarsExit = function() {
+    window.animateBarsExit = function () {
       const bars = document.querySelectorAll('[data-height]');
       // Collapse right to left
       [...bars].reverse().forEach((bar, i) => {
         bar.style.transition = 'height 0.3s cubic-bezier(0.55,0,1,0.45)';
-        setTimeout(() => { bar.style.height = '0%'; }, i * 40);
+        setTimeout(() => {bar.style.height = '0%';}, i * 40);
       });
     };
 
@@ -50,7 +50,7 @@ export default function ProblemSection() {
 
         if (!isMobile) {
           track.style.transform =
-            "translateX(-" + progress * window.innerWidth * 3 + "px)";
+          "translateX(-" + progress * window.innerWidth * 3 + "px)";
         }
 
         const activePanel = Math.min(3, Math.floor(progress * 4 + 0.05));
@@ -100,12 +100,12 @@ export default function ProblemSection() {
         if (cd) cd.textContent = count;
         if (mo) mo.textContent = fmt(monthly);
         if (ao) ao.textContent = fmt(monthly * 12) + " / year";
-        const sp = ((salary - 6000) / 6000) * 100;
-        const cp = ((count - 1) / 4) * 100;
+        const sp = (salary - 6000) / 6000 * 100;
+        const cp = (count - 1) / 4 * 100;
         ss.style.background =
-          "linear-gradient(to right,#000 " + sp + "%,#e5e5e5 " + sp + "%)";
+        "linear-gradient(to right,#000 " + sp + "%,#e5e5e5 " + sp + "%)";
         cs.style.background =
-          "linear-gradient(to right,#000 " + cp + "%,#e5e5e5 " + cp + "%)";
+        "linear-gradient(to right,#000 " + cp + "%,#e5e5e5 " + cp + "%)";
       }
       if (ss) ss.addEventListener("input", update);
       if (cs) cs.addEventListener("input", update);
@@ -115,24 +115,24 @@ export default function ProblemSection() {
 
   // Business hours bars
   const businessBars = [
-    { time: "08:00", h: 65 },
-    { time: "09:00", h: 95 },
-    { time: "10:00", h: 85 },
-    { time: "11:00", h: 60 },
-    { time: "12:00", h: 40 },
-    { time: "13:00", h: 50 },
-    { time: "14:00", h: 70 },
-    { time: "15:00", h: 65 },
-    { time: "16:00", h: 55 },
-    { time: "17:00", h: 45 },
-  ];
+  { time: "08:00", h: 65 },
+  { time: "09:00", h: 95 },
+  { time: "10:00", h: 85 },
+  { time: "11:00", h: 60 },
+  { time: "12:00", h: 40 },
+  { time: "13:00", h: 50 },
+  { time: "14:00", h: 70 },
+  { time: "15:00", h: 65 },
+  { time: "16:00", h: 55 },
+  { time: "17:00", h: 45 }];
+
   const afterHoursBars = [
-    { time: "18:00", h: 6 },
-    { time: "19:00", h: 5 },
-    { time: "20:00", h: 4 },
-    { time: "21:00", h: 3 },
-    { time: "22:00", h: 2 },
-  ];
+  { time: "18:00", h: 6 },
+  { time: "19:00", h: 5 },
+  { time: "20:00", h: 4 },
+  { time: "21:00", h: 3 },
+  { time: "22:00", h: 2 }];
+
 
   return (
     <>
@@ -267,9 +267,9 @@ export default function ProblemSection() {
 
           {/* Progress dots */}
           <div className="problem-dots">
-            {[0, 1, 2, 3].map((i) => (
-              <div key={i} id={`dot-${i}`} className="problem-dot" />
-            ))}
+            {[0, 1, 2, 3].map((i) =>
+            <div key={i} id={`dot-${i}`} className="problem-dot" />
+            )}
           </div>
 
           {/* Horizontal track */}
@@ -282,9 +282,9 @@ export default function ProblemSection() {
                 display: "flex",
                 alignItems: "center",
                 padding: "0 64px",
-                gap: "64px",
-              }}
-            >
+                gap: "64px"
+              }}>
+              
               {/* Left column */}
               <div
                 className="panel1-left"
@@ -293,9 +293,9 @@ export default function ProblemSection() {
                   display: "flex",
                   flexDirection: "column",
                   gap: "24px",
-                  maxWidth: "480px",
-                }}
-              >
+                  maxWidth: "480px"
+                }}>
+                
                 <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97" }}>01</span>
                 <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "42px", color: "#000", letterSpacing: "-0.84px", lineHeight: 1.1, margin: 0 }}>
                   Every missed call is a lost patient.
@@ -312,8 +312,8 @@ export default function ProblemSection() {
               {/* Right column — iOS notification stack */}
               <div
                 className="iphone-col"
-                style={{ flex: 1, display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "20px" }}
-              >
+                style={{ flex: 1, display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "20px" }}>
+                
                 <NotifStack />
               </div>
             </div>
@@ -327,9 +327,9 @@ export default function ProblemSection() {
                 alignItems: "center",
                 justifyContent: "center",
                 gap: "24px",
-                padding: "0 80px",
-              }}
-            >
+                padding: "0 80px"
+              }}>
+              
               <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97" }}>02</span>
               <div style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "5rem", color: "#000", lineHeight: 1 }}>40%</div>
               <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97" }}>of appointment requests come after hours</div>
@@ -340,26 +340,26 @@ export default function ProblemSection() {
               {/* Bar chart */}
               <div style={{ width: "min(640px, 100%)" }}>
                 <div id="bar-chart" style={{ width: "100%", height: "140px", display: "flex", alignItems: "flex-end", gap: "4px" }}>
-                  {businessBars.map((b) => (
-                    <div
-                      key={b.time}
-                      className="bar-item"
-                      data-height={b.h}
-                      style={{ background: "#000000" }}
-                    />
-                  ))}
+                  {businessBars.map((b) =>
+                  <div
+                    key={b.time}
+                    className="bar-item"
+                    data-height={b.h}
+                    style={{ background: "#000000" }} />
+
+                  )}
                   {/* Divider */}
                   <div style={{ position: "relative", width: "1px", height: "100%", background: "#e5e5e5", flexShrink: 0 }}>
                     <span style={{ position: "absolute", bottom: "-18px", left: "50%", transform: "translateX(-50%)", fontFamily: "Inter, sans-serif", fontSize: "9px", color: "#a59f97", whiteSpace: "nowrap" }}>18:00</span>
                   </div>
-                  {afterHoursBars.map((b) => (
-                    <div
-                      key={b.time}
-                      className="bar-item"
-                      data-height={b.h}
-                      style={{ background: "#e5e5e5" }}
-                    />
-                  ))}
+                  {afterHoursBars.map((b) =>
+                  <div
+                    key={b.time}
+                    className="bar-item"
+                    data-height={b.h}
+                    style={{ background: "#e5e5e5" }} />
+
+                  )}
                 </div>
                 {/* Labels */}
                 <div style={{ display: "flex", justifyContent: "space-between", marginTop: "24px" }}>
@@ -377,14 +377,14 @@ export default function ProblemSection() {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: "32px",
-              }}
-            >
+                gap: "32px"
+              }}>
+              
               <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97" }}>03</span>
               <div style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "5rem", color: "#000", lineHeight: 1 }}>30,000+</div>
               <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97" }}>French-speaking residents in Netanya</div>
-              <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "36px", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
-                Your receptionist speaks one language.<br />Your patients speak three.
+              <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "36px", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0, whiteSpace: "nowrap" }} className="px-1">
+                Your receptionist speaks one language. Your patients speak three.
               </h2>
 
               {/* Language card */}
@@ -446,9 +446,9 @@ export default function ProblemSection() {
                 alignItems: "center",
                 justifyContent: "center",
                 gap: "32px",
-                padding: "0 80px",
-              }}
-            >
+                padding: "0 80px"
+              }}>
+              
               <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97" }}>04</span>
               <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "36px", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
                 You're paying a full salary just to answer the phone.
@@ -521,7 +521,7 @@ export default function ProblemSection() {
             obs.observe(statEl);
           }
         })();
-      `}} />
-    </>
-  );
+      ` }} />
+    </>);
+
 }
