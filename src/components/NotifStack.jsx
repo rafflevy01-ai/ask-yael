@@ -8,15 +8,16 @@ const NOTIF_DATA = [
   { number: "+972 50 111 2233", time: "22:18" },
 ];
 
-const CARD_HEIGHT = 100; // px per card (approx)
-const GAP = 10;
-const SLOT = CARD_HEIGHT + GAP;
-const MAX_VISIBLE = 3;
-
+// iOS stacking: newer card sits ON TOP of older card, slightly peeking behind
+const PEEK = 10; // px of older card visible below newer card
 let uid = 0;
 
-function NotifCard({ data, slot, opacity, entering, exiting }) {
-  const top = entering ? -CARD_HEIGHT - GAP : exiting ? MAX_VISIBLE * SLOT : slot * SLOT;
+function NotifCard({ data, index, total, entering, exiting }) {
+  // index 0 = newest (top), index 1 = older (slightly behind/below)
+  const scale = 1 - index * 0.04;
+  const translateY = entering ? -120 : exiting ? -120 : index * PEEK;
+  const opacity = entering ? 0 : exiting ? 0 : index === 0 ? 1 : 0.75;
+  const zIndex = total - index;
 
   return (
     <div
@@ -24,15 +25,20 @@ function NotifCard({ data, slot, opacity, entering, exiting }) {
         position: "absolute",
         left: 0,
         right: 0,
-        top: `${top}px`,
-        opacity: exiting ? 0 : opacity,
-        transition: "top 0.45s cubic-bezier(0.34,1.1,0.64,1), opacity 0.45s ease",
-        background: "rgba(255,255,255,0.88)",
-        backdropFilter: "blur(24px) saturate(180%)",
-        WebkitBackdropFilter: "blur(24px) saturate(180%)",
-        borderRadius: "18px",
+        top: 0,
+        transform: `translateY(${translateY}px) scale(${scale})`,
+        transformOrigin: "top center",
+        opacity,
+        zIndex,
+        transition: entering || exiting
+          ? "transform 0.42s cubic-bezier(0.34,1.1,0.64,1), opacity 0.35s ease"
+          : "transform 0.42s cubic-bezier(0.34,1.1,0.64,1), opacity 0.35s ease",
+        background: "rgba(255,255,255,0.92)",
+        backdropFilter: "blur(32px) saturate(180%)",
+        WebkitBackdropFilter: "blur(32px) saturate(180%)",
+        borderRadius: "20px",
         padding: "12px 14px",
-        boxShadow: "inset 0 0 0 0.5px rgba(255,255,255,0.6), 0 4px 20px rgba(0,0,0,0.07)",
+        boxShadow: "inset 0 0 0 0.5px rgba(255,255,255,0.7), 0 6px 24px rgba(0,0,0,0.10)",
         fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif",
         boxSizing: "border-box",
       }}
@@ -66,55 +72,44 @@ function NotifCard({ data, slot, opacity, entering, exiting }) {
   );
 }
 
-// Each card: { id, data, slot (0=top), entering, exiting }
 export default function NotifStack() {
+  // cards[0] = newest on top, cards[1] = older behind
   const [cards, setCards] = useState([]);
+  const [entering, setEntering] = useState(null); // id of entering card
   const indexRef = useRef(0);
-  const timerRef = useRef(null);
 
   function addCard() {
     const data = NOTIF_DATA[indexRef.current % NOTIF_DATA.length];
     indexRef.current++;
     const id = ++uid;
 
-    // Insert new card as entering (slot 0), shift all others down
-    setCards((prev) => {
-      const shifted = prev.map((c) => ({ ...c, slot: c.slot + 1, entering: false, exiting: c.slot >= MAX_VISIBLE - 1 }));
-      return [{ id, data, slot: 0, entering: true, exiting: false }, ...shifted];
-    });
+    // Add new card as "entering" (slides in from top)
+    setEntering(id);
+    setCards((prev) => [{ id, data }, ...prev.slice(0, 1)]);
 
-    // After one frame: stop entering flag for new card
+    // Next frame: clear entering flag so it transitions to resting position
     requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        setCards((prev) => prev.map((c) => (c.id === id ? { ...c, entering: false } : c)));
-      })
+      requestAnimationFrame(() => setEntering(null))
     );
-
-    // After transition: remove exited cards
-    setTimeout(() => {
-      setCards((prev) => prev.filter((c) => !c.exiting));
-    }, 500);
   }
 
   useEffect(() => {
-    // Seed immediately then loop
+    // Seed first card immediately, then loop
     addCard();
-    timerRef.current = setInterval(addCard, 2200);
-    return () => clearInterval(timerRef.current);
+    const interval = setInterval(addCard, 2400);
+    return () => clearInterval(interval);
   }, []);
 
-  const opacities = [1, 0.65, 0.3];
-
   return (
-    <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
-      {cards.map((card) => (
+    <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+      {cards.map((card, i) => (
         <NotifCard
           key={card.id}
           data={card.data}
-          slot={card.slot}
-          opacity={opacities[card.slot] ?? 0}
-          entering={card.entering}
-          exiting={card.exiting}
+          index={i}
+          total={cards.length}
+          entering={card.id === entering}
+          exiting={false}
         />
       ))}
     </div>
