@@ -8,7 +8,9 @@ const STEPS = [
     description: "Returning patients are recognized by phone number before they speak. New patients are registered on the spot." },
   { number: "03", title: "Request Handled",
     description: "Booking, triage, intake, modification, or cancellation — resolved in one call. Every action writes directly to the booking system." },
-  { number: "04", title: "Team Notified",
+  { number: "04", title: "CRM Updated",
+    description: "Every booking and patient change is synced directly to your clinic management system. No manual data entry." },
+  { number: "05", title: "Team Notified",
     description: "Your staff gets an SMS for every action Yael takes. If she can't handle it, she transfers the call with a full summary." },
 ];
 

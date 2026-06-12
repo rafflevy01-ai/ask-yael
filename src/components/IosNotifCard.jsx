@@ -66,6 +66,28 @@ const NOTIF_STEPS = [
   },
   {
     step: 3,
+    type: "notification",
+    appIcon: (
+      <div style={{
+        width: "20px", height: "20px", background: "#5856d6", borderRadius: "5px",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M23 4v6h-6" />
+          <path d="M1 20v-6h6" />
+          <path d="M3.51 9a9 9 0 0114.85-3.36L23 10" />
+          <path d="M1 14l4.64 4.36A9 9 0 0020.49 15" />
+        </svg>
+      </div>
+    ),
+    appName: "Yael",
+    timestamp: "now",
+    title: "CRM Synced",
+    subtitle: "Appointment logged in clinic system — no double entry needed",
+    buttons: null,
+  },
+  {
+    step: 4,
     type: "sms-banner",
     appIcon: (
       <div style={{
