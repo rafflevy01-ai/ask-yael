@@ -4,6 +4,7 @@ import ProofBar from "@/components/ProofBar";
 import ProblemSection from "@/components/ProblemSection";
 import HearYaelSection from "@/components/HearYaelSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
+import CapabilitiesSection from "@/components/CapabilitiesSection";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <ProblemSection />
       <HearYaelSection />
       <HowItWorksSection />
+      <CapabilitiesSection />
     </main>
   );
 }
