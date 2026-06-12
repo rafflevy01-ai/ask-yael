@@ -1,8 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NotifStack from "@/components/NotifStack";
 
 export default function ProblemSection() {
   const initRef = useRef(false);
+  const [salary, setSalary] = useState(8500);
+  const [count, setCount] = useState(2);
+  const monthly = salary * count;
+  const annual = monthly * 12;
 
   useEffect(() => {
     if (initRef.current) return;
@@ -80,47 +84,7 @@ export default function ProblemSection() {
       updateScroll();
     })();
 
-    // --- Calculator ---
-    (function () {
-      function initCalculator() {
-        const ss = document.getElementById("salary-slider");
-        const cs = document.getElementById("count-slider");
-        const sd = document.getElementById("salary-display");
-        const cd = document.getElementById("count-display");
-        const mo = document.getElementById("monthly-output");
-        const ao = document.getElementById("annual-output");
-        
-        function fmt(n) {
-          return "₪" + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-        
-        function update() {
-          if (!ss || !cs) return;
-          const salary = parseInt(ss.value);
-          const count = parseInt(cs.value);
-          const monthly = salary * count;
-          if (sd) sd.textContent = fmt(salary) + " / month";
-          if (cd) cd.textContent = count;
-          if (mo) mo.textContent = fmt(monthly);
-          if (ao) ao.textContent = fmt(monthly * 12) + " / year";
-          const sp = (salary - 6000) / 6000 * 100;
-          const cp = (count - 1) / 4 * 100;
-          ss.style.background = "linear-gradient(to right,#000 " + sp + "%,#e5e5e5 " + sp + "%)";
-          cs.style.background = "linear-gradient(to right,#000 " + cp + "%,#e5e5e5 " + cp + "%)";
-        }
-        
-        if (ss) ss.addEventListener("input", update);
-        if (cs) cs.addEventListener("input", update);
-        update();
-      }
-      
-      // Wait for DOM to be ready
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initCalculator);
-      } else {
-        setTimeout(initCalculator, 50);
-      }
-    })();
+
   }, []);
 
   // Business hours bars
@@ -452,18 +416,38 @@ export default function ProblemSection() {
                   <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "13px", color: "#000" }}>Salary per receptionist</span>
-                      <span id="salary-display" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#000", letterSpacing: "-0.02em" }}>₪8,500 / month</span>
+                      <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#000", letterSpacing: "-0.02em" }}>₪{salary.toLocaleString()} / month</span>
                     </div>
-                    <input type="range" id="salary-slider" min="6000" max="12000" step="500" defaultValue="8500" />
+                    <input 
+                      type="range" 
+                      min="6000" 
+                      max="12000" 
+                      step="500" 
+                      value={salary}
+                      onChange={(e) => setSalary(parseInt(e.target.value))}
+                      style={{
+                        background: `linear-gradient(to right, #000 ${(salary - 6000) / 6000 * 100}%, #e5e5e5 ${(salary - 6000) / 6000 * 100}%)`
+                      }}
+                    />
                   </div>
 
                   {/* Slider 2 */}
                   <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "13px", color: "#000" }}>Number of receptionists</span>
-                      <span id="count-display" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#000", letterSpacing: "-0.02em" }}>2</span>
+                      <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#000", letterSpacing: "-0.02em" }}>{count}</span>
                     </div>
-                    <input type="range" id="count-slider" min="1" max="5" step="1" defaultValue="2" />
+                    <input 
+                      type="range" 
+                      min="1" 
+                      max="5" 
+                      step="1" 
+                      value={count}
+                      onChange={(e) => setCount(parseInt(e.target.value))}
+                      style={{
+                        background: `linear-gradient(to right, #000 ${(count - 1) / 4 * 100}%, #e5e5e5 ${(count - 1) / 4 * 100}%)`
+                      }}
+                    />
                   </div>
 
                   {/* Divider */}
@@ -473,10 +457,10 @@ export default function ProblemSection() {
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
                     <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97" }}>You pay</span>
                     <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
-                      <span id="monthly-output" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "2.5rem", color: "#000", letterSpacing: "-0.05em" }}>₪17,000</span>
+                      <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "2.5rem", color: "#000", letterSpacing: "-0.05em" }}>₪{monthly.toLocaleString()}</span>
                       <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#a59f97" }}>/ month</span>
-                      </div>
-                      <span id="annual-output" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "1.4rem", color: "#777169", letterSpacing: "-0.02em" }}>₪204,000 / year</span>
+                    </div>
+                    <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "1.4rem", color: "#777169", letterSpacing: "-0.02em" }}>₪{annual.toLocaleString()} / year</span>
                     <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontStyle: "italic", fontSize: "13px", color: "#a59f97", lineHeight: 1.5, textAlign: "center", marginTop: "8px", marginBottom: 0 }}>
                       For a team that still goes home at 18:00. Still misses calls. Still speaks one language.
                     </p>
