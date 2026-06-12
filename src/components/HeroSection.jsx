@@ -117,7 +117,7 @@ export default function HeroSection() {
           className="hero-headline"
           style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontWeight: 300,
+            fontWeight: 400,
             fontSize: "clamp(2rem, 5vw, 4rem)",
             color: "#000000",
             letterSpacing: "-0.96px",
