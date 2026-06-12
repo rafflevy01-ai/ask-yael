@@ -188,6 +188,9 @@ export default function HeroSection() {
         @media (min-width: 769px) {
           .hero-content { max-width: 900px !important; }
         }
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .hero-content { padding: 80px 40px !important; }
+        }
         @media (max-width: 768px) {
           .hero-content {
             padding: 60px 24px !important;

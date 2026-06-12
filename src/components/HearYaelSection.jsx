@@ -279,9 +279,10 @@ function AudioCard({ card }) {
 
 export default function HearYaelSection() {
   return (
-    <section style={{
+    <section data-hear-yael style={{
       background: "#fdfcfc",
       padding: "100px 48px",
+      maxWidth: "100%",
     }}>
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         <div style={{ marginBottom: "48px", textAlign: "center" }}>
@@ -348,8 +349,13 @@ export default function HearYaelSection() {
           }
         }
         @media (max-width: 768px) {
-          section[data-hear-yael] {
+          [data-hear-yael] {
             padding: 64px 24px !important;
+          }
+        }
+        @media (max-width: 1024px) {
+          [data-hear-yael] {
+            padding: 80px 32px !important;
           }
         }
       `}</style>

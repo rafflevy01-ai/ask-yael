@@ -224,7 +224,7 @@ export default function ProblemSection() {
           height: 0;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
           #problem-section {
             height: auto !important;
           }

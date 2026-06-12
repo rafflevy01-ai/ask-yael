@@ -103,8 +103,12 @@ export default function Navbar() {
         @media (min-width: 768px) {
           .navbar-inner { padding: 0 48px !important; }
         }
+        @media (min-width: 768px) and (max-width: 1024px) {
+          .navbar-inner { padding: 0 32px !important; }
+        }
         @media (max-width: 480px) {
           .navbar-cta { display: none !important; }
+          .navbar-inner { padding: 0 16px !important; }
         }
       `}</style>
     </nav>);

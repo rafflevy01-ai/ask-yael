@@ -81,10 +81,10 @@ export default function HowItWorksSection() {
         </div>
 
         {/* Cards + single continuous line */}
-        <div ref={trackRef} style={{ position: "relative", display: "flex", flexDirection: "row", gap: "0" }}>
+        <div ref={trackRef} className="how-steps-track" style={{ position: "relative", display: "flex", flexDirection: "row", gap: "0" }}>
 
           {/* Line column */}
-          <div style={{
+          <div className="how-line-col" style={{
             width: "60px",
             flexShrink: 0,
             position: "relative",
@@ -117,7 +117,7 @@ export default function HowItWorksSection() {
           </div>
 
           {/* Cards */}
-          <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          <div className="how-card-col" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
             {STEPS.map((step, i) => (
               <div
                 key={step.number}
@@ -187,8 +187,14 @@ export default function HowItWorksSection() {
       </div>
 
       <style>{`
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
           section { padding: 64px 24px !important; }
+          .how-steps-track { flex-direction: column !important; }
+          .how-line-col { display: none !important; }
+          .how-card-col > div { padding-left: 0 !important; }
+        }
+        @media (max-width: 1024px) {
+          section { padding: 80px 32px !important; }
         }
       `}</style>
     </section>

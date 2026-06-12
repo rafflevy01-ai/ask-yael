@@ -155,6 +155,9 @@ export default function ProofBar() {
         ))}
       </div>
       <style>{`
+        @media (max-width: 1024px) {
+          section { padding: 0 16px 32px !important; }
+        }
         @media (max-width: 480px) {
           .proof-cell { flex: 1 1 calc(50%) !important; }
           .proof-cell-1 { border-right: none !important; }
