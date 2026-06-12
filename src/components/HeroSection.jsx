@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import GlassBackground from "@/components/GlassBackground";
 
 const PHRASES = [
   "never misses a call.",
@@ -70,7 +71,10 @@ export default function HeroSection() {
         width: "100%",
       }}>
 
-      {/* Animated gradient orbs */}
+      {/* Glass distortion background */}
+      <GlassBackground />
+
+      {/* Subtle animated orbs on top */}
       {orbs.map((orb, i) => (
         <motion.div
           key={i}
