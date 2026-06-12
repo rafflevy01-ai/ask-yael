@@ -25,7 +25,7 @@ const OUTPUTS = [
   { label: "24/7 Availability", sub: "No voicemail, no missed calls" },
 ];
 
-/* ── SVG icon functions (simple inline SVGs) ── */
+/* ── Inline SVG icons ── */
 function Phone() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -66,31 +66,28 @@ function Cpu() {
 }
 
 /* ── Node card ── */
-function NodeCard({ label, sub, icon: Icon, variant = "default", style }) {
+function NodeCard({ label, sub, icon: IconComp, variant = "default" }) {
   const isCore = variant === "core";
-  const isDimmed = variant === "dimmed";
   return (
-    <div
-      style={{
-        border: isCore ? "1.5px solid rgba(0,0,0,0.20)" : "1px solid #e0ddd8",
-        borderRadius: "12px",
-        background: isCore ? "#ffffff" : "#fafaf8",
-        padding: isCore ? "14px 18px" : "10px 14px",
-        textAlign: "center",
-        boxShadow: isCore
-          ? "0 0 0 5px rgba(0,0,0,0.025), 0 2px 16px rgba(0,0,0,0.05)"
-          : undefined,
-        opacity: isDimmed ? 0.35 : 1,
-        transition: "opacity 0.5s ease",
-        ...style,
-      }}>
-      <div style={{
-        display: "flex", alignItems: "center", justifyContent: "center",
-        marginBottom: isCore ? "6px" : "8px",
-        color: "#a59f97",
-      }}>
-        <Icon />
-      </div>
+    <div style={{
+      border: isCore ? "1.5px solid rgba(0,0,0,0.20)" : "1px solid #e0ddd8",
+      borderRadius: "12px",
+      background: isCore ? "#ffffff" : "#fafaf8",
+      padding: isCore ? "14px 18px" : "10px 14px",
+      textAlign: "center",
+      boxShadow: isCore
+        ? "0 0 0 5px rgba(0,0,0,0.025), 0 2px 16px rgba(0,0,0,0.05)"
+        : undefined,
+    }}>
+      {IconComp && (
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "center",
+          marginBottom: isCore ? "6px" : "8px",
+          color: "#a59f97",
+        }}>
+          <IconComp />
+        </div>
+      )}
       <div style={{
         fontFamily: "'DM Sans', sans-serif",
         fontWeight: isCore ? 600 : 500,
@@ -112,47 +109,28 @@ function NodeCard({ label, sub, icon: Icon, variant = "default", style }) {
   );
 }
 
-/* ── Bezier beam (animated SVG path) ── */
-function Beam({ d, active, delay = 0 }) {
-  return (
-    <motion.path
-      d={d}
-      stroke={active ? "#2563eb" : "#d4d0ca"}
-      strokeWidth={active ? 1.5 : 0.8}
-      fill="none"
-      initial={{ pathLength: 0, opacity: 0 }}
-      animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-      transition={{ duration: 0.7, delay, ease: "easeInOut" }}
-      style={{ filter: active ? "drop-shadow(0 0 3px rgba(37,99,235,0.3))" : undefined }}
-    />
-  );
-}
-
 /* ── Dot grid background ── */
 function DotGrid() {
   return (
-    <div
-      style={{
-        position: "absolute", inset: 0, zIndex: 0, opacity: 0.25,
-        backgroundImage: "radial-gradient(circle, #c4bfb8 1px, transparent 1px)",
-        backgroundSize: "16px 16px",
-        pointerEvents: "none",
-      }}
-    />
+    <div style={{
+      position: "absolute", inset: 0, zIndex: 0, opacity: 0.25,
+      backgroundImage: "radial-gradient(circle, #c4bfb8 1px, transparent 1px)",
+      backgroundSize: "16px 16px",
+      pointerEvents: "none",
+    }} />
   );
 }
 
 /* ── Main section ── */
 export default function CapabilitiesSection() {
   const [phase, setPhase] = useState(0);
-  // 0 = initial (center only)
-  // 1 = inputs connected → center
-  // 2 = capabilities branch out
+  // 0 = initial (center only, pulsing)
+  // 1 = inputs descend from above → center
+  // 2 = capabilities branch below
   // 3 = outputs auto-appear
 
   const advance = useCallback(() => setPhase((p) => Math.min(p + 1, 3)), []);
 
-  // Auto-advance from phase 2 to 3 after delay
   useEffect(() => {
     if (phase === 2) {
       const t = setTimeout(() => setPhase(3), 1200);
@@ -160,39 +138,15 @@ export default function CapabilitiesSection() {
     }
   }, [phase]);
 
-  // SVG viewBox coordinates
-  const VW = 600, VH = 360;
-  // Layout positions
-  const leftXs = [60, 60, 60, 60];
-  const leftYs = [60, 120, 180, 240];
-  const leftRx = 180; // right edge of left nodes
-
-  const centerLx = 270, centerRx = 330, centerY = 180;
-
-  const rightLx = 420;
-  const capYs = [60, 115, 170, 225, 280];
-  const outYs = [310, 330, 350];
-
-  // Build bezier paths
-  const leftBeams = leftYs.map((y, i) => {
-    const midX = (leftRx + centerLx) / 2;
-    return { d: `M ${leftRx},${y} C ${midX},${y} ${midX},${centerY} ${centerLx},${centerY}`, fromX: leftRx, fromY: y, toX: centerLx, toY: centerY };
-  });
-
-  const rightBeams = [...capYs, ...outYs].map((y, i) => {
-    const midX = (centerRx + rightLx) / 2;
-    return { d: `M ${centerRx},${centerY} C ${midX},${centerY} ${midX},${y} ${rightLx},${y}`, fromX: centerRx, fromY: centerY, toX: rightLx, toY: y };
-  });
-
   return (
     <section data-capabilities style={{ background: "#fdfcfc", padding: "100px 48px" }}>
-      <div style={{ maxWidth: "760px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "600px", margin: "0 auto" }}>
 
         {/* ── Label ── */}
         <span style={{
           fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "10px",
           textTransform: "uppercase", letterSpacing: "0.12em", color: "#a59f97",
-          display: "block", marginBottom: "14px",
+          display: "block", marginBottom: "14px", textAlign: "center",
         }}>
           Capabilities
         </span>
@@ -201,7 +155,7 @@ export default function CapabilitiesSection() {
         <h2 style={{
           fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "36px",
           color: "#000000", letterSpacing: "-0.72px", lineHeight: 1.15,
-          margin: "0 0 48px 0",
+          margin: "0 auto 48px auto", textAlign: "center", maxWidth: "480px",
         }}>
           Everything your front desk handles. Automated.
         </h2>
@@ -213,99 +167,36 @@ export default function CapabilitiesSection() {
           borderRadius: "18px",
           background: "#fafaf8",
           overflow: "hidden",
+          minHeight: phase === 0 ? "340px" : "auto",
         }}>
           <DotGrid />
 
-          {/* SVG beams layer */}
-          <svg
-            viewBox={`0 0 ${VW} ${VH}`}
-            preserveAspectRatio="xMidYMid meet"
-            style={{
-              width: "100%", height: "auto",
-              position: "absolute", inset: 0, zIndex: 1,
-              pointerEvents: "none",
-            }}
-          >
-            {/* Left → Center beams */}
-            {leftBeams.map((b, i) => (
-              <g key={`lb${i}`}>
-                <Beam d={b.d} active={phase >= 1} delay={i * 0.1} />
-                {phase >= 1 && (
-                  <>
-                    <motion.circle cx={b.fromX} cy={b.fromY} r={3} fill="#2563eb"
-                      initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: i * 0.1 + 0.4, duration: 0.3 }} />
-                    <motion.circle cx={b.toX} cy={b.toY} r={3} fill="#2563eb"
-                      initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: i * 0.1 + 0.6, duration: 0.3 }} />
-                  </>
-                )}
-              </g>
-            ))}
-
-            {/* Center → Right beams (capabilities) */}
-            {rightBeams.slice(0, 5).map((b, i) => (
-              <g key={`cb${i}`}>
-                <Beam d={b.d} active={phase >= 2} delay={i * 0.1} />
-                {phase >= 2 && (
-                  <motion.circle cx={b.toX} cy={b.toY} r={3} fill="#2563eb"
-                    initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.1 + 0.5, duration: 0.3 }} />
-                )}
-              </g>
-            ))}
-
-            {/* Center → Right beams (outputs) */}
-            {rightBeams.slice(5).map((b, i) => (
-              <g key={`ob${i}`}>
-                <Beam d={b.d} active={phase >= 3} delay={i * 0.1} />
-                {phase >= 3 && (
-                  <motion.circle cx={b.toX} cy={b.toY} r={3} fill="#2563eb"
-                    initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.1 + 0.5, duration: 0.3 }} />
-                )}
-              </g>
-            ))}
-
-            {/* Center node anchor dots */}
-            {phase >= 1 && (
-              <>
-                {leftYs.map((y, i) => (
-                  <motion.circle key={`la${i}`} cx={centerLx} cy={centerY} r={3} fill="#2563eb"
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    transition={{ delay: i * 0.1 + 0.6 }} />
-                ))}
-              </>
-            )}
-          </svg>
-
-          {/* ── Nodes layer ── */}
+          {/* ═══ CONTENT — top-to-bottom flow ═══ */}
           <div style={{
             position: "relative", zIndex: 2,
             padding: "clamp(24px, 4vw, 40px)",
+            display: "flex", flexDirection: "column", alignItems: "center",
           }}>
 
-            {/* LEFT — Input nodes */}
+            {/* ── TOP: Input nodes ── */}
             <AnimatePresence>
               {phase >= 1 && (
                 <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
                   transition={{ duration: 0.5 }}
                   style={{
-                    position: "absolute",
-                    left: "clamp(16px, 4vw, 32px)",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    display: "flex", flexDirection: "column", gap: "10px",
-                    width: "clamp(150px, 22vw, 190px)",
+                    display: "flex", flexWrap: "wrap", justifyContent: "center",
+                    gap: "10px", marginBottom: "24px",
+                    maxWidth: "480px",
                   }}>
                   {INPUTS.map((n, i) => (
                     <motion.div
                       key={n.label}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.2 + i * 0.12, duration: 0.4 }}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.15 + i * 0.1, duration: 0.4 }}
+                      style={{ flex: "1 1 calc(50% - 10px)", minWidth: "170px", maxWidth: "230px" }}
                     >
                       <NodeCard label={n.label} sub={n.sub} icon={n.icon} />
                     </motion.div>
@@ -314,104 +205,215 @@ export default function CapabilitiesSection() {
               )}
             </AnimatePresence>
 
-            {/* CENTER — Yael Core */}
-            <div style={{
-              display: "flex", justifyContent: "center", alignItems: "center",
-              minHeight: phase === 0 ? "280px" : "380px",
-            }}>
-              <motion.div
-                animate={phase === 0 ? { scale: [1, 1.03, 1] } : { scale: 1 }}
-                transition={phase === 0 ? { repeat: Infinity, duration: 2.5, ease: "easeInOut" } : {}}
-                style={{
-                  width: "clamp(180px, 28vw, 240px)",
-                  cursor: phase < 3 ? "pointer" : "default",
-                }}
-                onClick={advance}
-              >
-                <NodeCard label={CENTER.label} sub={CENTER.sub} icon={Cpu} variant="core" />
-              </motion.div>
-
-              {/* CTA label */}
-              {phase < 3 && (
-                <div
-                  onClick={advance}
+            {/* ── Vertical beam: inputs → center ── */}
+            <AnimatePresence>
+              {phase >= 1 && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  transition={{ duration: 0.4, delay: 0.3 }}
                   style={{
-                    position: "absolute", bottom: "clamp(16px, 3vw, 28px)",
-                    left: "50%", transform: "translateX(-50%)",
-                    cursor: "pointer",
+                    display: "flex", flexDirection: "column", alignItems: "center",
+                    marginBottom: "8px",
                   }}>
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                    style={{
-                      fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "12px",
-                      color: "#2563eb", letterSpacing: "-0.01em",
-                      border: "1px solid rgba(37,99,235,0.25)",
-                      borderRadius: "9999px", padding: "6px 18px",
-                    }}>
+                  {/* 4 parallel vertical lines fanning into one */}
+                  <svg width="260" height="40" viewBox="0 0 260 40" style={{ display: "block" }}>
+                    {/* Leftmost line */}
+                    <motion.path
+                      d="M 40,0 Q 70,20 130,40"
+                      stroke="#2563eb" strokeWidth="1.2" fill="none"
+                      initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+                      transition={{ delay: 0.3, duration: 0.5 }}
+                    />
+                    <motion.circle cx="130" cy="40" r="3" fill="#2563eb"
+                      initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                      transition={{ delay: 0.7 }} />
+                    {/* Left-middle */}
+                    <motion.path
+                      d="M 100,0 Q 120,20 130,40"
+                      stroke="#2563eb" strokeWidth="1.2" fill="none"
+                      initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+                      transition={{ delay: 0.35, duration: 0.5 }}
+                    />
+                    {/* Right-middle */}
+                    <motion.path
+                      d="M 160,0 Q 140,20 130,40"
+                      stroke="#2563eb" strokeWidth="1.2" fill="none"
+                      initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+                      transition={{ delay: 0.4, duration: 0.5 }}
+                    />
+                    {/* Rightmost */}
+                    <motion.path
+                      d="M 220,0 Q 190,20 130,40"
+                      stroke="#2563eb" strokeWidth="1.2" fill="none"
+                      initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+                      transition={{ delay: 0.45, duration: 0.5 }}
+                    />
+                  </svg>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* ── CENTER: Yael AI Core ── */}
+            <motion.div
+              animate={phase === 0 ? { scale: [1, 1.025, 1] } : { scale: 1 }}
+              transition={phase === 0 ? { repeat: Infinity, duration: 2.5, ease: "easeInOut" } : {}}
+              style={{
+                width: "220px",
+                cursor: phase < 3 ? "pointer" : "default",
+                marginBottom: "8px",
+              }}
+              onClick={advance}
+            >
+              <NodeCard label={CENTER.label} sub={CENTER.sub} icon={Cpu} variant="core" />
+            </motion.div>
+
+            {/* ── CTA label under center ── */}
+            <AnimatePresence>
+              {phase < 3 && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  style={{
+                    cursor: "pointer", marginBottom: "20px",
+                  }}
+                  onClick={advance}
+                >
+                  <div style={{
+                    fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "12px",
+                    color: "#2563eb", letterSpacing: "-0.01em",
+                    border: "1px solid rgba(37,99,235,0.25)",
+                    borderRadius: "9999px", padding: "6px 18px",
+                  }}>
                     {phase === 0 && "Tap to see how Yael works"}
                     {phase === 1 && "See what Yael can do"}
-                    {phase === 2 && <>Capabilities active — outputs loading&hellip;</>}
-                  </motion.div>
-                </div>
+                    {phase === 2 && <>Running — outputs loading&hellip;</>}
+                  </div>
+                </motion.div>
               )}
-            </div>
+            </AnimatePresence>
 
-            {/* RIGHT — Capabilities & Outputs */}
+            {/* ── Vertical beam: center → capabilities ── */}
             <AnimatePresence>
               {phase >= 2 && (
                 <motion.div
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  transition={{ duration: 0.4 }}
+                  style={{
+                    display: "flex", flexDirection: "column", alignItems: "center",
+                    marginBottom: "4px",
+                  }}>
+                  {/* Single line fanning out into 5 */}
+                  <svg width="260" height="40" viewBox="0 0 260 40" style={{ display: "block" }}>
+                    {/* Center to each branch */}
+                    {[40, 95, 150, 205, 260].map((tx, i) => (
+                      <motion.path
+                        key={i}
+                        d={`M 130,0 Q ${(130 + tx) / 2},20 ${tx},40`}
+                        stroke="#2563eb" strokeWidth="1.2" fill="none"
+                        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+                        transition={{ delay: 0.1 + i * 0.1, duration: 0.5 }}
+                      />
+                    ))}
+                    {/* Anchor dot at center */}
+                    <motion.circle cx="130" cy="0" r="3" fill="#2563eb"
+                      initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                      transition={{ delay: 0.1 }} />
+                    {/* Anchor dots at destinations */}
+                    {[40, 95, 150, 205, 260].map((x, i) => (
+                      <motion.circle key={i} cx={x} cy={40} r={3} fill="#2563eb"
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5 + i * 0.1 }} />
+                    ))}
+                  </svg>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* ── BOTTOM: Capabilities ── */}
+            <AnimatePresence>
+              {phase >= 2 && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
                   transition={{ duration: 0.5 }}
                   style={{
-                    position: "absolute",
-                    right: "clamp(16px, 4vw, 32px)",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    display: "flex", flexDirection: "column", gap: "10px",
-                    width: "clamp(150px, 22vw, 190px)",
+                    display: "flex", flexWrap: "wrap", justifyContent: "center",
+                    gap: "10px", marginBottom: "12px",
+                    maxWidth: "520px",
                   }}>
-
-                  {/* Capabilities */}
                   {CAPABILITIES.map((n, i) => (
                     <motion.div
                       key={n.label}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.2 + i * 0.1, duration: 0.4 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.15 + i * 0.1, duration: 0.4 }}
+                      style={{
+                        flex: "1 1 calc(33.333% - 10px)",
+                        minWidth: "150px", maxWidth: "200px",
+                      }}
                     >
                       <NodeCard label={n.label} sub={n.sub} />
                     </motion.div>
                   ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-                  {/* Outputs */}
-                  <AnimatePresence>
-                    {phase >= 3 && (
+            {/* ── Divider + Outputs ── */}
+            <AnimatePresence>
+              {phase >= 3 && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  transition={{ duration: 0.5 }}
+                  style={{
+                    display: "flex", flexDirection: "column", alignItems: "center",
+                    width: "100%", maxWidth: "520px",
+                  }}>
+
+                  {/* Thin beam to outputs */}
+                  <svg width="260" height="28" viewBox="0 0 260 28" style={{ display: "block", marginBottom: "2px" }}>
+                    {[40, 130, 220].map((tx, i) => (
+                      <motion.path
+                        key={i}
+                        d={`M 130,0 Q ${(130 + tx) / 2},12 ${tx},28`}
+                        stroke="#2563eb" strokeWidth="1.2" fill="none"
+                        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+                        transition={{ delay: 0.1 + i * 0.1, duration: 0.5 }}
+                      />
+                    ))}
+                    <motion.circle cx="130" cy="0" r="3" fill="#2563eb"
+                      initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                      transition={{ delay: 0.1 }} />
+                  </svg>
+
+                  <div style={{
+                    height: "1px", background: "#e8e5e0",
+                    width: "60%", margin: "8px auto 14px auto",
+                  }} />
+
+                  <div style={{
+                    display: "flex", flexWrap: "wrap", justifyContent: "center",
+                    gap: "10px",
+                  }}>
+                    {OUTPUTS.map((n, i) => (
                       <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        transition={{ duration: 0.5 }}
+                        key={n.label}
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 + i * 0.1, duration: 0.35 }}
+                        style={{
+                          flex: "1 1 calc(33.333% - 10px)",
+                          minWidth: "140px", maxWidth: "200px",
+                        }}
                       >
-                        <div style={{
-                          height: "1px", background: "#e8e5e0",
-                          margin: "6px 8px 10px 8px",
-                        }} />
-                        {OUTPUTS.map((n, i) => (
-                          <motion.div
-                            key={n.label}
-                            style={{ marginBottom: i < OUTPUTS.length - 1 ? "10px" : 0 }}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 + i * 0.1, duration: 0.35 }}
-                          >
-                            <NodeCard label={n.label} sub={n.sub} />
-                          </motion.div>
-                        ))}
+                        <NodeCard label={n.label} sub={n.sub} />
                       </motion.div>
-                    )}
-                  </AnimatePresence>
+                    ))}
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -423,7 +425,7 @@ export default function CapabilitiesSection() {
         <p style={{
           fontFamily: "Inter, sans-serif", fontWeight: 400, fontStyle: "italic",
           fontSize: "14px", color: "#777169", lineHeight: 1.6,
-          margin: "36px 0 0 0", textAlign: "center",
+          margin: "36px auto 0 auto", textAlign: "center",
         }}>
           All of this in one call, in the patient's language, 24 hours a day.
         </p>
