@@ -32,22 +32,19 @@ export default function HowItWorksSection() {
   const stepRefs = useRef([]);
   const hasAnimated = useRef(new Set());
   const hasScrolled = useRef(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   const [progress, setProgress] = useState(0);
-  const [activeStep, setActiveStep] = useState(0);
   const [cardTops, setCardTops] = useState({});
   const [animatingSteps, setAnimatingSteps] = useState({});
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-
     const onScroll = () => {
       const section = sectionRef.current;
       if (!section) return;
       const rect = section.getBoundingClientRect();
       const sectionHeight = section.offsetHeight;
       const viewportHeight = window.innerHeight;
+      const mobile = window.innerWidth < 768;
 
       const triggerPoint = viewportHeight * 0.4;
       const start = viewportHeight - triggerPoint;
@@ -56,9 +53,7 @@ export default function HowItWorksSection() {
       const p = Math.max(0, Math.min(1, scrolled / end));
       setProgress(p);
 
-      const newActiveStep = Math.min(STEP_COUNT - 1, Math.floor(p * STEP_COUNT));
-      setActiveStep(newActiveStep);
-
+      // Animate cards on real scroll only
       if (hasScrolled.current) {
         for (let i = 0; i < STEP_COUNT; i++) {
           const visible = p >= i / STEP_COUNT;
@@ -77,7 +72,7 @@ export default function HowItWorksSection() {
       }
 
       // Desktop: position cards aligned with headings
-      if (!isMobile) {
+      if (!mobile) {
         const panel = cardsPanelRef.current;
         if (panel) {
           const panelRect = panel.getBoundingClientRect();
@@ -137,75 +132,12 @@ export default function HowItWorksSection() {
           </h2>
         </div>
 
-        {/* MOBILE: single-column with cards embedded in each step */}
-        {isMobile && (
-          <div className="how-mobile" style={{ position: "relative" }}>
-            {/* Progress line */}
-            <div style={{
-              position: "absolute", left: "0", top: 0, bottom: 0, width: "1px",
-              background: "#e0ddd9", borderRadius: "9999px", zIndex: 0,
-            }} />
-            <div style={{
-              position: "absolute", left: "0", top: 0, width: "1px",
-              height: `${progress * 100}%`, maxHeight: "100%",
-              background: "#FF4500", borderRadius: "9999px", zIndex: 1,
-              transition: "height 0.08s linear",
-            }} />
-
-            {STEPS.map((step, i) => {
-              const visible = progress >= i / STEP_COUNT;
-              return (
-                <div
-                  key={step.number}
-                  ref={(el) => (stepRefs.current[i] = el)}
-                  style={{
-                    padding: "32px 0 32px 0",
-                    opacity: visible ? 1 : 0.25,
-                    transition: "opacity 0.4s ease",
-                    position: "relative",
-                    zIndex: 2,
-                  }}
-                >
-                  <span style={{
-                    fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "12px",
-                    color: "#a59f97", display: "block", marginBottom: "12px",
-                  }}>
-                    {step.number}
-                  </span>
-                  <h3 style={{
-                    fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
-                    fontSize: "1.5rem", color: "#000000", letterSpacing: "-0.05em",
-                    lineHeight: 1.15, margin: "0 0 8px 0",
-                  }}>
-                    {step.title}
-                  </h3>
-                  <p style={{
-                    fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
-                    color: "#777169", lineHeight: 1.65, margin: "0 0 16px 0",
-                  }}>
-                    {step.description}
-                  </p>
-                  {/* Card embedded right under the step */}
-                  <div style={{ maxWidth: "340px" }}>
-                    <IosNotifCard
-                      stepIndex={i}
-                      visible={visible}
-                      animate={!!animatingSteps[i]}
-                      cardStyle={{}}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {/* DESKTOP: two-column layout */}
-        {!isMobile && (
-          <div className="how-layout" style={{ display: "flex", gap: "clamp(32px, 5vw, 80px)", alignItems: "flex-start" }}>
+        {/* ── DESKTOP ── */}
+        <div className="how-desktop">
+          <div style={{ display: "flex", gap: "clamp(32px, 5vw, 80px)", alignItems: "flex-start" }}>
 
             {/* LEFT — Sticky card panel */}
-            <div ref={cardsPanelRef} className="how-cards" style={{
+            <div ref={cardsPanelRef} style={{
               width: "clamp(280px, 36vw, 340px)",
               flexShrink: 0,
               position: "sticky",
@@ -230,16 +162,22 @@ export default function HowItWorksSection() {
             </div>
 
             {/* RIGHT — Text steps + progress line */}
-            <div className="how-text" style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ position: "relative" }}>
+                {/* Track line */}
                 <div style={{
-                  position: "absolute", left: "0", top: 0, bottom: 0, width: "1px",
-                  background: "#e0ddd9", borderRadius: "9999px", zIndex: 0,
+                  position: "absolute", left: "0", top: 0, bottom: 0,
+                  width: "1px", background: "#e0ddd9", borderRadius: "9999px", zIndex: 0,
                 }} />
+                {/* Active fill */}
                 <div style={{
-                  position: "absolute", left: "0", top: 0, width: "1px",
-                  height: `${progress * 100}%`, maxHeight: "100%",
-                  background: "#FF4500", borderRadius: "9999px", zIndex: 1,
+                  position: "absolute", left: "0", top: 0,
+                  width: "1px",
+                  height: `${progress * 100}%`,
+                  maxHeight: "100%",
+                  background: "#FF4500",
+                  borderRadius: "9999px",
+                  zIndex: 1,
                   transition: "height 0.08s linear",
                 }} />
 
@@ -279,7 +217,60 @@ export default function HowItWorksSection() {
               </div>
             </div>
           </div>
-        )}
+        </div>
+
+        {/* ── MOBILE ── */}
+        <div className="how-mobile">
+          {STEPS.map((step, i) => {
+            const visible = progress >= i / STEP_COUNT;
+            return (
+              <div
+                key={step.number}
+                style={{
+                  padding: "0 0 40px 0",
+                  opacity: visible ? 1 : 0.25,
+                  transition: "opacity 0.4s ease",
+                }}
+              >
+                {/* Step number */}
+                <span style={{
+                  fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "11px",
+                  textTransform: "uppercase", letterSpacing: "0.1em",
+                  color: "#a59f97", display: "block", marginBottom: "12px",
+                }}>
+                  Step {step.number}
+                </span>
+
+                {/* Title */}
+                <h3 style={{
+                  fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
+                  fontSize: "1.4rem", color: "#000000", letterSpacing: "-0.04em",
+                  lineHeight: 1.15, margin: "0 0 8px 0",
+                }}>
+                  {step.title}
+                </h3>
+
+                {/* Description */}
+                <p style={{
+                  fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
+                  color: "#66605a", lineHeight: 1.6, margin: "0 0 20px 0",
+                }}>
+                  {step.description}
+                </p>
+
+                {/* Notification card */}
+                <div style={{ maxWidth: "340px", margin: "0 auto" }}>
+                  <IosNotifCard
+                    stepIndex={i}
+                    visible={visible}
+                    animate={!!animatingSteps[i]}
+                    cardStyle={{}}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* Callout strip */}
@@ -303,8 +294,11 @@ export default function HowItWorksSection() {
       </div>
 
       <style>{`
+        .how-mobile { display: none; }
         @media (max-width: 768px) {
           [data-how-works] { padding: 48px 16px !important; }
+          .how-desktop { display: none !important; }
+          .how-mobile { display: block !important; }
           .how-callout { padding: 16px 16px !important; margin-top: 48px !important; }
         }
         @media (max-width: 1024px) {
