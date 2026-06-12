@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import GlassBackground from "@/components/GlassBackground";
+import FractalGlassBackground from "@/components/FractalGlassBackground";
 
 const PHRASES = [
   "never misses a call.",
@@ -69,12 +69,13 @@ export default function HeroSection() {
         position: "relative",
         overflow: "hidden",
         width: "100%",
+        backgroundColor: "#fdfcfc",
       }}>
 
-      {/* Glass distortion background */}
-      <GlassBackground />
+      {/* Fractal glass background — sits behind everything */}
+      <FractalGlassBackground sectionRef={sectionRef} />
 
-      {/* Subtle animated orbs on top */}
+      {/* Animated background orbs */}
       {orbs.map((orb, i) => (
         <motion.div
           key={i}
