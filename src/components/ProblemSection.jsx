@@ -81,43 +81,46 @@ export default function ProblemSection() {
     })();
 
     // --- Calculator ---
-    setTimeout(() => {
-      const ss = document.getElementById("salary-slider");
-      const cs = document.getElementById("count-slider");
-      const sd = document.getElementById("salary-display");
-      const cd = document.getElementById("count-display");
-      const mo = document.getElementById("monthly-output");
-      const ao = document.getElementById("annual-output");
-      
-      function fmt(n) {
-        return "₪" + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    (function () {
+      function initCalculator() {
+        const ss = document.getElementById("salary-slider");
+        const cs = document.getElementById("count-slider");
+        const sd = document.getElementById("salary-display");
+        const cd = document.getElementById("count-display");
+        const mo = document.getElementById("monthly-output");
+        const ao = document.getElementById("annual-output");
+        
+        function fmt(n) {
+          return "₪" + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
+        function update() {
+          if (!ss || !cs) return;
+          const salary = parseInt(ss.value);
+          const count = parseInt(cs.value);
+          const monthly = salary * count;
+          if (sd) sd.textContent = fmt(salary) + " / month";
+          if (cd) cd.textContent = count;
+          if (mo) mo.textContent = fmt(monthly);
+          if (ao) ao.textContent = fmt(monthly * 12) + " / year";
+          const sp = (salary - 6000) / 6000 * 100;
+          const cp = (count - 1) / 4 * 100;
+          ss.style.background = "linear-gradient(to right,#000 " + sp + "%,#e5e5e5 " + sp + "%)";
+          cs.style.background = "linear-gradient(to right,#000 " + cp + "%,#e5e5e5 " + cp + "%)";
+        }
+        
+        if (ss) ss.addEventListener("input", update);
+        if (cs) cs.addEventListener("input", update);
+        update();
       }
       
-      function update() {
-        if (!ss || !cs) return;
-        const salary = parseInt(ss.value) || 8500;
-        const count = parseInt(cs.value) || 2;
-        const monthly = salary * count;
-        if (sd) sd.textContent = fmt(salary) + " / month";
-        if (cd) cd.textContent = count.toString();
-        if (mo) mo.textContent = fmt(monthly);
-        if (ao) ao.textContent = fmt(monthly * 12) + " / year";
-        const sp = (salary - 6000) / 6000 * 100;
-        const cp = (count - 1) / 4 * 100;
-        ss.style.background = "linear-gradient(to right,#000 " + sp + "%,#e5e5e5 " + sp + "%)";
-        cs.style.background = "linear-gradient(to right,#000 " + cp + "%,#e5e5e5 " + cp + "%)";
+      // Wait for DOM to be ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCalculator);
+      } else {
+        setTimeout(initCalculator, 50);
       }
-      
-      if (ss) {
-        ss.addEventListener("input", update);
-        ss.addEventListener("change", update);
-      }
-      if (cs) {
-        cs.addEventListener("input", update);
-        cs.addEventListener("change", update);
-      }
-      update();
-    }, 100);
+    })();
   }, []);
 
   // Business hours bars
