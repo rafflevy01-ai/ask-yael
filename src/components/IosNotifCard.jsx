@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const NOTIF_STEPS = [
   {
@@ -125,34 +125,48 @@ function AcceptIcon() {
   );
 }
 
-function DeclineIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#eb4d3d" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.73a16 16 0 006.72 6.72l1.06-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-      <line x1="2" y1="2" x2="22" y2="22" style={{ transform: "rotate(-45deg)", transformOrigin: "center" }} />
-    </svg>
-  );
-}
-
-export default function IosNotifCard({ stepIndex, animate, cardStyle }) {
+export default function IosNotifCard({ stepIndex, visible = true, animate, isRevisit, cardStyle }) {
   const [entered, setEntered] = useState(false);
+  const prevVisible = useRef(false);
 
   useEffect(() => {
-    if (animate) {
-      // First time — slide down from above
+    // Just became visible
+    if (visible && !prevVisible.current) {
+      if (animate) {
+        // First time ever — animate entrance from below
+        setEntered(false);
+        const raf = requestAnimationFrame(() =>
+          requestAnimationFrame(() => setEntered(true))
+        );
+        return () => cancelAnimationFrame(raf);
+      } else if (isRevisit) {
+        // Scrolling back down to a previously-seen step — quicker re-entry
+        setEntered(false);
+        const raf = requestAnimationFrame(() =>
+          requestAnimationFrame(() => setEntered(true))
+        );
+        return () => cancelAnimationFrame(raf);
+      } else {
+        setEntered(true);
+      }
+    }
+    // Just became hidden
+    else if (!visible && prevVisible.current) {
       setEntered(false);
-      const raf = requestAnimationFrame(() =>
-        requestAnimationFrame(() => setEntered(true))
-      );
-      return () => cancelAnimationFrame(raf);
-    } else {
-      // Already seen this step — appear instantly
+    }
+    // Already visible, no change needed
+    else if (visible && prevVisible.current && !entered) {
       setEntered(true);
     }
-  }, [stepIndex, animate]);
+
+    prevVisible.current = visible;
+  }, [stepIndex, visible, animate, isRevisit]);
 
   if (stepIndex < 0 || stepIndex >= NOTIF_STEPS.length) return null;
   const data = NOTIF_STEPS[stepIndex];
+
+  const isFirstAnim = animate;
+  const isReEntry = isRevisit && !animate;
 
   return (
     <div
@@ -160,10 +174,12 @@ export default function IosNotifCard({ stepIndex, animate, cardStyle }) {
         ...cardBase,
         ...cardStyle,
         opacity: entered ? 1 : 0,
-        transform: entered ? "translateY(0)" : "translateY(-180px)",
-        transition: animate
+        transform: entered ? "translateY(0)" : "translateY(40px)",
+        transition: isFirstAnim
           ? "opacity 0.45s ease-out, transform 0.7s cubic-bezier(0.22,1,0.36,1), top 0.08s linear"
-          : "opacity 0.25s ease, top 0.08s linear",
+          : isReEntry
+            ? "opacity 0.35s ease-out, transform 0.5s cubic-bezier(0.22,1,0.36,1), top 0.08s linear"
+            : "opacity 0.35s ease, transform 0.45s cubic-bezier(0.55,0,1,0.45), top 0.08s linear",
         pointerEvents: "none",
       }}
     >

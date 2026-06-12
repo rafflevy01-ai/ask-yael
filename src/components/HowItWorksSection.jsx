@@ -2,26 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import IosNotifCard from "@/components/IosNotifCard";
 
 const STEPS = [
-  {
-    number: "01",
-    title: "Call Received",
-    description: "Yael answers instantly in the caller's language. No menu, no hold music, no voicemail.",
-  },
-  {
-    number: "02",
-    title: "Patient Identified",
-    description: "Returning patients are recognized by phone number before they speak. New patients are registered on the spot.",
-  },
-  {
-    number: "03",
-    title: "Request Handled",
-    description: "Booking, triage, intake, modification, or cancellation — resolved in one call. Every action writes directly to the booking system.",
-  },
-  {
-    number: "04",
-    title: "Team Notified",
-    description: "Your staff gets an SMS for every action Yael takes. If she can't handle it, she transfers the call with a full summary.",
-  },
+  { number: "01", title: "Call Received",
+    description: "Yael answers instantly in the caller's language. No menu, no hold music, no voicemail." },
+  { number: "02", title: "Patient Identified",
+    description: "Returning patients are recognized by phone number before they speak. New patients are registered on the spot." },
+  { number: "03", title: "Request Handled",
+    description: "Booking, triage, intake, modification, or cancellation — resolved in one call. Every action writes directly to the booking system." },
+  { number: "04", title: "Team Notified",
+    description: "Your staff gets an SMS for every action Yael takes. If she can't handle it, she transfers the call with a full summary." },
 ];
 
 const STEP_COUNT = STEPS.length;
@@ -32,6 +20,7 @@ export default function HowItWorksSection() {
   const stepRefs = useRef([]);
   const hasAnimated = useRef(new Set());
   const hasScrolled = useRef(false);
+  const lastActive = useRef(0);
 
   const [progress, setProgress] = useState(0);
   const [cardTops, setCardTops] = useState({});
@@ -53,10 +42,17 @@ export default function HowItWorksSection() {
       const p = Math.max(0, Math.min(1, scrolled / end));
       setProgress(p);
 
-      // Animate cards on real scroll only
+      const active = Math.min(STEP_COUNT - 1, Math.floor(p * STEP_COUNT));
+
+      // Track which steps are visible right now
       if (hasScrolled.current) {
+        const scrollingDown = active >= lastActive.current;
+        lastActive.current = active;
+
         for (let i = 0; i < STEP_COUNT; i++) {
+          // A step is "visible" when progress passes its threshold
           const visible = p >= i / STEP_COUNT;
+
           if (visible && !hasAnimated.current.has(i)) {
             hasAnimated.current.add(i);
             setAnimatingSteps((prev) => ({ ...prev, [i]: true }));
@@ -68,10 +64,16 @@ export default function HowItWorksSection() {
               });
             }, 700);
           }
+
+          // On scroll back up: clear animation flag so card can re-animate
+          if (!visible && hasAnimated.current.has(i)) {
+            // Keep it marked as "seen" but allow re-entrance animation
+            // We don't remove from hasAnimated — the card handles re-entry
+          }
         }
       }
 
-      // Desktop: position cards aligned with headings
+      // Desktop: align cards to headings
       if (!mobile) {
         const panel = cardsPanelRef.current;
         if (panel) {
@@ -109,27 +111,14 @@ export default function HowItWorksSection() {
         {/* Header */}
         <div style={{ marginBottom: "64px", textAlign: "center" }}>
           <span style={{
-            fontFamily: "'Geist Mono', monospace",
-            fontSize: "11px",
-            textTransform: "uppercase",
-            letterSpacing: "0.12em",
-            color: "#a59f97",
-            display: "block",
-            marginBottom: "12px",
-          }}>
-            How it works
-          </span>
+            fontFamily: "'Geist Mono', monospace", fontSize: "11px", textTransform: "uppercase",
+            letterSpacing: "0.12em", color: "#a59f97", display: "block", marginBottom: "12px",
+          }}>How it works</span>
           <h2 style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontWeight: 300,
-            fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)",
-            color: "#000000",
-            letterSpacing: "-0.05em",
-            lineHeight: 1.1,
-            margin: 0,
-          }}>
-            How Yael works.
-          </h2>
+            fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
+            fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000000",
+            letterSpacing: "-0.05em", lineHeight: 1.1, margin: 0,
+          }}>How Yael works.</h2>
         </div>
 
         {/* ── DESKTOP ── */}
@@ -138,12 +127,8 @@ export default function HowItWorksSection() {
 
             {/* LEFT — Sticky card panel */}
             <div ref={cardsPanelRef} style={{
-              width: "clamp(280px, 36vw, 340px)",
-              flexShrink: 0,
-              position: "sticky",
-              top: "120px",
-              alignSelf: "flex-start",
-              minHeight: "calc(100vh - 120px)",
+              width: "clamp(280px, 36vw, 340px)", flexShrink: 0, position: "sticky",
+              top: "120px", alignSelf: "flex-start", minHeight: "calc(100vh - 120px)",
             }}>
               {STEPS.map((_, i) => (
                 <IosNotifCard
@@ -151,11 +136,11 @@ export default function HowItWorksSection() {
                   stepIndex={i}
                   visible={progress >= i / STEP_COUNT}
                   animate={!!animatingSteps[i]}
+                  isRevisit={hasAnimated.current.has(i) && !animatingSteps[i]}
                   cardStyle={{
                     position: "absolute",
                     top: `${cardTops[i] || 0}px`,
-                    left: 0,
-                    right: 0,
+                    left: 0, right: 0,
                   }}
                 />
               ))}
@@ -164,54 +149,37 @@ export default function HowItWorksSection() {
             {/* RIGHT — Text steps + progress line */}
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ position: "relative" }}>
-                {/* Track line */}
                 <div style={{
                   position: "absolute", left: "0", top: 0, bottom: 0,
                   width: "1px", background: "#e0ddd9", borderRadius: "9999px", zIndex: 0,
                 }} />
-                {/* Active fill */}
                 <div style={{
-                  position: "absolute", left: "0", top: 0,
-                  width: "1px",
-                  height: `${progress * 100}%`,
-                  maxHeight: "100%",
-                  background: "#FF4500",
-                  borderRadius: "9999px",
-                  zIndex: 1,
+                  position: "absolute", left: "0", top: 0, width: "1px",
+                  height: `${progress * 100}%`, maxHeight: "100%",
+                  background: "#FF4500", borderRadius: "9999px", zIndex: 1,
                   transition: "height 0.08s linear",
                 }} />
-
                 {STEPS.map((step, i) => (
-                  <div
-                    key={step.number}
-                    ref={(el) => (stepRefs.current[i] = el)}
+                  <div key={step.number} ref={(el) => (stepRefs.current[i] = el)}
                     style={{
                       padding: "56px 0 56px 48px",
                       opacity: progress >= i / STEP_COUNT ? 1 : 0.25,
                       transition: "opacity 0.4s ease",
-                      position: "relative",
-                      zIndex: 2,
-                    }}
-                  >
+                      position: "relative", zIndex: 2,
+                    }}>
                     <span style={{
                       fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "12px",
                       color: "#a59f97", display: "block", marginBottom: "16px",
-                    }}>
-                      {step.number}
-                    </span>
+                    }}>{step.number}</span>
                     <h3 style={{
                       fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
                       fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000000",
                       letterSpacing: "-0.05em", lineHeight: 1.15, margin: "0 0 12px 0",
-                    }}>
-                      {step.title}
-                    </h3>
+                    }}>{step.title}</h3>
                     <p style={{
                       fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
                       color: "#777169", lineHeight: 1.65, margin: 0, maxWidth: "520px",
-                    }}>
-                      {step.description}
-                    </p>
+                    }}>{step.description}</p>
                   </div>
                 ))}
               </div>
@@ -224,46 +192,32 @@ export default function HowItWorksSection() {
           {STEPS.map((step, i) => {
             const visible = progress >= i / STEP_COUNT;
             return (
-              <div
-                key={step.number}
+              <div key={step.number}
                 style={{
-                  padding: "0 0 40px 0",
-                  opacity: visible ? 1 : 0.25,
-                  transition: "opacity 0.4s ease",
-                }}
-              >
-                {/* Step number */}
+                  opacity: visible ? 1 : 0.22,
+                  transition: "opacity 0.5s ease",
+                  padding: "32px 0 48px 0",
+                }}>
                 <span style={{
                   fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "11px",
                   textTransform: "uppercase", letterSpacing: "0.1em",
                   color: "#a59f97", display: "block", marginBottom: "12px",
-                }}>
-                  Step {step.number}
-                </span>
-
-                {/* Title */}
+                }}>Step {step.number}</span>
                 <h3 style={{
                   fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
                   fontSize: "1.4rem", color: "#000000", letterSpacing: "-0.04em",
                   lineHeight: 1.15, margin: "0 0 8px 0",
-                }}>
-                  {step.title}
-                </h3>
-
-                {/* Description */}
+                }}>{step.title}</h3>
                 <p style={{
                   fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
                   color: "#66605a", lineHeight: 1.6, margin: "0 0 20px 0",
-                }}>
-                  {step.description}
-                </p>
-
-                {/* Notification card */}
+                }}>{step.description}</p>
                 <div style={{ maxWidth: "340px", margin: "0 auto" }}>
                   <IosNotifCard
                     stepIndex={i}
                     visible={visible}
                     animate={!!animatingSteps[i]}
+                    isRevisit={hasAnimated.current.has(i) && !animatingSteps[i]}
                     cardStyle={{}}
                   />
                 </div>
@@ -273,21 +227,12 @@ export default function HowItWorksSection() {
         </div>
       </div>
 
-      {/* Callout strip */}
+      {/* Callout */}
       <div className="how-callout" style={{
-        marginTop: "80px",
-        borderTop: "1px solid #e5e5e5",
-        borderBottom: "1px solid #e5e5e5",
-        padding: "20px 48px",
-        textAlign: "center",
+        marginTop: "80px", borderTop: "1px solid #e5e5e5", borderBottom: "1px solid #e5e5e5",
+        padding: "20px 48px", textAlign: "center",
       }}>
-        <p style={{
-          fontFamily: "Inter, sans-serif",
-          fontWeight: 400,
-          fontSize: "15px",
-          color: "#000000",
-          margin: 0,
-        }}>
+        <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px", color: "#000000", margin: 0 }}>
           <span style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400 }}>2–4 weeks</span>
           {" "}— Live. We handle everything.
         </p>
