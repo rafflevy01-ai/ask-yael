@@ -26,10 +26,16 @@ const STEPS = [
 
 export default function HowItWorksSection() {
   const sectionRef = useRef(null);
+  const rightPanelRef = useRef(null);
+  const stepRefs = useRef([]);
+  const hasAnimated = useRef(new Set());
+  const maxStepRef = useRef(0);
+
   const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
-  const [animateCard, setAnimateCard] = useState(false);
-  const hasAnimated = useRef(new Set());
+  const [maxStepReached, setMaxStepReached] = useState(0);
+  const [cardTops, setCardTops] = useState({});
+  const [animatingSteps, setAnimatingSteps] = useState({});
 
   useEffect(() => {
     const onScroll = () => {
@@ -39,7 +45,7 @@ export default function HowItWorksSection() {
       const sectionHeight = section.offsetHeight;
       const viewportHeight = window.innerHeight;
 
-      // Section-level progress (for the orange progress line)
+      // Section-level progress (orange line)
       const triggerPoint = viewportHeight * 0.4;
       const start = viewportHeight - triggerPoint;
       const end = sectionHeight - triggerPoint;
@@ -47,20 +53,61 @@ export default function HowItWorksSection() {
       const p = Math.max(0, Math.min(1, scrolled / end));
       setProgress(p);
 
-      // Step-level activeStep — use local p, not stale state
+      // Current active step from scroll position
       const newActiveStep = Math.min(3, Math.floor(p * 4));
-      setActiveStep((prev) => {
-        if (newActiveStep !== prev) {
-          // First time hitting this step → animate
-          if (!hasAnimated.current.has(newActiveStep)) {
-            hasAnimated.current.add(newActiveStep);
-            setAnimateCard(true);
-          } else {
-            setAnimateCard(false);
+      setActiveStep(newActiveStep);
+
+      // Monotonic max — cards accumulate, never disappear
+      const prevMax = maxStepRef.current;
+      const newMax = Math.max(prevMax, newActiveStep);
+
+      // Animate any newly-reached steps
+      if (newMax > prevMax) {
+        for (let i = prevMax + 1; i <= newMax; i++) {
+          if (!hasAnimated.current.has(i)) {
+            hasAnimated.current.add(i);
+            setAnimatingSteps((prev) => ({ ...prev, [i]: true }));
+            setTimeout(() => {
+              setAnimatingSteps((prev) => {
+                const next = { ...prev };
+                delete next[i];
+                return next;
+              });
+            }, 600);
           }
         }
-        return newActiveStep;
-      });
+      }
+
+      // Step 0 is baseline — animate it on first meaningful scroll into section
+      if (hasAnimated.current.size === 0 && p > 0.02) {
+        hasAnimated.current.add(0);
+        setAnimatingSteps((prev) => ({ ...prev, [0]: true }));
+        setTimeout(() => {
+          setAnimatingSteps((prev) => {
+            const next = { ...prev };
+            delete next[0];
+            return next;
+          });
+        }, 600);
+      }
+      maxStepRef.current = newMax;
+      setMaxStepReached(newMax);
+
+      // Position each visible card aligned with its step
+      const panel = rightPanelRef.current;
+      if (panel) {
+        const panelRect = panel.getBoundingClientRect();
+        const tops = {};
+        for (let i = 0; i <= newMax; i++) {
+          const stepEl = stepRefs.current[i];
+          if (stepEl) {
+            const stepRect = stepEl.getBoundingClientRect();
+            // Align card top with step heading
+            tops[i] = stepRect.top - panelRect.top;
+          }
+        }
+        setCardTops(tops);
+      }
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -98,33 +145,38 @@ export default function HowItWorksSection() {
           </h2>
         </div>
 
-        {/* Two-column layout */}
-        <div className="how-layout" style={{ display: "flex", gap: "clamp(32px, 5vw, 80px)", alignItems: "flex-start" }}>
+        {/* Two-column layout: LEFT = text steps, RIGHT = sticky animation cards */}
+        <div className="how-layout" style={{ display: "flex", gap: "clamp(32px, 5vw, 80px)", alignItems: "flex-start", flexDirection: "row-reverse" }}>
 
-          {/* LEFT — Sticky iOS panel */}
-          <div className="how-left" style={{
+          {/* RIGHT — Sticky panel with stacked animation cards */}
+          <div ref={rightPanelRef} className="how-right" style={{
             width: "clamp(280px, 36vw, 340px)",
             flexShrink: 0,
             position: "sticky",
             top: "120px",
             alignSelf: "flex-start",
             minHeight: "calc(100vh - 120px)",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
           }}>
-            {/* Single iOS card — changes as you scroll, centered next to active step */}
-            <IosNotifCard
-              key={activeStep}
-              stepIndex={activeStep}
-              animate={animateCard}
-            />
+            {Array.from({ length: maxStepReached + 1 }, (_, i) => (
+              <IosNotifCard
+                key={i}
+                stepIndex={i}
+                animate={!!animatingSteps[i]}
+                cardStyle={{
+                  position: "absolute",
+                  top: `${cardTops[i] || 0}px`,
+                  left: 0,
+                  right: 0,
+                  transition: "top 0.08s linear",
+                }}
+              />
+            ))}
           </div>
 
-          {/* RIGHT — Scrollable steps */}
-          <div className="how-right" style={{ flex: 1, minWidth: 0 }}>
-            {/* Vertical line */}
+          {/* LEFT — Scrollable text steps */}
+          <div className="how-left" style={{ flex: 1, minWidth: 0 }}>
             <div style={{ position: "relative" }}>
+              {/* Vertical progress line */}
               <div style={{
                 position: "absolute",
                 left: "0",
@@ -151,6 +203,7 @@ export default function HowItWorksSection() {
               {STEPS.map((step, i) => (
                 <div
                   key={step.number}
+                  ref={(el) => (stepRefs.current[i] = el)}
                   style={{
                     padding: "56px 0 56px 48px",
                     opacity: progress >= i / STEPS.length ? 1 : 0.25,
@@ -222,17 +275,22 @@ export default function HowItWorksSection() {
         @media (max-width: 768px) {
           [data-how-works] { padding: 48px 16px !important; }
           .how-layout { flex-direction: column !important; gap: 24px !important; }
-          .how-left {
+          .how-right {
             position: relative !important;
             top: auto !important;
             width: 100% !important;
             max-width: 340px !important;
             margin: 0 auto !important;
             min-height: auto !important;
+            order: -1 !important;
           }
-          .how-right > div { padding: 0 !important; }
-          .how-right > div > div { padding-left: 0 !important; padding-top: 32px !important; padding-bottom: 32px !important; }
-          .how-right > div > div:first-child { padding-top: 16px !important; }
+          .how-right > div {
+            position: relative !important;
+            top: auto !important;
+          }
+          .how-left > div { padding: 0 !important; }
+          .how-left > div > div { padding-left: 0 !important; padding-top: 32px !important; padding-bottom: 32px !important; }
+          .how-left > div > div:first-child { padding-top: 16px !important; }
           .how-callout { padding: 16px 16px !important; margin-top: 48px !important; }
         }
         @media (max-width: 1024px) {

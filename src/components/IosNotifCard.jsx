@@ -131,7 +131,7 @@ function DeclineIcon() {
   );
 }
 
-export default function IosNotifCard({ stepIndex, animate }) {
+export default function IosNotifCard({ stepIndex, animate, cardStyle }) {
   const [entered, setEntered] = useState(false);
 
   useEffect(() => {
@@ -143,7 +143,7 @@ export default function IosNotifCard({ stepIndex, animate }) {
       );
       return () => cancelAnimationFrame(raf);
     } else {
-      // Returning to this step — appear instantly
+      // Already seen this step — appear instantly
       setEntered(true);
     }
   }, [stepIndex, animate]);
@@ -155,9 +155,12 @@ export default function IosNotifCard({ stepIndex, animate }) {
     <div
       style={{
         ...cardBase,
+        ...cardStyle,
         opacity: entered ? 1 : 0,
         transform: entered ? "translateY(0)" : "translateY(-40px)",
-        transition: "opacity 0.35s ease, transform 0.5s cubic-bezier(0.22,1,0.36,1)",
+        transition: animate
+          ? "opacity 0.35s ease, transform 0.5s cubic-bezier(0.22,1,0.36,1)"
+          : "opacity 0.25s ease",
         pointerEvents: "none",
       }}
     >
