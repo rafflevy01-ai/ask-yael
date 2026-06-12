@@ -93,7 +93,7 @@ export default function HowItWorksSection() {
       maxStepRef.current = newMax;
       setMaxStepReached(newMax);
 
-      // Position each visible card aligned with its step
+      // Position each visible card aligned with its step heading
       const panel = leftPanelRef.current;
       if (panel) {
         const panelRect = panel.getBoundingClientRect();
@@ -101,8 +101,12 @@ export default function HowItWorksSection() {
         for (let i = 0; i <= newMax; i++) {
           const stepEl = stepRefs.current[i];
           if (stepEl) {
-            const stepRect = stepEl.getBoundingClientRect();
-            tops[i] = stepRect.top - panelRect.top;
+            const heading = stepEl.querySelector("h3");
+            if (heading) {
+              const headingRect = heading.getBoundingClientRect();
+              // Align card top near heading top, with a small nudge for visual centering
+              tops[i] = headingRect.top - panelRect.top - 8;
+            }
           }
         }
         setCardTops(tops);
@@ -166,7 +170,6 @@ export default function HowItWorksSection() {
                   top: `${cardTops[i] || 0}px`,
                   left: 0,
                   right: 0,
-                  transition: "top 0.08s linear",
                 }}
               />
             ))}
