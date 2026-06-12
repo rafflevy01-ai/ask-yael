@@ -94,22 +94,22 @@ export default function Navbar() {
       <style>{`
         /* Logo */
         .logo-wordmark {
-          font-family: 'Noto Sans', sans-serif;
+          font-family: 'Nunito', sans-serif;
           display: inline-flex;
           align-items: baseline;
-          gap: 0.18em;
+          gap: 0;
           line-height: 1;
         }
         .logo-ask {
           font-weight: 300;
           color: #1C1C1E;
-          letter-spacing: 0.06em;
+          letter-spacing: 0;
           font-size: 18px;
         }
         .logo-yael {
           font-weight: 500;
-          color: #F4510B;
-          letter-spacing: 0.02em;
+          color: #1C1C1E;
+          letter-spacing: 0;
           font-size: 18px;
         }
         @media (min-width: 768px) {
