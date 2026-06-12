@@ -32,7 +32,7 @@ export default function Navbar() {
         {/* Logo */}
         <span
           style={{
-            fontFamily: "'Onest', sans-serif",
+            fontFamily: "'Nunito', sans-serif",
             fontWeight: 400,
             fontSize: "16px",
             letterSpacing: "-0.02em",
