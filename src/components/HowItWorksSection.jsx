@@ -162,23 +162,26 @@ export default function HowItWorksSection() {
               <div key={step.number}
                 style={{
                   padding: "32px 0 48px 0",
+                }}>
+                <div style={{
                   opacity: visible ? 1 : 0.12,
                   transition: "opacity 0.7s ease",
                 }}>
-                <span style={{
-                  fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "11px",
-                  textTransform: "uppercase", letterSpacing: "0.1em",
-                  color: "#a59f97", display: "block", marginBottom: "12px",
-                }}>Step {step.number}</span>
-                <h3 style={{
-                  fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
-                  fontSize: "1.4rem", color: "#000000", letterSpacing: "-0.04em",
-                  lineHeight: 1.15, margin: "0 0 8px 0",
-                }}>{step.title}</h3>
-                <p style={{
-                  fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
-                  color: "#66605a", lineHeight: 1.6, margin: "0 0 20px 0",
-                }}>{step.description}</p>
+                  <span style={{
+                    fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "11px",
+                    textTransform: "uppercase", letterSpacing: "0.1em",
+                    color: "#a59f97", display: "block", marginBottom: "12px",
+                  }}>Step {step.number}</span>
+                  <h3 style={{
+                    fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
+                    fontSize: "1.4rem", color: "#000000", letterSpacing: "-0.04em",
+                    lineHeight: 1.15, margin: "0 0 8px 0",
+                  }}>{step.title}</h3>
+                  <p style={{
+                    fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
+                    color: "#66605a", lineHeight: 1.6, margin: "0 0 20px 0",
+                  }}>{step.description}</p>
+                </div>
                 <div style={{ maxWidth: "340px", margin: "0 auto" }}>
                   <IosNotifCard
                     stepIndex={i}
