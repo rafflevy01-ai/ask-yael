@@ -9,7 +9,7 @@ const NOTIF_DATA = [
 ];
 
 // iOS stacking: newer card sits ON TOP of older card, slightly peeking behind
-const PEEK = 10; // px of older card visible below newer card
+const PEEK = 28; // px of older card visible below newer card
 let uid = 0;
 
 function NotifCard({ data, index, total, entering, exiting }) {
