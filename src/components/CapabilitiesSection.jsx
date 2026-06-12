@@ -1,168 +1,132 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/* ── Data ── */
-const CENTER = { label: "Yael AI Core", sub: "Voice receptionist engine", icon: Cpu, color: "#2563eb" };
-
-const OUTPUTS = [
-  { label: "Staff SMS", sub: "Real-time for every action", icon: MessageSquare, color: "#2563eb" },
-  { label: "CRM Sync", sub: "No manual data entry", icon: RefreshCw, color: "#2563eb" },
-  { label: "24/7 Live", sub: "No voicemail, no missed calls", icon: Clock, color: "#2563eb" },
+/* ── Data: 10 capabilities ── */
+const CAPABILITIES = [
+  { label: "Booking", sub: "Book, modify, cancel" },
+  { label: "Emergency Triage", sub: "Same-day fee disclosure" },
+  { label: "Registration", sub: "New patient intake" },
+  { label: "Patient Recognition", sub: "Returning by phone" },
+  { label: "Missed Call Recovery", sub: "Calls back patients" },
+  { label: "Pricing & Treatments", sub: "Cost & procedure info" },
+  { label: "HMO & Insurance", sub: "Coverage questions" },
+  { label: "Staff SMS", sub: "Real-time notifications" },
+  { label: "Language Detection", sub: "Hebrew·French·English" },
+  { label: "24/7 Availability", sub: "No voicemail, no wait" },
 ];
 
-/* ── Inline SVG icons ── */
-function Cpu() {
+const N = CAPABILITIES.length; // 10
+
+/* ── Icons ── */
+const ICONS = [
+  () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg>),
+  () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5" /><path d="M12 22V12" /><path d="M12 12l10-3.5" /></svg>),
+  () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" /><rect x="8" y="2" width="8" height="4" rx="1" /></svg>),
+  () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2" /><circle cx="9" cy="7" r="4" /><path d="M16 11l2 2 4-4" /></svg>),
+  () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M23 4v6h-6" /><path d="M1 20v-6h6" /><path d="M3.51 9a9 9 0 0114.85-3.36L23 10" /><path d="M1 14l4.64 4.36A9 9 0 0020.49 15" /></svg>),
+  () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" /></svg>),
+  () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>),
+  () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" /></svg>),
+  () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M2 12h20" /><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" /></svg>),
+  () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>),
+];
+
+/* ── Center icon ── */
+function CenterIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="4" y="4" width="16" height="16" rx="2" /><rect x="9" y="9" width="6" height="6" />
       <path d="M15 2v2M9 2v2M15 20v2M9 20v2M20 15h2M2 15h2M20 9h2M2 9h2" />
     </svg>
   );
 }
-function MessageSquare() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-    </svg>
-  );
-}
-function RefreshCw() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M23 4v6h-6" /><path d="M1 20v-6h6" />
-      <path d="M3.51 9a9 9 0 0114.85-3.36L23 10" /><path d="M1 14l4.64 4.36A9 9 0 0020.49 15" />
-    </svg>
-  );
-}
-function Clock() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
-    </svg>
-  );
+
+/* ── Radial positions for 10 banners ── */
+function getBannerPosition(i, cx, cy, radius) {
+  // Start from top (-90°) and go clockwise
+  const angle = (i * 36 - 90) * (Math.PI / 180);
+  return {
+    x: cx + radius * Math.cos(angle),
+    y: cy + radius * Math.sin(angle),
+  };
 }
 
-/* ── Node card (light theme) ── */
-function NodeCard({ label, sub, icon: IconComp, variant = "default", accentColor }) {
-  const isCore = variant === "core";
+/* ── Banner node ── */
+function BannerNode({ label, sub, icon: Icon, x, y, active, accentColor }) {
   return (
-    <div style={{
-      border: isCore ? `1.5px solid ${accentColor}40` : "1px solid #e0ddd8",
-      borderRadius: "10px",
-      background: isCore ? "#ffffff" : "#fafaf8",
-      padding: isCore ? "14px 18px" : "10px 14px",
-      textAlign: "left",
-      minWidth: isCore ? "180px" : "160px",
-      boxShadow: isCore ? "0 0 0 4px rgba(37,99,235,0.04), 0 2px 12px rgba(0,0,0,0.04)" : undefined,
-    }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        {IconComp && (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.7 }}
+      animate={{
+        opacity: active ? 1 : 0.5,
+        scale: 1,
+      }}
+      transition={{ duration: 0.4 }}
+      style={{
+        position: "absolute",
+        left: `${x}%`,
+        top: `${y}%`,
+        transform: "translate(-50%, -50%)",
+        width: "clamp(130px, 16vw, 155px)",
+      }}
+    >
+      <div style={{
+        border: active ? "1.5px solid rgba(37,99,235,0.45)" : "1px solid #e0ddd8",
+        borderRadius: "10px",
+        background: active ? "rgba(37,99,235,0.04)" : "#fafaf8",
+        padding: "10px 12px",
+        textAlign: "center",
+        transition: "border 0.5s, background 0.5s, opacity 0.3s",
+        boxShadow: active ? "0 0 0 3px rgba(37,99,235,0.05)" : undefined,
+      }}>
+        {Icon && (
           <div style={{
             display: "flex", alignItems: "center", justifyContent: "center",
-            width: "26px", height: "26px", borderRadius: "6px",
-            background: `${accentColor}12`,
-            color: accentColor,
-            flexShrink: 0,
+            marginBottom: "6px", color: accentColor,
           }}>
-            <IconComp />
+            <Icon />
           </div>
         )}
-        <div style={{ minWidth: 0 }}>
-          <div style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontWeight: isCore ? 600 : 500,
-            fontSize: isCore ? "14px" : "12px",
-            color: "#000000",
-            letterSpacing: "-0.01em",
-            lineHeight: 1.2,
-            marginBottom: "2px",
-          }}>
-            {label}
-          </div>
-          <div style={{
-            fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "10px",
-            color: "#a59f97", lineHeight: 1.3,
-          }}>
-            {sub}
-          </div>
+        <div style={{
+          fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "11px",
+          color: "#000000", letterSpacing: "-0.01em", lineHeight: 1.2, marginBottom: "2px",
+        }}>
+          {label}
+        </div>
+        <div style={{
+          fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "9px",
+          color: "#a59f97", lineHeight: 1.3,
+        }}>
+          {sub}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
-/* ── Dot grid background (light) ── */
+/* ── Dot grid background ── */
 function DotGrid() {
   return (
     <div style={{
-      position: "absolute", inset: 0, zIndex: 0, opacity: 0.22,
+      position: "absolute", inset: 0, zIndex: 0, opacity: 0.18,
       backgroundImage: "radial-gradient(circle, #c4bfb8 1px, transparent 1px)",
-      backgroundSize: "18px 18px",
+      backgroundSize: "20px 20px",
       pointerEvents: "none",
     }} />
   );
 }
 
-/* ── Flowing line with dash animation ── */
-function FlowLine({ d, color, delay, visible }) {
-  const [flowOffset, setFlowOffset] = useState(0);
-
-  useEffect(() => {
-    if (!visible) return;
-    const dur = 1400;
-    const step = 60;
-    let start = Date.now();
-    const tick = () => {
-      const elapsed = (Date.now() - start) % dur;
-      setFlowOffset((elapsed / dur) * 4);
-    };
-    const id = setInterval(tick, step);
-    return () => clearInterval(id);
-  }, [visible]);
-
-  return (
-    <g>
-      {/* Base line */}
-      <path d={d} stroke={color} strokeWidth="1.5" fill="none" opacity={0.18} />
-      {/* Flowing dash */}
-      <path
-        d={d}
-        stroke={color}
-        strokeWidth="1.8"
-        fill="none"
-        strokeDasharray="6 14"
-        strokeDashoffset={-flowOffset * 20}
-        opacity={0.75}
-      />
-      {/* Traveling dot 1 */}
-      <circle r="3" fill={color} opacity={0.9}>
-        <animateMotion dur="2s" repeatCount="indefinite" path={d} begin={`${delay}s`} />
-      </circle>
-      {/* Traveling dot 2 */}
-      <circle r="2" fill={color} opacity={0.5}>
-        <animateMotion dur="2s" repeatCount="indefinite" path={d} begin={`${delay + 1}s`} />
-      </circle>
-    </g>
-  );
-}
-
-/* ── Connection paths (source → outputs) ── */
-const CONNECTIONS = [
-  { d: "M 206,78 Q 280,78 330,98 Q 344,106 348,102", delay: 0 },
-  { d: "M 206,128 Q 300,128 330,128 Q 344,128 348,128", delay: 0.2 },
-  { d: "M 206,178 Q 280,178 330,158 Q 344,150 348,154", delay: 0.4 },
-];
-
 /* ── Main section ── */
 export default function CapabilitiesSection() {
   const [phase, setPhase] = useState(0);
-  // 0 = source node only, pulsing
-  // 1 = lines animate in + output nodes appear
+  // 0 = center only, pulsing
+  // 1 = center→banner lines draw + banners appear
+  // 2 = ring pulse starts looping
 
+  const [pulseIndex, setPulseIndex] = useState(-1);
   const [started, setStarted] = useState(false);
   const sectionRef = useRef(null);
 
-  // Trigger on scroll into view
+  // Trigger on scroll
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
@@ -170,22 +134,32 @@ export default function CapabilitiesSection() {
       ([entry]) => {
         if (entry.isIntersecting && !started) setStarted(true);
       },
-      { threshold: 0.3 }
+      { threshold: 0.25 }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, [started]);
 
-  // Auto-advance once started
+  // Phase auto-advance
   useEffect(() => {
     if (!started) return;
-    const t = setTimeout(() => setPhase(1), 800);
-    return () => clearTimeout(t);
+    const t1 = setTimeout(() => setPhase(1), 700);
+    const t2 = setTimeout(() => { setPhase(2); setPulseIndex(0); }, 2500);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [started]);
+
+  // Ring pulse loop: advance every 900ms
+  useEffect(() => {
+    if (phase < 2) return;
+    const id = setInterval(() => {
+      setPulseIndex(prev => (prev + 1) % N);
+    }, 900);
+    return () => clearInterval(id);
+  }, [phase]);
 
   return (
     <section ref={sectionRef} data-capabilities style={{ background: "#fdfcfc", padding: "100px 48px" }}>
-      <div style={{ maxWidth: "680px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "780px", margin: "0 auto" }}>
 
         {/* ── Label ── */}
         <span style={{
@@ -205,93 +179,161 @@ export default function CapabilitiesSection() {
           Everything your front desk handles. Automated.
         </h2>
 
-        {/* ═══════ DIAGRAM — light grey ═══════ */}
-        <div style={{
+        {/* ═══════ RADIAL DIAGRAM (Desktop) ═══════ */}
+        <div className="caps-desktop" style={{
           position: "relative",
           borderRadius: "18px",
           background: "#fafaf8",
           overflow: "hidden",
-          minHeight: "260px",
           border: "1px solid #e8e5e0",
+          aspectRatio: "1 / 1",
+          maxWidth: "700px",
+          margin: "0 auto",
         }}>
           <DotGrid />
 
-          {/* ═══ CONTENT: left → right ═══ */}
+          {/* ═══ SVG lines layer ═══ */}
+          <svg
+            style={{
+              position: "absolute", inset: 0, zIndex: 1,
+              width: "100%", height: "100%",
+            }}
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            {/* ── Center→Banner lines ── */}
+            <AnimatePresence>
+              {phase >= 1 && Array.from({ length: N }).map((_, i) => {
+                const pos = getBannerPosition(i, 50, 50, 37);
+                return (
+                  <g key={`c2b-${i}`}>
+                    {/* Subtle base line */}
+                    <line x1="50" y1="50" x2={pos.x} y2={pos.y}
+                      stroke="#2563eb" strokeWidth="0.2" opacity="0.15" />
+                    {/* Animated dash */}
+                    <motion.line
+                      x1="50" y1="50" x2={pos.x} y2={pos.y}
+                      stroke="#2563eb" strokeWidth="0.25" opacity="0.6"
+                      strokeDasharray="1 2"
+                      initial={{ strokeDashoffset: 3 }}
+                      animate={{ strokeDashoffset: -2 }}
+                      transition={{ delay: 0.1 + i * 0.08, duration: 1.2, repeat: Infinity, ease: "linear" }}
+                    />
+                    {/* Traveling dot outward */}
+                    <circle r="0.6" fill="#2563eb" opacity="0.8">
+                      <animateMotion dur="1.5s" repeatCount="indefinite"
+                        path={`M50,50 L${pos.x},${pos.y}`}
+                        begin={`${0.1 + i * 0.08}s`} />
+                    </circle>
+                    <circle r="0.35" fill="#2563eb" opacity="0.5">
+                      <animateMotion dur="1.5s" repeatCount="indefinite"
+                        path={`M50,50 L${pos.x},${pos.y}`}
+                        begin={`${0.85 + i * 0.08}s`} />
+                    </circle>
+                  </g>
+                );
+              })}
+            </AnimatePresence>
+
+            {/* ── Ring connections (banner→banner) ── */}
+            <AnimatePresence>
+              {phase >= 2 && Array.from({ length: N }).map((_, i) => {
+                const from = getBannerPosition(i, 50, 50, 37);
+                const to = getBannerPosition((i + 1) % N, 50, 50, 37);
+                // Control point further out for curved outer ring
+                const midAngle = ((i * 36 + (i + 1) * 36) / 2 - 90) * (Math.PI / 180);
+                const cpR = 48;
+                const cp = {
+                  x: 50 + cpR * Math.cos(midAngle),
+                  y: 50 + cpR * Math.sin(midAngle),
+                };
+                const d = `M${from.x},${from.y} Q${cp.x},${cp.y} ${to.x},${to.y}`;
+                const isActive = pulseIndex === i || (pulseIndex === (i + N - 1) % N);
+
+                return (
+                  <g key={`ring-${i}`}>
+                    <path d={d} stroke="#2563eb" strokeWidth="0.2" fill="none"
+                      opacity={isActive ? 0.6 : 0.12}
+                      style={{ transition: "opacity 0.5s" }} />
+                    {isActive && (
+                      <>
+                        <circle r="0.55" fill="#2563eb" opacity="0.85">
+                          <animateMotion dur="0.9s" repeatCount="indefinite" path={d} begin="0s" />
+                        </circle>
+                        <circle r="0.55" fill="#2563eb" opacity="0.5">
+                          <animateMotion dur="0.9s" repeatCount="indefinite" path={d} begin="0.45s" />
+                        </circle>
+                      </>
+                    )}
+                  </g>
+                );
+              })}
+            </AnimatePresence>
+          </svg>
+
+          {/* ═══ Nodes layer ═══ */}
           <div style={{
-            position: "relative", zIndex: 2,
-            padding: "clamp(24px, 4vw, 36px) clamp(32px, 5vw, 48px)",
-            display: "flex", alignItems: "center",
-            justifyContent: "space-between",
-            gap: "clamp(12px, 2vw, 24px)",
+            position: "absolute", inset: 0, zIndex: 2,
+            pointerEvents: "none",
           }}>
 
-            {/* ── LEFT: Source ── */}
+            {/* ── CENTER node ── */}
             <motion.div
-              animate={phase === 0 ? { scale: [1, 1.025, 1] } : { scale: 1 }}
+              animate={phase === 0 ? { scale: [1, 1.035, 1] } : { scale: 1 }}
               transition={phase === 0 ? { repeat: Infinity, duration: 2.8, ease: "easeInOut" } : {}}
-              style={{ flexShrink: 0 }}
+              style={{
+                position: "absolute", left: "50%", top: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
             >
-              <NodeCard
-                label={CENTER.label}
-                sub={CENTER.sub}
-                icon={Cpu}
-                variant="core"
-                accentColor={CENTER.color}
-              />
+              <div style={{
+                border: "1.5px solid rgba(37,99,235,0.50)",
+                borderRadius: "14px",
+                background: "#ffffff",
+                padding: "16px 22px",
+                textAlign: "center",
+                boxShadow: "0 0 0 6px rgba(37,99,235,0.04), 0 4px 20px rgba(0,0,0,0.06)",
+              }}>
+                <div style={{
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  marginBottom: "6px", color: "#2563eb",
+                }}>
+                  <CenterIcon />
+                </div>
+                <div style={{
+                  fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "15px",
+                  color: "#000000", letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "3px",
+                }}>
+                  Yael AI Core
+                </div>
+                <div style={{
+                  fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "10px",
+                  color: "#a59f97", lineHeight: 1.3,
+                }}>
+                  Voice receptionist engine
+                </div>
+              </div>
             </motion.div>
 
-            {/* ── SVG connector lines ── */}
-            <div style={{
-              flex: 1,
-              position: "relative",
-              minWidth: "80px",
-              alignSelf: "stretch",
-            }}>
-              <svg
-                width="100%"
-                height="100%"
-                viewBox="0 0 150 208"
-                preserveAspectRatio="xMidYMid meet"
-                style={{ position: "absolute", inset: 0 }}
-              >
-                <AnimatePresence>
-                  {phase >= 1 && CONNECTIONS.map((conn, i) => (
-                    <FlowLine
-                      key={i}
-                      d={conn.d}
-                      color="#2563eb"
-                      delay={conn.delay}
-                      visible={phase >= 1}
-                    />
-                  ))}
-                </AnimatePresence>
-              </svg>
-            </div>
-
-            {/* ── RIGHT: Outputs ── */}
-            <div style={{
-              flexShrink: 0,
-              display: "flex", flexDirection: "column", gap: "16px",
-              justifyContent: "center",
-            }}>
-              <AnimatePresence>
-                {phase >= 1 && OUTPUTS.map((n, i) => (
-                  <motion.div
-                    key={n.label}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.30 + i * 0.15, duration: 0.45 }}
-                  >
-                    <NodeCard
-                      label={n.label}
-                      sub={n.sub}
-                      icon={n.icon}
-                      accentColor={n.color}
-                    />
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
+            {/* ── BANNER nodes ── */}
+            <AnimatePresence>
+              {phase >= 1 && CAPABILITIES.map((cap, i) => {
+                const pos = getBannerPosition(i, 50, 50, 37);
+                const isActive = phase >= 2 && pulseIndex === i;
+                return (
+                  <BannerNode
+                    key={cap.label}
+                    label={cap.label}
+                    sub={cap.sub}
+                    icon={ICONS[i]}
+                    x={pos.x}
+                    y={pos.y}
+                    active={isActive}
+                    accentColor="#2563eb"
+                  />
+                );
+              })}
+            </AnimatePresence>
 
           </div>
 
@@ -303,7 +345,7 @@ export default function CapabilitiesSection() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 style={{
-                  position: "absolute", bottom: "18px", left: 0, right: 0,
+                  position: "absolute", bottom: "16px", left: 0, right: 0, zIndex: 3,
                   display: "flex", justifyContent: "center",
                 }}
               >
@@ -321,15 +363,76 @@ export default function CapabilitiesSection() {
           </AnimatePresence>
         </div>
 
-        {/* ── Closing line ── */}
-        <p style={{
-          fontFamily: "Inter, sans-serif", fontWeight: 400, fontStyle: "italic",
-          fontSize: "14px", color: "#777169", lineHeight: 1.6,
-          margin: "36px auto 0 auto", textAlign: "center",
-        }}>
-          All of this in one call, in the patient's language, 24 hours a day.
-        </p>
       </div>
+
+      {/* ── MOBILE: simplified layout ── */}
+      <div className="caps-mobile" style={{ display: "none", marginTop: "48px" }}>
+        <div style={{
+          borderRadius: "18px", background: "#fafaf8", border: "1px solid #e8e5e0",
+          padding: "28px 20px", position: "relative", overflow: "hidden",
+        }}>
+          <DotGrid />
+          <div style={{ position: "relative", zIndex: 2 }}>
+            {/* Center node */}
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+              <div style={{
+                border: "1.5px solid rgba(37,99,235,0.45)", borderRadius: "12px",
+                background: "#ffffff", padding: "14px 20px", textAlign: "center",
+                boxShadow: "0 0 0 4px rgba(37,99,235,0.04), 0 3px 14px rgba(0,0,0,0.05)",
+              }}>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: "4px", color: "#2563eb" }}>
+                  <CenterIcon />
+                </div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "14px", color: "#000" }}>
+                  Yael AI Core
+                </div>
+                <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "10px", color: "#a59f97" }}>
+                  Voice receptionist engine
+                </div>
+              </div>
+            </div>
+
+            {/* Divider line */}
+            <div style={{ height: "1px", background: "#e0ddd8", margin: "0 0 20px 0" }} />
+
+            {/* Banner grid */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
+              {CAPABILITIES.map((cap, i) => (
+                <motion.div
+                  key={cap.label}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={started ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
+                >
+                  <div style={{
+                    border: "1px solid #e0ddd8", borderRadius: "8px", background: "#fafaf8",
+                    padding: "8px 10px", textAlign: "center",
+                  }}>
+                    <div style={{ display: "flex", justifyContent: "center", marginBottom: "4px", color: "#2563eb" }}>
+                      {ICONS[i]()}
+                    </div>
+                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "10px", color: "#000", marginBottom: "1px" }}>
+                      {cap.label}
+                    </div>
+                    <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "8px", color: "#a59f97" }}>
+                      {cap.sub}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Closing line ── */}
+      <p style={{
+        fontFamily: "Inter, sans-serif", fontWeight: 400, fontStyle: "italic",
+        fontSize: "14px", color: "#777169", lineHeight: 1.6,
+        margin: "36px auto 0 auto", textAlign: "center", maxWidth: "780px",
+      }}>
+        All of this in one call, in the patient's language, 24 hours a day.
+      </p>
 
       <style>{`
         @media (max-width: 768px) {
@@ -337,6 +440,10 @@ export default function CapabilitiesSection() {
         }
         @media (max-width: 1024px) {
           [data-capabilities] { padding: 64px 24px !important; }
+        }
+        @media (max-width: 640px) {
+          .caps-desktop { display: none !important; }
+          .caps-mobile { display: block !important; }
         }
       `}</style>
     </section>
