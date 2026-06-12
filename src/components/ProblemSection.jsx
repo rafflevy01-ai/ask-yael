@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import NotifStack from "@/components/NotifStack";
 
 export default function ProblemSection() {
   const initRef = useRef(false);
@@ -45,106 +46,6 @@ export default function ProblemSection() {
         window.addEventListener("scroll", updateScroll, { passive: true });
       }
       updateScroll();
-    })();
-
-    // --- Notifications ---
-    (function () {
-      const notifData = [
-        { number: "+972 54 321 4567", time: "18:32" },
-        { number: "+33 6 12 34 56 78", time: "19:15" },
-        { number: "+972 52 876 5432", time: "20:07" },
-        { number: "+972 58 234 5678", time: "21:44" },
-        { number: "+972 50 111 2233", time: "22:18" },
-      ];
-      let notifIndex = 0;
-      let activeCards = [];
-      const stack = document.getElementById("notif-stack");
-      if (!stack) return;
-
-      function createCard(data) {
-        const card = document.createElement("div");
-        card.style.cssText =
-          "position:absolute;top:0;left:0;right:0;" +
-          "background:rgba(255,255,255,0.82);" +
-          "backdrop-filter:blur(40px) saturate(180%);" +
-          "-webkit-backdrop-filter:blur(40px) saturate(180%);" +
-          "border-radius:20px;padding:12px 14px;box-sizing:border-box;" +
-          "box-shadow:inset 0 0 0 0.5px rgba(255,255,255,0.6),0 4px 24px rgba(0,0,0,0.06);" +
-          "font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;" +
-          "transition:transform 0.42s cubic-bezier(0.34,1.1,0.64,1),opacity 0.42s ease;" +
-          "transform:translateY(-80px) scale(1);opacity:0;";
-        card.innerHTML =
-          // Row 1 — header
-          '<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">' +
-            '<div style="width:18px;height:18px;background:#34c759;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0">' +
-              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.73a16 16 0 006.72 6.72l1.06-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>' +
-            '</div>' +
-            '<span style="font-size:12px;font-weight:600;color:rgba(60,60,67,0.6);flex:1">Phone</span>' +
-            '<span style="font-size:12px;font-weight:400;color:rgba(60,60,67,0.4)">' + data.time + '</span>' +
-            '<span style="font-size:14px;color:rgba(60,60,67,0.3);margin-left:4px">›</span>' +
-          '</div>' +
-          // Row 2
-          '<div style="font-size:15px;font-weight:600;color:#000000">Missed Call</div>' +
-          // Row 3
-          '<div style="font-size:15px;font-weight:400;color:#3c3c3c;margin-top:1px">New Patient · ' + data.number + '</div>' +
-          // Row 4 — actions
-          '<div style="display:flex;gap:8px;margin-top:10px">' +
-            '<div style="flex:1;height:32px;background:rgba(0,0,0,0.05);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#007aff">Call Back</div>' +
-            '<div style="flex:1;height:32px;background:rgba(0,0,0,0.05);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#007aff">Message</div>' +
-          '</div>';
-        return card;
-      }
-
-      function addNotification() {
-        activeCards.forEach((card, i) => {
-          const np = i + 1;
-          if (np >= 3) {
-            card.style.opacity = "0";
-            setTimeout(
-              () => card.parentNode && card.parentNode.removeChild(card),
-              450
-            );
-            activeCards.splice(i, 1);
-          } else if (np === 1) {
-            card.style.transform = "translateY(9px) scale(0.95)";
-            card.style.zIndex = "2";
-            card.style.opacity = "0.85";
-          } else {
-            card.style.transform = "translateY(16px) scale(0.90)";
-            card.style.zIndex = "1";
-            card.style.opacity = "0.6";
-          }
-        });
-        const card = createCard(notifData[notifIndex % notifData.length]);
-        stack.appendChild(card);
-        activeCards.unshift(card);
-        requestAnimationFrame(() =>
-          requestAnimationFrame(() => {
-            card.style.transform = "translateY(0) scale(1)";
-            card.style.opacity = "1";
-            card.style.zIndex = "3";
-            card.style.transition = "transform 0.42s cubic-bezier(0.34,1.1,0.64,1), opacity 0.42s ease";
-          })
-        );
-        notifIndex++;
-      }
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              setTimeout(addNotification, 600);
-              const interval = setInterval(addNotification, 2500);
-              observer.disconnect();
-              // store interval so it doesn't leak
-              window.__yaelNotifInterval = interval;
-            }
-          });
-        },
-        { threshold: 0.3 }
-      );
-      const s = document.getElementById("problem-section");
-      if (s) observer.observe(s);
     })();
 
     // --- Calculator ---
@@ -382,10 +283,7 @@ export default function ProblemSection() {
                 className="iphone-col"
                 style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}
               >
-                <div
-                  id="notif-stack"
-                  style={{ position: "relative", width: "340px", height: "220px", pointerEvents: "none" }}
-                />
+                <NotifStack />
               </div>
             </div>
 
