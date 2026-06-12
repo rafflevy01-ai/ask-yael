@@ -33,28 +33,21 @@ const OUTPUTS = [
   { label: "24/7 Availability", sub: "No voicemail, no missed calls" },
 ];
 
-/* ── Layer panel (groups related nodes) ── */
+/* ── Layer panel ── */
 function LayerPanel({ label, children }) {
   return (
     <div style={{
       background: "#fafaf8",
       border: "1px solid #e8e5e0",
-      borderRadius: "14px",
-      padding: "20px 24px",
+      borderRadius: "12px",
+      padding: "18px 22px",
       position: "relative",
     }}>
       <span style={{
-        fontFamily: "Inter, sans-serif",
-        fontWeight: 500,
-        fontSize: "9px",
-        textTransform: "uppercase",
-        letterSpacing: "0.1em",
-        color: "#b0aba3",
-        position: "absolute",
-        top: "-9px",
-        left: "20px",
-        background: "#fafaf8",
-        padding: "0 8px",
+        fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "9px",
+        textTransform: "uppercase", letterSpacing: "0.1em", color: "#b0aba3",
+        position: "absolute", top: "-9px", left: "20px",
+        background: "#fafaf8", padding: "0 8px",
       }}>
         {label}
       </span>
@@ -63,7 +56,7 @@ function LayerPanel({ label, children }) {
   );
 }
 
-/* ── Individual node box ── */
+/* ── Node box ── */
 function NodeBox({ label, sub, prominent }) {
   return (
     <div style={{
@@ -87,11 +80,8 @@ function NodeBox({ label, sub, prominent }) {
         {label}
       </div>
       <div style={{
-        fontFamily: "Inter, sans-serif",
-        fontWeight: 400,
-        fontSize: "11px",
-        color: "#a59f97",
-        lineHeight: 1.35,
+        fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "11px",
+        color: "#a59f97", lineHeight: 1.35,
       }}>
         {sub}
       </div>
@@ -99,29 +89,89 @@ function NodeBox({ label, sub, prominent }) {
   );
 }
 
-/* ── Vertical arrow connector ── */
-function ArrowDown() {
+/* ── Connector strip (renders SVG arrows between layers) ── */
+const STROKE = "#c4bfb8";
+
+/* Two parallel vertical arrows between 2-box layers */
+function TwoDownArrows() {
   return (
-    <div style={{ height: "28px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <svg width="16" height="20" viewBox="0 0 16 20">
-        <line x1="8" y1="0" x2="8" y2="14" stroke="#c4bfb8" strokeWidth="1" />
-        <path d="M3 10 L8 16 L13 10" stroke="#c4bfb8" strokeWidth="1" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    <div style={{ height: "28px", position: "relative", margin: "4px 0" }}>
+      <svg width="100%" height="28" style={{ position: "absolute", top: 0, left: 0 }}>
+        <defs>
+          <marker id="ah" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
+            <polygon points="0 0, 5 2, 0 4" fill={STROKE} />
+          </marker>
+        </defs>
+        {/* Left: 25% → 25% */}
+        <line x1="25%" y1="0" x2="25%" y2="24" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah)" />
+        {/* Right: 75% → 75% */}
+        <line x1="75%" y1="0" x2="75%" y2="24" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah)" />
       </svg>
     </div>
   );
 }
 
-/* ── Fan-out SVG ── */
-function FanOut({ count }) {
-  const positions = count === 5
-    ? ["12%", "31%", "50%", "69%", "88%"]
-    : ["20%", "50%", "80%"];
+/* Two converging arrows (from 2 boxes → 1 center box) */
+function ConvergeArrows() {
   return (
-    <div style={{ position: "relative", height: "22px" }}>
-      <svg width="100%" height="22" style={{ display: "block" }}>
-        {positions.map((x, i) => (
-          <line key={i} x1="50%" y1="0" x2={x} y2="22" stroke="#c4bfb8" strokeWidth="1" />
+    <div style={{ height: "28px", position: "relative", margin: "4px 0" }}>
+      <svg width="100%" height="28" style={{ position: "absolute", top: 0, left: 0 }}>
+        <defs>
+          <marker id="ah2" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
+            <polygon points="0 0, 5 2, 0 4" fill={STROKE} />
+          </marker>
+        </defs>
+        <line x1="25%" y1="0" x2="50%" y2="24" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah2)" />
+        <line x1="75%" y1="0" x2="50%" y2="24" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah2)" />
+      </svg>
+    </div>
+  );
+}
+
+/* Fan-out: 1 center → 5 boxes */
+function FanOutFive() {
+  const targets = [10, 30, 50, 70, 90]; // percentages
+  return (
+    <div style={{ height: "32px", position: "relative", margin: "4px 0" }}>
+      <svg width="100%" height="32" style={{ position: "absolute", top: 0, left: 0 }}>
+        <defs>
+          <marker id="ah3" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
+            <polygon points="0 0, 5 2, 0 4" fill={STROKE} />
+          </marker>
+        </defs>
+        {targets.map((x) => (
+          <line key={x} x1="50%" y1="0" x2={`${x}%`} y2="28" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah3)" />
         ))}
+      </svg>
+    </div>
+  );
+}
+
+/* 3 straight down arrows */
+function ThreeDownArrows() {
+  return (
+    <div style={{ height: "24px", position: "relative", margin: "4px 0" }}>
+      <svg width="100%" height="24" style={{ position: "absolute", top: 0, left: 0 }}>
+        <defs>
+          <marker id="ah4" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
+            <polygon points="0 0, 5 2, 0 4" fill={STROKE} />
+          </marker>
+        </defs>
+        <line x1="17%" y1="0" x2="17%" y2="20" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah4)" />
+        <line x1="50%" y1="0" x2="50%" y2="20" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah4)" />
+        <line x1="83%" y1="0" x2="83%" y2="20" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah4)" />
+      </svg>
+    </div>
+  );
+}
+
+/* Mobile arrow */
+function MobileArrow() {
+  return (
+    <div style={{ height: "28px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <svg width="16" height="20" viewBox="0 0 16 20">
+        <line x1="8" y1="0" x2="8" y2="13" stroke={STROKE} strokeWidth="1" />
+        <polygon points="4,10 8,16 12,10" fill={STROKE} />
       </svg>
     </div>
   );
@@ -150,7 +200,7 @@ export default function CapabilitiesSection() {
           Everything your front desk handles. Automated.
         </h2>
 
-        {/* ═══════ DESKTOP DIAGRAM ═══════ */}
+        {/* ═══════ DESKTOP ═══════ */}
         <div className="arch-desktop">
 
           {/* Layer 1: Input */}
@@ -160,7 +210,7 @@ export default function CapabilitiesSection() {
             </div>
           </LayerPanel>
 
-          <ArrowDown />
+          <TwoDownArrows />
 
           {/* Layer 2: Intelligence */}
           <LayerPanel label="Intelligence">
@@ -169,87 +219,64 @@ export default function CapabilitiesSection() {
             </div>
           </LayerPanel>
 
-          <ArrowDown />
+          <ConvergeArrows />
 
-          {/* Core — standalone, prominent */}
+          {/* Core – centered, prominent */}
           <div style={{ display: "flex", justifyContent: "center" }}>
             <div style={{ maxWidth: "280px", width: "100%" }}>
               <NodeBox label={CORE.label} sub={CORE.sub} prominent />
             </div>
           </div>
 
-          <FanOut count={5} />
+          <FanOutFive />
 
-          {/* Capabilities row */}
-          <div style={{ display: "flex", gap: "12px" }}>
+          {/* Capabilities – 5 across */}
+          <div style={{ display: "flex", gap: "10px" }}>
             {CAPABILITIES.map((n) => <NodeBox key={n.label} label={n.label} sub={n.sub} />)}
           </div>
 
-          <div style={{ display: "flex", justifyContent: "center", gap: "120px", margin: "12px 0 8px" }}>
-            {OUTPUTS.map((_, i) => (
-              <div key={i} style={{ width: "1px", height: "16px", background: "#c4bfb8" }} />
-            ))}
-          </div>
+          <ThreeDownArrows />
 
-          {/* Output row */}
-          <div style={{ display: "flex", gap: "12px" }}>
-            {OUTPUTS.map((n) => (
-              <NodeBox key={n.label} label={n.label} sub={n.sub} />
-            ))}
+          {/* Output – 3 across */}
+          <div style={{ display: "flex", gap: "10px" }}>
+            {OUTPUTS.map((n) => <NodeBox key={n.label} label={n.label} sub={n.sub} />)}
           </div>
 
         </div>
 
-        {/* ═══════ MOBILE DIAGRAM ═══════ */}
+        {/* ═══════ MOBILE ═══════ */}
         <div className="arch-mobile">
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0" }}>
 
-            {/* Input */}
             <LayerPanel label="Input">
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {LAYERS[0].nodes.map((n) => (
-                  <NodeBox key={n.label} label={n.label} sub={n.sub} />
-                ))}
+                {LAYERS[0].nodes.map((n) => <NodeBox key={n.label} label={n.label} sub={n.sub} />)}
               </div>
             </LayerPanel>
+            <MobileArrow />
 
-            <ArrowDown />
-
-            {/* Intelligence */}
             <LayerPanel label="Intelligence">
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {LAYERS[1].nodes.map((n) => (
-                  <NodeBox key={n.label} label={n.label} sub={n.sub} />
-                ))}
+                {LAYERS[1].nodes.map((n) => <NodeBox key={n.label} label={n.label} sub={n.sub} />)}
               </div>
             </LayerPanel>
+            <MobileArrow />
 
-            <ArrowDown />
-
-            {/* Core */}
             <div style={{ width: "100%", maxWidth: "340px" }}>
               <NodeBox label={CORE.label} sub={CORE.sub} prominent />
             </div>
+            <MobileArrow />
 
-            <ArrowDown />
-
-            {/* Capabilities */}
             <LayerPanel label="Capabilities">
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {CAPABILITIES.map((n) => (
-                  <NodeBox key={n.label} label={n.label} sub={n.sub} />
-                ))}
+                {CAPABILITIES.map((n) => <NodeBox key={n.label} label={n.label} sub={n.sub} />)}
               </div>
             </LayerPanel>
+            <MobileArrow />
 
-            <ArrowDown />
-
-            {/* Output */}
             <LayerPanel label="Output">
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {OUTPUTS.map((n) => (
-                  <NodeBox key={n.label} label={n.label} sub={n.sub} />
-                ))}
+                {OUTPUTS.map((n) => <NodeBox key={n.label} label={n.label} sub={n.sub} />)}
               </div>
             </LayerPanel>
 
