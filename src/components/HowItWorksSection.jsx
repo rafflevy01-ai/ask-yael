@@ -76,7 +76,7 @@ export default function HowItWorksSection() {
         }
       }
 
-      // Position cards aligned with headings (desktop only)
+      // Desktop: position cards aligned with headings
       if (!isMobile) {
         const panel = cardsPanelRef.current;
         if (panel) {
@@ -137,100 +137,56 @@ export default function HowItWorksSection() {
           </h2>
         </div>
 
-        {/* Two-column layout: LEFT = text, RIGHT = animated cards */}
-        <div className="how-layout" style={{ display: "flex", gap: "clamp(32px, 5vw, 80px)", alignItems: "flex-start" }}>
+        {/* MOBILE: single-column with cards embedded in each step */}
+        {isMobile && (
+          <div className="how-mobile" style={{ position: "relative" }}>
+            {/* Progress line */}
+            <div style={{
+              position: "absolute", left: "0", top: 0, bottom: 0, width: "1px",
+              background: "#e0ddd9", borderRadius: "9999px", zIndex: 0,
+            }} />
+            <div style={{
+              position: "absolute", left: "0", top: 0, width: "1px",
+              height: `${progress * 100}%`, maxHeight: "100%",
+              background: "#FF4500", borderRadius: "9999px", zIndex: 1,
+              transition: "height 0.08s linear",
+            }} />
 
-          {/* LEFT — Text steps + progress line */}
-          <div className="how-left" style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ position: "relative" }}>
-              {/* Vertical progress line */}
-              <div style={{
-                position: "absolute",
-                left: "0",
-                top: 0,
-                bottom: 0,
-                width: "1px",
-                background: "#e0ddd9",
-                borderRadius: "9999px",
-                zIndex: 0,
-              }} />
-              <div style={{
-                position: "absolute",
-                left: "0",
-                top: 0,
-                width: "1px",
-                height: `${progress * 100}%`,
-                maxHeight: "100%",
-                background: "#FF4500",
-                borderRadius: "9999px",
-                zIndex: 1,
-                transition: "height 0.08s linear",
-              }} />
-
-              {STEPS.map((step, i) => (
+            {STEPS.map((step, i) => {
+              const visible = progress >= i / STEP_COUNT;
+              return (
                 <div
                   key={step.number}
                   ref={(el) => (stepRefs.current[i] = el)}
                   style={{
-                    padding: "56px 0 56px 48px",
-                    opacity: progress >= i / STEP_COUNT ? 1 : 0.25,
+                    padding: "32px 0 32px 0",
+                    opacity: visible ? 1 : 0.25,
                     transition: "opacity 0.4s ease",
                     position: "relative",
                     zIndex: 2,
                   }}
                 >
                   <span style={{
-                    fontFamily: "'Geist Mono', monospace",
-                    fontWeight: 400,
-                    fontSize: "12px",
-                    color: "#a59f97",
-                    display: "block",
-                    marginBottom: "16px",
+                    fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "12px",
+                    color: "#a59f97", display: "block", marginBottom: "12px",
                   }}>
                     {step.number}
                   </span>
                   <h3 style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontWeight: 300,
-                    fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)",
-                    color: "#000000",
-                    letterSpacing: "-0.05em",
-                    lineHeight: 1.15,
-                    margin: "0 0 12px 0",
+                    fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
+                    fontSize: "1.5rem", color: "#000000", letterSpacing: "-0.05em",
+                    lineHeight: 1.15, margin: "0 0 8px 0",
                   }}>
                     {step.title}
                   </h3>
                   <p style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontWeight: 400,
-                    fontSize: "15px",
-                    color: "#777169",
-                    lineHeight: 1.65,
-                    margin: 0,
-                    maxWidth: "520px",
+                    fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
+                    color: "#777169", lineHeight: 1.65, margin: "0 0 16px 0",
                   }}>
                     {step.description}
                   </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* RIGHT — Sticky animated cards (desktop) or stacked cards (mobile) */}
-          <div ref={cardsPanelRef} className="how-right" style={{
-            width: "clamp(280px, 36vw, 340px)",
-            flexShrink: 0,
-            position: "sticky",
-            top: "120px",
-            alignSelf: "flex-start",
-            minHeight: "calc(100vh - 120px)",
-          }}>
-            {STEPS.map((_, i) => {
-              const visible = progress >= i / STEP_COUNT;
-
-              if (isMobile) {
-                return (
-                  <div key={i} style={{ marginBottom: i < STEP_COUNT - 1 ? "16px" : 0 }}>
+                  {/* Card embedded right under the step */}
+                  <div style={{ maxWidth: "340px" }}>
                     <IosNotifCard
                       stepIndex={i}
                       visible={visible}
@@ -238,14 +194,30 @@ export default function HowItWorksSection() {
                       cardStyle={{}}
                     />
                   </div>
-                );
-              }
+                </div>
+              );
+            })}
+          </div>
+        )}
 
-              return (
+        {/* DESKTOP: two-column layout */}
+        {!isMobile && (
+          <div className="how-layout" style={{ display: "flex", gap: "clamp(32px, 5vw, 80px)", alignItems: "flex-start" }}>
+
+            {/* LEFT — Sticky card panel */}
+            <div ref={cardsPanelRef} className="how-cards" style={{
+              width: "clamp(280px, 36vw, 340px)",
+              flexShrink: 0,
+              position: "sticky",
+              top: "120px",
+              alignSelf: "flex-start",
+              minHeight: "calc(100vh - 120px)",
+            }}>
+              {STEPS.map((_, i) => (
                 <IosNotifCard
                   key={i}
                   stepIndex={i}
-                  visible={visible}
+                  visible={progress >= i / STEP_COUNT}
                   animate={!!animatingSteps[i]}
                   cardStyle={{
                     position: "absolute",
@@ -254,10 +226,60 @@ export default function HowItWorksSection() {
                     right: 0,
                   }}
                 />
-              );
-            })}
+              ))}
+            </div>
+
+            {/* RIGHT — Text steps + progress line */}
+            <div className="how-text" style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ position: "relative" }}>
+                <div style={{
+                  position: "absolute", left: "0", top: 0, bottom: 0, width: "1px",
+                  background: "#e0ddd9", borderRadius: "9999px", zIndex: 0,
+                }} />
+                <div style={{
+                  position: "absolute", left: "0", top: 0, width: "1px",
+                  height: `${progress * 100}%`, maxHeight: "100%",
+                  background: "#FF4500", borderRadius: "9999px", zIndex: 1,
+                  transition: "height 0.08s linear",
+                }} />
+
+                {STEPS.map((step, i) => (
+                  <div
+                    key={step.number}
+                    ref={(el) => (stepRefs.current[i] = el)}
+                    style={{
+                      padding: "56px 0 56px 48px",
+                      opacity: progress >= i / STEP_COUNT ? 1 : 0.25,
+                      transition: "opacity 0.4s ease",
+                      position: "relative",
+                      zIndex: 2,
+                    }}
+                  >
+                    <span style={{
+                      fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "12px",
+                      color: "#a59f97", display: "block", marginBottom: "16px",
+                    }}>
+                      {step.number}
+                    </span>
+                    <h3 style={{
+                      fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
+                      fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000000",
+                      letterSpacing: "-0.05em", lineHeight: 1.15, margin: "0 0 12px 0",
+                    }}>
+                      {step.title}
+                    </h3>
+                    <p style={{
+                      fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
+                      color: "#777169", lineHeight: 1.65, margin: 0, maxWidth: "520px",
+                    }}>
+                      {step.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Callout strip */}
@@ -283,18 +305,6 @@ export default function HowItWorksSection() {
       <style>{`
         @media (max-width: 768px) {
           [data-how-works] { padding: 48px 16px !important; }
-          .how-layout { flex-direction: column !important; gap: 24px !important; }
-          .how-left > div { padding: 0 !important; }
-          .how-left > div > div { padding-left: 0 !important; padding-top: 32px !important; padding-bottom: 32px !important; }
-          .how-left > div > div:first-child { padding-top: 16px !important; }
-          .how-right {
-            position: relative !important;
-            top: auto !important;
-            width: 100% !important;
-            max-width: 340px !important;
-            margin: 0 auto !important;
-            min-height: auto !important;
-          }
           .how-callout { padding: 16px 16px !important; margin-top: 48px !important; }
         }
         @media (max-width: 1024px) {
