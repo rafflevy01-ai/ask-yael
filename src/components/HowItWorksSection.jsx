@@ -75,7 +75,7 @@ export default function HowItWorksSection() {
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
 
         {/* Header */}
-        <div style={{ marginBottom: "64px", textAlign: "center" }}>
+        <div style={{ marginBottom: "32px", textAlign: "center" }}>
           <span style={{
             fontFamily: "'Geist Mono', monospace", fontSize: "11px", textTransform: "uppercase",
             letterSpacing: "0.12em", color: "#a59f97", display: "block", marginBottom: "12px",
@@ -129,7 +129,7 @@ export default function HowItWorksSection() {
                 {STEPS.map((step, i) => (
                   <div key={step.number} ref={(el) => (stepRefs.current[i] = el)}
                     style={{
-                      padding: "56px 0 56px 48px",
+                      padding: i === 0 ? "24px 0 56px 48px" : "56px 0 56px 48px",
                       opacity: progress >= i / STEP_COUNT ? 1 : 0.15,
                       transition: "opacity 0.7s ease",
                       position: "relative", zIndex: 2,
@@ -161,7 +161,7 @@ export default function HowItWorksSection() {
             return (
               <div key={step.number}
                 style={{
-                  padding: "32px 0 48px 0",
+                  padding: i === 0 ? "12px 0 48px 0" : "32px 0 48px 0",
                 }}>
                 <div style={{
                   opacity: visible ? 1 : 0.12,
