@@ -98,13 +98,16 @@ const cardBase = {
   fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif",
   boxSizing: "border-box",
   maxWidth: "340px",
+  minHeight: "124px",
+  display: "flex",
+  flexDirection: "column",
 };
 
 function CardHeader({ appIcon, appName, timestamp }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
       {appIcon}
-      <span style={{ fontSize: "12px", fontWeight: 600, color: "rgba(60,60,67,0.6)", flex: 1, letterSpacing: "-0.01em" }}>
+      <span style={{ fontSize: "12px", fontWeight: 500, color: "rgba(60,60,67,0.55)", flex: 1, letterSpacing: "-0.01em" }}>
         {appName}
       </span>
       <span style={{ fontSize: "11px", fontWeight: 400, color: "rgba(60,60,67,0.4)" }}>
@@ -168,26 +171,25 @@ export default function IosNotifCard({ stepIndex, animate, cardStyle }) {
 
       {data.type === "incoming-call" && (
         <>
-          <div style={{ fontSize: "16px", fontWeight: 600, color: "#000", lineHeight: 1.3, marginBottom: "2px" }}>
+          <div style={{ fontSize: "15px", fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: "2px" }}>
             {data.title}
           </div>
-          <div style={{ fontSize: "13px", fontWeight: 400, color: "rgba(60,60,67,0.75)", lineHeight: 1.3, marginBottom: "12px" }}>
+          <div style={{ fontSize: "13px", fontWeight: 400, color: "rgba(60,60,67,0.65)", lineHeight: 1.25, marginBottom: "6px", flex: 1 }}>
             {data.subtitle}
           </div>
           <div style={{ display: "flex", gap: "10px" }}>
             <div style={{
-              flex: 1, height: "34px", background: data.buttons[0].bg,
-              borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", gap: "4px",
+              flex: 1, height: "28px", background: data.buttons[0].bg,
+              borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center",
             }}>
-              <DeclineIcon />
-              <span style={{ fontSize: "14px", fontWeight: 500, color: data.buttons[0].color }}>{data.buttons[0].label}</span>
+              <span style={{ fontSize: "13px", fontWeight: 500, color: data.buttons[0].color }}>{data.buttons[0].label}</span>
             </div>
             <div style={{
-              flex: 1, height: "34px", background: data.buttons[1].bg,
-              borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", gap: "4px",
+              flex: 1, height: "28px", background: data.buttons[1].bg,
+              borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", gap: "4px",
             }}>
               <AcceptIcon />
-              <span style={{ fontSize: "14px", fontWeight: 500, color: data.buttons[1].color }}>{data.buttons[1].label}</span>
+              <span style={{ fontSize: "13px", fontWeight: 500, color: data.buttons[1].color }}>{data.buttons[1].label}</span>
             </div>
           </div>
         </>
@@ -195,10 +197,10 @@ export default function IosNotifCard({ stepIndex, animate, cardStyle }) {
 
       {data.type === "notification" && (
         <>
-          <div style={{ fontSize: "14px", fontWeight: 600, color: "#000", lineHeight: 1.3, marginBottom: "2px" }}>
+          <div style={{ fontSize: "15px", fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: "2px" }}>
             {data.title}
           </div>
-          <div style={{ fontSize: "13px", fontWeight: 400, color: "rgba(60,60,67,0.75)", lineHeight: 1.35 }}>
+          <div style={{ fontSize: "13px", fontWeight: 400, color: "rgba(60,60,67,0.65)", lineHeight: 1.25, flex: 1 }}>
             {data.subtitle}
           </div>
         </>
@@ -206,12 +208,12 @@ export default function IosNotifCard({ stepIndex, animate, cardStyle }) {
 
       {data.type === "sms-banner" && (
         <div style={{
-          background: "rgba(118,118,128,0.08)", borderRadius: "10px", padding: "10px 12px", marginTop: "2px",
+          background: "rgba(118,118,128,0.08)", borderRadius: "10px", padding: "10px 12px", marginTop: "2px", flex: 1,
         }}>
-          <div style={{ fontSize: "14px", fontWeight: 600, color: "#000", lineHeight: 1.3, marginBottom: "2px" }}>
+          <div style={{ fontSize: "15px", fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: "2px" }}>
             {data.title}
           </div>
-          <div style={{ fontSize: "13px", fontWeight: 400, color: "rgba(60,60,67,0.75)", lineHeight: 1.35 }}>
+          <div style={{ fontSize: "13px", fontWeight: 400, color: "rgba(60,60,67,0.65)", lineHeight: 1.25 }}>
             {data.subtitle}
           </div>
         </div>
