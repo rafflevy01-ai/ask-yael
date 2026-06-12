@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /* ── Data ── */
@@ -129,17 +129,36 @@ export default function CapabilitiesSection() {
   // 2 = capabilities branch below
   // 3 = outputs auto-appear
 
-  const advance = useCallback(() => setPhase((p) => Math.min(p + 1, 3)), []);
+  const [started, setStarted] = useState(false);
+  const sectionRef = useRef(null);
 
+  // Trigger on scroll into view
   useEffect(() => {
-    if (phase === 2) {
-      const t = setTimeout(() => setPhase(3), 1200);
-      return () => clearTimeout(t);
-    }
-  }, [phase]);
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started) {
+          setStarted(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [started]);
+
+  // Auto-advance phases once started
+  useEffect(() => {
+    if (!started) return;
+    const t1 = setTimeout(() => setPhase(1), 600);
+    const t2 = setTimeout(() => setPhase(2), 2000);
+    const t3 = setTimeout(() => setPhase(3), 3500);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, [started]);
 
   return (
-    <section data-capabilities style={{ background: "#fdfcfc", padding: "100px 48px" }}>
+    <section ref={sectionRef} data-capabilities style={{ background: "#fdfcfc", padding: "100px 48px" }}>
       <div style={{ maxWidth: "600px", margin: "0 auto" }}>
 
         {/* ── Label ── */}
@@ -258,27 +277,19 @@ export default function CapabilitiesSection() {
             <motion.div
               animate={phase === 0 ? { scale: [1, 1.025, 1] } : { scale: 1 }}
               transition={phase === 0 ? { repeat: Infinity, duration: 2.5, ease: "easeInOut" } : {}}
-              style={{
-                width: "220px",
-                cursor: phase < 3 ? "pointer" : "default",
-                marginBottom: "8px",
-              }}
-              onClick={advance}
+              style={{ width: "220px", marginBottom: "8px" }}
             >
               <NodeCard label={CENTER.label} sub={CENTER.sub} icon={Cpu} variant="core" />
             </motion.div>
 
-            {/* ── CTA label under center ── */}
+            {/* ── Progress indicator under center ── */}
             <AnimatePresence>
               {phase < 3 && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  style={{
-                    cursor: "pointer", marginBottom: "20px",
-                  }}
-                  onClick={advance}
+                  style={{ marginBottom: "20px" }}
                 >
                   <div style={{
                     fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "12px",
@@ -286,8 +297,8 @@ export default function CapabilitiesSection() {
                     border: "1px solid rgba(37,99,235,0.25)",
                     borderRadius: "9999px", padding: "6px 18px",
                   }}>
-                    {phase === 0 && "Tap to see how Yael works"}
-                    {phase === 1 && "See what Yael can do"}
+                    {phase === 0 && <>Initializing&hellip;</>}
+                    {phase === 1 && <>Processing&hellip;</>}
                     {phase === 2 && <>Running — outputs loading&hellip;</>}
                   </div>
                 </motion.div>
