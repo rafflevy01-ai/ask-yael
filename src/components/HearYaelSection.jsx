@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const CARDS = [
   {
@@ -27,7 +27,7 @@ const CARDS = [
   },
 ];
 
-function WaveformPlaceholder({ featured }) {
+function WaveformPlaceholder({ featured, playing }) {
   const bars = [
     { height: 18, duration: "0.7s", delay: "0s" },
     { height: 32, duration: "0.9s", delay: "0.15s" },
@@ -61,8 +61,10 @@ function WaveformPlaceholder({ featured }) {
             width: "3px",
             height: `${bar.height}px`,
             borderRadius: "9999px",
-            background: featured ? "#c0c0c0" : "#e0e0e0",
-            animation: `waveform-pulse ${bar.duration} ${bar.delay} ease-in-out infinite alternate`,
+            background: playing ? "#000000" : (featured ? "#c0c0c0" : "#e0e0e0"),
+            animation: playing ? `waveform-pulse ${bar.duration} ${bar.delay} ease-in-out infinite alternate` : "none",
+            height: playing ? `${bar.height}px` : "6px",
+            transition: "height 0.3s ease, background 0.3s ease",
           }}
         />
       ))}
@@ -77,6 +79,8 @@ function WaveformPlaceholder({ featured }) {
 }
 
 function AudioCard({ card }) {
+  const [playing, setPlaying] = useState(false);
+
   return (
     <div style={{
       background: "#ffffff",
@@ -132,7 +136,47 @@ function AudioCard({ card }) {
         </div>
       </div>
 
-      <WaveformPlaceholder featured={card.featured} />
+      {/* Player row */}
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        {/* Play / Pause button */}
+        <button
+          onClick={() => setPlaying((p) => !p)}
+          style={{
+            width: "36px",
+            height: "36px",
+            borderRadius: "9999px",
+            background: card.featured ? "#000000" : "#000000",
+            border: "none",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+            transition: "transform 0.15s ease, opacity 0.15s ease",
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
+          onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+        >
+          {playing ? (
+            /* Pause icon */
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="white">
+              <rect x="1.5" y="1" width="3.5" height="10" rx="1" />
+              <rect x="7" y="1" width="3.5" height="10" rx="1" />
+            </svg>
+          ) : (
+            /* Play icon — nudged right slightly */
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="white" style={{ marginLeft: "2px" }}>
+              <polygon points="2,1 11,6 2,11" />
+            </svg>
+          )}
+        </button>
+
+        {/* Waveform */}
+        <div style={{ flex: 1 }}>
+          <WaveformPlaceholder featured={card.featured} playing={playing} />
+        </div>
+      </div>
     </div>
   );
 }
