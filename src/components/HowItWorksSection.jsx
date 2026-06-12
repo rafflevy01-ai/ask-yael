@@ -33,9 +33,12 @@ export default function HowItWorksSection() {
       const track = trackRef.current;
       if (!track) return;
       const rect = track.getBoundingClientRect();
-      const total = track.offsetHeight;
-      const scrolled = -rect.top + window.innerHeight * 0.15;
-      const p = Math.max(0, Math.min(1, scrolled / total));
+      const trackHeight = track.offsetHeight;
+      // Line starts filling when top of track hits center of viewport
+      // Line is full when bottom of track hits center of viewport
+      const viewportMid = window.innerHeight / 2;
+      const scrolled = viewportMid - rect.top;
+      const p = Math.max(0, Math.min(1, scrolled / trackHeight));
       setProgress(p);
     };
 
