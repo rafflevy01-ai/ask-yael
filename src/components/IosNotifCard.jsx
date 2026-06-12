@@ -1,0 +1,213 @@
+import React, { useState, useEffect } from "react";
+
+const NOTIF_STEPS = [
+  {
+    step: 0,
+    type: "incoming-call",
+    appIcon: (
+      <div style={{
+        width: "20px", height: "20px", background: "#34c759", borderRadius: "5px",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.73a16 16 0 006.72 6.72l1.06-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+        </svg>
+      </div>
+    ),
+    appName: "Phone",
+    timestamp: "now",
+    title: "David Cohen",
+    subtitle: "Yael answering in Hebrew...",
+    buttons: [
+      { label: "Decline", bg: "rgba(235,77,61,0.18)", color: "#eb4d3d", icon: "decline" },
+      { label: "Accept", bg: "rgba(52,199,89,0.18)", color: "#34c759", icon: "accept" },
+    ],
+  },
+  {
+    step: 1,
+    type: "notification",
+    appIcon: (
+      <div style={{
+        width: "20px", height: "20px", background: "#007aff", borderRadius: "5px",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 00-3-3.87" />
+          <path d="M16 3.13a4 4 0 010 7.75" />
+        </svg>
+      </div>
+    ),
+    appName: "Yael",
+    timestamp: "now",
+    title: "Patient Found",
+    subtitle: "David Cohen — returning patient. Last visit: March 2026",
+    buttons: null,
+  },
+  {
+    step: 2,
+    type: "notification",
+    appIcon: (
+      <div style={{
+        width: "20px", height: "20px", background: "#34c759", borderRadius: "5px",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
+    ),
+    appName: "Yael",
+    timestamp: "now",
+    title: "Appointment Confirmed",
+    subtitle: "Thursday 15 July at 10:00 — SMS sent to patient",
+    buttons: null,
+  },
+  {
+    step: 3,
+    type: "sms-banner",
+    appIcon: (
+      <div style={{
+        width: "20px", height: "20px", background: "#ff9500", borderRadius: "5px",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+        </svg>
+      </div>
+    ),
+    appName: "Messages",
+    timestamp: "now",
+    title: "Clinic Staff Notified",
+    subtitle: "Booking logged. Full summary sent to your team.",
+    buttons: null,
+    isSms: true,
+  },
+];
+
+export { NOTIF_STEPS };
+
+const cardBase = {
+  background: "rgba(250,250,252,0.94)",
+  backdropFilter: "blur(40px) saturate(200%)",
+  WebkitBackdropFilter: "blur(40px) saturate(200%)",
+  borderRadius: "16px",
+  padding: "14px 16px",
+  boxShadow: "0 2px 12px rgba(0,0,0,0.08), 0 0 0 0.5px rgba(0,0,0,0.06)",
+  fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif",
+  boxSizing: "border-box",
+  maxWidth: "340px",
+};
+
+function CardHeader({ appIcon, appName, timestamp }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+      {appIcon}
+      <span style={{ fontSize: "12px", fontWeight: 600, color: "rgba(60,60,67,0.6)", flex: 1, letterSpacing: "-0.01em" }}>
+        {appName}
+      </span>
+      <span style={{ fontSize: "11px", fontWeight: 400, color: "rgba(60,60,67,0.4)" }}>
+        {timestamp}
+      </span>
+    </div>
+  );
+}
+
+function AcceptIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34c759" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.73a16 16 0 006.72 6.72l1.06-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+    </svg>
+  );
+}
+
+function DeclineIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#eb4d3d" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.73a16 16 0 006.72 6.72l1.06-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+      <line x1="2" y1="2" x2="22" y2="22" style={{ transform: "rotate(-45deg)", transformOrigin: "center" }} />
+    </svg>
+  );
+}
+
+export default function IosNotifCard({ stepIndex }) {
+  const [entered, setEntered] = useState(false);
+
+  useEffect(() => {
+    // Trigger enter animation on mount or step change
+    setEntered(false);
+    const raf = requestAnimationFrame(() =>
+      requestAnimationFrame(() => setEntered(true))
+    );
+    return () => cancelAnimationFrame(raf);
+  }, [stepIndex]);
+
+  if (stepIndex < 0 || stepIndex >= NOTIF_STEPS.length) return null;
+  const data = NOTIF_STEPS[stepIndex];
+
+  return (
+    <div
+      style={{
+        ...cardBase,
+        opacity: entered ? 1 : 0,
+        transform: entered ? "translateY(0)" : "translateY(-20px)",
+        transition: "opacity 0.35s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1)",
+        pointerEvents: "none",
+      }}
+    >
+      <CardHeader appIcon={data.appIcon} appName={data.appName} timestamp={data.timestamp} />
+
+      {data.type === "incoming-call" && (
+        <>
+          <div style={{ fontSize: "16px", fontWeight: 600, color: "#000", lineHeight: 1.3, marginBottom: "2px" }}>
+            {data.title}
+          </div>
+          <div style={{ fontSize: "13px", fontWeight: 400, color: "rgba(60,60,67,0.75)", lineHeight: 1.3, marginBottom: "12px" }}>
+            {data.subtitle}
+          </div>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <div style={{
+              flex: 1, height: "34px", background: data.buttons[0].bg,
+              borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", gap: "4px",
+            }}>
+              <DeclineIcon />
+              <span style={{ fontSize: "14px", fontWeight: 500, color: data.buttons[0].color }}>{data.buttons[0].label}</span>
+            </div>
+            <div style={{
+              flex: 1, height: "34px", background: data.buttons[1].bg,
+              borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", gap: "4px",
+            }}>
+              <AcceptIcon />
+              <span style={{ fontSize: "14px", fontWeight: 500, color: data.buttons[1].color }}>{data.buttons[1].label}</span>
+            </div>
+          </div>
+        </>
+      )}
+
+      {data.type === "notification" && (
+        <>
+          <div style={{ fontSize: "14px", fontWeight: 600, color: "#000", lineHeight: 1.3, marginBottom: "2px" }}>
+            {data.title}
+          </div>
+          <div style={{ fontSize: "13px", fontWeight: 400, color: "rgba(60,60,67,0.75)", lineHeight: 1.35 }}>
+            {data.subtitle}
+          </div>
+        </>
+      )}
+
+      {data.type === "sms-banner" && (
+        <div style={{
+          background: "rgba(118,118,128,0.08)", borderRadius: "10px", padding: "10px 12px", marginTop: "2px",
+        }}>
+          <div style={{ fontSize: "14px", fontWeight: 600, color: "#000", lineHeight: 1.3, marginBottom: "2px" }}>
+            {data.title}
+          </div>
+          <div style={{ fontSize: "13px", fontWeight: 400, color: "rgba(60,60,67,0.75)", lineHeight: 1.35 }}>
+            {data.subtitle}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
