@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import IosWaveform from "@/components/IosWaveform";
 import IosNotifCard from "@/components/IosNotifCard";
 
 const STEPS = [
@@ -29,7 +28,6 @@ export default function HowItWorksSection() {
   const sectionRef = useRef(null);
   const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
-  const stepRefs = useRef([]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -47,25 +45,17 @@ export default function HowItWorksSection() {
       const p = Math.max(0, Math.min(1, scrolled / end));
       setProgress(p);
 
-      // Step-level activeStep: based on each step's heading position
-      // Trigger zone aligns with sticky left panel (~200px from viewport top)
-      const triggerY = 220;
-      let best = 0;
-      for (let i = 0; i < stepRefs.current.length; i++) {
-        const el = stepRefs.current[i];
-        if (!el) continue;
-        const top = el.getBoundingClientRect().top;
-        if (top <= triggerY) best = i;
-      }
-      setActiveStep(best);
+      // Step-level activeStep: derived from section scroll progress
+      // Evenly distributes 4 steps across the full scroll range
+      const stepProgress = Math.min(1, Math.max(0, progress));
+      const newActiveStep = Math.min(3, Math.floor(stepProgress * 4));
+      setActiveStep(newActiveStep);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const isCalming = activeStep === 3;
 
   return (
     <section ref={sectionRef} data-how-works style={{ background: "#fdfcfc", padding: "100px 48px" }}>
@@ -107,25 +97,19 @@ export default function HowItWorksSection() {
             position: "sticky",
             top: "120px",
             alignSelf: "flex-start",
+            minHeight: "calc(100vh - 120px)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
           }}>
-            {/* Waveform */}
-            <div style={{ marginBottom: "32px" }}>
-              <p style={{
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 400,
-                fontSize: "11px",
-                color: "#a59f97",
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                margin: "0 0 10px 0",
-              }}>
-                Live Audio
-              </p>
-              <IosWaveform active={activeStep >= 0} calming={isCalming} />
-            </div>
-
             {/* Stacked iOS Notification Cards — accumulate as user scrolls */}
-            <div className="notif-stack" style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <div className="notif-stack" style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "6px",
+              justifyContent: "center",
+              flex: 1,
+            }}>
               {Array.from({ length: activeStep + 1 }, (_, i) => (
                 <IosNotifCard
                   key={i}
@@ -169,7 +153,6 @@ export default function HowItWorksSection() {
               {STEPS.map((step, i) => (
                 <div
                   key={step.number}
-                  ref={(el) => { stepRefs.current[i] = el; }}
                   style={{
                     padding: "56px 0 56px 48px",
                     opacity: progress >= i / STEPS.length ? 1 : 0.25,
