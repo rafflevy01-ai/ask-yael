@@ -263,9 +263,9 @@ export default function ProblemSection() {
       <section id="problem-section">
         <div id="problem-sticky">
           {/* Section label */}
-          <div className="problem-label" style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            <h1 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.6rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.05em", lineHeight: 1.1, margin: 0, textTransform: "none" }}>Sound familiar?</h1>
-            <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "14px", color: "#a59f97", textTransform: "none", letterSpacing: "0", margin: 0 }}>Recurrent issues that Yael fixes for you.</p>
+          <div style={{ position: "absolute", top: "40px", left: "50%", transform: "translateX(-50%)", zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", textAlign: "center", width: "100%" }}>
+            <h1 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.6rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.05em", lineHeight: 1.1, margin: 0 }}>Sound familiar?</h1>
+            <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "14px", color: "#a59f97", margin: 0 }}>Calls go unanswered. Patients don't wait. Your front desk can't be everywhere at once.</p>
           </div>
 
           {/* Progress dots */}
