@@ -3,6 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import ProofBar from "@/components/ProofBar";
 import ProblemSection from "@/components/ProblemSection";
 import HearYaelSection from "@/components/HearYaelSection";
+import HowItWorksSection from "@/components/HowItWorksSection";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <ProofBar />
       <ProblemSection />
       <HearYaelSection />
+      <HowItWorksSection />
     </main>
   );
 }
