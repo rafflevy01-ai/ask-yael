@@ -11,19 +11,24 @@ export default function ProblemSection() {
     // --- Bar animations (defined first so scroll handler can call them) ---
     window.animateBarsEnter = function() {
       const bars = document.querySelectorAll('[data-height]');
+      // Reset all to 0 instantly
       bars.forEach((bar) => { bar.style.transition = 'none'; bar.style.height = '0%'; });
       requestAnimationFrame(() => requestAnimationFrame(() => {
         bars.forEach((bar, i) => {
-          bar.style.transition = 'height 0.55s cubic-bezier(0.22,1,0.36,1)';
-          setTimeout(() => { bar.style.height = bar.getAttribute('data-height') + '%'; }, i * 35);
+          // Each bar rises one at a time: 120ms stagger, 500ms rise
+          setTimeout(() => {
+            bar.style.transition = 'height 0.5s cubic-bezier(0.22,1,0.36,1)';
+            bar.style.height = bar.getAttribute('data-height') + '%';
+          }, i * 120);
         });
       }));
     };
     window.animateBarsExit = function() {
       const bars = document.querySelectorAll('[data-height]');
+      // Collapse right to left
       [...bars].reverse().forEach((bar, i) => {
-        bar.style.transition = 'height 0.35s cubic-bezier(0.55,0,1,0.45)';
-        setTimeout(() => { bar.style.height = '0%'; }, i * 20);
+        bar.style.transition = 'height 0.3s cubic-bezier(0.55,0,1,0.45)';
+        setTimeout(() => { bar.style.height = '0%'; }, i * 40);
       });
     };
 
