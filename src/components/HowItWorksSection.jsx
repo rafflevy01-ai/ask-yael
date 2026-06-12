@@ -24,21 +24,24 @@ const STEPS = [
   },
 ];
 
+const STEP_COUNT = STEPS.length;
+
 export default function HowItWorksSection() {
   const sectionRef = useRef(null);
   const leftPanelRef = useRef(null);
   const stepRefs = useRef([]);
   const hasAnimated = useRef(new Set());
-  const maxStepRef = useRef(0);
   const hasScrolled = useRef(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
-  const [maxStepReached, setMaxStepReached] = useState(0);
   const [cardTops, setCardTops] = useState({});
   const [animatingSteps, setAnimatingSteps] = useState({});
 
   useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+
     const onScroll = () => {
       const section = sectionRef.current;
       if (!section) return;
@@ -46,7 +49,7 @@ export default function HowItWorksSection() {
       const sectionHeight = section.offsetHeight;
       const viewportHeight = window.innerHeight;
 
-      // Section-level progress (orange line)
+      // Section-level progress
       const triggerPoint = viewportHeight * 0.4;
       const start = viewportHeight - triggerPoint;
       const end = sectionHeight - triggerPoint;
@@ -54,65 +57,45 @@ export default function HowItWorksSection() {
       const p = Math.max(0, Math.min(1, scrolled / end));
       setProgress(p);
 
-      // Current active step from scroll position
-      const newActiveStep = Math.min(3, Math.floor(p * 4));
+      const newActiveStep = Math.min(STEP_COUNT - 1, Math.floor(p * STEP_COUNT));
       setActiveStep(newActiveStep);
 
-      // Monotonic max — cards accumulate, never disappear
-      const prevMax = maxStepRef.current;
-      const newMax = Math.max(prevMax, newActiveStep);
-
-      // Only animate on actual scroll — skip the initial measurement call
+      // Only animate on real scroll
       if (hasScrolled.current) {
-        // Animate any newly-reached steps
-        if (newMax > prevMax) {
-          for (let i = prevMax + 1; i <= newMax; i++) {
-            if (!hasAnimated.current.has(i)) {
-              hasAnimated.current.add(i);
-              setAnimatingSteps((prev) => ({ ...prev, [i]: true }));
-              setTimeout(() => {
-                setAnimatingSteps((prev) => {
-                  const next = { ...prev };
-                  delete next[i];
-                  return next;
-                });
-              }, 700);
-            }
+        for (let i = 0; i < STEP_COUNT; i++) {
+          const visible = p >= i / STEP_COUNT;
+          if (visible && !hasAnimated.current.has(i)) {
+            hasAnimated.current.add(i);
+            setAnimatingSteps((prev) => ({ ...prev, [i]: true }));
+            setTimeout(() => {
+              setAnimatingSteps((prev) => {
+                const next = { ...prev };
+                delete next[i];
+                return next;
+              });
+            }, 700);
           }
-        }
-
-        // Step 0 is baseline — animate it on first meaningful scroll into section
-        if (hasAnimated.current.size === 0 && p > 0.02) {
-          hasAnimated.current.add(0);
-          setAnimatingSteps((prev) => ({ ...prev, [0]: true }));
-          setTimeout(() => {
-            setAnimatingSteps((prev) => {
-              const next = { ...prev };
-              delete next[0];
-              return next;
-            });
-          }, 700);
         }
       }
-      maxStepRef.current = newMax;
-      setMaxStepReached(newMax);
 
-      // Position each visible card aligned with its step heading
-      const panel = leftPanelRef.current;
-      if (panel) {
-        const panelRect = panel.getBoundingClientRect();
-        const tops = {};
-        for (let i = 0; i <= newMax; i++) {
-          const stepEl = stepRefs.current[i];
-          if (stepEl) {
-            const heading = stepEl.querySelector("h3");
-            if (heading) {
-              const headingRect = heading.getBoundingClientRect();
-              tops[i] = headingRect.top - panelRect.top - 8;
+      // Position cards aligned with headings (desktop only)
+      if (!isMobile) {
+        const panel = leftPanelRef.current;
+        if (panel) {
+          const panelRect = panel.getBoundingClientRect();
+          const tops = {};
+          for (let i = 0; i < STEP_COUNT; i++) {
+            const stepEl = stepRefs.current[i];
+            if (stepEl) {
+              const heading = stepEl.querySelector("h3");
+              if (heading) {
+                const headingRect = heading.getBoundingClientRect();
+                tops[i] = headingRect.top - panelRect.top - 8;
+              }
             }
           }
+          setCardTops(tops);
         }
-        setCardTops(tops);
       }
     };
 
@@ -122,7 +105,7 @@ export default function HowItWorksSection() {
     };
 
     window.addEventListener("scroll", onRealScroll, { passive: true });
-    onScroll(); // initial measurement only, no animation
+    onScroll();
     return () => window.removeEventListener("scroll", onRealScroll);
   }, []);
 
@@ -156,10 +139,10 @@ export default function HowItWorksSection() {
           </h2>
         </div>
 
-        {/* Two-column layout: LEFT = sticky animation cards, RIGHT = text steps */}
+        {/* Desktop: two-column layout */}
         <div className="how-layout" style={{ display: "flex", gap: "clamp(32px, 5vw, 80px)", alignItems: "flex-start" }}>
 
-          {/* LEFT — Sticky panel with stacked animation cards */}
+          {/* LEFT — Sticky panel (desktop) or inline column (mobile) */}
           <div ref={leftPanelRef} className="how-left" style={{
             width: "clamp(280px, 36vw, 340px)",
             flexShrink: 0,
@@ -168,22 +151,42 @@ export default function HowItWorksSection() {
             alignSelf: "flex-start",
             minHeight: "calc(100vh - 120px)",
           }}>
-            {Array.from({ length: maxStepReached + 1 }, (_, i) => (
-              <IosNotifCard
-                key={i}
-                stepIndex={i}
-                animate={!!animatingSteps[i]}
-                cardStyle={{
-                  position: "absolute",
-                  top: `${cardTops[i] || 0}px`,
-                  left: 0,
-                  right: 0,
-                }}
-              />
-            ))}
+            {STEPS.map((_, i) => {
+              const visible = progress >= i / STEP_COUNT;
+
+              if (isMobile) {
+                // Mobile: stacked vertically, not absolute
+                return (
+                  <div key={i} style={{ marginBottom: i < STEP_COUNT - 1 ? "16px" : 0 }}>
+                    <IosNotifCard
+                      stepIndex={i}
+                      visible={visible}
+                      animate={!!animatingSteps[i]}
+                      cardStyle={{}}
+                    />
+                  </div>
+                );
+              }
+
+              // Desktop: absolute positioning in sticky panel
+              return (
+                <IosNotifCard
+                  key={i}
+                  stepIndex={i}
+                  visible={visible}
+                  animate={!!animatingSteps[i]}
+                  cardStyle={{
+                    position: "absolute",
+                    top: `${cardTops[i] || 0}px`,
+                    left: 0,
+                    right: 0,
+                  }}
+                />
+              );
+            })}
           </div>
 
-          {/* RIGHT — Scrollable text steps */}
+          {/* RIGHT — Text steps */}
           <div className="how-right" style={{ flex: 1, minWidth: 0 }}>
             <div style={{ position: "relative" }}>
               {/* Vertical progress line */}
@@ -216,7 +219,7 @@ export default function HowItWorksSection() {
                   ref={(el) => (stepRefs.current[i] = el)}
                   style={{
                     padding: "56px 0 56px 48px",
-                    opacity: progress >= i / STEPS.length ? 1 : 0.25,
+                    opacity: progress >= i / STEP_COUNT ? 1 : 0.25,
                     transition: "opacity 0.4s ease",
                     position: "relative",
                     zIndex: 2,
@@ -293,10 +296,6 @@ export default function HowItWorksSection() {
             margin: 0 auto !important;
             min-height: auto !important;
             order: -1 !important;
-          }
-          .how-left > div {
-            position: relative !important;
-            top: auto !important;
           }
           .how-right > div { padding: 0 !important; }
           .how-right > div > div { padding-left: 0 !important; padding-top: 32px !important; padding-bottom: 32px !important; }
