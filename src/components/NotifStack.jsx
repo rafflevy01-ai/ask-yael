@@ -8,7 +8,8 @@ const NOTIF_DATA = [
   { number: "+972 50 111 2233", time: "22:18" },
 ];
 
-const GAP = 10; // px gap between cards
+const GAP = 10;
+const OPACITIES = [1, 0.75, 0.45];
 
 let idCounter = 0;
 
@@ -39,14 +40,12 @@ function Card({ data, topOffset, opacity, zIndex, entering, onHeightChange, card
         boxSizing: "border-box",
         boxShadow: "inset 0 0 0 0.5px rgba(255,255,255,0.6), 0 4px 24px rgba(0,0,0,0.06)",
         fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif",
-        transition: "top 0.42s cubic-bezier(0.34,1.1,0.64,1), opacity 0.42s ease, transform 0.42s cubic-bezier(0.34,1.1,0.64,1)",
+        transition: "top 0.42s cubic-bezier(0.34,1.1,0.64,1), opacity 0.42s ease",
         top: entering ? "-80px" : `${topOffset}px`,
         opacity: entering ? 0 : opacity,
         zIndex,
-        transform: "scale(1)",
       }}
     >
-      {/* Row 1 — header */}
       <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "6px" }}>
         <div style={{
           width: "18px", height: "18px", background: "#34c759", borderRadius: "5px",
@@ -60,16 +59,10 @@ function Card({ data, topOffset, opacity, zIndex, entering, onHeightChange, card
         <span style={{ fontSize: "12px", fontWeight: 400, color: "rgba(60,60,67,0.4)" }}>{data.time}</span>
         <span style={{ fontSize: "14px", color: "rgba(60,60,67,0.3)", marginLeft: "4px" }}>›</span>
       </div>
-
-      {/* Row 2 */}
       <div style={{ fontSize: "15px", fontWeight: 600, color: "#000000" }}>Missed Call</div>
-
-      {/* Row 3 */}
       <div style={{ fontSize: "15px", fontWeight: 400, color: "#3c3c3c", marginTop: "1px" }}>
         New Patient · {data.number}
       </div>
-
-      {/* Row 4 — actions */}
       <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>
         <div style={{ flex: 1, height: "32px", background: "rgba(0,0,0,0.05)", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: 500, color: "#007aff" }}>
           Call Back
@@ -83,15 +76,21 @@ function Card({ data, topOffset, opacity, zIndex, entering, onHeightChange, card
 }
 
 export default function NotifStack() {
+  // cards[0] = top (newest), cards[2] = bottom (oldest)
   const [cards, setCards] = useState([]);
   const [heights, setHeights] = useState({});
   const [visible, setVisible] = useState(false);
+  // tracks which card is "exiting" (fading out before recycling)
+  const [exitingId, setExitingId] = useState(null);
+
   const wrapperRef = useRef(null);
   const indexRef = useRef(0);
   const startedRef = useRef(false);
+  const cardsRef = useRef(cards);
+  cardsRef.current = cards;
 
   const onHeightChange = useCallback((id, h) => {
-    setHeights((prev) => ({ ...prev, [id]: h }));
+    setHeights((prev) => (prev[id] === h ? prev : { ...prev, [id]: h }));
   }, []);
 
   useEffect(() => {
@@ -114,43 +113,68 @@ export default function NotifStack() {
   useEffect(() => {
     if (!visible) return;
 
-    function addCard() {
-      const data = NOTIF_DATA[indexRef.current % NOTIF_DATA.length];
-      indexRef.current++;
-      const id = ++idCounter;
-      // Add entering card at front, keep max 3
-      setCards((prev) => [{ id, data, entering: true }, ...prev.slice(0, 2)]);
-      // Flip entering off after 2 frames
-      requestAnimationFrame(() =>
-        requestAnimationFrame(() => {
-          setCards((prev) =>
-            prev.map((c) => (c.id === id ? { ...c, entering: false } : c))
+    function cycle() {
+      const current = cardsRef.current;
+
+      if (current.length < 3) {
+        // Just add a new card at the top
+        const data = NOTIF_DATA[indexRef.current % NOTIF_DATA.length];
+        indexRef.current++;
+        const id = ++idCounter;
+        setCards((prev) => [{ id, data, entering: true }, ...prev]);
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            setCards((prev) =>
+              prev.map((c) => (c.id === id ? { ...c, entering: false } : c))
+            );
+          })
+        );
+      } else {
+        // Step 1: fade out the bottom card
+        const bottomCard = current[current.length - 1];
+        setExitingId(bottomCard.id);
+
+        // Step 2: after fade-out, recycle it to the top with new data
+        setTimeout(() => {
+          const data = NOTIF_DATA[indexRef.current % NOTIF_DATA.length];
+          indexRef.current++;
+          const recycledId = ++idCounter;
+
+          setExitingId(null);
+          setCards((prev) => {
+            // Remove bottom card, prepend recycled one as entering
+            const rest = prev.slice(0, prev.length - 1);
+            return [{ id: recycledId, data, entering: true }, ...rest];
+          });
+
+          requestAnimationFrame(() =>
+            requestAnimationFrame(() => {
+              setCards((prev) =>
+                prev.map((c) => (c.id === recycledId ? { ...c, entering: false } : c))
+              );
+            })
           );
-        })
-      );
+        }, 420); // matches transition duration
+      }
     }
 
-    addCard();
-    const interval = setInterval(addCard, 2500);
+    // Seed with first card immediately
+    cycle();
+    const interval = setInterval(cycle, 2500);
     return () => clearInterval(interval);
   }, [visible]);
 
-  // Compute top offsets: card[0] is at top=0, card[1] is below card[0], etc.
   function getTopOffset(index) {
     let top = 0;
     for (let i = 0; i < index; i++) {
-      const id = cards[i]?.id;
-      top += (heights[id] ?? 120) + GAP;
+      top += (heights[cards[i]?.id] ?? 120) + GAP;
     }
     return top;
   }
 
-  // Total height for wrapper
   const totalHeight = cards.reduce((sum, c, i) => {
     return sum + (heights[c.id] ?? 120) + (i < cards.length - 1 ? GAP : 0);
   }, 0);
-
-  const opacities = [1, 0.75, 0.45];
 
   return (
     <div
@@ -158,23 +182,27 @@ export default function NotifStack() {
       style={{
         position: "relative",
         width: "340px",
+        minHeight: "120px",
         height: Math.max(totalHeight, 120) + "px",
         pointerEvents: "none",
         transition: "height 0.42s cubic-bezier(0.34,1.1,0.64,1)",
       }}
     >
-      {cards.map((card, i) => (
-        <Card
-          key={card.id}
-          cardId={card.id}
-          data={card.data}
-          entering={card.entering}
-          topOffset={getTopOffset(i)}
-          opacity={opacities[i] ?? 0}
-          zIndex={cards.length - i}
-          onHeightChange={onHeightChange}
-        />
-      ))}
+      {cards.map((card, i) => {
+        const isExiting = card.id === exitingId;
+        return (
+          <Card
+            key={card.id}
+            cardId={card.id}
+            data={card.data}
+            entering={card.entering}
+            topOffset={getTopOffset(i)}
+            opacity={isExiting ? 0 : (OPACITIES[i] ?? 0.3)}
+            zIndex={cards.length - i}
+            onHeightChange={onHeightChange}
+          />
+        );
+      })}
     </div>
   );
 }
