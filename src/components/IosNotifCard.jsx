@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 
 const NOTIF_STEPS = [
   {
@@ -19,7 +19,7 @@ const NOTIF_STEPS = [
     title: "David Cohen",
     subtitle: "Yael answering in Hebrew...",
     buttons: [
-      { label: "Decline", bg: "rgba(235,77,61,0.18)", color: "#eb4d3d", icon: "decline" },
+      { label: "Decline", bg: "rgba(235,77,61,0.18)", color: "#eb4d3d" },
       { label: "Accept", bg: "rgba(52,199,89,0.18)", color: "#34c759", icon: "accept" },
     ],
   },
@@ -125,61 +125,17 @@ function AcceptIcon() {
   );
 }
 
-export default function IosNotifCard({ stepIndex, visible = true, animate, isRevisit, cardStyle }) {
-  const [entered, setEntered] = useState(false);
-  const prevVisible = useRef(false);
-
-  useEffect(() => {
-    // Just became visible
-    if (visible && !prevVisible.current) {
-      if (animate) {
-        // First time ever — animate entrance from below
-        setEntered(false);
-        const raf = requestAnimationFrame(() =>
-          requestAnimationFrame(() => setEntered(true))
-        );
-        return () => cancelAnimationFrame(raf);
-      } else if (isRevisit) {
-        // Scrolling back down to a previously-seen step — quicker re-entry
-        setEntered(false);
-        const raf = requestAnimationFrame(() =>
-          requestAnimationFrame(() => setEntered(true))
-        );
-        return () => cancelAnimationFrame(raf);
-      } else {
-        setEntered(true);
-      }
-    }
-    // Just became hidden
-    else if (!visible && prevVisible.current) {
-      setEntered(false);
-    }
-    // Already visible, no change needed
-    else if (visible && prevVisible.current && !entered) {
-      setEntered(true);
-    }
-
-    prevVisible.current = visible;
-  }, [stepIndex, visible, animate, isRevisit]);
-
+export default function IosNotifCard({ stepIndex, visible = true, cardStyle }) {
   if (stepIndex < 0 || stepIndex >= NOTIF_STEPS.length) return null;
   const data = NOTIF_STEPS[stepIndex];
-
-  const isFirstAnim = animate;
-  const isReEntry = isRevisit && !animate;
 
   return (
     <div
       style={{
         ...cardBase,
         ...cardStyle,
-        opacity: entered ? 1 : 0,
-        transform: entered ? "translateY(0)" : "translateY(40px)",
-        transition: isFirstAnim
-          ? "opacity 0.45s ease-out, transform 0.7s cubic-bezier(0.22,1,0.36,1), top 0.08s linear"
-          : isReEntry
-            ? "opacity 0.35s ease-out, transform 0.5s cubic-bezier(0.22,1,0.36,1), top 0.08s linear"
-            : "opacity 0.35s ease, transform 0.45s cubic-bezier(0.55,0,1,0.45), top 0.08s linear",
+        opacity: visible ? 1 : 0,
+        transition: "opacity 0.65s ease",
         pointerEvents: "none",
       }}
     >
@@ -204,7 +160,7 @@ export default function IosNotifCard({ stepIndex, visible = true, animate, isRev
               flex: 1, height: "28px", background: data.buttons[1].bg,
               borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", gap: "4px",
             }}>
-              <AcceptIcon />
+              {data.buttons[1].icon === "accept" && <AcceptIcon />}
               <span style={{ fontSize: "13px", fontWeight: 500, color: data.buttons[1].color }}>{data.buttons[1].label}</span>
             </div>
           </div>

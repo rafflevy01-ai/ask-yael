@@ -18,13 +18,10 @@ export default function HowItWorksSection() {
   const sectionRef = useRef(null);
   const cardsPanelRef = useRef(null);
   const stepRefs = useRef([]);
-  const hasAnimated = useRef(new Set());
   const hasScrolled = useRef(false);
-  const lastActive = useRef(0);
 
   const [progress, setProgress] = useState(0);
   const [cardTops, setCardTops] = useState({});
-  const [animatingSteps, setAnimatingSteps] = useState({});
 
   useEffect(() => {
     const onScroll = () => {
@@ -41,37 +38,6 @@ export default function HowItWorksSection() {
       const scrolled = start - rect.top;
       const p = Math.max(0, Math.min(1, scrolled / end));
       setProgress(p);
-
-      const active = Math.min(STEP_COUNT - 1, Math.floor(p * STEP_COUNT));
-
-      // Track which steps are visible right now
-      if (hasScrolled.current) {
-        const scrollingDown = active >= lastActive.current;
-        lastActive.current = active;
-
-        for (let i = 0; i < STEP_COUNT; i++) {
-          // A step is "visible" when progress passes its threshold
-          const visible = p >= i / STEP_COUNT;
-
-          if (visible && !hasAnimated.current.has(i)) {
-            hasAnimated.current.add(i);
-            setAnimatingSteps((prev) => ({ ...prev, [i]: true }));
-            setTimeout(() => {
-              setAnimatingSteps((prev) => {
-                const next = { ...prev };
-                delete next[i];
-                return next;
-              });
-            }, 700);
-          }
-
-          // On scroll back up: clear animation flag so card can re-animate
-          if (!visible && hasAnimated.current.has(i)) {
-            // Keep it marked as "seen" but allow re-entrance animation
-            // We don't remove from hasAnimated — the card handles re-entry
-          }
-        }
-      }
 
       // Desktop: align cards to headings
       if (!mobile) {
@@ -130,20 +96,21 @@ export default function HowItWorksSection() {
               width: "clamp(280px, 36vw, 340px)", flexShrink: 0, position: "sticky",
               top: "120px", alignSelf: "flex-start", minHeight: "calc(100vh - 120px)",
             }}>
-              {STEPS.map((_, i) => (
-                <IosNotifCard
-                  key={i}
-                  stepIndex={i}
-                  visible={progress >= i / STEP_COUNT}
-                  animate={!!animatingSteps[i]}
-                  isRevisit={hasAnimated.current.has(i) && !animatingSteps[i]}
-                  cardStyle={{
-                    position: "absolute",
-                    top: `${cardTops[i] || 0}px`,
-                    left: 0, right: 0,
-                  }}
-                />
-              ))}
+              {STEPS.map((_, i) => {
+                const visible = progress >= i / STEP_COUNT;
+                return (
+                  <IosNotifCard
+                    key={i}
+                    stepIndex={i}
+                    visible={visible}
+                    cardStyle={{
+                      position: "absolute",
+                      top: `${cardTops[i] || 0}px`,
+                      left: 0, right: 0,
+                    }}
+                  />
+                );
+              })}
             </div>
 
             {/* RIGHT — Text steps + progress line */}
@@ -163,8 +130,8 @@ export default function HowItWorksSection() {
                   <div key={step.number} ref={(el) => (stepRefs.current[i] = el)}
                     style={{
                       padding: "56px 0 56px 48px",
-                      opacity: progress >= i / STEP_COUNT ? 1 : 0.25,
-                      transition: "opacity 0.4s ease",
+                      opacity: progress >= i / STEP_COUNT ? 1 : 0.15,
+                      transition: "opacity 0.7s ease",
                       position: "relative", zIndex: 2,
                     }}>
                     <span style={{
@@ -194,9 +161,9 @@ export default function HowItWorksSection() {
             return (
               <div key={step.number}
                 style={{
-                  opacity: visible ? 1 : 0.22,
-                  transition: "opacity 0.5s ease",
                   padding: "32px 0 48px 0",
+                  opacity: visible ? 1 : 0.12,
+                  transition: "opacity 0.7s ease",
                 }}>
                 <span style={{
                   fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "11px",
@@ -216,8 +183,6 @@ export default function HowItWorksSection() {
                   <IosNotifCard
                     stepIndex={i}
                     visible={visible}
-                    animate={!!animatingSteps[i]}
-                    isRevisit={hasAnimated.current.has(i) && !animatingSteps[i]}
                     cardStyle={{}}
                   />
                 </div>
