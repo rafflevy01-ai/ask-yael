@@ -192,7 +192,6 @@ export default function HeroSection() {
           .hero-content { padding: 60px 32px !important; }
         }
         @media (max-width: 768px) {
-          .hero-headline { font-weight: 700 !important; }
           .hero-content {
             padding: 48px 20px !important;
             align-items: center !important;
