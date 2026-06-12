@@ -281,7 +281,7 @@ export default function ProblemSection() {
               {/* Right column — iOS notification stack */}
               <div
                 className="iphone-col"
-                style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}
+                style={{ flex: 1, display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "20px" }}
               >
                 <NotifStack />
               </div>
