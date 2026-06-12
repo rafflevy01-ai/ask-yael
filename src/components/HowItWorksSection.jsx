@@ -125,7 +125,7 @@ export default function HowItWorksSection() {
                 <div style={{
                   position: "absolute", left: "0", top: 0, width: "1px",
                   height: `${progress * 100}%`, maxHeight: "100%",
-                  background: "#FF4500", borderRadius: "9999px", zIndex: 1,
+                  background: "#007aff", borderRadius: "9999px", zIndex: 1,
                   transition: "height 0.08s linear",
                 }} />
                 {STEPS.map((step, i) => (
@@ -158,42 +158,55 @@ export default function HowItWorksSection() {
 
         {/* ── MOBILE ── */}
         <div className="how-mobile">
-          {STEPS.map((step, i) => {
-            const visible = progress >= i / STEP_COUNT;
-            return (
-              <div key={step.number}
-                style={{
-                  padding: i === 0 ? "12px 0 48px 0" : "32px 0 48px 0",
-                }}>
-                <div style={{
-                  opacity: visible ? 1 : 0.12,
-                  transition: "opacity 0.7s ease",
-                }}>
-                  <span style={{
-                    fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "11px",
-                    textTransform: "uppercase", letterSpacing: "0.1em",
-                    color: "#a59f97", display: "block", marginBottom: "12px",
-                  }}>Step {step.number}</span>
-                  <h3 style={{
-                    fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
-                    fontSize: "1.4rem", color: "#000000", letterSpacing: "-0.04em",
-                    lineHeight: 1.15, margin: "0 0 8px 0",
-                  }}>{step.title}</h3>
-                  <p style={{
-                    fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
-                    color: "#66605a", lineHeight: 1.6, margin: "0 0 20px 0",
-                  }}>{step.description}</p>
+          <div style={{ position: "relative", paddingLeft: "28px" }}>
+            {/* Progress tracks */}
+            <div style={{
+              position: "absolute", left: "8px", top: 0, bottom: 0,
+              width: "1px", background: "#e0ddd9", borderRadius: "9999px", zIndex: 0,
+            }} />
+            <div style={{
+              position: "absolute", left: "8px", top: 0, width: "1px",
+              height: `${progress * 100}%`, maxHeight: "100%",
+              background: "#007aff", borderRadius: "9999px", zIndex: 1,
+              transition: "height 0.08s linear",
+            }} />
+            {STEPS.map((step, i) => {
+              const visible = progress >= i / STEP_COUNT;
+              return (
+                <div key={step.number}
+                  style={{
+                    padding: i === 0 ? "12px 0 48px 0" : "32px 0 48px 0",
+                  }}>
+                  <div style={{
+                    opacity: visible ? 1 : 0.12,
+                    transition: "opacity 0.7s ease",
+                  }}>
+                    <span style={{
+                      fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "11px",
+                      textTransform: "uppercase", letterSpacing: "0.1em",
+                      color: "#a59f97", display: "block", marginBottom: "12px",
+                    }}>Step {step.number}</span>
+                    <h3 style={{
+                      fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
+                      fontSize: "1.4rem", color: "#000000", letterSpacing: "-0.04em",
+                      lineHeight: 1.15, margin: "0 0 8px 0",
+                    }}>{step.title}</h3>
+                    <p style={{
+                      fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
+                      color: "#66605a", lineHeight: 1.6, margin: "0 0 20px 0",
+                    }}>{step.description}</p>
+                  </div>
+                  <div style={{ maxWidth: "340px", margin: "0 auto" }}>
+                    <IosNotifCard
+                      stepIndex={i}
+                      visible={true}
+                      cardStyle={{}}
+                    />
+                  </div>
                 </div>
-                <div style={{ maxWidth: "340px", margin: "0 auto" }}>
-                  <IosNotifCard
-                    stepIndex={i}
-                    visible={true}
-                    cardStyle={{}}
-                  />
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
 
