@@ -30,6 +30,7 @@ export default function HowItWorksSection() {
   const rightColRef = useRef(null);
   const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
+
   useEffect(() => {
     const onScroll = () => {
       const section = sectionRef.current;
@@ -37,6 +38,8 @@ export default function HowItWorksSection() {
       const rect = section.getBoundingClientRect();
       const sectionHeight = section.offsetHeight;
       const viewportHeight = window.innerHeight;
+
+      // Section-level progress (for the orange progress line)
       const triggerPoint = viewportHeight * 0.4;
       const start = viewportHeight - triggerPoint;
       const end = sectionHeight - triggerPoint;
@@ -44,9 +47,17 @@ export default function HowItWorksSection() {
       const p = Math.max(0, Math.min(1, scrolled / end));
       setProgress(p);
 
-      // Map progress to step: 0→step0, 0.25→step1, 0.5→step2, 0.75→step3
-      const step = Math.min(3, Math.floor(p * 4 + 0.05));
-      setActiveStep(step);
+      // Step-level activeStep: check each step div's position in viewport
+      const stepEls = document.querySelectorAll('[data-how-step]');
+      const lineMiddle = viewportHeight * 0.45; // trigger when step top hits 45% from top
+      let bestStep = 0;
+      stepEls.forEach((el) => {
+        const top = el.getBoundingClientRect().top;
+        if (top <= lineMiddle) {
+          bestStep = Math.max(bestStep, parseInt(el.getAttribute('data-how-step'), 10));
+        }
+      });
+      setActiveStep(bestStep);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -162,6 +173,7 @@ export default function HowItWorksSection() {
               {STEPS.map((step, i) => (
                 <div
                   key={step.number}
+                  data-how-step={i}
                   style={{
                     padding: "56px 0 56px 48px",
                     opacity: progress >= i / STEPS.length ? 1 : 0.25,
