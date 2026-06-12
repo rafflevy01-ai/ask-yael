@@ -162,6 +162,32 @@ export default function ProblemSection() {
           width: 100vw;
           height: 100vh;
           flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .panel-card {
+          width: min(900px, 90vw);
+          height: min(600px, 80vh);
+          border-radius: 24px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 48px 40px;
+          position: relative;
+          overflow: hidden;
+        }
+        .panel-card::before {
+          content: '';
+          position: absolute;
+          width: 200px;
+          height: 200px;
+          background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+          top: -80px;
+          right: -60px;
+          pointer-events: none;
+          filter: blur(20px);
         }
         .problem-dots {
           position: absolute;
@@ -279,147 +305,123 @@ export default function ProblemSection() {
           <div id="panels-track">
 
             {/* ── PANEL 1 ── */}
-            <div
-              className="problem-panel"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 80px",
-                gap: "24px",
-                textAlign: "center",
-              }}>
-              
-              <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97" }}>01</span>
-              <div id="stat-revenue" style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "5rem", color: "#000", lineHeight: 1 }}>₪0</div>
-              <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97" }}>in unrealized revenue per year</div>
-              <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.84px", lineHeight: 1.1, margin: 0, maxWidth: "520px" }}>
-                Every missed call is a lost patient.
-              </h2>
-              <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px", color: "#777169", lineHeight: 1.6, margin: 0, maxWidth: "480px" }}>
-                Five missed calls a day at ₪900 each, 250 working days.
-              </p>
+            <div className="problem-panel">
+              <div className="panel-card" style={{ background: "linear-gradient(135deg, #fef2f2 0%, #fef7ff 100%)" }}>
+                <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97", marginBottom: "8px" }}>01</span>
+                <div id="stat-revenue" style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "5rem", color: "#000", lineHeight: 1 }}>₪0</div>
+                <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>in unrealized revenue per year</div>
+                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.84px", lineHeight: 1.1, margin: 0, maxWidth: "520px", textAlign: "center" }}>
+                  Every missed call is a lost patient.
+                </h2>
+                <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px", color: "#777169", lineHeight: 1.6, margin: "16px 0 0 0", maxWidth: "480px", textAlign: "center" }}>
+                  Five missed calls a day at ₪900 each, 250 working days.
+                </p>
 
-              {/* Notification stack — fixed height container so it never shifts the text above */}
-              <div style={{ height: "240px", width: "360px", flexShrink: 0, position: "relative", overflow: "hidden" }}>
-                <NotifStack />
+                {/* Notification stack */}
+                <div style={{ height: "240px", width: "360px", flexShrink: 0, position: "relative", overflow: "hidden", marginTop: "24px" }}>
+                  <NotifStack />
+                </div>
               </div>
             </div>
 
             {/* ── PANEL 2 ── */}
-            <div
-              className="problem-panel"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "24px",
-                padding: "0 80px"
-              }}>
-              
-              <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97" }}>02</span>
-              <div style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "5rem", color: "#000", lineHeight: 1 }}>40%</div>
-              <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97" }}>of appointment requests come after hours</div>
-              <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "520px", margin: 0 }}>
-                Your receptionist leaves at 18:00. Patients don't.
-              </h2>
+            <div className="problem-panel">
+              <div className="panel-card" style={{ background: "linear-gradient(135deg, #fef3c7 0%, #fef7ff 100%)" }}>
+                <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97", marginBottom: "8px" }}>02</span>
+                <div style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "5rem", color: "#000", lineHeight: 1 }}>40%</div>
+                <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>of appointment requests come after hours</div>
+                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "520px", margin: 0 }}>
+                  Your receptionist leaves at 18:00. Patients don't.
+                </h2>
 
-              {/* Bar chart */}
-              <div style={{ width: "min(640px, 100%)" }}>
-                <div id="bar-chart" style={{ width: "100%", height: "140px", display: "flex", alignItems: "flex-end", gap: "4px" }}>
-                  {businessBars.map((b) =>
-                  <div
-                    key={b.time}
-                    className="bar-item"
-                    data-height={b.h}
-                    style={{ background: "#000000" }} />
+                {/* Bar chart */}
+                <div style={{ width: "min(640px, 100%)", marginTop: "24px" }}>
+                  <div id="bar-chart" style={{ width: "100%", height: "140px", display: "flex", alignItems: "flex-end", gap: "4px" }}>
+                    {businessBars.map((b) =>
+                    <div
+                      key={b.time}
+                      className="bar-item"
+                      data-height={b.h}
+                      style={{ background: "#000000" }} />
 
-                  )}
-                  {/* Divider */}
-                  <div style={{ position: "relative", width: "1px", height: "100%", background: "#e5e5e5", flexShrink: 0 }}>
-                    <span style={{ position: "absolute", bottom: "-18px", left: "50%", transform: "translateX(-50%)", fontFamily: "Inter, sans-serif", fontSize: "9px", color: "#a59f97", whiteSpace: "nowrap" }}>18:00</span>
+                    )}
+                    {/* Divider */}
+                    <div style={{ position: "relative", width: "1px", height: "100%", background: "#e5e5e5", flexShrink: 0 }}>
+                      <span style={{ position: "absolute", bottom: "-18px", left: "50%", transform: "translateX(-50%)", fontFamily: "Inter, sans-serif", fontSize: "9px", color: "#a59f97", whiteSpace: "nowrap" }}>18:00</span>
+                    </div>
+                    {afterHoursBars.map((b) =>
+                    <div
+                      key={b.time}
+                      className="bar-item"
+                      data-height={b.h}
+                      style={{ background: "#e5e5e5" }} />
+
+                    )}
                   </div>
-                  {afterHoursBars.map((b) =>
-                  <div
-                    key={b.time}
-                    className="bar-item"
-                    data-height={b.h}
-                    style={{ background: "#e5e5e5" }} />
-
-                  )}
-                </div>
-                {/* Labels */}
-                <div style={{ display: "flex", justifyContent: "space-between", marginTop: "24px" }}>
-                  <span style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", color: "#a59f97" }}>Answered</span>
-                  <span style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", color: "#dc2626" }}>No answer</span>
+                  {/* Labels */}
+                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: "24px" }}>
+                    <span style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", color: "#a59f97" }}>Answered</span>
+                    <span style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", color: "#dc2626" }}>No answer</span>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* ── PANEL 3 ── */}
-            <div
-              className="problem-panel"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "32px"
-              }}>
-              
-              <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97" }}>03</span>
-              <div style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "5rem", color: "#000", lineHeight: 1 }}>30,000+</div>
-              <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97" }}>French-speaking residents in Netanya</div>
-              <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }} className="my-5 mx-auto">
-                Your receptionist speaks one language.<br />Your patients speak three.
-              </h2>
+            <div className="problem-panel">
+              <div className="panel-card" style={{ background: "linear-gradient(135deg, #dbeafe 0%, #fef7ff 100%)" }}>
+                <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97", marginBottom: "8px" }}>03</span>
+                <div style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "5rem", color: "#000", lineHeight: 1 }}>30,000+</div>
+                <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>French-speaking residents in Netanya</div>
+                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
+                  Your receptionist speaks one language.<br />Your patients speak three.
+                </h2>
 
-              {/* Language card */}
-              <div style={{ width: "min(400px, 90%)", background: "#ffffff", borderRadius: "20px", boxShadow: "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.04) 0px 2px 4px 0px", overflow: "hidden" }}>
-                {/* Hebrew row */}
-                <div style={{ opacity: 1, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid #e5e5e5" }}>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <span style={{ fontSize: "18px" }}>🇮🇱</span>
-                    <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "15px", color: "#000", marginLeft: "12px" }}>Hebrew</span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <div style={{ width: "36px", height: "20px", borderRadius: "9999px", background: "#16a34a", position: "relative" }}>
-                      <div style={{ width: "16px", height: "16px", background: "#fff", borderRadius: "9999px", position: "absolute", top: "2px", right: "2px", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
+                {/* Language card */}
+                <div style={{ width: "min(400px, 90%)", background: "#ffffff", borderRadius: "20px", boxShadow: "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.04) 0px 2px 4px 0px", overflow: "hidden", marginTop: "24px" }}>
+                  {/* Hebrew row */}
+                  <div style={{ opacity: 1, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid #e5e5e5" }}>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <span style={{ fontSize: "18px" }}>🇮🇱</span>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "15px", color: "#000", marginLeft: "12px" }}>Hebrew</span>
                     </div>
-                    <div style={{ width: "16px", height: "16px", background: "#16a34a", borderRadius: "9999px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <span style={{ color: "#fff", fontSize: "10px", lineHeight: 1 }}>✓</span>
-                    </div>
-                  </div>
-                </div>
-                {/* French row */}
-                <div style={{ opacity: 0.4, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid #e5e5e5" }}>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <span style={{ fontSize: "18px" }}>🇫🇷</span>
-                    <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "15px", color: "#000", marginLeft: "12px" }}>Français</span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <div style={{ width: "36px", height: "20px", borderRadius: "9999px", background: "#d1d5db", position: "relative" }}>
-                      <div style={{ width: "16px", height: "16px", background: "#fff", borderRadius: "9999px", position: "absolute", top: "2px", left: "2px", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
-                    </div>
-                    <div style={{ width: "16px", height: "16px", background: "#dc2626", borderRadius: "9999px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <span style={{ color: "#fff", fontSize: "10px", lineHeight: 1 }}>✕</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <div style={{ width: "36px", height: "20px", borderRadius: "9999px", background: "#16a34a", position: "relative" }}>
+                        <div style={{ width: "16px", height: "16px", background: "#fff", borderRadius: "9999px", position: "absolute", top: "2px", right: "2px", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
+                      </div>
+                      <div style={{ width: "16px", height: "16px", background: "#16a34a", borderRadius: "9999px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <span style={{ color: "#fff", fontSize: "10px", lineHeight: 1 }}>✓</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                {/* English row */}
-                <div style={{ opacity: 0.4, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <span style={{ fontSize: "18px" }}>🇬🇧</span>
-                    <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "15px", color: "#000", marginLeft: "12px" }}>English</span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <div style={{ width: "36px", height: "20px", borderRadius: "9999px", background: "#d1d5db", position: "relative" }}>
-                      <div style={{ width: "16px", height: "16px", background: "#fff", borderRadius: "9999px", position: "absolute", top: "2px", left: "2px", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
+                  {/* French row */}
+                  <div style={{ opacity: 0.4, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid #e5e5e5" }}>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <span style={{ fontSize: "18px" }}>🇫🇷</span>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "15px", color: "#000", marginLeft: "12px" }}>Français</span>
                     </div>
-                    <div style={{ width: "16px", height: "16px", background: "#dc2626", borderRadius: "9999px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <span style={{ color: "#fff", fontSize: "10px", lineHeight: 1 }}>✕</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <div style={{ width: "36px", height: "20px", borderRadius: "9999px", background: "#d1d5db", position: "relative" }}>
+                        <div style={{ width: "16px", height: "16px", background: "#fff", borderRadius: "9999px", position: "absolute", top: "2px", left: "2px", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
+                      </div>
+                      <div style={{ width: "16px", height: "16px", background: "#dc2626", borderRadius: "9999px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <span style={{ color: "#fff", fontSize: "10px", lineHeight: 1 }}>✕</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* English row */}
+                  <div style={{ opacity: 0.4, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <span style={{ fontSize: "18px" }}>🇬🇧</span>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "15px", color: "#000", marginLeft: "12px" }}>English</span>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <div style={{ width: "36px", height: "20px", borderRadius: "9999px", background: "#d1d5db", position: "relative" }}>
+                        <div style={{ width: "16px", height: "16px", background: "#fff", borderRadius: "9999px", position: "absolute", top: "2px", left: "2px", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
+                      </div>
+                      <div style={{ width: "16px", height: "16px", background: "#dc2626", borderRadius: "9999px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <span style={{ color: "#fff", fontSize: "10px", lineHeight: 1 }}>✕</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -427,56 +429,48 @@ export default function ProblemSection() {
             </div>
 
             {/* ── PANEL 4 ── */}
-            <div
-              className="problem-panel"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "32px",
-                padding: "0 80px"
-              }}>
-              
-              <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97" }}>04</span>
-              <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
-                You're paying a full salary just to answer the phone.
-              </h2>
+            <div className="problem-panel">
+              <div className="panel-card" style={{ background: "linear-gradient(135deg, #f3e8ff 0%, #fef7ff 100%)" }}>
+                <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97", marginBottom: "8px" }}>04</span>
+                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
+                  You're paying a full salary just to answer the phone.
+                </h2>
 
-              {/* Calculator card */}
-              <div style={{ width: "min(480px, 90%)", background: "#ffffff", borderRadius: "20px", boxShadow: "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.04) 0px 2px 4px 0px", padding: "32px", display: "flex", flexDirection: "column", gap: "28px" }}>
-                {/* Slider 1 */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "13px", color: "#000" }}>Salary per receptionist</span>
-                    <span id="salary-display" style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "14px", color: "#000" }}>₪8,500 / month</span>
+                {/* Calculator card */}
+                <div style={{ width: "min(480px, 90%)", background: "#ffffff", borderRadius: "20px", boxShadow: "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.04) 0px 2px 4px 0px", padding: "32px", display: "flex", flexDirection: "column", gap: "28px", marginTop: "24px" }}>
+                  {/* Slider 1 */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "13px", color: "#000" }}>Salary per receptionist</span>
+                      <span id="salary-display" style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "14px", color: "#000" }}>₪8,500 / month</span>
+                    </div>
+                    <input type="range" id="salary-slider" min="6000" max="12000" step="500" defaultValue="8500" />
                   </div>
-                  <input type="range" id="salary-slider" min="6000" max="12000" step="500" defaultValue="8500" />
-                </div>
 
-                {/* Slider 2 */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "13px", color: "#000" }}>Number of receptionists</span>
-                    <span id="count-display" style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "14px", color: "#000" }}>2</span>
+                  {/* Slider 2 */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "13px", color: "#000" }}>Number of receptionists</span>
+                      <span id="count-display" style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "14px", color: "#000" }}>2</span>
+                    </div>
+                    <input type="range" id="count-slider" min="1" max="5" step="1" defaultValue="2" />
                   </div>
-                  <input type="range" id="count-slider" min="1" max="5" step="1" defaultValue="2" />
-                </div>
 
-                {/* Divider */}
-                <div style={{ height: "1px", background: "#e5e5e5" }} />
+                  {/* Divider */}
+                  <div style={{ height: "1px", background: "#e5e5e5" }} />
 
-                {/* Output */}
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-                  <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97" }}>You pay</span>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
-                    <span id="monthly-output" style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "2.5rem", color: "#000" }}>₪17,000</span>
-                    <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#a59f97" }}>/ month</span>
+                  {/* Output */}
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
+                    <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97" }}>You pay</span>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
+                      <span id="monthly-output" style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "2.5rem", color: "#000" }}>₪17,000</span>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#a59f97" }}>/ month</span>
+                    </div>
+                    <span id="annual-output" style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "1.4rem", color: "#777169" }}>₪204,000 / year</span>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontStyle: "italic", fontSize: "13px", color: "#a59f97", lineHeight: 1.5, textAlign: "center", marginTop: "8px", marginBottom: 0 }}>
+                      For a team that still goes home at 18:00. Still misses calls. Still speaks one language.
+                    </p>
                   </div>
-                  <span id="annual-output" style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "1.4rem", color: "#777169" }}>₪204,000 / year</span>
-                  <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontStyle: "italic", fontSize: "13px", color: "#a59f97", lineHeight: 1.5, textAlign: "center", marginTop: "8px", marginBottom: 0 }}>
-                    For a team that still goes home at 18:00. Still misses calls. Still speaks one language.
-                  </p>
                 </div>
               </div>
             </div>
