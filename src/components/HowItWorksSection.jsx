@@ -26,7 +26,7 @@ const STEPS = [
 
 export default function HowItWorksSection() {
   const sectionRef = useRef(null);
-  const rightPanelRef = useRef(null);
+  const leftPanelRef = useRef(null);
   const stepRefs = useRef([]);
   const hasAnimated = useRef(new Set());
   const maxStepRef = useRef(0);
@@ -94,7 +94,7 @@ export default function HowItWorksSection() {
       setMaxStepReached(newMax);
 
       // Position each visible card aligned with its step
-      const panel = rightPanelRef.current;
+      const panel = leftPanelRef.current;
       if (panel) {
         const panelRect = panel.getBoundingClientRect();
         const tops = {};
@@ -102,7 +102,6 @@ export default function HowItWorksSection() {
           const stepEl = stepRefs.current[i];
           if (stepEl) {
             const stepRect = stepEl.getBoundingClientRect();
-            // Align card top with step heading
             tops[i] = stepRect.top - panelRect.top;
           }
         }
@@ -145,11 +144,11 @@ export default function HowItWorksSection() {
           </h2>
         </div>
 
-        {/* Two-column layout: LEFT = text steps, RIGHT = sticky animation cards */}
-        <div className="how-layout" style={{ display: "flex", gap: "clamp(32px, 5vw, 80px)", alignItems: "flex-start", flexDirection: "row-reverse" }}>
+        {/* Two-column layout: LEFT = sticky animation cards, RIGHT = text steps */}
+        <div className="how-layout" style={{ display: "flex", gap: "clamp(32px, 5vw, 80px)", alignItems: "flex-start" }}>
 
-          {/* RIGHT — Sticky panel with stacked animation cards */}
-          <div ref={rightPanelRef} className="how-right" style={{
+          {/* LEFT — Sticky panel with stacked animation cards */}
+          <div ref={leftPanelRef} className="how-left" style={{
             width: "clamp(280px, 36vw, 340px)",
             flexShrink: 0,
             position: "sticky",
@@ -173,8 +172,8 @@ export default function HowItWorksSection() {
             ))}
           </div>
 
-          {/* LEFT — Scrollable text steps */}
-          <div className="how-left" style={{ flex: 1, minWidth: 0 }}>
+          {/* RIGHT — Scrollable text steps */}
+          <div className="how-right" style={{ flex: 1, minWidth: 0 }}>
             <div style={{ position: "relative" }}>
               {/* Vertical progress line */}
               <div style={{
@@ -275,7 +274,7 @@ export default function HowItWorksSection() {
         @media (max-width: 768px) {
           [data-how-works] { padding: 48px 16px !important; }
           .how-layout { flex-direction: column !important; gap: 24px !important; }
-          .how-right {
+          .how-left {
             position: relative !important;
             top: auto !important;
             width: 100% !important;
@@ -284,13 +283,13 @@ export default function HowItWorksSection() {
             min-height: auto !important;
             order: -1 !important;
           }
-          .how-right > div {
+          .how-left > div {
             position: relative !important;
             top: auto !important;
           }
-          .how-left > div { padding: 0 !important; }
-          .how-left > div > div { padding-left: 0 !important; padding-top: 32px !important; padding-bottom: 32px !important; }
-          .how-left > div > div:first-child { padding-top: 16px !important; }
+          .how-right > div { padding: 0 !important; }
+          .how-right > div > div { padding-left: 0 !important; padding-top: 32px !important; padding-bottom: 32px !important; }
+          .how-right > div > div:first-child { padding-top: 16px !important; }
           .how-callout { padding: 16px 16px !important; margin-top: 48px !important; }
         }
         @media (max-width: 1024px) {
