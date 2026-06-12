@@ -30,16 +30,10 @@ export default function Navbar() {
         }} className="navbar-inner">
         
         {/* Logo */}
-        <span
-          style={{
-            fontFamily: "'Nunito', sans-serif",
-            fontWeight: 400,
-            fontSize: "16px",
-            letterSpacing: "-0.02em",
-            color: "#000000"
-          }}>
-          AskYael
-        </span>
+        <a href="/" className="logo-wordmark" style={{ textDecoration: "none" }}>
+          <span className="logo-ask">Ask</span>
+          <span className="logo-yael">Yael</span>
+        </a>
 
         {/* Right cluster */}
         <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
@@ -98,11 +92,35 @@ export default function Navbar() {
         </div>
       </div>
       <style>{`
+        /* Logo */
+        .logo-wordmark {
+          font-family: 'Noto Sans', sans-serif;
+          display: inline-flex;
+          align-items: baseline;
+          gap: 0.18em;
+          line-height: 1;
+        }
+        .logo-ask {
+          font-weight: 300;
+          color: #1C1C1E;
+          letter-spacing: 0.06em;
+          font-size: 18px;
+        }
+        .logo-yael {
+          font-weight: 500;
+          color: #F4510B;
+          letter-spacing: 0.02em;
+          font-size: 18px;
+        }
         @media (min-width: 768px) {
           .navbar-inner { padding: 0 48px !important; }
+          .logo-ask, .logo-yael { font-size: 22px; }
         }
         @media (min-width: 768px) and (max-width: 1024px) {
           .navbar-inner { padding: 0 32px !important; }
+        }
+        @media (min-width: 1280px) {
+          .logo-ask, .logo-yael { font-size: 26px; }
         }
         @media (max-width: 480px) {
           .navbar-cta { display: none !important; }
