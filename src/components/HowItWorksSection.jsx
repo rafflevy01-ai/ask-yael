@@ -124,22 +124,18 @@ export default function HowItWorksSection() {
               <IosWaveform active={activeStep >= 0} calming={isCalming} />
             </div>
 
-            {/* iOS Notification Card */}
-            <div style={{ position: "relative", minHeight: "180px" }}>
-              <IosNotifCard key={activeStep} stepIndex={activeStep} />
-
-              {/* Timeline dot + line connecting to active step */}
-              <div style={{
-                position: "absolute",
-                left: "-44px",
-                top: "24px",
-                width: "10px",
-                height: "10px",
-                borderRadius: "9999px",
-                background: "#FF4500",
-                boxShadow: "0 0 0 3px rgba(255,69,0,0.2)",
-                transition: "top 0.5s cubic-bezier(0.22,1,0.36,1)",
-              }} />
+            {/* Stacked iOS Notification Cards — accumulate as user scrolls */}
+            <div className="notif-stack" style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              {Array.from({ length: activeStep + 1 }, (_, i) => (
+                <IosNotifCard
+                  key={i}
+                  stepIndex={i}
+                  stacked={true}
+                  stackIndex={i}
+                  isNewest={i === activeStep}
+                  stackTotal={activeStep + 1}
+                />
+              ))}
             </div>
           </div>
 

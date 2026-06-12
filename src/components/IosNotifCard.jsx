@@ -131,28 +131,52 @@ function DeclineIcon() {
   );
 }
 
-export default function IosNotifCard({ stepIndex }) {
+export default function IosNotifCard({ stepIndex, stacked, stackIndex, isNewest, stackTotal }) {
   const [entered, setEntered] = useState(false);
 
   useEffect(() => {
-    // Trigger enter animation on mount or step change
-    setEntered(false);
-    const raf = requestAnimationFrame(() =>
-      requestAnimationFrame(() => setEntered(true))
-    );
-    return () => cancelAnimationFrame(raf);
-  }, [stepIndex]);
+    if (stacked) {
+      // In stacked mode, only newest card animates in; older cards appear instantly
+      if (isNewest) {
+        setEntered(false);
+        const raf = requestAnimationFrame(() =>
+          requestAnimationFrame(() => setEntered(true))
+        );
+        return () => cancelAnimationFrame(raf);
+      } else {
+        setEntered(true);
+      }
+    } else {
+      // Non-stacked mode: animate on every stepIndex change
+      setEntered(false);
+      const raf = requestAnimationFrame(() =>
+        requestAnimationFrame(() => setEntered(true))
+      );
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [stepIndex, stacked, isNewest]);
 
   if (stepIndex < 0 || stepIndex >= NOTIF_STEPS.length) return null;
   const data = NOTIF_STEPS[stepIndex];
+
+  // Stacked depth styling
+  const isOlderInStack = stacked && !isNewest;
+  const depthScale = stacked ? 1 - (stackTotal - 1 - stackIndex) * 0.02 : 1;
+  const depthOpacity = stacked
+    ? 1 - (stackTotal - 1 - stackIndex) * 0.12
+    : 1;
 
   return (
     <div
       style={{
         ...cardBase,
-        opacity: entered ? 1 : 0,
-        transform: entered ? "translateY(0)" : "translateY(-20px)",
-        transition: "opacity 0.35s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1)",
+        opacity: isOlderInStack ? depthOpacity : (entered ? 1 : 0),
+        transform: isOlderInStack
+          ? `scale(${depthScale})`
+          : (entered ? "translateY(0)" : "translateY(-20px)"),
+        transition: isOlderInStack
+          ? "opacity 0.35s ease, transform 0.4s ease"
+          : "opacity 0.35s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1)",
         pointerEvents: "none",
       }}
     >
