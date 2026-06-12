@@ -25,7 +25,7 @@ const NOTIF_STEPS = [
   },
   {
     step: 1,
-    type: "notification",
+    type: "sms-banner",
     appIcon: (
       <div style={{
         width: "20px", height: "20px", background: "#007aff", borderRadius: "5px",
@@ -44,6 +44,7 @@ const NOTIF_STEPS = [
     title: "Patient Found",
     subtitle: "David Cohen — returning patient. Last visit: March 2026",
     buttons: null,
+    isSms: true,
   },
   {
     step: 2,
