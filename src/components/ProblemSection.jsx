@@ -80,6 +80,22 @@ export default function ProblemSection() {
 
       if (!isMobile) {
         window.addEventListener("scroll", updateScroll, { passive: true });
+      } else {
+        const barChart = document.getElementById("bar-chart");
+        if (barChart) {
+          const barObs = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((e) => {
+                if (e.isIntersecting) {
+                  window.animateBarsEnter();
+                  barObs.disconnect();
+                }
+              });
+            },
+            { threshold: 0.2 }
+          );
+          barObs.observe(barChart);
+        }
       }
       updateScroll();
     })();
