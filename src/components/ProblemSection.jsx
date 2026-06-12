@@ -284,25 +284,22 @@ export default function ProblemSection() {
                 alignItems: "center",
                 justifyContent: "center",
                 padding: "0 80px",
-                gap: "0"
+                gap: "24px",
+                textAlign: "center",
               }}>
               
-              <div style={{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "480px", width: "100%" }}>
-                <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97" }}>01</span>
-                <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.84px", lineHeight: 1.1, margin: 0 }}>
-                  Every missed call is a lost patient.
-                </h2>
-                <div>
-                  <div id="stat-revenue" style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "3.5rem", color: "#000", lineHeight: 1 }}>₪0</div>
-                  <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginTop: "6px" }}>in unrealized revenue per year</div>
-                </div>
-                <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px", color: "#777169", lineHeight: 1.6, margin: 0 }}>
-                  Five missed calls a day at ₪900 each, 250 working days.
-                </p>
-              </div>
+              <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97" }}>01</span>
+              <div id="stat-revenue" style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "5rem", color: "#000", lineHeight: 1 }}>₪0</div>
+              <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97" }}>in unrealized revenue per year</div>
+              <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.84px", lineHeight: 1.1, margin: 0, maxWidth: "520px" }}>
+                Every missed call is a lost patient.
+              </h2>
+              <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px", color: "#777169", lineHeight: 1.6, margin: 0, maxWidth: "480px" }}>
+                Five missed calls a day at ₪900 each, 250 working days.
+              </p>
 
-              {/* Notification stack below */}
-              <div style={{ marginTop: "32px", width: "100%", maxWidth: "480px", display: "flex", justifyContent: "flex-start" }}>
+              {/* Notification stack — fixed height container so it never shifts the text above */}
+              <div style={{ height: "240px", width: "360px", flexShrink: 0, position: "relative", overflow: "hidden" }}>
                 <NotifStack />
               </div>
             </div>
