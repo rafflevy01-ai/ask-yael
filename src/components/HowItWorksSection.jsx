@@ -28,6 +28,8 @@ export default function HowItWorksSection() {
   const sectionRef = useRef(null);
   const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
+  const [animateCard, setAnimateCard] = useState(false);
+  const hasAnimated = useRef(new Set());
 
   useEffect(() => {
     const onScroll = () => {
@@ -45,11 +47,20 @@ export default function HowItWorksSection() {
       const p = Math.max(0, Math.min(1, scrolled / end));
       setProgress(p);
 
-      // Step-level activeStep: derived from section scroll progress
-      // Evenly distributes 4 steps across the full scroll range
-      const stepProgress = Math.min(1, Math.max(0, progress));
-      const newActiveStep = Math.min(3, Math.floor(stepProgress * 4));
-      setActiveStep(newActiveStep);
+      // Step-level activeStep — use local p, not stale state
+      const newActiveStep = Math.min(3, Math.floor(p * 4));
+      setActiveStep((prev) => {
+        if (newActiveStep !== prev) {
+          // First time hitting this step → animate
+          if (!hasAnimated.current.has(newActiveStep)) {
+            hasAnimated.current.add(newActiveStep);
+            setAnimateCard(true);
+          } else {
+            setAnimateCard(false);
+          }
+        }
+        return newActiveStep;
+      });
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -102,25 +113,12 @@ export default function HowItWorksSection() {
             flexDirection: "column",
             justifyContent: "center",
           }}>
-            {/* Stacked iOS Notification Cards — accumulate as user scrolls */}
-            <div className="notif-stack" style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "6px",
-              justifyContent: "center",
-              flex: 1,
-            }}>
-              {Array.from({ length: activeStep + 1 }, (_, i) => (
-                <IosNotifCard
-                  key={i}
-                  stepIndex={i}
-                  stacked={true}
-                  stackIndex={i}
-                  isNewest={i === activeStep}
-                  stackTotal={activeStep + 1}
-                />
-              ))}
-            </div>
+            {/* Single iOS card — changes as you scroll, centered next to active step */}
+            <IosNotifCard
+              key={activeStep}
+              stepIndex={activeStep}
+              animate={animateCard}
+            />
           </div>
 
           {/* RIGHT — Scrollable steps */}
@@ -230,6 +228,7 @@ export default function HowItWorksSection() {
             width: 100% !important;
             max-width: 340px !important;
             margin: 0 auto !important;
+            min-height: auto !important;
           }
           .how-right > div { padding: 0 !important; }
           .how-right > div > div { padding-left: 0 !important; padding-top: 32px !important; padding-bottom: 32px !important; }

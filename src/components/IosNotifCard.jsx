@@ -131,52 +131,33 @@ function DeclineIcon() {
   );
 }
 
-export default function IosNotifCard({ stepIndex, stacked, stackIndex, isNewest, stackTotal }) {
+export default function IosNotifCard({ stepIndex, animate }) {
   const [entered, setEntered] = useState(false);
 
   useEffect(() => {
-    if (stacked) {
-      // In stacked mode, only newest card animates in; older cards appear instantly
-      if (isNewest) {
-        setEntered(false);
-        const raf = requestAnimationFrame(() =>
-          requestAnimationFrame(() => setEntered(true))
-        );
-        return () => cancelAnimationFrame(raf);
-      } else {
-        setEntered(true);
-      }
-    } else {
-      // Non-stacked mode: animate on every stepIndex change
+    if (animate) {
+      // First time — slide down from above
       setEntered(false);
       const raf = requestAnimationFrame(() =>
         requestAnimationFrame(() => setEntered(true))
       );
       return () => cancelAnimationFrame(raf);
+    } else {
+      // Returning to this step — appear instantly
+      setEntered(true);
     }
-  }, [stepIndex, stacked, isNewest]);
+  }, [stepIndex, animate]);
 
   if (stepIndex < 0 || stepIndex >= NOTIF_STEPS.length) return null;
   const data = NOTIF_STEPS[stepIndex];
-
-  // Stacked depth styling
-  const isOlderInStack = stacked && !isNewest;
-  const depthScale = stacked ? 1 - (stackTotal - 1 - stackIndex) * 0.02 : 1;
-  const depthOpacity = stacked
-    ? 1 - (stackTotal - 1 - stackIndex) * 0.12
-    : 1;
 
   return (
     <div
       style={{
         ...cardBase,
-        opacity: isOlderInStack ? depthOpacity : (entered ? 1 : 0),
-        transform: isOlderInStack
-          ? `scale(${depthScale})`
-          : (entered ? "translateY(0)" : "translateY(-20px)"),
-        transition: isOlderInStack
-          ? "opacity 0.35s ease, transform 0.4s ease"
-          : "opacity 0.35s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1)",
+        opacity: entered ? 1 : 0,
+        transform: entered ? "translateY(0)" : "translateY(-40px)",
+        transition: "opacity 0.35s ease, transform 0.5s cubic-bezier(0.22,1,0.36,1)",
         pointerEvents: "none",
       }}
     >
