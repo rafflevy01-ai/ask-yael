@@ -47,7 +47,7 @@ const NOTIF_STEPS = [
   },
   {
     step: 2,
-    type: "notification",
+    type: "sms-banner",
     appIcon: (
       <div style={{
         width: "20px", height: "20px", background: "#34c759", borderRadius: "5px",
@@ -63,10 +63,11 @@ const NOTIF_STEPS = [
     title: "Appointment Confirmed",
     subtitle: "Thursday 15 July at 10:00 — SMS sent to patient",
     buttons: null,
+    isSms: true,
   },
   {
     step: 3,
-    type: "notification",
+    type: "sms-banner",
     appIcon: (
       <div style={{
         width: "20px", height: "20px", background: "#5856d6", borderRadius: "5px",
@@ -85,6 +86,7 @@ const NOTIF_STEPS = [
     title: "CRM Synced",
     subtitle: "Appointment logged in clinic system — no double entry needed",
     buttons: null,
+    isSms: true,
   },
   {
     step: 4,
