@@ -28,128 +28,6 @@ const CARDS = [
   },
 ];
 
-// ── iOS Mockups ──────────────────────────────────────────────────────────────
-
-function IOSLanguageDetection() {
-  return (
-    <div style={{ background: "#f2f2f7", borderRadius: "16px 16px 0 0", padding: "16px 16px 12px", fontFamily: "-apple-system, 'SF Pro Text', sans-serif", overflow: "hidden" }}>
-      <div style={{ fontSize: "12px", fontWeight: 600, color: "#000", marginBottom: "8px", textAlign: "center" }}>Language Detected</div>
-      {[
-        { flag: "🇮🇱", lang: "Hebrew", active: true },
-        { flag: "🇫🇷", lang: "Français", active: false },
-        { flag: "🇬🇧", lang: "English", active: false },
-      ].map(({ flag, lang, active }) => (
-        <div key={lang} style={{
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          background: "#fff", borderRadius: "10px", padding: "8px 12px",
-          marginBottom: "4px",
-          boxShadow: active ? "0 0 0 2px #34c759" : "none",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <span style={{ fontSize: "16px" }}>{flag}</span>
-            <span style={{ fontSize: "13px", fontWeight: active ? 600 : 400, color: "#000" }}>{lang}</span>
-          </div>
-          {active && (
-            <div style={{ width: "18px", height: "18px", borderRadius: "50%", background: "#34c759", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-              <svg width="9" height="7" viewBox="0 0 10 8"><polyline points="1,4 3.5,6.5 9,1" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round"/></svg>
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function IOSPatientRecognition() {
-  return (
-    <div style={{ background: "#f2f2f7", borderRadius: "16px 16px 0 0", padding: "16px 16px 12px", fontFamily: "-apple-system, 'SF Pro Text', sans-serif", overflow: "hidden" }}>
-      {/* Incoming call */}
-      <div style={{ textAlign: "center", marginBottom: "12px" }}>
-        <div style={{ fontSize: "12px", color: "#8e8e93", letterSpacing: "0.04em", marginBottom: "6px" }}>Incoming Call</div>
-        <div style={{ width: "44px", height: "44px", borderRadius: "50%", background: "linear-gradient(135deg, #5e5ce6, #bf5af2)", margin: "0 auto 6px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <span style={{ color: "#fff", fontSize: "18px", fontWeight: 600 }}>מ</span>
-        </div>
-        <div style={{ fontSize: "15px", fontWeight: 600, color: "#000" }}>מיכל לוי</div>
-        <div style={{ fontSize: "11px", color: "#34c759", marginTop: "2px", fontWeight: 500 }}>✓ Returning patient · File #0482</div>
-      </div>
-      {/* Action buttons */}
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
-        {[{ icon: "✕", bg: "#ff3b30", label: "Decline" }, { icon: "✓", bg: "#34c759", label: "Accept" }].map(({ icon, bg, label }) => (
-          <div key={label} style={{ textAlign: "center" }}>
-            <div style={{ width: "38px", height: "38px", borderRadius: "50%", background: bg, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 3px" }}>
-              <span style={{ color: "#fff", fontSize: "16px" }}>{icon}</span>
-            </div>
-            <span style={{ fontSize: "10px", color: "#8e8e93" }}>{label}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function IOSFullBooking() {
-  return (
-    <div style={{ background: "#f2f2f7", borderRadius: "16px 16px 0 0", padding: "16px 16px 12px", fontFamily: "-apple-system, 'SF Pro Text', sans-serif", overflow: "hidden" }}>
-      <div style={{ background: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
-        <div style={{ background: "#007aff", padding: "8px 12px" }}>
-          <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.8)", textTransform: "uppercase", letterSpacing: "0.08em" }}>New Appointment</div>
-          <div style={{ fontSize: "14px", fontWeight: 600, color: "#fff", marginTop: "2px" }}>Dental Check-up</div>
-        </div>
-        <div style={{ padding: "8px 12px", display: "flex", flexDirection: "column", gap: "5px" }}>
-          {[
-            { icon: "📅", text: "Thursday, June 19" },
-            { icon: "🕙", text: "10:30 – 11:00" },
-            { icon: "👤", text: "Dr. Cohen · Sarah B." },
-          ].map(({ icon, text }) => (
-            <div key={text} style={{ display: "flex", alignItems: "center", gap: "7px", fontSize: "12px", color: "#333" }}>
-              <span>{icon}</span><span>{text}</span>
-            </div>
-          ))}
-          <div style={{ marginTop: "2px", padding: "5px 8px", background: "#e8f4ff", borderRadius: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#34c759", flexShrink: 0 }} />
-            <span style={{ fontSize: "10px", color: "#007aff", fontWeight: 500 }}>Confirmed & synced to booking system</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function IOSNewPatientIntake() {
-  return (
-    <div style={{ background: "#f2f2f7", borderRadius: "16px 16px 0 0", padding: "16px 16px 12px", fontFamily: "-apple-system, 'SF Pro Text', sans-serif", overflow: "hidden" }}>
-      <div style={{ fontSize: "12px", fontWeight: 600, color: "#000", marginBottom: "6px" }}>New Patient</div>
-      <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-        {[
-          { label: "Full Name", value: "David Marciano", done: true },
-          { label: "Date of Birth", value: "14 / 03 / 1988", done: true },
-          { label: "Health Fund", value: "Maccabi", done: true },
-          { label: "Reason", value: "Tooth pain — urgent", done: true },
-        ].map(({ label, value, done }) => (
-          <div key={label} style={{ background: "#fff", borderRadius: "8px", padding: "5px 10px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <div>
-              <div style={{ fontSize: "10px", color: "#8e8e93", marginBottom: "1px" }}>{label}</div>
-              <div style={{ fontSize: "13px", color: "#000", fontWeight: 400 }}>{value}</div>
-            </div>
-            {done && (
-              <div style={{ width: "18px", height: "18px", borderRadius: "50%", background: "#34c759", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <svg width="9" height="7" viewBox="0 0 9 7"><polyline points="1,3.5 3.5,6 8,1" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round"/></svg>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-const IOS_MOCKUPS = {
-  1: IOSLanguageDetection,
-  2: IOSPatientRecognition,
-  3: IOSFullBooking,
-  4: IOSNewPatientIntake,
-};
-
 // ── Waveform ──────────────────────────────────────────────────────────────────
 
 function WaveformPlaceholder({ featured, playing }) {
@@ -184,11 +62,10 @@ function WaveformPlaceholder({ featured, playing }) {
           key={i}
           style={{
             width: "3px",
-            height: `${bar.height}px`,
+            height: playing ? `${bar.height}px` : "6px",
             borderRadius: "9999px",
             background: playing ? "#000000" : (featured ? "#c0c0c0" : "#e0e0e0"),
             animation: playing ? `waveform-pulse ${bar.duration} ${bar.delay} ease-in-out infinite alternate` : "none",
-            height: playing ? `${bar.height}px` : "6px",
             transition: "height 0.3s ease, background 0.3s ease",
           }}
         />
@@ -204,7 +81,6 @@ function WaveformPlaceholder({ featured, playing }) {
 }
 
 function AudioCard({ card }) {
-  const IOSMockup = IOS_MOCKUPS[card.id];
   const [playing, setPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -257,21 +133,16 @@ function AudioCard({ card }) {
     <div style={{
       background: "#ffffff",
       borderRadius: "16px",
-      overflow: "hidden",
+      padding: "24px",
       display: "flex",
       flexDirection: "column",
-      gap: "0",
+      gap: "14px",
       boxShadow: card.featured
         ? "0 4px 24px rgba(0,0,0,0.10), 0 0 0 1px #000000"
         : "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.05) 0px 4px 12px 0px",
       border: card.featured ? "1px solid #000000" : "none",
       position: "relative",
     }}>
-      {/* iOS Mockup — top of card */}
-      {IOSMockup && <IOSMockup />}
-
-      {/* Card body */}
-      <div style={{ padding: "20px 24px 24px", display: "flex", flexDirection: "column", gap: "14px" }}>
       {card.featured && (
         <div style={{
           position: "absolute",
@@ -315,14 +186,13 @@ function AudioCard({ card }) {
 
       {/* Player row */}
       <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-        {/* Play / Pause button */}
         <button
           onClick={handlePlayPause}
           style={{
             width: "36px",
             height: "36px",
             borderRadius: "9999px",
-            background: card.featured ? "#000000" : "#000000",
+            background: "#000000",
             border: "none",
             cursor: "pointer",
             display: "flex",
@@ -330,26 +200,23 @@ function AudioCard({ card }) {
             justifyContent: "center",
             flexShrink: 0,
             boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-            transition: "transform 0.15s ease, opacity 0.15s ease",
+            transition: "opacity 0.15s ease",
           }}
           onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
           onMouseLeave={e => e.currentTarget.style.opacity = "1"}
         >
           {playing ? (
-            /* Pause icon */
             <svg width="12" height="12" viewBox="0 0 12 12" fill="white">
               <rect x="1.5" y="1" width="3.5" height="10" rx="1" />
               <rect x="7" y="1" width="3.5" height="10" rx="1" />
             </svg>
           ) : (
-            /* Play icon — nudged right slightly */
             <svg width="12" height="12" viewBox="0 0 12 12" fill="white" style={{ marginLeft: "2px" }}>
               <polygon points="2,1 11,6 2,11" />
             </svg>
           )}
         </button>
 
-        {/* Waveform */}
         <div style={{ flex: 1 }}>
           <WaveformPlaceholder featured={card.featured} playing={playing} />
         </div>
@@ -357,7 +224,6 @@ function AudioCard({ card }) {
 
       {/* Seek bar + controls */}
       <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-        {/* Progress bar */}
         <div
           onClick={handleSeek}
           style={{
@@ -377,13 +243,11 @@ function AudioCard({ card }) {
           }} />
         </div>
 
-        {/* Time + skip buttons */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "11px", color: "#a59f97" }}>
             {formatTime(currentTime)}{duration ? ` / ${formatTime(duration)}` : ""}
           </span>
           <div style={{ display: "flex", gap: "8px" }}>
-            {/* Rewind 10s */}
             <button
               onClick={() => handleSkip(-10)}
               style={{ background: "none", border: "none", cursor: "pointer", padding: "2px", display: "flex", alignItems: "center", opacity: card.audioUrl ? 1 : 0.3 }}
@@ -395,7 +259,6 @@ function AudioCard({ card }) {
                 <text x="7" y="15" fontSize="7" fill="#777169" stroke="none" fontFamily="Inter" fontWeight="500">10</text>
               </svg>
             </button>
-            {/* Forward 10s */}
             <button
               onClick={() => handleSkip(10)}
               style={{ background: "none", border: "none", cursor: "pointer", padding: "2px", display: "flex", alignItems: "center", opacity: card.audioUrl ? 1 : 0.3 }}
@@ -409,8 +272,7 @@ function AudioCard({ card }) {
             </button>
           </div>
         </div>
-      </div>{/* end seek bar */}
-      </div>{/* end card body */}
+      </div>
     </div>
   );
 }
@@ -422,7 +284,6 @@ export default function HearYaelSection() {
       padding: "100px 48px",
     }}>
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-        {/* Headline */}
         <div style={{ marginBottom: "48px", textAlign: "center" }}>
           <span style={{
             fontFamily: "'Geist Mono', monospace",
@@ -448,7 +309,6 @@ export default function HearYaelSection() {
           </h2>
         </div>
 
-        {/* 2×2 Grid */}
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(2, 1fr)",
@@ -461,7 +321,6 @@ export default function HearYaelSection() {
           ))}
         </div>
 
-        {/* Note */}
         <p style={{
           fontFamily: "Inter, sans-serif",
           fontWeight: 400,
