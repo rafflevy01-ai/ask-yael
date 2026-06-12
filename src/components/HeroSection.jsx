@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import FractalGlassBackground from "@/components/FractalGlassBackground";
+import GradientStrips from "@/components/GradientStrips";
 
 const PHRASES = [
   "never misses a call.",
@@ -47,20 +46,11 @@ function useTypewriter(phrases) {
 }
 
 
-const orbs = [
-  { width: 600, height: 600, color: "rgba(4,71,255,0.10)", top: "-15%", left: "-10%", duration: 14, x: [0, 50, 20, 0], y: [0, 30, -20, 0] },
-  { width: 450, height: 450, color: "rgba(255,71,4,0.08)", bottom: "-10%", right: "-8%", duration: 11, x: [0, -40, -10, 0], y: [0, -30, 20, 0] },
-  { width: 300, height: 300, color: "rgba(100,200,150,0.07)", top: "40%", left: "60%", duration: 17, x: [0, 30, -20, 0], y: [0, -40, 10, 0] },
-  { width: 250, height: 250, color: "rgba(200,100,255,0.06)", top: "20%", right: "15%", duration: 13, x: [0, -20, 30, 0], y: [0, 25, -15, 0] },
-];
-
 export default function HeroSection() {
   const typed = useTypewriter(PHRASES);
-  const sectionRef = useRef(null);
 
   return (
     <section
-      ref={sectionRef}
       className="hero-section"
       style={{
         minHeight: "calc(100vh - 64px)",
@@ -72,30 +62,8 @@ export default function HeroSection() {
         backgroundColor: "#fdfcfc",
       }}>
 
-      {/* Fractal glass background — sits behind everything */}
-      <FractalGlassBackground sectionRef={sectionRef} />
-
-      {/* Animated background orbs */}
-      {orbs.map((orb, i) => (
-        <motion.div
-          key={i}
-          style={{
-            position: "absolute",
-            width: orb.width,
-            height: orb.height,
-            borderRadius: "50%",
-            background: `radial-gradient(circle, ${orb.color} 0%, transparent 70%)`,
-            top: orb.top,
-            left: orb.left,
-            bottom: orb.bottom,
-            right: orb.right,
-            pointerEvents: "none",
-            zIndex: 0,
-          }}
-          animate={{ x: orb.x, y: orb.y }}
-          transition={{ duration: orb.duration, repeat: Infinity, ease: "easeInOut", repeatType: "loop" }}
-        />
-      ))}
+      {/* Gradient strips background */}
+      <GradientStrips shape="hill" maxHeightPercent={70} />
 
       <div
         className="hero-content"
