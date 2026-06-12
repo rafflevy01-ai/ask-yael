@@ -28,7 +28,7 @@ const STEP_COUNT = STEPS.length;
 
 export default function HowItWorksSection() {
   const sectionRef = useRef(null);
-  const leftPanelRef = useRef(null);
+  const cardsPanelRef = useRef(null);
   const stepRefs = useRef([]);
   const hasAnimated = useRef(new Set());
   const hasScrolled = useRef(false);
@@ -49,7 +49,6 @@ export default function HowItWorksSection() {
       const sectionHeight = section.offsetHeight;
       const viewportHeight = window.innerHeight;
 
-      // Section-level progress
       const triggerPoint = viewportHeight * 0.4;
       const start = viewportHeight - triggerPoint;
       const end = sectionHeight - triggerPoint;
@@ -60,7 +59,6 @@ export default function HowItWorksSection() {
       const newActiveStep = Math.min(STEP_COUNT - 1, Math.floor(p * STEP_COUNT));
       setActiveStep(newActiveStep);
 
-      // Only animate on real scroll
       if (hasScrolled.current) {
         for (let i = 0; i < STEP_COUNT; i++) {
           const visible = p >= i / STEP_COUNT;
@@ -80,7 +78,7 @@ export default function HowItWorksSection() {
 
       // Position cards aligned with headings (desktop only)
       if (!isMobile) {
-        const panel = leftPanelRef.current;
+        const panel = cardsPanelRef.current;
         if (panel) {
           const panelRect = panel.getBoundingClientRect();
           const tops = {};
@@ -139,55 +137,11 @@ export default function HowItWorksSection() {
           </h2>
         </div>
 
-        {/* Desktop: two-column layout */}
+        {/* Two-column layout: LEFT = text, RIGHT = animated cards */}
         <div className="how-layout" style={{ display: "flex", gap: "clamp(32px, 5vw, 80px)", alignItems: "flex-start" }}>
 
-          {/* LEFT — Sticky panel (desktop) or inline column (mobile) */}
-          <div ref={leftPanelRef} className="how-left" style={{
-            width: "clamp(280px, 36vw, 340px)",
-            flexShrink: 0,
-            position: "sticky",
-            top: "120px",
-            alignSelf: "flex-start",
-            minHeight: "calc(100vh - 120px)",
-          }}>
-            {STEPS.map((_, i) => {
-              const visible = progress >= i / STEP_COUNT;
-
-              if (isMobile) {
-                // Mobile: stacked vertically, not absolute
-                return (
-                  <div key={i} style={{ marginBottom: i < STEP_COUNT - 1 ? "16px" : 0 }}>
-                    <IosNotifCard
-                      stepIndex={i}
-                      visible={visible}
-                      animate={!!animatingSteps[i]}
-                      cardStyle={{}}
-                    />
-                  </div>
-                );
-              }
-
-              // Desktop: absolute positioning in sticky panel
-              return (
-                <IosNotifCard
-                  key={i}
-                  stepIndex={i}
-                  visible={visible}
-                  animate={!!animatingSteps[i]}
-                  cardStyle={{
-                    position: "absolute",
-                    top: `${cardTops[i] || 0}px`,
-                    left: 0,
-                    right: 0,
-                  }}
-                />
-              );
-            })}
-          </div>
-
-          {/* RIGHT — Text steps */}
-          <div className="how-right" style={{ flex: 1, minWidth: 0 }}>
+          {/* LEFT — Text steps + progress line */}
+          <div className="how-left" style={{ flex: 1, minWidth: 0 }}>
             <div style={{ position: "relative" }}>
               {/* Vertical progress line */}
               <div style={{
@@ -261,6 +215,48 @@ export default function HowItWorksSection() {
               ))}
             </div>
           </div>
+
+          {/* RIGHT — Sticky animated cards (desktop) or stacked cards (mobile) */}
+          <div ref={cardsPanelRef} className="how-right" style={{
+            width: "clamp(280px, 36vw, 340px)",
+            flexShrink: 0,
+            position: "sticky",
+            top: "120px",
+            alignSelf: "flex-start",
+            minHeight: "calc(100vh - 120px)",
+          }}>
+            {STEPS.map((_, i) => {
+              const visible = progress >= i / STEP_COUNT;
+
+              if (isMobile) {
+                return (
+                  <div key={i} style={{ marginBottom: i < STEP_COUNT - 1 ? "16px" : 0 }}>
+                    <IosNotifCard
+                      stepIndex={i}
+                      visible={visible}
+                      animate={!!animatingSteps[i]}
+                      cardStyle={{}}
+                    />
+                  </div>
+                );
+              }
+
+              return (
+                <IosNotifCard
+                  key={i}
+                  stepIndex={i}
+                  visible={visible}
+                  animate={!!animatingSteps[i]}
+                  cardStyle={{
+                    position: "absolute",
+                    top: `${cardTops[i] || 0}px`,
+                    left: 0,
+                    right: 0,
+                  }}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -288,18 +284,17 @@ export default function HowItWorksSection() {
         @media (max-width: 768px) {
           [data-how-works] { padding: 48px 16px !important; }
           .how-layout { flex-direction: column !important; gap: 24px !important; }
-          .how-left {
+          .how-left > div { padding: 0 !important; }
+          .how-left > div > div { padding-left: 0 !important; padding-top: 32px !important; padding-bottom: 32px !important; }
+          .how-left > div > div:first-child { padding-top: 16px !important; }
+          .how-right {
             position: relative !important;
             top: auto !important;
             width: 100% !important;
             max-width: 340px !important;
             margin: 0 auto !important;
             min-height: auto !important;
-            order: -1 !important;
           }
-          .how-right > div { padding: 0 !important; }
-          .how-right > div > div { padding-left: 0 !important; padding-top: 32px !important; padding-bottom: 32px !important; }
-          .how-right > div > div:first-child { padding-top: 16px !important; }
           .how-callout { padding: 16px 16px !important; margin-top: 48px !important; }
         }
         @media (max-width: 1024px) {
