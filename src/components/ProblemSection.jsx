@@ -307,7 +307,7 @@ export default function ProblemSection() {
             {/* ── PANEL 1 ── */}
             <div className="problem-panel">
               <div className="panel-card" style={{ background: "linear-gradient(135deg, #fef2f2 0%, #fef7ff 100%)" }}>
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#a59f97", marginBottom: "8px", letterSpacing: "-0.02em" }}>01</span>
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em", marginBottom: "8px" }}>01</span>
                 <div id="stat-revenue" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>₪0</div>
                 <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>in unrealized revenue per year</div>
                 <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.84px", lineHeight: 1.1, margin: 0, maxWidth: "520px", textAlign: "center" }}>
@@ -327,7 +327,7 @@ export default function ProblemSection() {
             {/* ── PANEL 2 ── */}
             <div className="problem-panel">
               <div className="panel-card" style={{ background: "linear-gradient(135deg, #fef3c7 0%, #fef7ff 100%)" }}>
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#a59f97", marginBottom: "8px", letterSpacing: "-0.02em" }}>02</span>
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em", marginBottom: "8px" }}>02</span>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>40%</div>
                 <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>of appointment requests come after hours</div>
                 <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "520px", margin: 0 }}>
@@ -370,7 +370,7 @@ export default function ProblemSection() {
             {/* ── PANEL 3 ── */}
             <div className="problem-panel">
               <div className="panel-card" style={{ background: "linear-gradient(135deg, #dbeafe 0%, #fef7ff 100%)" }}>
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#a59f97", marginBottom: "8px", letterSpacing: "-0.02em" }}>03</span>
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em", marginBottom: "8px" }}>03</span>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>30,000+</div>
                 <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>French-speaking residents in Netanya</div>
                 <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
@@ -431,7 +431,7 @@ export default function ProblemSection() {
             {/* ── PANEL 4 ── */}
             <div className="problem-panel">
               <div className="panel-card" style={{ background: "linear-gradient(135deg, #f3e8ff 0%, #fef7ff 100%)" }}>
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#a59f97", marginBottom: "8px", letterSpacing: "-0.02em" }}>04</span>
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em", marginBottom: "8px" }}>04</span>
                 <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
                   You're paying a full salary just to answer the phone.
                 </h2>
@@ -442,7 +442,7 @@ export default function ProblemSection() {
                   <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "13px", color: "#000" }}>Salary per receptionist</span>
-                      <span id="salary-display" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#000", letterSpacing: "-0.02em" }}>₪8,500 / month</span>
+                      <span id="salary-display" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "2.5rem", color: "#000", letterSpacing: "-0.05em" }}>₪8,500 / month</span>
                     </div>
                     <input type="range" id="salary-slider" min="6000" max="12000" step="500" defaultValue="8500" />
                   </div>
@@ -451,7 +451,7 @@ export default function ProblemSection() {
                   <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "13px", color: "#000" }}>Number of receptionists</span>
-                      <span id="count-display" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#000", letterSpacing: "-0.02em" }}>2</span>
+                      <span id="count-display" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "2.5rem", color: "#000", letterSpacing: "-0.05em" }}>2</span>
                     </div>
                     <input type="range" id="count-slider" min="1" max="5" step="1" defaultValue="2" />
                   </div>
@@ -465,8 +465,8 @@ export default function ProblemSection() {
                     <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
                       <span id="monthly-output" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "2.5rem", color: "#000", letterSpacing: "-0.05em" }}>₪17,000</span>
                       <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#a59f97" }}>/ month</span>
-                    </div>
-                    <span id="annual-output" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "1.4rem", color: "#777169", letterSpacing: "-0.02em" }}>₪204,000 / year</span>
+                      </div>
+                      <span id="annual-output" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "2.5rem", color: "#777169", letterSpacing: "-0.05em" }}>₪204,000 / year</span>
                     <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontStyle: "italic", fontSize: "13px", color: "#a59f97", lineHeight: 1.5, textAlign: "center", marginTop: "8px", marginBottom: 0 }}>
                       For a team that still goes home at 18:00. Still misses calls. Still speaks one language.
                     </p>
