@@ -68,7 +68,6 @@ export default function HeroSection() {
         position: "relative",
         overflow: "hidden",
         width: "100%",
-        backgroundColor: "#fdfcfc",
       }}>
 
       {/* Animated gradient orbs */}
