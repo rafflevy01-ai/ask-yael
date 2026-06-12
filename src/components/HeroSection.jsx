@@ -71,11 +71,20 @@ export default function HeroSection() {
         backgroundColor: "#fdfcfc",
       }}>
 
-      {/* Glass gradient background — subtle, low opacity */}
+      {/* Glass gradient background */}
       <div style={{
         position: "absolute",
         inset: 0,
-        background: "radial-gradient(ellipse at 30% 20%, rgba(90, 110, 180, 0.06) 0%, transparent 45%), radial-gradient(ellipse at 70% 80%, rgba(160, 90, 130, 0.05) 0%, transparent 45%)",
+        background: "radial-gradient(ellipse at 30% 20%, rgba(100, 130, 200, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(180, 110, 150, 0.10) 0%, transparent 50%)",
+        pointerEvents: "none",
+        zIndex: 0,
+      }} />
+      
+      {/* Glass distortion stripes */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        backgroundImage: "repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 2px, transparent 2px, transparent 40px)",
         pointerEvents: "none",
         zIndex: 0,
       }} />
@@ -84,7 +93,7 @@ export default function HeroSection() {
       <div style={{
         position: "absolute",
         inset: 0,
-        backgroundImage: "url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\"><filter id=\"n\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.9\" numOctaves=\"3\" stitchTiles=\"stitch\"/></filter><rect width=\"100%25\" height=\"100%25\" filter=\"url(%23n)\" opacity=\"0.025\"/></svg>')",
+        backgroundImage: "url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\"><filter id=\"n\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.8\" numOctaves=\"3\" stitchTiles=\"stitch\"/></filter><rect width=\"100%25\" height=\"100%25\" filter=\"url(%23n)\" opacity=\"0.035\"/></svg>')",
         pointerEvents: "none",
         zIndex: 0,
       }} />
