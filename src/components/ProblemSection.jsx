@@ -383,7 +383,7 @@ export default function ProblemSection() {
               <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97" }}>03</span>
               <div style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "5rem", color: "#000", lineHeight: 1 }}>30,000+</div>
               <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97" }}>French-speaking residents in Netanya</div>
-              <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "36px", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
+              <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "36px", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0, whiteSpace: "nowrap" }}>
                 Your receptionist speaks one language. Your patients speak three.
               </h2>
 
