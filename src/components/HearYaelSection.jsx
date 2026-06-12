@@ -204,7 +204,7 @@ export default function HearYaelSection() {
           <h2 style={{
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 300,
-            fontSize: "clamp(2rem, 4vw, 3rem)",
+            fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)",
             color: "#000000",
             letterSpacing: "-0.6px",
             lineHeight: 1.15,
