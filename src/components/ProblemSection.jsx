@@ -308,7 +308,7 @@ export default function ProblemSection() {
             <div className="problem-panel">
               <div className="panel-card" style={{ background: "linear-gradient(135deg, #fef2f2 0%, #fef7ff 100%)" }}>
                 <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97", marginBottom: "8px" }}>01</span>
-                <div id="stat-revenue" style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "5rem", color: "#000", lineHeight: 1 }}>₪0</div>
+                <div id="stat-revenue" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>₪0</div>
                 <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>in unrealized revenue per year</div>
                 <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.84px", lineHeight: 1.1, margin: 0, maxWidth: "520px", textAlign: "center" }}>
                   Every missed call is a lost patient.
@@ -328,7 +328,7 @@ export default function ProblemSection() {
             <div className="problem-panel">
               <div className="panel-card" style={{ background: "linear-gradient(135deg, #fef3c7 0%, #fef7ff 100%)" }}>
                 <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97", marginBottom: "8px" }}>02</span>
-                <div style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "5rem", color: "#000", lineHeight: 1 }}>40%</div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>40%</div>
                 <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>of appointment requests come after hours</div>
                 <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "520px", margin: 0 }}>
                   Your receptionist leaves at 18:00. Patients don't.
@@ -371,7 +371,7 @@ export default function ProblemSection() {
             <div className="problem-panel">
               <div className="panel-card" style={{ background: "linear-gradient(135deg, #dbeafe 0%, #fef7ff 100%)" }}>
                 <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97", marginBottom: "8px" }}>03</span>
-                <div style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "5rem", color: "#000", lineHeight: 1 }}>30,000+</div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>30,000+</div>
                 <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>French-speaking residents in Netanya</div>
                 <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
                   Your receptionist speaks one language.<br />Your patients speak three.
