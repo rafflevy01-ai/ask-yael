@@ -81,6 +81,8 @@ function WaveformPlaceholder({ featured, playing }) {
 
 function AudioCard({ card }) {
   const [playing, setPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -88,7 +90,9 @@ function AudioCard({ card }) {
     const audio = new Audio(card.audioUrl);
     audioRef.current = audio;
     audio.addEventListener("ended", () => setPlaying(false));
-    return () => { audio.pause(); audio.removeEventListener("ended", () => setPlaying(false)); };
+    audio.addEventListener("timeupdate", () => setCurrentTime(audio.currentTime));
+    audio.addEventListener("loadedmetadata", () => setDuration(audio.duration));
+    return () => { audio.pause(); };
   }, [card.audioUrl]);
 
   const handlePlayPause = () => {
@@ -101,6 +105,28 @@ function AudioCard({ card }) {
       setPlaying(true);
     }
   };
+
+  const handleSeek = (e) => {
+    if (!audioRef.current || !duration) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    audioRef.current.currentTime = ratio * duration;
+    setCurrentTime(ratio * duration);
+  };
+
+  const handleSkip = (secs) => {
+    if (!audioRef.current) return;
+    audioRef.current.currentTime = Math.max(0, Math.min(duration, audioRef.current.currentTime + secs));
+  };
+
+  const formatTime = (s) => {
+    if (!s || isNaN(s)) return "0:00";
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec.toString().padStart(2, "0")}`;
+  };
+
+  const progress = duration ? currentTime / duration : 0;
 
   return (
     <div style={{
@@ -196,6 +222,62 @@ function AudioCard({ card }) {
         {/* Waveform */}
         <div style={{ flex: 1 }}>
           <WaveformPlaceholder featured={card.featured} playing={playing} />
+        </div>
+      </div>
+
+      {/* Seek bar + controls */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+        {/* Progress bar */}
+        <div
+          onClick={handleSeek}
+          style={{
+            height: "3px",
+            background: "#e5e5e5",
+            borderRadius: "9999px",
+            cursor: card.audioUrl ? "pointer" : "default",
+            position: "relative",
+          }}
+        >
+          <div style={{
+            width: `${progress * 100}%`,
+            height: "100%",
+            background: "#000000",
+            borderRadius: "9999px",
+            transition: "width 0.1s linear",
+          }} />
+        </div>
+
+        {/* Time + skip buttons */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "11px", color: "#a59f97" }}>
+            {formatTime(currentTime)}{duration ? ` / ${formatTime(duration)}` : ""}
+          </span>
+          <div style={{ display: "flex", gap: "8px" }}>
+            {/* Rewind 10s */}
+            <button
+              onClick={() => handleSkip(-10)}
+              style={{ background: "none", border: "none", cursor: "pointer", padding: "2px", display: "flex", alignItems: "center", opacity: card.audioUrl ? 1 : 0.3 }}
+              title="Back 10s"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#777169" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="1 4 1 10 7 10" />
+                <path d="M3.51 15a9 9 0 1 0 .49-4" />
+                <text x="7" y="15" fontSize="7" fill="#777169" stroke="none" fontFamily="Inter" fontWeight="500">10</text>
+              </svg>
+            </button>
+            {/* Forward 10s */}
+            <button
+              onClick={() => handleSkip(10)}
+              style={{ background: "none", border: "none", cursor: "pointer", padding: "2px", display: "flex", alignItems: "center", opacity: card.audioUrl ? 1 : 0.3 }}
+              title="Forward 10s"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#777169" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="23 4 23 10 17 10" />
+                <path d="M20.49 15a9 9 0 1 1-.49-4" />
+                <text x="7" y="15" fontSize="7" fill="#777169" stroke="none" fontFamily="Inter" fontWeight="500">10</text>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
