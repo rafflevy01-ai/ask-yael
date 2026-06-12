@@ -160,9 +160,9 @@ export default function IosNotifCard({ stepIndex, animate, cardStyle }) {
         ...cardBase,
         ...cardStyle,
         opacity: entered ? 1 : 0,
-        transform: entered ? "translateY(0)" : "translateY(-120px)",
+        transform: entered ? "translateY(0)" : "translateY(-180px)",
         transition: animate
-          ? "opacity 0.4s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1), top 0.08s linear"
+          ? "opacity 0.45s ease-out, transform 0.7s cubic-bezier(0.22,1,0.36,1), top 0.08s linear"
           : "opacity 0.25s ease, top 0.08s linear",
         pointerEvents: "none",
       }}

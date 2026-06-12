@@ -30,6 +30,7 @@ export default function HowItWorksSection() {
   const stepRefs = useRef([]);
   const hasAnimated = useRef(new Set());
   const maxStepRef = useRef(0);
+  const hasScrolled = useRef(false);
 
   const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
@@ -61,34 +62,37 @@ export default function HowItWorksSection() {
       const prevMax = maxStepRef.current;
       const newMax = Math.max(prevMax, newActiveStep);
 
-      // Animate any newly-reached steps
-      if (newMax > prevMax) {
-        for (let i = prevMax + 1; i <= newMax; i++) {
-          if (!hasAnimated.current.has(i)) {
-            hasAnimated.current.add(i);
-            setAnimatingSteps((prev) => ({ ...prev, [i]: true }));
-            setTimeout(() => {
-              setAnimatingSteps((prev) => {
-                const next = { ...prev };
-                delete next[i];
-                return next;
-              });
-            }, 600);
+      // Only animate on actual scroll — skip the initial measurement call
+      if (hasScrolled.current) {
+        // Animate any newly-reached steps
+        if (newMax > prevMax) {
+          for (let i = prevMax + 1; i <= newMax; i++) {
+            if (!hasAnimated.current.has(i)) {
+              hasAnimated.current.add(i);
+              setAnimatingSteps((prev) => ({ ...prev, [i]: true }));
+              setTimeout(() => {
+                setAnimatingSteps((prev) => {
+                  const next = { ...prev };
+                  delete next[i];
+                  return next;
+                });
+              }, 700);
+            }
           }
         }
-      }
 
-      // Step 0 is baseline — animate it on first meaningful scroll into section
-      if (hasAnimated.current.size === 0 && p > 0.02) {
-        hasAnimated.current.add(0);
-        setAnimatingSteps((prev) => ({ ...prev, [0]: true }));
-        setTimeout(() => {
-          setAnimatingSteps((prev) => {
-            const next = { ...prev };
-            delete next[0];
-            return next;
-          });
-        }, 600);
+        // Step 0 is baseline — animate it on first meaningful scroll into section
+        if (hasAnimated.current.size === 0 && p > 0.02) {
+          hasAnimated.current.add(0);
+          setAnimatingSteps((prev) => ({ ...prev, [0]: true }));
+          setTimeout(() => {
+            setAnimatingSteps((prev) => {
+              const next = { ...prev };
+              delete next[0];
+              return next;
+            });
+          }, 700);
+        }
       }
       maxStepRef.current = newMax;
       setMaxStepReached(newMax);
@@ -104,7 +108,6 @@ export default function HowItWorksSection() {
             const heading = stepEl.querySelector("h3");
             if (heading) {
               const headingRect = heading.getBoundingClientRect();
-              // Align card top near heading top, with a small nudge for visual centering
               tops[i] = headingRect.top - panelRect.top - 8;
             }
           }
@@ -113,9 +116,14 @@ export default function HowItWorksSection() {
       }
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    const onRealScroll = () => {
+      hasScrolled.current = true;
+      onScroll();
+    };
+
+    window.addEventListener("scroll", onRealScroll, { passive: true });
+    onScroll(); // initial measurement only, no animation
+    return () => window.removeEventListener("scroll", onRealScroll);
   }, []);
 
   return (
