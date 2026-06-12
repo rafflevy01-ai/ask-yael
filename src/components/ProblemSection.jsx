@@ -15,7 +15,7 @@ export default function ProblemSection() {
       const section = document.getElementById("problem-section");
       const track = document.getElementById("panels-track");
       const dots = [0, 1, 2, 3].map((i) => document.getElementById("dot-" + i));
-      let barAnimated = false;
+      let lastPanel = -1;
 
       function updateScroll() {
         if (!section || !track) return;
@@ -36,9 +36,16 @@ export default function ProblemSection() {
           dot.style.transform = i === activePanel ? "scale(1.3)" : "scale(1)";
         });
 
-        if (activePanel === 1 && !barAnimated) {
-          barAnimated = true;
-          if (typeof window.animateBars === 'function') window.animateBars();
+        if (activePanel !== lastPanel) {
+          // Entering panel 2 (index 1)
+          if (activePanel === 1) {
+            if (typeof window.animateBarsEnter === 'function') window.animateBarsEnter();
+          }
+          // Leaving panel 2 → going to panel 3
+          if (lastPanel === 1 && activePanel === 2) {
+            if (typeof window.animateBarsExit === 'function') window.animateBarsExit();
+          }
+          lastPanel = activePanel;
         }
       }
 
@@ -465,19 +472,18 @@ export default function ProblemSection() {
         </div>{/* end problem-sticky */}
       </section>
 
-      {/* Stat counter + bar animation script */}
+      {/* Stat counter script */}
       <script dangerouslySetInnerHTML={{ __html: `
         (function() {
-          // Count-up for revenue stat
           function countUp(el, target, duration) {
             const start = performance.now();
             function step(now) {
               const t = Math.min((now - start) / duration, 1);
               const eased = 1 - Math.pow(1 - t, 3);
               const val = Math.floor(eased * target);
-              el.textContent = '₪' + val.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');
+              el.textContent = '\\u20AA' + val.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');
               if (t < 1) requestAnimationFrame(step);
-              else el.textContent = '₪' + target.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');
+              else el.textContent = '\\u20AA' + target.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');
             }
             requestAnimationFrame(step);
           }
@@ -496,11 +502,31 @@ export default function ProblemSection() {
   );
 }
 
-// animateBars must be global for the scroll handler
+// Bar animations — global so the scroll handler can call them
 if (typeof window !== 'undefined') {
-  window.animateBars = function() {
-    document.querySelectorAll('[data-height]').forEach((bar, i) => {
-      setTimeout(() => { bar.style.height = bar.getAttribute('data-height') + '%'; }, i * 40);
+  // Enter: bars grow up from 0, staggered left-to-right
+  window.animateBarsEnter = function() {
+    const bars = document.querySelectorAll('[data-height]');
+    bars.forEach((bar) => { bar.style.transition = 'none'; bar.style.height = '0'; });
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        bars.forEach((bar, i) => {
+          bar.style.transition = 'height 0.55s cubic-bezier(0.22,1,0.36,1)';
+          setTimeout(() => { bar.style.height = bar.getAttribute('data-height') + '%'; }, i * 35);
+        });
+      });
     });
   };
+
+  // Exit: bars collapse down, then instantly reset (ready for next enter)
+  window.animateBarsExit = function() {
+    const bars = document.querySelectorAll('[data-height]');
+    bars.forEach((bar, i) => {
+      bar.style.transition = 'height 0.35s cubic-bezier(0.55,0,1,0.45)';
+      setTimeout(() => { bar.style.height = '0'; }, i * 20);
+    });
+  };
+
+  // Keep legacy name working just in case
+  window.animateBars = window.animateBarsEnter;
 }
