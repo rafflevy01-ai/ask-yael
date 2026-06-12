@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const CARDS = [
   {
@@ -6,6 +6,7 @@ const CARDS = [
     title: "Language Detection",
     description: "Yael opens in Hebrew and switches to French mid-call.",
     featured: false,
+    audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/5600dd582_recording1.wav",
   },
   {
     id: 2,
@@ -80,6 +81,26 @@ function WaveformPlaceholder({ featured, playing }) {
 
 function AudioCard({ card }) {
   const [playing, setPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (!card.audioUrl) return;
+    const audio = new Audio(card.audioUrl);
+    audioRef.current = audio;
+    audio.addEventListener("ended", () => setPlaying(false));
+    return () => { audio.pause(); audio.removeEventListener("ended", () => setPlaying(false)); };
+  }, [card.audioUrl]);
+
+  const handlePlayPause = () => {
+    if (!card.audioUrl) { setPlaying((p) => !p); return; }
+    if (playing) {
+      audioRef.current?.pause();
+      setPlaying(false);
+    } else {
+      audioRef.current?.play();
+      setPlaying(true);
+    }
+  };
 
   return (
     <div style={{
@@ -140,7 +161,7 @@ function AudioCard({ card }) {
       <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
         {/* Play / Pause button */}
         <button
-          onClick={() => setPlaying((p) => !p)}
+          onClick={handlePlayPause}
           style={{
             width: "36px",
             height: "36px",
