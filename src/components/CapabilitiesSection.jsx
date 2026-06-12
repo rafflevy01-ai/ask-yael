@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 const CENTER = { label: "Yael AI Core", sub: "Voice receptionist engine", icon: Cpu, color: "#2563eb" };
 
 const OUTPUTS = [
-  { label: "Staff SMS", sub: "Real-time for every action", icon: MessageSquare, color: "#34c759" },
-  { label: "CRM Sync", sub: "No manual data entry", icon: RefreshCw, color: "#5856d6" },
-  { label: "24/7 Live", sub: "No voicemail, no missed calls", icon: Clock, color: "#ff9500" },
+  { label: "Staff SMS", sub: "Real-time for every action", icon: MessageSquare, color: "#2563eb" },
+  { label: "CRM Sync", sub: "No manual data entry", icon: RefreshCw, color: "#2563eb" },
+  { label: "24/7 Live", sub: "No voicemail, no missed calls", icon: Clock, color: "#2563eb" },
 ];
 
 /* ── Inline SVG icons ── */
@@ -42,24 +42,25 @@ function Clock() {
   );
 }
 
-/* ── Node card ── */
+/* ── Node card (light theme) ── */
 function NodeCard({ label, sub, icon: IconComp, variant = "default", accentColor }) {
   const isCore = variant === "core";
   return (
     <div style={{
-      border: isCore ? `1.5px solid ${accentColor}` : "1px solid rgba(255,255,255,0.10)",
+      border: isCore ? `1.5px solid ${accentColor}40` : "1px solid #e0ddd8",
       borderRadius: "10px",
-      background: isCore ? "rgba(37,99,235,0.08)" : "rgba(255,255,255,0.04)",
+      background: isCore ? "#ffffff" : "#fafaf8",
       padding: isCore ? "14px 18px" : "10px 14px",
       textAlign: "left",
       minWidth: isCore ? "180px" : "160px",
+      boxShadow: isCore ? "0 0 0 4px rgba(37,99,235,0.04), 0 2px 12px rgba(0,0,0,0.04)" : undefined,
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
         {IconComp && (
           <div style={{
             display: "flex", alignItems: "center", justifyContent: "center",
             width: "26px", height: "26px", borderRadius: "6px",
-            background: `${accentColor}18`,
+            background: `${accentColor}12`,
             color: accentColor,
             flexShrink: 0,
           }}>
@@ -68,10 +69,10 @@ function NodeCard({ label, sub, icon: IconComp, variant = "default", accentColor
         )}
         <div style={{ minWidth: 0 }}>
           <div style={{
-            fontFamily: "Inter, sans-serif",
-            fontWeight: 600,
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: isCore ? 600 : 500,
             fontSize: isCore ? "14px" : "12px",
-            color: "#ffffff",
+            color: "#000000",
             letterSpacing: "-0.01em",
             lineHeight: 1.2,
             marginBottom: "2px",
@@ -80,7 +81,7 @@ function NodeCard({ label, sub, icon: IconComp, variant = "default", accentColor
           </div>
           <div style={{
             fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "10px",
-            color: "rgba(255,255,255,0.45)", lineHeight: 1.3,
+            color: "#a59f97", lineHeight: 1.3,
           }}>
             {sub}
           </div>
@@ -90,21 +91,20 @@ function NodeCard({ label, sub, icon: IconComp, variant = "default", accentColor
   );
 }
 
-/* ── Dot grid background ── */
+/* ── Dot grid background (light) ── */
 function DotGrid() {
   return (
     <div style={{
-      position: "absolute", inset: 0, zIndex: 0, opacity: 0.18,
-      backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)",
-      backgroundSize: "20px 20px",
+      position: "absolute", inset: 0, zIndex: 0, opacity: 0.22,
+      backgroundImage: "radial-gradient(circle, #c4bfb8 1px, transparent 1px)",
+      backgroundSize: "18px 18px",
       pointerEvents: "none",
     }} />
   );
 }
 
-/* ── Flowing line animation component ── */
+/* ── Flowing line with dash animation ── */
 function FlowLine({ d, color, delay, visible }) {
-  // Dash moves along the path to simulate flow
   const [flowOffset, setFlowOffset] = useState(0);
 
   useEffect(() => {
@@ -123,52 +123,34 @@ function FlowLine({ d, color, delay, visible }) {
   return (
     <g>
       {/* Base line */}
+      <path d={d} stroke={color} strokeWidth="1.5" fill="none" opacity={0.18} />
+      {/* Flowing dash */}
       <path
         d={d}
         stroke={color}
-        strokeWidth="2"
+        strokeWidth="1.8"
         fill="none"
-        opacity={0.2}
-      />
-      {/* Flowing dash line */}
-      <path
-        d={d}
-        stroke={color}
-        strokeWidth="2"
-        fill="none"
-        strokeDasharray="8 12"
+        strokeDasharray="6 14"
         strokeDashoffset={-flowOffset * 20}
-        opacity={0.9}
-        style={{ filter: `drop-shadow(0 0 3px ${color}80)` }}
+        opacity={0.75}
       />
-      {/* Glow dots along the path */}
-      <circle r="3" fill={color} style={{ filter: `drop-shadow(0 0 4px ${color})` }}>
-        <animateMotion dur="1.8s" repeatCount="indefinite" path={d} begin={`${delay}s`} />
+      {/* Traveling dot 1 */}
+      <circle r="3" fill={color} opacity={0.9}>
+        <animateMotion dur="2s" repeatCount="indefinite" path={d} begin={`${delay}s`} />
       </circle>
-      <circle r="2" fill={color} opacity="0.6" style={{ filter: `drop-shadow(0 0 3px ${color})` }}>
-        <animateMotion dur="1.8s" repeatCount="indefinite" path={d} begin={`${delay + 0.9}s`} />
+      {/* Traveling dot 2 */}
+      <circle r="2" fill={color} opacity={0.5}>
+        <animateMotion dur="2s" repeatCount="indefinite" path={d} begin={`${delay + 1}s`} />
       </circle>
     </g>
   );
 }
 
-/* ── Connection lines from center to outputs ── */
+/* ── Connection paths (source → outputs) ── */
 const CONNECTIONS = [
-  {
-    d: "M 204,80 Q 280,80 320,100 Q 340,108 344,104",
-    color: "#34c759",
-    delay: 0,
-  },
-  {
-    d: "M 204,128 Q 300,128 320,128 Q 340,128 344,128",
-    color: "#5856d6",
-    delay: 0.3,
-  },
-  {
-    d: "M 204,176 Q 280,176 320,156 Q 340,148 344,152",
-    color: "#ff9500",
-    delay: 0.6,
-  },
+  { d: "M 206,78 Q 280,78 330,98 Q 344,106 348,102", delay: 0 },
+  { d: "M 206,128 Q 300,128 330,128 Q 344,128 348,128", delay: 0.2 },
+  { d: "M 206,178 Q 280,178 330,158 Q 344,150 348,154", delay: 0.4 },
 ];
 
 /* ── Main section ── */
@@ -194,7 +176,7 @@ export default function CapabilitiesSection() {
     return () => obs.disconnect();
   }, [started]);
 
-  // Auto-advance phases once started
+  // Auto-advance once started
   useEffect(() => {
     if (!started) return;
     const t = setTimeout(() => setPhase(1), 800);
@@ -223,29 +205,29 @@ export default function CapabilitiesSection() {
           Everything your front desk handles. Automated.
         </h2>
 
-        {/* ═══════ DARK DIAGRAM ═══════ */}
+        {/* ═══════ DIAGRAM — light grey ═══════ */}
         <div style={{
           position: "relative",
           borderRadius: "18px",
-          background: "#0a0a0f",
+          background: "#fafaf8",
           overflow: "hidden",
-          minHeight: "280px",
-          border: "1px solid rgba(255,255,255,0.06)",
+          minHeight: "260px",
+          border: "1px solid #e8e5e0",
         }}>
           <DotGrid />
 
-          {/* ═══ CONTENT — left → right flow ═══ */}
+          {/* ═══ CONTENT: left → right ═══ */}
           <div style={{
             position: "relative", zIndex: 2,
-            padding: "clamp(24px, 4vw, 40px) clamp(32px, 5vw, 48px)",
+            padding: "clamp(24px, 4vw, 36px) clamp(32px, 5vw, 48px)",
             display: "flex", alignItems: "center",
             justifyContent: "space-between",
-            gap: "24px",
+            gap: "clamp(12px, 2vw, 24px)",
           }}>
 
-            {/* ── LEFT: Source node ── */}
+            {/* ── LEFT: Source ── */}
             <motion.div
-              animate={phase === 0 ? { scale: [1, 1.03, 1] } : { scale: 1 }}
+              animate={phase === 0 ? { scale: [1, 1.025, 1] } : { scale: 1 }}
               transition={phase === 0 ? { repeat: Infinity, duration: 2.8, ease: "easeInOut" } : {}}
               style={{ flexShrink: 0 }}
             >
@@ -268,7 +250,7 @@ export default function CapabilitiesSection() {
               <svg
                 width="100%"
                 height="100%"
-                viewBox="0 0 148 208"
+                viewBox="0 0 150 208"
                 preserveAspectRatio="xMidYMid meet"
                 style={{ position: "absolute", inset: 0 }}
               >
@@ -277,7 +259,7 @@ export default function CapabilitiesSection() {
                     <FlowLine
                       key={i}
                       d={conn.d}
-                      color={conn.color}
+                      color="#2563eb"
                       delay={conn.delay}
                       visible={phase >= 1}
                     />
@@ -286,7 +268,7 @@ export default function CapabilitiesSection() {
               </svg>
             </div>
 
-            {/* ── RIGHT: Output nodes stacked ── */}
+            {/* ── RIGHT: Outputs ── */}
             <div style={{
               flexShrink: 0,
               display: "flex", flexDirection: "column", gap: "16px",
@@ -321,16 +303,16 @@ export default function CapabilitiesSection() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 style={{
-                  position: "absolute", bottom: "20px", left: 0, right: 0,
+                  position: "absolute", bottom: "18px", left: 0, right: 0,
                   display: "flex", justifyContent: "center",
                 }}
               >
                 <div style={{
-                  fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "12px",
+                  fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px",
                   color: "#2563eb", letterSpacing: "-0.01em",
-                  border: "1px solid rgba(37,99,235,0.30)",
-                  borderRadius: "9999px", padding: "6px 18px",
-                  background: "rgba(37,99,235,0.06)",
+                  border: "1px solid rgba(37,99,235,0.20)",
+                  borderRadius: "9999px", padding: "5px 16px",
+                  background: "rgba(37,99,235,0.04)",
                 }}>
                   Initializing&hellip;
                 </div>
