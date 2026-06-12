@@ -89,77 +89,97 @@ function NodeBox({ label, sub, prominent }) {
   );
 }
 
-/* ── Connector strip (renders SVG arrows between layers) ── */
+/* ── Connector strips (orthogonal SVG lines only) ── */
 const STROKE = "#c4bfb8";
 
-/* Two parallel vertical arrows between 2-box layers */
+function ArrowMarker({ id }) {
+  return (
+    <marker id={id} markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
+      <polygon points="0 0, 5 2, 0 4" fill={STROKE} />
+    </marker>
+  );
+}
+
+/* ── two straight verticals (Input → Intelligence, boxes aligned) ── */
 function TwoDownArrows() {
+  const H = 28;
   return (
-    <div style={{ height: "28px", position: "relative", margin: "4px 0" }}>
-      <svg width="100%" height="28" style={{ position: "absolute", top: 0, left: 0 }}>
-        <defs>
-          <marker id="ah" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
-            <polygon points="0 0, 5 2, 0 4" fill={STROKE} />
-          </marker>
-        </defs>
-        {/* Left: 25% → 25% */}
-        <line x1="25%" y1="0" x2="25%" y2="24" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah)" />
-        {/* Right: 75% → 75% */}
-        <line x1="75%" y1="0" x2="75%" y2="24" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah)" />
+    <div style={{ height: H, position: "relative", margin: "4px 0" }}>
+      <svg width="100%" height={H} viewBox={`0 0 100 ${H}`} preserveAspectRatio="none"
+        style={{ position: "absolute", top: 0, left: 0 }}>
+        <defs><ArrowMarker id="ah" /></defs>
+        <line x1="25" y1="0" x2="25" y2={H - 4} stroke={STROKE} strokeWidth="1" markerEnd="url(#ah)" />
+        <line x1="75" y1="0" x2="75" y2={H - 4} stroke={STROKE} strokeWidth="1" markerEnd="url(#ah)" />
       </svg>
     </div>
   );
 }
 
-/* Two converging arrows (from 2 boxes → 1 center box) */
+/* ── 2 → 1 converge: L-shaped orthogonal from both sides to centre ── */
 function ConvergeArrows() {
+  const H = 42;
+  const v1 = 18, v2 = H - 4;
   return (
-    <div style={{ height: "28px", position: "relative", margin: "4px 0" }}>
-      <svg width="100%" height="28" style={{ position: "absolute", top: 0, left: 0 }}>
-        <defs>
-          <marker id="ah2" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
-            <polygon points="0 0, 5 2, 0 4" fill={STROKE} />
-          </marker>
-        </defs>
-        <line x1="25%" y1="0" x2="50%" y2="24" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah2)" />
-        <line x1="75%" y1="0" x2="50%" y2="24" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah2)" />
+    <div style={{ height: H, position: "relative", margin: "4px 0" }}>
+      <svg width="100%" height={H} viewBox={`0 0 100 ${H}`} preserveAspectRatio="none"
+        style={{ position: "absolute", top: 0, left: 0 }}>
+        <defs><ArrowMarker id="ah2" /></defs>
+        {/* left side: down → right → down */}
+        <path d={`M 25,0 L 25,${v1} L 50,${v1} L 50,${v2}`}
+          stroke={STROKE} strokeWidth="1" fill="none" markerEnd="url(#ah2)" />
+        {/* right side: down → left → down */}
+        <path d={`M 75,0 L 75,${v1} L 50,${v1} L 50,${v2}`}
+          stroke={STROKE} strokeWidth="1" fill="none" markerEnd="url(#ah2)" />
       </svg>
     </div>
   );
 }
 
-/* Fan-out: 1 center → 5 boxes */
+/* ── 1 → 5 fan-out: stem → horizontal bus → five vertical drops ── */
 function FanOutFive() {
-  const targets = [10, 30, 50, 70, 90]; // percentages
+  const H = 46;
+  const busY = 18;
   return (
-    <div style={{ height: "32px", position: "relative", margin: "4px 0" }}>
-      <svg width="100%" height="32" style={{ position: "absolute", top: 0, left: 0 }}>
-        <defs>
-          <marker id="ah3" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
-            <polygon points="0 0, 5 2, 0 4" fill={STROKE} />
-          </marker>
-        </defs>
-        {targets.map((x) => (
-          <line key={x} x1="50%" y1="0" x2={`${x}%`} y2="28" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah3)" />
+    <div style={{ height: H, position: "relative", margin: "4px 0" }}>
+      <svg width="100%" height={H} viewBox={`0 0 100 ${H}`} preserveAspectRatio="none"
+        style={{ position: "absolute", top: 0, left: 0 }}>
+        <defs><ArrowMarker id="ah3" /></defs>
+        {/* vertical stem from 50 down to bus */}
+        <line x1="50" y1="0" x2="50" y2={busY} stroke={STROKE} strokeWidth="1" />
+        {/* horizontal bus bar */}
+        <line x1="10" y1={busY} x2="90" y2={busY} stroke={STROKE} strokeWidth="1" />
+        {/* five vertical drops */}
+        {[10, 30, 50, 70, 90].map((x) => (
+          <line key={x} x1={x} y1={busY} x2={x} y2={H - 4}
+            stroke={STROKE} strokeWidth="1" markerEnd="url(#ah3)" />
         ))}
       </svg>
     </div>
   );
 }
 
-/* 3 straight down arrows */
-function ThreeDownArrows() {
+/* ── 5 → 3: five drops → horizontal bus → three drops ── */
+function FiveToThreeArrows() {
+  const H = 40;
+  const busY = 16;
+  const sources = [10, 30, 50, 70, 90];
+  const targets = [17, 50, 83];
   return (
-    <div style={{ height: "24px", position: "relative", margin: "4px 0" }}>
-      <svg width="100%" height="24" style={{ position: "absolute", top: 0, left: 0 }}>
-        <defs>
-          <marker id="ah4" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
-            <polygon points="0 0, 5 2, 0 4" fill={STROKE} />
-          </marker>
-        </defs>
-        <line x1="17%" y1="0" x2="17%" y2="20" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah4)" />
-        <line x1="50%" y1="0" x2="50%" y2="20" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah4)" />
-        <line x1="83%" y1="0" x2="83%" y2="20" stroke={STROKE} strokeWidth="1" markerEnd="url(#ah4)" />
+    <div style={{ height: H, position: "relative", margin: "4px 0" }}>
+      <svg width="100%" height={H} viewBox={`0 0 100 ${H}`} preserveAspectRatio="none"
+        style={{ position: "absolute", top: 0, left: 0 }}>
+        <defs><ArrowMarker id="ah4" /></defs>
+        {/* five sources drop to bus */}
+        {sources.map((x) => (
+          <line key={`s${x}`} x1={x} y1="0" x2={x} y2={busY} stroke={STROKE} strokeWidth="1" />
+        ))}
+        {/* horizontal bus bar */}
+        <line x1="10" y1={busY} x2="90" y2={busY} stroke={STROKE} strokeWidth="1" />
+        {/* three targets drop from bus */}
+        {targets.map((x) => (
+          <line key={`t${x}`} x1={x} y1={busY} x2={x} y2={H - 4}
+            stroke={STROKE} strokeWidth="1" markerEnd="url(#ah4)" />
+        ))}
       </svg>
     </div>
   );
@@ -235,7 +255,7 @@ export default function CapabilitiesSection() {
             {CAPABILITIES.map((n) => <NodeBox key={n.label} label={n.label} sub={n.sub} />)}
           </div>
 
-          <ThreeDownArrows />
+          <FiveToThreeArrows />
 
           {/* Output – 3 across */}
           <div style={{ display: "flex", gap: "10px" }}>
