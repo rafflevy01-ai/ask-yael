@@ -27,9 +27,9 @@ const STEPS = [
 
 export default function HowItWorksSection() {
   const sectionRef = useRef(null);
-  const rightColRef = useRef(null);
   const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
+  const stepRefs = useRef([]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -47,17 +47,17 @@ export default function HowItWorksSection() {
       const p = Math.max(0, Math.min(1, scrolled / end));
       setProgress(p);
 
-      // Step-level activeStep: check each step div's position in viewport
-      const stepEls = document.querySelectorAll('[data-how-step]');
-      const lineMiddle = viewportHeight * 0.45; // trigger when step top hits 45% from top
-      let bestStep = 0;
-      stepEls.forEach((el) => {
+      // Step-level activeStep: based on each step's heading position
+      // Trigger zone aligns with sticky left panel (~200px from viewport top)
+      const triggerY = 220;
+      let best = 0;
+      for (let i = 0; i < stepRefs.current.length; i++) {
+        const el = stepRefs.current[i];
+        if (!el) continue;
         const top = el.getBoundingClientRect().top;
-        if (top <= lineMiddle) {
-          bestStep = Math.max(bestStep, parseInt(el.getAttribute('data-how-step'), 10));
-        }
-      });
-      setActiveStep(bestStep);
+        if (top <= triggerY) best = i;
+      }
+      setActiveStep(best);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -144,7 +144,7 @@ export default function HowItWorksSection() {
           </div>
 
           {/* RIGHT — Scrollable steps */}
-          <div ref={rightColRef} className="how-right" style={{ flex: 1, minWidth: 0 }}>
+          <div className="how-right" style={{ flex: 1, minWidth: 0 }}>
             {/* Vertical line */}
             <div style={{ position: "relative" }}>
               <div style={{
@@ -173,7 +173,7 @@ export default function HowItWorksSection() {
               {STEPS.map((step, i) => (
                 <div
                   key={step.number}
-                  data-how-step={i}
+                  ref={(el) => { stepRefs.current[i] = el; }}
                   style={{
                     padding: "56px 0 56px 48px",
                     opacity: progress >= i / STEPS.length ? 1 : 0.25,
