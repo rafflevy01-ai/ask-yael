@@ -280,7 +280,7 @@ export default function ProblemSection() {
 
             {/* ── PANEL 1 ── */}
             <div className="problem-panel">
-              <div className="panel-card" style={{ background: "linear-gradient(135deg, #fef2f2 0%, #fef7ff 100%)" }}>
+              <div className="panel-card" style={{ background: "linear-gradient(135deg, #f0f9ff 0%, #faf5ff 100%)" }}>
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#a59f97", marginBottom: "8px", letterSpacing: "-0.02em" }}>01</span>
                 <div id="stat-revenue" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>₪0</div>
                 <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>in unrealized revenue per year</div>
@@ -300,7 +300,7 @@ export default function ProblemSection() {
 
             {/* ── PANEL 2 ── */}
             <div className="problem-panel">
-              <div className="panel-card" style={{ background: "linear-gradient(135deg, #fef3c7 0%, #fef7ff 100%)" }}>
+              <div className="panel-card" style={{ background: "linear-gradient(135deg, #ecfdf5 0%, #f0f9ff 100%)" }}>
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#a59f97", marginBottom: "8px", letterSpacing: "-0.02em" }}>02</span>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>40%</div>
                 <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>of appointment requests come after hours</div>
@@ -343,7 +343,7 @@ export default function ProblemSection() {
 
             {/* ── PANEL 3 ── */}
             <div className="problem-panel">
-              <div className="panel-card" style={{ background: "linear-gradient(135deg, #dbeafe 0%, #fef7ff 100%)" }}>
+              <div className="panel-card" style={{ background: "linear-gradient(135deg, #f0f4ff 0%, #fafef9 100%)" }}>
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#a59f97", marginBottom: "8px", letterSpacing: "-0.02em" }}>03</span>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "5rem", color: "#000", lineHeight: 1, letterSpacing: "-0.05em" }}>30,000+</div>
                 <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#a59f97", marginBottom: "16px" }}>French-speaking residents in Netanya</div>
@@ -404,7 +404,7 @@ export default function ProblemSection() {
 
             {/* ── PANEL 4 ── */}
             <div className="problem-panel">
-              <div className="panel-card" style={{ background: "linear-gradient(135deg, #f3e8ff 0%, #fef7ff 100%)" }}>
+              <div className="panel-card" style={{ background: "linear-gradient(135deg, #f8fafc 0%, #f5f9ff 100%)" }}>
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "14px", color: "#a59f97", marginBottom: "8px", letterSpacing: "-0.02em" }}>04</span>
                 <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.72px", textAlign: "center", maxWidth: "540px", margin: 0 }}>
                   You're paying a full salary just to answer the phone.
