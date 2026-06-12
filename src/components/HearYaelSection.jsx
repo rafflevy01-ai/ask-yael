@@ -32,19 +32,8 @@ const CARDS = [
 
 function IOSLanguageDetection() {
   return (
-    <div style={{ background: "#f2f2f7", borderRadius: "16px 16px 0 0", padding: "16px", fontFamily: "-apple-system, 'SF Pro Text', sans-serif", overflow: "hidden" }}>
-      {/* Status bar */}
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", opacity: 0.5 }}>
-        <span style={{ fontSize: "11px", fontWeight: 600, color: "#000" }}>9:41</span>
-        <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
-          <svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="2" width="3" height="8" rx="1" fill="#000"/><rect x="4.5" y="1" width="3" height="9" rx="1" fill="#000"/><rect x="9" y="0" width="3" height="10" rx="1" fill="#000"/><rect x="13.5" y="3" width="2" height="6" rx="0.5" fill="#000" opacity=".3"/></svg>
-          <svg width="15" height="12" viewBox="0 0 15 12"><path d="M7.5 2.5C9.8 2.5 11.9 3.5 13.3 5L14.8 3.4C12.9 1.3 10.3 0 7.5 0S2.1 1.3.2 3.4L1.7 5C3.1 3.5 5.2 2.5 7.5 2.5Z" fill="#000"/><path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7.1L12.8 5.5C11.4 4.1 9.5 3.3 7.5 3.3S3.6 4.1 2.2 5.5L3.7 7.1C4.7 6.1 6 5.5 7.5 5.5Z" fill="#000"/><circle cx="7.5" cy="10" r="2" fill="#000"/></svg>
-          <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="22" height="10" rx="2.5" stroke="#000" strokeWidth="1" fill="none" opacity=".35"/><rect x="1" y="2" width="18" height="8" rx="1.5" fill="#000"/><path d="M23 4.5v3a1.5 1.5 0 000-3z" fill="#000" opacity=".4"/></svg>
-        </div>
-      </div>
-      {/* Sheet title */}
-      <div style={{ fontSize: "13px", fontWeight: 600, color: "#000", marginBottom: "8px", textAlign: "center" }}>Language Detected</div>
-      {/* Language rows */}
+    <div style={{ background: "#f2f2f7", borderRadius: "16px 16px 0 0", padding: "16px 16px 12px", fontFamily: "-apple-system, 'SF Pro Text', sans-serif", overflow: "hidden" }}>
+      <div style={{ fontSize: "12px", fontWeight: 600, color: "#000", marginBottom: "8px", textAlign: "center" }}>Language Detected</div>
       {[
         { flag: "🇮🇱", lang: "Hebrew", active: true },
         { flag: "🇫🇷", lang: "Français", active: false },
@@ -52,17 +41,17 @@ function IOSLanguageDetection() {
       ].map(({ flag, lang, active }) => (
         <div key={lang} style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          background: "#fff", borderRadius: "10px", padding: "9px 12px",
+          background: "#fff", borderRadius: "10px", padding: "8px 12px",
           marginBottom: "4px",
           boxShadow: active ? "0 0 0 2px #34c759" : "none",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <span style={{ fontSize: "18px" }}>{flag}</span>
-            <span style={{ fontSize: "14px", fontWeight: active ? 600 : 400, color: "#000" }}>{lang}</span>
+            <span style={{ fontSize: "16px" }}>{flag}</span>
+            <span style={{ fontSize: "13px", fontWeight: active ? 600 : 400, color: "#000" }}>{lang}</span>
           </div>
           {active && (
-            <div style={{ width: "20px", height: "20px", borderRadius: "50%", background: "#34c759", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 3.5,6.5 9,1" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round"/></svg>
+            <div style={{ width: "18px", height: "18px", borderRadius: "50%", background: "#34c759", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <svg width="9" height="7" viewBox="0 0 10 8"><polyline points="1,4 3.5,6.5 9,1" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round"/></svg>
             </div>
           )}
         </div>
@@ -73,32 +62,24 @@ function IOSLanguageDetection() {
 
 function IOSPatientRecognition() {
   return (
-    <div style={{ background: "#1c1c1e", borderRadius: "16px 16px 0 0", padding: "16px", fontFamily: "-apple-system, 'SF Pro Text', sans-serif", overflow: "hidden" }}>
-      {/* Status bar */}
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "14px", opacity: 0.6 }}>
-        <span style={{ fontSize: "11px", fontWeight: 600, color: "#fff" }}>9:41</span>
-        <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
-          <svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="2" width="3" height="8" rx="1" fill="#fff"/><rect x="4.5" y="1" width="3" height="9" rx="1" fill="#fff"/><rect x="9" y="0" width="3" height="10" rx="1" fill="#fff"/></svg>
-          <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="22" height="10" rx="2.5" stroke="#fff" strokeWidth="1" fill="none" opacity=".5"/><rect x="1" y="2" width="16" height="8" rx="1.5" fill="#fff"/></svg>
-        </div>
-      </div>
+    <div style={{ background: "#f2f2f7", borderRadius: "16px 16px 0 0", padding: "16px 16px 12px", fontFamily: "-apple-system, 'SF Pro Text', sans-serif", overflow: "hidden" }}>
       {/* Incoming call */}
       <div style={{ textAlign: "center", marginBottom: "12px" }}>
-        <div style={{ fontSize: "12px", color: "#aeaeb2", letterSpacing: "0.04em", marginBottom: "4px" }}>Incoming Call</div>
-        <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "linear-gradient(135deg, #5e5ce6, #bf5af2)", margin: "0 auto 8px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <span style={{ color: "#fff", fontSize: "22px", fontWeight: 600 }}>מ</span>
+        <div style={{ fontSize: "12px", color: "#8e8e93", letterSpacing: "0.04em", marginBottom: "6px" }}>Incoming Call</div>
+        <div style={{ width: "44px", height: "44px", borderRadius: "50%", background: "linear-gradient(135deg, #5e5ce6, #bf5af2)", margin: "0 auto 6px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <span style={{ color: "#fff", fontSize: "18px", fontWeight: 600 }}>מ</span>
         </div>
-        <div style={{ fontSize: "18px", fontWeight: 600, color: "#fff" }}>מיכל לוי</div>
-        <div style={{ fontSize: "12px", color: "#34c759", marginTop: "2px" }}>✓ Returning patient · File #0482</div>
+        <div style={{ fontSize: "15px", fontWeight: 600, color: "#000" }}>מיכל לוי</div>
+        <div style={{ fontSize: "11px", color: "#34c759", marginTop: "2px", fontWeight: 500 }}>✓ Returning patient · File #0482</div>
       </div>
       {/* Action buttons */}
       <div style={{ display: "flex", justifyContent: "space-around" }}>
         {[{ icon: "✕", bg: "#ff3b30", label: "Decline" }, { icon: "✓", bg: "#34c759", label: "Accept" }].map(({ icon, bg, label }) => (
           <div key={label} style={{ textAlign: "center" }}>
-            <div style={{ width: "44px", height: "44px", borderRadius: "50%", background: bg, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 4px" }}>
-              <span style={{ color: "#fff", fontSize: "18px" }}>{icon}</span>
+            <div style={{ width: "38px", height: "38px", borderRadius: "50%", background: bg, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 3px" }}>
+              <span style={{ color: "#fff", fontSize: "16px" }}>{icon}</span>
             </div>
-            <span style={{ fontSize: "11px", color: "#aeaeb2" }}>{label}</span>
+            <span style={{ fontSize: "10px", color: "#8e8e93" }}>{label}</span>
           </div>
         ))}
       </div>
@@ -108,30 +89,25 @@ function IOSPatientRecognition() {
 
 function IOSFullBooking() {
   return (
-    <div style={{ background: "#f2f2f7", borderRadius: "16px 16px 0 0", padding: "16px", fontFamily: "-apple-system, 'SF Pro Text', sans-serif", overflow: "hidden" }}>
-      {/* Status bar */}
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", opacity: 0.5 }}>
-        <span style={{ fontSize: "11px", fontWeight: 600, color: "#000" }}>9:41</span>
-      </div>
-      {/* Calendar event card */}
+    <div style={{ background: "#f2f2f7", borderRadius: "16px 16px 0 0", padding: "16px 16px 12px", fontFamily: "-apple-system, 'SF Pro Text', sans-serif", overflow: "hidden" }}>
       <div style={{ background: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
         <div style={{ background: "#007aff", padding: "8px 12px" }}>
-          <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.8)", textTransform: "uppercase", letterSpacing: "0.08em" }}>New Appointment</div>
-          <div style={{ fontSize: "16px", fontWeight: 600, color: "#fff", marginTop: "2px" }}>Dental Check-up</div>
+          <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.8)", textTransform: "uppercase", letterSpacing: "0.08em" }}>New Appointment</div>
+          <div style={{ fontSize: "14px", fontWeight: 600, color: "#fff", marginTop: "2px" }}>Dental Check-up</div>
         </div>
-        <div style={{ padding: "10px 12px", display: "flex", flexDirection: "column", gap: "6px" }}>
+        <div style={{ padding: "8px 12px", display: "flex", flexDirection: "column", gap: "5px" }}>
           {[
             { icon: "📅", text: "Thursday, June 19" },
             { icon: "🕙", text: "10:30 – 11:00" },
             { icon: "👤", text: "Dr. Cohen · Sarah B." },
           ].map(({ icon, text }) => (
-            <div key={text} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "#333" }}>
+            <div key={text} style={{ display: "flex", alignItems: "center", gap: "7px", fontSize: "12px", color: "#333" }}>
               <span>{icon}</span><span>{text}</span>
             </div>
           ))}
-          <div style={{ marginTop: "4px", padding: "6px 10px", background: "#e8f4ff", borderRadius: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#34c759", flexShrink: 0 }} />
-            <span style={{ fontSize: "11px", color: "#007aff", fontWeight: 500 }}>Confirmed & synced to booking system</span>
+          <div style={{ marginTop: "2px", padding: "5px 8px", background: "#e8f4ff", borderRadius: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
+            <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#34c759", flexShrink: 0 }} />
+            <span style={{ fontSize: "10px", color: "#007aff", fontWeight: 500 }}>Confirmed & synced to booking system</span>
           </div>
         </div>
       </div>
@@ -141,12 +117,8 @@ function IOSFullBooking() {
 
 function IOSNewPatientIntake() {
   return (
-    <div style={{ background: "#f2f2f7", borderRadius: "16px 16px 0 0", padding: "16px", fontFamily: "-apple-system, 'SF Pro Text', sans-serif", overflow: "hidden" }}>
-      {/* Status bar */}
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px", opacity: 0.5 }}>
-        <span style={{ fontSize: "11px", fontWeight: 600, color: "#000" }}>9:41</span>
-      </div>
-      <div style={{ fontSize: "13px", fontWeight: 600, color: "#000", marginBottom: "8px" }}>New Patient</div>
+    <div style={{ background: "#f2f2f7", borderRadius: "16px 16px 0 0", padding: "16px 16px 12px", fontFamily: "-apple-system, 'SF Pro Text', sans-serif", overflow: "hidden" }}>
+      <div style={{ fontSize: "12px", fontWeight: 600, color: "#000", marginBottom: "6px" }}>New Patient</div>
       <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
         {[
           { label: "Full Name", value: "David Marciano", done: true },
@@ -154,7 +126,7 @@ function IOSNewPatientIntake() {
           { label: "Health Fund", value: "Maccabi", done: true },
           { label: "Reason", value: "Tooth pain — urgent", done: true },
         ].map(({ label, value, done }) => (
-          <div key={label} style={{ background: "#fff", borderRadius: "8px", padding: "7px 10px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div key={label} style={{ background: "#fff", borderRadius: "8px", padding: "5px 10px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div>
               <div style={{ fontSize: "10px", color: "#8e8e93", marginBottom: "1px" }}>{label}</div>
               <div style={{ fontSize: "13px", color: "#000", fontWeight: 400 }}>{value}</div>
