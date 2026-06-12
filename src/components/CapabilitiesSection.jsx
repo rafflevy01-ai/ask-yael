@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /* ── Data: 10 capabilities ── */
@@ -179,8 +179,8 @@ export default function CapabilitiesSection() {
           Everything your front desk handles. Automated.
         </h2>
 
-        {/* ═══════ RADIAL DIAGRAM (Desktop) ═══════ */}
-        <div className="caps-desktop" style={{
+        {/* ═══════ RADIAL DIAGRAM ═══════ */}
+        <div style={{
           position: "relative",
           borderRadius: "18px",
           background: "#fafaf8",
@@ -363,76 +363,15 @@ export default function CapabilitiesSection() {
           </AnimatePresence>
         </div>
 
-      </div>
-
-      {/* ── MOBILE: simplified layout ── */}
-      <div className="caps-mobile" style={{ display: "none", marginTop: "48px" }}>
-        <div style={{
-          borderRadius: "18px", background: "#fafaf8", border: "1px solid #e8e5e0",
-          padding: "28px 20px", position: "relative", overflow: "hidden",
+        {/* ── Closing line ── */}
+        <p style={{
+          fontFamily: "Inter, sans-serif", fontWeight: 400, fontStyle: "italic",
+          fontSize: "14px", color: "#777169", lineHeight: 1.6,
+          margin: "36px auto 0 auto", textAlign: "center",
         }}>
-          <DotGrid />
-          <div style={{ position: "relative", zIndex: 2 }}>
-            {/* Center node */}
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
-              <div style={{
-                border: "1.5px solid rgba(37,99,235,0.45)", borderRadius: "12px",
-                background: "#ffffff", padding: "14px 20px", textAlign: "center",
-                boxShadow: "0 0 0 4px rgba(37,99,235,0.04), 0 3px 14px rgba(0,0,0,0.05)",
-              }}>
-                <div style={{ display: "flex", justifyContent: "center", marginBottom: "4px", color: "#2563eb" }}>
-                  <CenterIcon />
-                </div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "14px", color: "#000" }}>
-                  Yael AI Core
-                </div>
-                <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "10px", color: "#a59f97" }}>
-                  Voice receptionist engine
-                </div>
-              </div>
-            </div>
-
-            {/* Divider line */}
-            <div style={{ height: "1px", background: "#e0ddd8", margin: "0 0 20px 0" }} />
-
-            {/* Banner grid */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
-              {CAPABILITIES.map((cap, i) => (
-                <motion.div
-                  key={cap.label}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={started ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
-                >
-                  <div style={{
-                    border: "1px solid #e0ddd8", borderRadius: "8px", background: "#fafaf8",
-                    padding: "8px 10px", textAlign: "center",
-                  }}>
-                    <div style={{ display: "flex", justifyContent: "center", marginBottom: "4px", color: "#2563eb" }}>
-                      {ICONS[i]()}
-                    </div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: "10px", color: "#000", marginBottom: "1px" }}>
-                      {cap.label}
-                    </div>
-                    <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "8px", color: "#a59f97" }}>
-                      {cap.sub}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
+          All of this in one call, in the patient's language, 24 hours a day.
+        </p>
       </div>
-
-      {/* ── Closing line ── */}
-      <p style={{
-        fontFamily: "Inter, sans-serif", fontWeight: 400, fontStyle: "italic",
-        fontSize: "14px", color: "#777169", lineHeight: 1.6,
-        margin: "36px auto 0 auto", textAlign: "center", maxWidth: "780px",
-      }}>
-        All of this in one call, in the patient's language, 24 hours a day.
-      </p>
 
       <style>{`
         @media (max-width: 768px) {
@@ -440,10 +379,6 @@ export default function CapabilitiesSection() {
         }
         @media (max-width: 1024px) {
           [data-capabilities] { padding: 64px 24px !important; }
-        }
-        @media (max-width: 640px) {
-          .caps-desktop { display: none !important; }
-          .caps-mobile { display: block !important; }
         }
       `}</style>
     </section>
