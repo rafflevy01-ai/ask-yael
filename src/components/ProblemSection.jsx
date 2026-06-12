@@ -8,6 +8,25 @@ export default function ProblemSection() {
     if (initRef.current) return;
     initRef.current = true;
 
+    // --- Bar animations (defined first so scroll handler can call them) ---
+    window.animateBarsEnter = function() {
+      const bars = document.querySelectorAll('[data-height]');
+      bars.forEach((bar) => { bar.style.transition = 'none'; bar.style.height = '0%'; });
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        bars.forEach((bar, i) => {
+          bar.style.transition = 'height 0.55s cubic-bezier(0.22,1,0.36,1)';
+          setTimeout(() => { bar.style.height = bar.getAttribute('data-height') + '%'; }, i * 35);
+        });
+      }));
+    };
+    window.animateBarsExit = function() {
+      const bars = document.querySelectorAll('[data-height]');
+      [...bars].reverse().forEach((bar, i) => {
+        bar.style.transition = 'height 0.35s cubic-bezier(0.55,0,1,0.45)';
+        setTimeout(() => { bar.style.height = '0%'; }, i * 20);
+      });
+    };
+
     // --- Scroll-jacking ---
     (function () {
       const isMobile = window.innerWidth < 768;
@@ -37,15 +56,16 @@ export default function ProblemSection() {
         });
 
         if (activePanel !== lastPanel) {
-          // Entering panel 2 (index 1)
-          if (activePanel === 1) {
-            if (typeof window.animateBarsEnter === 'function') window.animateBarsEnter();
-          }
-          // Leaving panel 2 → going to panel 3
-          if (lastPanel === 1 && activePanel === 2) {
-            if (typeof window.animateBarsExit === 'function') window.animateBarsExit();
-          }
+          const prev = lastPanel;
           lastPanel = activePanel;
+          // Entering panel 2 (from either side)
+          if (activePanel === 1) {
+            window.animateBarsEnter();
+          }
+          // Leaving panel 2 in either direction
+          if (prev === 1 && activePanel !== 1) {
+            window.animateBarsExit();
+          }
         }
       }
 
@@ -197,7 +217,6 @@ export default function ProblemSection() {
           flex: 1;
           border-radius: 4px 4px 0 0;
           height: 0;
-          transition: height 0.6s ease-out;
         }
 
         @media (max-width: 768px) {
@@ -500,33 +519,4 @@ export default function ProblemSection() {
       `}} />
     </>
   );
-}
-
-// Bar animations — global so the scroll handler can call them
-if (typeof window !== 'undefined') {
-  // Enter: bars grow up from 0, staggered left-to-right
-  window.animateBarsEnter = function() {
-    const bars = document.querySelectorAll('[data-height]');
-    bars.forEach((bar) => { bar.style.transition = 'none'; bar.style.height = '0'; });
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        bars.forEach((bar, i) => {
-          bar.style.transition = 'height 0.55s cubic-bezier(0.22,1,0.36,1)';
-          setTimeout(() => { bar.style.height = bar.getAttribute('data-height') + '%'; }, i * 35);
-        });
-      });
-    });
-  };
-
-  // Exit: bars collapse down, then instantly reset (ready for next enter)
-  window.animateBarsExit = function() {
-    const bars = document.querySelectorAll('[data-height]');
-    bars.forEach((bar, i) => {
-      bar.style.transition = 'height 0.35s cubic-bezier(0.55,0,1,0.45)';
-      setTimeout(() => { bar.style.height = '0'; }, i * 20);
-    });
-  };
-
-  // Keep legacy name working just in case
-  window.animateBars = window.animateBarsEnter;
 }
