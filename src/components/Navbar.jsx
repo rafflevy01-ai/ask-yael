@@ -19,14 +19,14 @@ export default function Navbar() {
       }}>
       
       <div
-      style={{
-        maxWidth: "1440px",
-        width: "100%",
-        margin: "0 auto",
-        padding: "0 24px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between"
+        style={{
+          maxWidth: "1440px",
+          width: "100%",
+          margin: "0 auto",
+          padding: "0 24px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between"
         }} className="navbar-inner">
         
         {/* Logo */}
@@ -38,7 +38,7 @@ export default function Navbar() {
             letterSpacing: "0.05em",
             textTransform: "uppercase",
             color: "#000000"
-          }} className="[font-family:'Inter',_sans-serif] font-medium">
+          }} className="[font-family:'Roboto',_sans-serif] font-light">
           
           Ask Yael
         </span>
@@ -62,7 +62,7 @@ export default function Navbar() {
                   cursor: "pointer",
                   padding: "0 4px",
                   lineHeight: 1,
-                  textAlign: "center",
+                  textAlign: "center"
                 }}>
                   {lang}
                 </button>
