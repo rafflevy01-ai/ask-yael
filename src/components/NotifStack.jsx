@@ -9,7 +9,7 @@ const NOTIF_DATA = [
 ];
 
 const GAP = 10;
-const OPACITIES = [1, 0.75, 0.45, 0.2];
+const OPACITIES = [1, 0.75, 0.45];
 
 let idCounter = 0;
 
@@ -116,12 +116,12 @@ export default function NotifStack() {
     function cycle() {
       const current = cardsRef.current;
 
-      if (current.length < 4) {
+      if (current.length < 3) {
         // Just add a new card at the top
         const data = NOTIF_DATA[indexRef.current % NOTIF_DATA.length];
         indexRef.current++;
         const id = ++idCounter;
-        setCards((prev) => [{ id, data, entering: true }, ...prev.slice(0, 3)]);
+        setCards((prev) => [{ id, data, entering: true }, ...prev.slice(0, 2)]);
         requestAnimationFrame(() =>
           requestAnimationFrame(() => {
             setCards((prev) =>
@@ -143,7 +143,7 @@ export default function NotifStack() {
           setExitingId(null);
           setCards((prev) => {
             // Remove bottom card, prepend recycled one as entering
-            const rest = prev.slice(0, 3);
+            const rest = prev.slice(0, 2);
             return [{ id: recycledId, data, entering: true }, ...rest];
           });
 

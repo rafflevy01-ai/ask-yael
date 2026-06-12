@@ -280,22 +280,14 @@ export default function ProblemSection() {
               className="problem-panel"
               style={{
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
-                padding: "0 64px",
-                gap: "64px"
+                justifyContent: "center",
+                padding: "0 80px",
+                gap: "0"
               }}>
               
-              {/* Left column */}
-              <div
-                className="panel1-left"
-                style={{
-                  flex: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "24px",
-                  maxWidth: "480px"
-                }}>
-                
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "480px", width: "100%" }}>
                 <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "13px", color: "#a59f97" }}>01</span>
                 <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.84px", lineHeight: 1.1, margin: 0 }}>
                   Every missed call is a lost patient.
@@ -309,11 +301,8 @@ export default function ProblemSection() {
                 </p>
               </div>
 
-              {/* Right column — iOS notification stack */}
-              <div
-                className="iphone-col"
-                style={{ flex: 1, display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "20px" }}>
-                
+              {/* Notification stack below */}
+              <div style={{ marginTop: "32px", width: "100%", maxWidth: "480px", display: "flex", justifyContent: "flex-start" }}>
                 <NotifStack />
               </div>
             </div>
