@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-const GROUPS = [
+const COLUMNS = [
   {
     label: "PATIENT JOURNEY",
+    color: "#c9a882",
     items: [
       {
         text: "Appointment booking, modification, and cancellation",
@@ -28,6 +29,7 @@ const GROUPS = [
   },
   {
     label: "LIVE ASSISTANCE",
+    color: "#9ab5a0",
     items: [
       {
         text: "Price and treatment inquiries",
@@ -45,6 +47,7 @@ const GROUPS = [
   },
   {
     label: "ALWAYS ON",
+    color: "#b8a0c8",
     items: [
       {
         text: "Automatic language detection \u2014 Hebrew, French, English",
@@ -58,17 +61,43 @@ const GROUPS = [
   },
 ];
 
+function Column({ label, color, items }) {
+  return (
+    <div style={{ borderTop: `3px solid ${color}`, paddingTop: "28px" }}>
+      <span style={{
+        fontFamily: "Inter, sans-serif",
+        fontWeight: 500,
+        fontSize: "11px",
+        textTransform: "uppercase",
+        letterSpacing: "0.09em",
+        color: color,
+        display: "block",
+        marginBottom: "24px",
+      }}>
+        {label}
+      </span>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+        {items.map((item) => (
+          <ExpandableItem key={item.text} text={item.text} example={item.example} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ExpandableItem({ text, example }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div style={{ marginBottom: "12px" }}>
+    <div>
       <button
         onClick={() => setOpen(!open)}
         style={{
           display: "flex",
           alignItems: "flex-start",
-          gap: "10px",
+          justifyContent: "space-between",
+          gap: "12px",
           width: "100%",
           textAlign: "left",
           background: "none",
@@ -82,22 +111,22 @@ function ExpandableItem({ text, example }) {
         <span style={{
           fontFamily: "Inter, sans-serif",
           fontWeight: 400,
-          fontSize: "16px",
-          color: "#a59f97",
-          lineHeight: 1.7,
-          flexShrink: 0,
-          userSelect: "none",
+          fontSize: "15px",
+          color: "#1a1a1a",
+          lineHeight: 1.6,
         }}>
-          &#x2713;
+          {text}
         </span>
         <span style={{
           fontFamily: "Inter, sans-serif",
           fontWeight: 400,
-          fontSize: "16px",
-          color: "#000000",
-          lineHeight: 1.7,
+          fontSize: "14px",
+          color: "#c8c0b8",
+          lineHeight: 1.6,
+          flexShrink: 0,
+          userSelect: "none",
         }}>
-          {text}
+          {open ? "\u2212" : "+"}
         </span>
       </button>
 
@@ -107,7 +136,6 @@ function ExpandableItem({ text, example }) {
           maxHeight: open ? "80px" : "0",
           opacity: open ? 1 : 0,
           transition: "max-height 200ms ease, opacity 200ms ease",
-          paddingLeft: "28px",
         }}
       >
         <p style={{
@@ -129,7 +157,7 @@ function ExpandableItem({ text, example }) {
 export default function CapabilitiesSection() {
   return (
     <section data-capabilities style={{ background: "#fdfcfc", padding: "100px 48px" }}>
-      <div style={{ maxWidth: "780px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1020px", margin: "0 auto" }}>
 
         {/* Label */}
         <span style={{
@@ -149,40 +177,14 @@ export default function CapabilitiesSection() {
           Everything your front desk handles. Automated.
         </h2>
 
-        {/* Grouped checklist cards */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          {GROUPS.map((group) => (
-            <div
-              key={group.label}
-              style={{
-                background: "#f5f0eb",
-                borderRadius: "12px",
-                padding: "32px",
-              }}
-            >
-              <span style={{
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 500,
-                fontSize: "10px",
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                color: "#a59f97",
-                display: "block",
-                marginBottom: "24px",
-              }}>
-                {group.label}
-              </span>
-
-              <div>
-                {group.items.map((item) => (
-                  <ExpandableItem
-                    key={item.text}
-                    text={item.text}
-                    example={item.example}
-                  />
-                ))}
-              </div>
-            </div>
+        {/* 3-column grid */}
+        <div className="caps-grid" style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "48px",
+        }}>
+          {COLUMNS.map((col) => (
+            <Column key={col.label} label={col.label} color={col.color} items={col.items} />
           ))}
         </div>
 
@@ -190,7 +192,7 @@ export default function CapabilitiesSection() {
         <p style={{
           fontFamily: "Inter, sans-serif", fontWeight: 400, fontStyle: "italic",
           fontSize: "14px", color: "#777169", lineHeight: 1.6,
-          margin: "36px auto 0 auto", textAlign: "center",
+          margin: "48px auto 0 auto", textAlign: "center",
         }}>
           All of this in one call, in the patient's language, 24 hours a day.
         </p>
@@ -199,6 +201,7 @@ export default function CapabilitiesSection() {
       <style>{`
         @media (max-width: 768px) {
           [data-capabilities] { padding: 48px 16px !important; }
+          .caps-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
         }
         @media (max-width: 1024px) {
           [data-capabilities] { padding: 64px 24px !important; }
