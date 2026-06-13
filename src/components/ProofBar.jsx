@@ -25,7 +25,7 @@ function AnimatedNumber({ end, suffix, start }) {
         style={{
           fontFamily: "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace",
           fontWeight: 400,
-          fontSize: "2.5rem",
+          fontSize: "clamp(2rem, 5vw, 3.5rem)",
           color: "#000000",
           letterSpacing: "-0.02em",
           lineHeight: 1,
@@ -38,7 +38,7 @@ function AnimatedNumber({ end, suffix, start }) {
         <span style={{
           fontFamily: "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace",
           fontWeight: 400,
-          fontSize: "2.5rem",
+          fontSize: "clamp(2rem, 5vw, 3.5rem)",
           color: "#000000",
           letterSpacing: "-0.02em",
           lineHeight: 1,
