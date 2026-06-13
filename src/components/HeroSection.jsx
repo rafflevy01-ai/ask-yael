@@ -77,7 +77,7 @@ export default function HeroSection() {
         }}>
 
         {/* Logo */}
-        <div style={{ marginBottom: "4px" }}>
+        <div>
           <img
             src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/7038f5122_jiNNc01.svg"
             alt="AskYael"
