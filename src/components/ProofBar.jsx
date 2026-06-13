@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const METRICS = [
   { value: 0,    display: "0",    label: "Missed Calls", isText: false },
@@ -10,27 +11,15 @@ const METRICS = [
 const STAGGER_MS = 120;
 
 function CountUp({ target, active }) {
-  const [count, setCount] = useState(0);
-  const raf = useRef(null);
+  const value = useMotionValue(0);
+  const spring = useSpring(value, { damping: 30, stiffness: 100 });
+  const display = useTransform(spring, (num) => Math.round(num));
 
   useEffect(() => {
-    if (!active) return;
-    const start = performance.now();
-    const duration = 1400;
+    value.set(active ? target : 0);
+  }, [active, target, value]);
 
-    const tick = (now) => {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(eased * target));
-      if (progress < 1) raf.current = requestAnimationFrame(tick);
-    };
-
-    raf.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf.current);
-  }, [active, target]);
-
-  return count;
+  return display;
 }
 
 export default function ProofBar() {
@@ -81,8 +70,11 @@ export default function ProofBar() {
         }}
       >
         {METRICS.map((metric, i) => (
-          <div
+          <motion.div
             key={i}
+            initial={{ opacity: 0, y: 12 }}
+            animate={visible > i ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.5, delay: i * STAGGER_MS / 1000 }}
             style={{
               flex: "1 1 25%",
               display: "flex",
@@ -92,25 +84,38 @@ export default function ProofBar() {
               padding: "36px 20px",
               borderRight: i < METRICS.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none",
               gap: "10px",
-              opacity: visible > i ? 1 : 0,
-              transform: visible > i ? "translateY(0)" : "translateY(12px)",
-              transition: `opacity 500ms ease-out ${i * STAGGER_MS}ms, transform 500ms ease-out ${i * STAGGER_MS}ms`,
             }}
           >
-            <span
-              style={{
-                fontFamily: "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace",
-                fontWeight: 400,
-                fontSize: "2.5rem",
-                color: "#ffffff",
-                letterSpacing: "-0.02em",
-                lineHeight: 1,
-              }}
-            >
-              {metric.isText ? (visible > i ? metric.display : "") : (
+            {metric.isText ? (
+              <motion.span
+                initial={{ opacity: 0, y: 8 }}
+                animate={visible > i ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+                transition={{ duration: 0.5, delay: i * STAGGER_MS / 1000 }}
+                style={{
+                  fontFamily: "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace",
+                  fontWeight: 400,
+                  fontSize: "2.5rem",
+                  color: "#ffffff",
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1,
+                }}
+              >
+                {metric.display}
+              </motion.span>
+            ) : (
+              <motion.span
+                style={{
+                  fontFamily: "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace",
+                  fontWeight: 400,
+                  fontSize: "2.5rem",
+                  color: "#ffffff",
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1,
+                }}
+              >
                 <CountUp target={metric.value} active={visible > i} />
-              )}
-            </span>
+              </motion.span>
+            )}
             <span
               style={{
                 fontFamily: "Inter, sans-serif",
@@ -123,7 +128,7 @@ export default function ProofBar() {
             >
               {metric.label}
             </span>
-          </div>
+          </motion.div>
         ))}
       </div>
 
