@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import Spiral from "@/components/Spiral";
 
 const PHRASES = [
   "never misses a call.",
@@ -60,6 +61,18 @@ export default function HeroSection() {
         width: "100%",
         backgroundColor: "#fdfcfc",
       }}>
+
+      {/* Spiral dot animation */}
+      <Spiral
+        totalDots={400}
+        dotRadius={1.5}
+        duration={4}
+        dotColor="#0447FF"
+        minOpacity={0.1}
+        maxOpacity={0.4}
+        minScale={0.4}
+        maxScale={1.3}
+      />
 
       <div
         className="hero-content"
