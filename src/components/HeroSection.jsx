@@ -65,13 +65,14 @@ export default function HeroSection() {
       {/* Spiral dot animation */}
       <Spiral
         totalDots={400}
-        dotRadius={1.5}
+        dotRadius={1.2}
         duration={4}
         dotColor="#0447FF"
-        minOpacity={0.1}
-        maxOpacity={0.4}
-        minScale={0.4}
-        maxScale={1.3}
+        innerGap={0.35}
+        minOpacity={0.08}
+        maxOpacity={0.35}
+        minScale={0.3}
+        maxScale={1.2}
       />
 
       <div

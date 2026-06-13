@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const SIZE = 400;
+const SIZE = 800;
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
 
 export default function Spiral({
@@ -9,6 +9,7 @@ export default function Spiral({
   duration = 3,
   dotColor = "#FFFFFF",
   margin = 2,
+  innerGap = 0.3,
   minOpacity = 0.3,
   maxOpacity = 1,
   minScale = 0.5,
@@ -26,7 +27,7 @@ export default function Spiral({
     svg.innerHTML = "";
 
     for (let i = 0; i < totalDots; i++) {
-      const frac = i / totalDots;
+      const frac = innerGap + (1 - innerGap) * (i / totalDots);
       const radius = MAX_RADIUS * frac;
       const theta = i * GOLDEN_ANGLE;
       const x = CENTER + radius * Math.cos(theta);
