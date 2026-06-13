@@ -27,11 +27,11 @@ export default function Navbar() {
         }}>
 
         {/* Logo */}
-        <a href="/" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none" }}>
+        <a href="/" style={{ display: "flex", alignItems: "center", gap: "4px", textDecoration: "none" }}>
           <img
             src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/7038f5122_jiNNc01.svg"
             alt="AskYael"
-            style={{ height: "34px", width: "auto", display: "block", filter: "invert(1)" }}
+            style={{ height: "44px", width: "auto", display: "block", filter: "invert(1)" }}
           />
           <span style={{
             fontFamily: "Inter, sans-serif",

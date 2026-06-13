@@ -77,11 +77,11 @@ export default function HeroSection() {
         }}>
 
         {/* Logo */}
-        <div style={{ marginBottom: "28px" }}>
+        <div style={{ marginBottom: "16px" }}>
           <img
             src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/7038f5122_jiNNc01.svg"
             alt="AskYael"
-            style={{ height: "clamp(5rem, 10vw, 9rem)", width: "auto", display: "block", mixBlendMode: "multiply" }}
+            style={{ height: "clamp(6rem, 12vw, 10rem)", width: "auto", display: "block", mixBlendMode: "multiply" }}
           />
         </div>
 
