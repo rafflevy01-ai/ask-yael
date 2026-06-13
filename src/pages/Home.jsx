@@ -5,6 +5,7 @@ import ProblemSection from "@/components/ProblemSection";
 import HearYaelSection from "@/components/HearYaelSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import CapabilitiesSection from "@/components/CapabilitiesSection";
+import FaqSection from "@/components/FaqSection";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <HearYaelSection />
       <HowItWorksSection />
       <CapabilitiesSection />
+      <FaqSection />
     </main>
   );
 }
