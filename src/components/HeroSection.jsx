@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import BrandLogo from "./BrandLogo";
 
 const PHRASES = [
   "never misses a call.",
@@ -77,12 +78,8 @@ export default function HeroSection() {
         }}>
 
         {/* Logo */}
-        <div>
-          <img
-            src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/7038f5122_jiNNc01.svg"
-            alt="AskYael"
-            style={{ height: "clamp(7rem, 14vw, 12rem)", width: "auto", display: "block", mixBlendMode: "multiply" }}
-          />
+        <div style={{ width: "clamp(5.5rem, 12vw, 10rem)", height: "clamp(5.5rem, 12vw, 10rem)" }}>
+          <BrandLogo color="#000000" />
         </div>
 
         {/* Headline */}
