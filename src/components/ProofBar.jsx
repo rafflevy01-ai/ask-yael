@@ -33,7 +33,7 @@ function AnimatedNumber({ end, isInView }) {
   );
 }
 
-function MetricCell({ metric, isLast }) {
+function MetricCell({ metric }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
 
@@ -47,7 +47,6 @@ function MetricCell({ metric, isLast }) {
         alignItems: "center",
         justifyContent: "center",
         padding: "36px 20px",
-        borderRight: isLast ? "none" : "1px solid rgba(0,0,0,0.06)",
         gap: "10px",
       }}
     >
@@ -90,15 +89,11 @@ export default function ProofBar() {
         style={{
           maxWidth: "680px",
           margin: "0 auto",
-          backgroundColor: "#fdfcfc",
-          borderRadius: "20px",
-          overflow: "hidden",
           display: "flex",
-          border: "1px solid #e5e5e5",
         }}
       >
         {METRICS.map((metric, i) => (
-          <MetricCell key={i} metric={metric} isLast={i === METRICS.length - 1} />
+          <MetricCell key={i} metric={metric} />
         ))}
       </div>
 
