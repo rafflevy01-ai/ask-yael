@@ -31,7 +31,7 @@ export default function Navbar() {
           <img
             src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/7038f5122_jiNNc01.svg"
             alt="AskYael"
-            style={{ height: "26px", width: "auto", display: "block", filter: "invert(1)" }}
+            style={{ height: "34px", width: "auto", display: "block", filter: "invert(1)" }}
           />
           <span style={{
             fontFamily: "Inter, sans-serif",

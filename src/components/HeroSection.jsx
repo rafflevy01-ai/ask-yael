@@ -81,7 +81,7 @@ export default function HeroSection() {
           <img
             src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/7038f5122_jiNNc01.svg"
             alt="AskYael"
-            style={{ height: "clamp(4rem, 8vw, 7rem)", width: "auto", display: "block", mixBlendMode: "multiply" }}
+            style={{ height: "clamp(5rem, 10vw, 9rem)", width: "auto", display: "block", mixBlendMode: "multiply" }}
           />
         </div>
 
