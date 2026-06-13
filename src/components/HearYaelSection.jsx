@@ -280,7 +280,6 @@ function AudioCard({ card }) {
 export default function HearYaelSection() {
   return (
     <section data-hear-yael style={{
-      background: "#fdfcfc",
       padding: "100px 48px",
       maxWidth: "100%",
     }}>

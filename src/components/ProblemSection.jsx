@@ -139,7 +139,6 @@ export default function ProblemSection() {
           top: 0;
           height: 100vh;
           overflow: hidden;
-          background: #fdfcfc;
         }
         #panels-track {
           display: flex;

@@ -11,7 +11,7 @@ export default function Navbar() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        backgroundColor: "#fdfcfc",
+        backgroundColor: "transparent",
         borderBottom: "1px solid #e5e5e5",
         height: "64px",
         display: "flex",

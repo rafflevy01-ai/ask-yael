@@ -157,7 +157,7 @@ function ExpandableItem({ text, example }) {
 
 export default function CapabilitiesSection() {
   return (
-    <section data-capabilities style={{ background: "#fdfcfc", padding: "100px 48px" }}>
+    <section data-capabilities style={{ padding: "100px 48px" }}>
       <div style={{ maxWidth: "1020px", margin: "0 auto" }}>
 
         {/* Label */}

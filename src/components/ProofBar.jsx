@@ -107,7 +107,7 @@ export default function ProofBar() {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   return (
-    <section data-proof-bar style={{ padding: "0 24px 40px", backgroundColor: "#fdfcfc" }}>
+    <section data-proof-bar style={{ padding: "0 24px 40px" }}>
       <div
         ref={ref}
         style={{

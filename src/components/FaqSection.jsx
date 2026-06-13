@@ -29,7 +29,7 @@ export default function FaqSection() {
   const toggle = (i) => setOpenIndex(openIndex === i ? null : i);
 
   return (
-    <section data-faq style={{ background: "#fdfcfc", padding: "100px 48px" }}>
+    <section data-faq style={{ padding: "100px 48px" }}>
       <div style={{ maxWidth: "680px", margin: "0 auto" }}>
 
         <h2 style={{

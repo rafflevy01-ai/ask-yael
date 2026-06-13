@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 40 20% 97%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -83,7 +83,7 @@
 
 
 
-.hero-section { background-color: #fdfcfc; position: relative; overflow: hidden; }
+.hero-section { position: relative; overflow: hidden; }
 .hero-section::before { content:''; position:absolute; width:700px; height:700px; background:radial-gradient(circle, rgba(4,71,255,0.10) 0%, transparent 70%); top:-200px; left:-150px; animation:orb-a 14s ease-in-out infinite; pointer-events:none; z-index:0; }
 .hero-section::after { content:''; position:absolute; width:500px; height:500px; background:radial-gradient(circle, rgba(255,71,4,0.08) 0%, transparent 70%); bottom:-150px; right:-100px; animation:orb-b 11s ease-in-out infinite; pointer-events:none; z-index:0; }
 .hero-content { position:relative; z-index:1; }
