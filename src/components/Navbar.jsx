@@ -29,7 +29,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <a href="/" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none" }}>
-          <BrandLogo size={22} />
+          <BrandLogo size={22} color="#FFFFFF" />
           <span style={{
             fontFamily: "Inter, sans-serif",
             fontWeight: 600,

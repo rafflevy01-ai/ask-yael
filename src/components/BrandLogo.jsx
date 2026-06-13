@@ -1,4 +1,4 @@
-export default function BrandLogo({ size = 64 }) {
+export default function BrandLogo({ size = 64, color = "#000000" }) {
   const cx = size / 2;
   const cy = size / 2;
   const outerR = size * 0.42;
@@ -21,7 +21,6 @@ export default function BrandLogo({ size = 64 }) {
         viewBox={`0 0 ${size} ${size}`}
         style={{ display: "block" }}
       >
-        {/* stems */}
         {dots.map((dot, i) => (
           <line
             key={`stem-${i}`}
@@ -29,25 +28,21 @@ export default function BrandLogo({ size = 64 }) {
             y1={cy}
             x2={dot.x}
             y2={dot.y}
-            stroke="#000000"
+            stroke={color}
             strokeWidth={size * 0.015}
             strokeLinecap="round"
           />
         ))}
-
-        {/* outer dots */}
         {dots.map((dot, i) => (
           <circle
             key={`dot-${i}`}
             cx={dot.x}
             cy={dot.y}
             r={dotR}
-            fill="#000000"
+            fill={color}
           />
         ))}
-
-        {/* center circle */}
-        <circle cx={cx} cy={cy} r={centerR} fill="#000000" />
+        <circle cx={cx} cy={cy} r={centerR} fill={color} />
       </svg>
     </div>
   );
