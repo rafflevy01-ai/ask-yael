@@ -22,7 +22,7 @@ export default function Navbar() {
           gap: "20px",
           backgroundColor: "#1A1A1A",
           borderRadius: "9999px",
-          padding: "10px 24px",
+          padding: "8px 20px",
           boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
         }}>
 
@@ -31,7 +31,7 @@ export default function Navbar() {
           <img
             src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/7038f5122_jiNNc01.svg"
             alt="AskYael"
-            style={{ height: "44px", width: "auto", display: "block", filter: "invert(1)" }}
+            style={{ height: "30px", width: "auto", display: "block", filter: "invert(1)" }}
           />
           <span style={{
             fontFamily: "Inter, sans-serif",
