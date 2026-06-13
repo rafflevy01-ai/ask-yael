@@ -29,7 +29,7 @@ export default function Navbar() {
         {/* Logo */}
         <a href="/" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none" }}>
           <img
-            src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/5a3f8037f_davinci__img1_re_create_this_exact_logo.svg"
+            src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/6109d8ed6_davinci__img1_re_create_this_exact_logo.svg"
             alt="AskYael"
             style={{ height: "20px", width: "auto", display: "block", filter: "brightness(0) invert(1)" }}
           />
