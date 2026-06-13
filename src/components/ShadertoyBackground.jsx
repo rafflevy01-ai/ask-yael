@@ -1,16 +1,11 @@
 import { useEffect, useRef } from "react";
+import ShadertoyBackgroundInit from "https://cdn.jsdelivr.net/npm/threejs-components@0.0.23/build/backgrounds/shadertoy.min.js";
 
 export default function ShadertoyBackground() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    let app;
-    const loadShadertoy = async () => {
-      const { default: ShadertoyBackground } = await import("threejs-components/build/backgrounds/shadertoy.min.js");
-      app = ShadertoyBackground(canvasRef.current);
-    };
-    loadShadertoy();
-
+    const app = ShadertoyBackgroundInit(canvasRef.current);
     return () => {
       if (app && typeof app.dispose === "function") app.dispose();
     };
