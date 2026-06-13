@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import BrandLogo from "@/components/BrandLogo";
 
 const PHRASES = [
   "never misses a call.",
@@ -75,6 +76,11 @@ export default function HeroSection() {
           position: "relative",
           zIndex: 1,
         }}>
+
+        {/* Logo */}
+        <div style={{ marginBottom: "28px" }}>
+          <BrandLogo size={80} />
+        </div>
 
         {/* Headline */}
         <h1
