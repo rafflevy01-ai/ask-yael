@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import BrandLogo from "@/components/BrandLogo";
 
 const LANGUAGES = ["EN", "FR", "עב"];
 
@@ -9,124 +10,111 @@ export default function Navbar() {
     <nav
       style={{
         position: "sticky",
-        top: 0,
+        top: "20px",
         zIndex: 50,
-        backgroundColor: "transparent",
-        borderBottom: "1px solid #e5e5e5",
-        height: "64px",
         display: "flex",
-        alignItems: "center"
+        justifyContent: "center",
+        padding: "0 16px",
       }}>
-      
       <div
         style={{
-          maxWidth: "1440px",
-          width: "100%",
-          margin: "0 auto",
-          padding: "0 24px",
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between"
-        }} className="navbar-inner">
-        
+          gap: "20px",
+          backgroundColor: "#1A1A1A",
+          borderRadius: "9999px",
+          padding: "10px 24px",
+          boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
+        }}>
+
         {/* Logo */}
-        <a href="/" className="logo-wordmark" style={{ textDecoration: "none" }}>
-          <span className="logo-ask">Ask</span>
-          <span className="logo-yael">Yael</span>
+        <a href="/" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none" }}>
+          <BrandLogo size={22} />
+          <span style={{
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 600,
+            fontSize: "15px",
+            color: "#FFFFFF",
+            letterSpacing: "-0.02em",
+          }}>brand.ai</span>
         </a>
 
-        {/* Right cluster */}
-        <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-          {/* Language switcher */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0" }}>
-            {LANGUAGES.map((lang, i) =>
+        {/* Separator */}
+        <div style={{ width: "1px", height: "18px", background: "rgba(255,255,255,0.25)" }} />
+
+        {/* Language switcher */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0" }}>
+          {LANGUAGES.map((lang, i) =>
             <span key={lang} style={{ display: "flex", alignItems: "center" }}>
-                <button
+              <button
                 onClick={() => setActiveLang(lang)}
                 dir={lang === "עב" ? "rtl" : "ltr"}
                 style={{
                   fontFamily: "Inter, sans-serif",
-                  fontWeight: activeLang === lang ? 700 : 400,
-                  fontSize: "14px",
-                  color: activeLang === lang ? "#000000" : "#00000080",
+                  fontWeight: activeLang === lang ? 600 : 400,
+                  fontSize: "13px",
+                  color: activeLang === lang ? "#FFFFFF" : "rgba(255,255,255,0.5)",
                   background: "none",
                   border: "none",
                   cursor: "pointer",
-                  padding: "0 4px",
+                  padding: "0 3px",
                   lineHeight: 1,
-                  textAlign: "center"
+                  textAlign: "center",
+                  transition: "color 0.15s ease",
                 }}>
-                  {lang}
-                </button>
-                {i < LANGUAGES.length - 1 &&
-              <span style={{ color: "#00000030", margin: "0 4px", fontSize: "14px" }}>|</span>
+                {lang}
+              </button>
+              {i < LANGUAGES.length - 1 &&
+                <span style={{ color: "rgba(255,255,255,0.2)", margin: "0 2px", fontSize: "13px" }}>|</span>
               }
-              </span>
-            )}
-          </div>
-
-          {/* CTA Button */}
-          <a
-            href="#book-demo"
-            className="navbar-cta"
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontWeight: 500,
-              fontSize: "15px",
-              color: "#ffffff",
-              backgroundColor: "#000000",
-              borderRadius: "9999px",
-              height: "36px",
-              padding: "0 16px",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textDecoration: "none",
-              whiteSpace: "nowrap",
-              border: "none",
-              cursor: "pointer"
-            }}>
-            
-            Book a Free Demo
-          </a>
+            </span>
+          )}
         </div>
-      </div>
-      <style>{`
-        /* Logo */
-        .logo-wordmark {
-          font-family: 'Nunito', sans-serif;
-          display: inline-flex;
-          align-items: baseline;
-          gap: 0;
-          line-height: 1;
-        }
-        .logo-ask {
-          font-weight: 300;
-          color: #1C1C1E;
-          letter-spacing: 0;
-          font-size: 18px;
-        }
-        .logo-yael {
-          font-weight: 500;
-          color: #1C1C1E;
-          letter-spacing: 0;
-          font-size: 18px;
-        }
-        @media (min-width: 768px) {
-          .navbar-inner { padding: 0 48px !important; }
-          .logo-ask, .logo-yael { font-size: 22px; }
-        }
-        @media (min-width: 768px) and (max-width: 1024px) {
-          .navbar-inner { padding: 0 32px !important; }
-        }
-        @media (min-width: 1280px) {
-          .logo-ask, .logo-yael { font-size: 26px; }
-        }
-        @media (max-width: 480px) {
-          .navbar-cta { display: none !important; }
-          .navbar-inner { padding: 0 16px !important; }
-        }
-      `}</style>
-    </nav>);
 
+        {/* Log in */}
+        <a
+          href="/login"
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 400,
+            fontSize: "13px",
+            color: "rgba(255,255,255,0.7)",
+            textDecoration: "none",
+            transition: "color 0.15s ease",
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = "#FFFFFF"}
+          onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.7)"}
+        >
+          Log in
+        </a>
+
+        {/* CTA Button */}
+        <a
+          href="#book-demo"
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 500,
+            fontSize: "13px",
+            color: "#000000",
+            backgroundColor: "#FFFFFF",
+            borderRadius: "9999px",
+            height: "32px",
+            padding: "0 16px",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            textDecoration: "none",
+            whiteSpace: "nowrap",
+            border: "none",
+            cursor: "pointer",
+            transition: "opacity 0.15s ease",
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
+          onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+        >
+          Request early access
+        </a>
+      </div>
+    </nav>
+  );
 }

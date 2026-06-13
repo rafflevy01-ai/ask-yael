@@ -53,7 +53,7 @@ export default function HeroSection() {
     <section
       className="hero-section"
       style={{
-        minHeight: "calc(100vh - 64px)",
+        minHeight: "100vh",
         display: "flex",
         alignItems: "center",
         position: "relative",
