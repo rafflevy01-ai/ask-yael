@@ -118,15 +118,16 @@ function ExpandableItem({ text, example }) {
           {text}
         </span>
         <span style={{
-          fontFamily: "Inter, sans-serif",
-          fontWeight: 400,
-          fontSize: "14px",
-          color: "#c8c0b8",
-          lineHeight: 1.6,
+          display: "flex",
+          alignItems: "center",
           flexShrink: 0,
-          userSelect: "none",
+          color: "#c8c0b8",
+          transform: open ? "rotate(180deg)" : "rotate(0deg)",
+          transition: "transform 200ms ease",
         }}>
-          {open ? "\u2212" : "+"}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
         </span>
       </button>
 
