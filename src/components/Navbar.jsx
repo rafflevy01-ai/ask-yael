@@ -36,7 +36,7 @@ export default function Navbar() {
             fontSize: "15px",
             color: "#FFFFFF",
             letterSpacing: "-0.02em",
-          }}>brand.ai</span>
+          }}>AskYael</span>
         </a>
 
         {/* Separator */}
@@ -71,23 +71,6 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Log in */}
-        <a
-          href="/login"
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontWeight: 400,
-            fontSize: "13px",
-            color: "rgba(255,255,255,0.7)",
-            textDecoration: "none",
-            transition: "color 0.15s ease",
-          }}
-          onMouseEnter={e => e.currentTarget.style.color = "#FFFFFF"}
-          onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.7)"}
-        >
-          Log in
-        </a>
-
         {/* CTA Button */}
         <a
           href="#book-demo"
@@ -112,7 +95,7 @@ export default function Navbar() {
           onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
           onMouseLeave={e => e.currentTarget.style.opacity = "1"}
         >
-          Request early access
+          Book a Free Demo
         </a>
       </div>
     </nav>
