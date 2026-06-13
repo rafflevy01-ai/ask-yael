@@ -79,9 +79,9 @@ export default function HeroSection() {
         {/* Logo */}
         <div style={{ marginBottom: "28px" }}>
           <img
-            src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/c589e2857_davinci__img1_re_create_this_exact_logo.svg"
+            src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/5a3f8037f_davinci__img1_re_create_this_exact_logo.svg"
             alt="AskYael"
-            style={{ height: "clamp(2rem, 5vw, 4rem)", width: "auto", display: "block" }}
+            style={{ height: "clamp(4rem, 8vw, 7rem)", width: "auto", display: "block" }}
           />
         </div>
 
