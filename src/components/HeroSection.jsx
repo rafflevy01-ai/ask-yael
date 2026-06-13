@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import ShadertoyBackground from "@/components/ShadertoyBackground";
 
 const PHRASES = [
   "never misses a call.",
@@ -61,9 +60,6 @@ export default function HeroSection() {
         width: "100%",
         backgroundColor: "#fdfcfc",
       }}>
-
-      {/* Shadertoy background */}
-      <ShadertoyBackground />
 
       <div
         className="hero-content"
