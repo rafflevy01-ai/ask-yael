@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 const METRICS = [
   { value: 0,    display: "0",    label: "Missed Calls", isText: false },
@@ -11,15 +11,22 @@ const METRICS = [
 const STAGGER_MS = 120;
 
 function CountUp({ target, active }) {
+  const [count, setCount] = useState(0);
   const value = useMotionValue(0);
   const spring = useSpring(value, { damping: 30, stiffness: 100 });
-  const display = useTransform(spring, (num) => Math.round(num));
 
   useEffect(() => {
     value.set(active ? target : 0);
   }, [active, target, value]);
 
-  return display;
+  useEffect(() => {
+    const unsubscribe = spring.on("change", (latest) => {
+      setCount(Math.round(latest));
+    });
+    return unsubscribe;
+  }, [spring]);
+
+  return count;
 }
 
 export default function ProofBar() {
