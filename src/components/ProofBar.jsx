@@ -2,15 +2,15 @@ import { useRef, useEffect, useState } from "react";
 import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const METRICS = [
-  { value: 0,    display: "0",    label: "Missed Calls", isText: false },
-  { value: null, display: "24/7", label: "Available",    isText: true  },
-  { value: 3,    display: "3",    label: "Languages",    isText: false },
-  { value: 13,   display: "13",   label: "Workflows",    isText: false },
+  { value: 0,  suffix: "",     label: "Missed Calls" },
+  { value: 24, suffix: "/7",   label: "Available"    },
+  { value: 3,  suffix: "",     label: "Languages"    },
+  { value: 13, suffix: "",     label: "Workflows"    },
 ];
 
 const STAGGER = 0.15;
 
-function AnimatedNumber({ end, start }) {
+function AnimatedNumber({ end, suffix, start }) {
   const value = useMotionValue(0);
   const spring = useSpring(value, { damping: 30, stiffness: 100 });
   const display = useTransform(spring, (num) => Math.round(Number(num)));
@@ -20,19 +20,33 @@ function AnimatedNumber({ end, start }) {
   }, [start, end, value]);
 
   return (
-    <motion.span
-      style={{
-        fontFamily: "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace",
-        fontWeight: 400,
-        fontSize: "2.5rem",
-        color: "#000000",
-        letterSpacing: "-0.02em",
-        lineHeight: 1,
-        display: "inline-block",
-      }}
-    >
-      {display}
-    </motion.span>
+    <span style={{ display: "inline-flex", alignItems: "baseline" }}>
+      <motion.span
+        style={{
+          fontFamily: "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace",
+          fontWeight: 400,
+          fontSize: "2.5rem",
+          color: "#000000",
+          letterSpacing: "-0.02em",
+          lineHeight: 1,
+          display: "inline-block",
+        }}
+      >
+        {display}
+      </motion.span>
+      {suffix && (
+        <span style={{
+          fontFamily: "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace",
+          fontWeight: 400,
+          fontSize: "2.5rem",
+          color: "#000000",
+          letterSpacing: "-0.02em",
+          lineHeight: 1,
+        }}>
+          {suffix}
+        </span>
+      )}
+    </span>
   );
 }
 
@@ -71,22 +85,7 @@ function MetricCell({ metric, index, visible }) {
         gap: "10px",
       }}
     >
-      {metric.isText ? (
-        <span
-          style={{
-            fontFamily: "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace",
-            fontWeight: 400,
-            fontSize: "2.5rem",
-            color: "#000000",
-            letterSpacing: "-0.02em",
-            lineHeight: 1,
-          }}
-        >
-          {metric.display}
-        </span>
-      ) : (
-        <AnimatedNumber end={metric.value} start={startCount} />
-      )}
+      <AnimatedNumber end={metric.value} suffix={metric.suffix} start={startCount} />
       <span
         style={{
           fontFamily: "Inter, sans-serif",
