@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const METRICS = [
@@ -8,13 +8,16 @@ const METRICS = [
   { value: 13,   display: "13",   label: "Workflows",    isText: false },
 ];
 
-function AnimatedNumber({ end, isInView }) {
+const STAGGER = 0.15;
+
+function AnimatedNumber({ end, start }) {
   const value = useMotionValue(0);
   const spring = useSpring(value, { damping: 30, stiffness: 100 });
   const display = useTransform(spring, (num) => Math.round(Number(num)));
 
-  // Trigger the spring when scrolled into view
-  value.set(isInView ? end : 0);
+  useEffect(() => {
+    if (start) value.set(end);
+  }, [start, end, value]);
 
   return (
     <motion.span
@@ -33,13 +36,31 @@ function AnimatedNumber({ end, isInView }) {
   );
 }
 
-function MetricCell({ metric }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
+const cellVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: i * STAGGER, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
+
+function MetricCell({ metric, index, visible }) {
+  const [startCount, setStartCount] = useState(false);
+
+  useEffect(() => {
+    if (visible) {
+      const timer = setTimeout(() => setStartCount(true), index * STAGGER * 1000 + 200);
+      return () => clearTimeout(timer);
+    }
+  }, [visible, index]);
 
   return (
-    <div
-      ref={ref}
+    <motion.div
+      custom={index}
+      variants={cellVariants}
+      initial="hidden"
+      animate={visible ? "visible" : "hidden"}
       style={{
         flex: "1 1 25%",
         display: "flex",
@@ -64,7 +85,7 @@ function MetricCell({ metric }) {
           {metric.display}
         </span>
       ) : (
-        <AnimatedNumber end={metric.value} isInView={isInView} />
+        <AnimatedNumber end={metric.value} start={startCount} />
       )}
       <span
         style={{
@@ -78,14 +99,18 @@ function MetricCell({ metric }) {
       >
         {metric.label}
       </span>
-    </div>
+    </motion.div>
   );
 }
 
 export default function ProofBar() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+
   return (
     <section data-proof-bar style={{ padding: "0 24px 40px", backgroundColor: "#fdfcfc" }}>
       <div
+        ref={ref}
         style={{
           maxWidth: "680px",
           margin: "0 auto",
@@ -93,7 +118,7 @@ export default function ProofBar() {
         }}
       >
         {METRICS.map((metric, i) => (
-          <MetricCell key={i} metric={metric} />
+          <MetricCell key={i} metric={metric} index={i} visible={isInView} />
         ))}
       </div>
 
