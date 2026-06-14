@@ -24,17 +24,20 @@ const LANG_THEMES = {
 };
 
 const BLOBS = [
-  { size: 140, top: -20, left: -10, dx: 35, dy: 28, duration: 8, delay: 0 },
-  { size: 160, top: 40, left: 50, dx: -30, dy: -22, duration: 10, delay: 1 },
-  { size: 120, top: 60, left: -30, dx: 25, dy: -32, duration: 7, delay: 2 },
-  { size: 150, top: -10, left: 60, dx: -28, dy: 24, duration: 9, delay: 0.5 },
+  { size: 140, top: -20, left: -10, dx: 50, dy: 40, duration: 6, delay: 0 },
+  { size: 160, top: 40, left: 50, dx: -45, dy: -35, duration: 7, delay: 0.8 },
+  { size: 120, top: 60, left: -30, dx: 40, dy: -45, duration: 5, delay: 1.6 },
+  { size: 150, top: -10, left: 60, dx: -40, dy: 38, duration: 6.5, delay: 2.4 },
+  { size: 110, top: 20, left: 20, dx: -35, dy: 42, duration: 8, delay: 3.2 },
 ];
 
 const blobKeyframes = BLOBS.map((b, i) => `
   @keyframes blobFloat${i} {
-    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-    33% { transform: translate(${b.dx}px, ${b.dy}px) rotate(10deg) scale(1.08); }
-    66% { transform: translate(${-b.dx * 0.7}px, ${-b.dy * 0.7}px) rotate(-5deg) scale(0.94); }
+    0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
+    25%  { transform: translate(${b.dx}px, ${b.dy}px) rotate(15deg) scale(1.15); }
+    50%  { transform: translate(${b.dx * 0.4}px, ${-b.dy * 0.6}px) rotate(-8deg) scale(0.9); }
+    75%  { transform: translate(${-b.dx * 0.8}px, ${-b.dy * 0.3}px) rotate(5deg) scale(1.1); }
+    100% { transform: translate(0, 0) rotate(0deg) scale(1); }
   }
 `).join("\n");
 
@@ -58,10 +61,10 @@ export default function VoiceOrb({ activeLang = "en" }) {
           background: "radial-gradient(circle at 38% 32%, #F0F7F6 0%, #C8DDD8 45%, #8FB8B2 100%)",
         }}>
 
-        {/* Animated gradient blobs */}
+        {/* Animated gradient blobs with crossfade */}
         {BLOBS.map((blob, i) => (
           <div
-            key={i}
+            key={`${activeLang}-${i}`}
             style={{
               position: "absolute",
               width: blob.size,
@@ -70,8 +73,8 @@ export default function VoiceOrb({ activeLang = "en" }) {
               left: `${blob.left}%`,
               borderRadius: "50%",
               background: theme[i],
-              opacity: 0.55,
-              filter: "blur(20px)",
+              opacity: 0.65,
+              filter: "blur(22px)",
               animation: `blobFloat${i} ${blob.duration}s ease-in-out ${blob.delay}s infinite`,
               pointerEvents: "none",
             }}
