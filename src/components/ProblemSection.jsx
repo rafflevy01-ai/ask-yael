@@ -201,11 +201,11 @@ export default function ProblemSection() {
           >
             <h2
               style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontWeight: 500,
+                fontFamily: "'Inter', sans-serif",
+                fontWeight: 400,
                 fontSize: "clamp(2rem, 3.5vw, 2.6rem)",
-                color: "#0A0A0A",
-                letterSpacing: "-0.03em",
+                color: "#0D0D0D",
+                letterSpacing: "-0.02em",
                 lineHeight: 1.1,
                 margin: 0,
               }}
@@ -270,14 +270,14 @@ export default function ProblemSection() {
                     <Icon
                       size={18}
                       strokeWidth={1.8}
-                      color={isActive ? "#0A0A0A" : "#999999"}
+                      color={isActive ? "#0D0D0D" : "#999999"}
                     />
                     <span
                       style={{
-                        fontFamily: "'DM Sans', sans-serif",
+                        fontFamily: "'Inter', sans-serif",
                         fontWeight: 400,
                         fontSize: "15px",
-                        color: isActive ? "#0A0A0A" : "#999999",
+                        color: isActive ? "#0D0D0D" : "#999999",
                         letterSpacing: "-0.01em",
                       }}
                     >
@@ -334,10 +334,10 @@ export default function ProblemSection() {
                       <div
                         id="stat-revenue"
                         style={{
-                          fontFamily: "'DM Sans', sans-serif",
+                          fontFamily: "'Inter', sans-serif",
                           fontWeight: 500,
                           fontSize: "clamp(2.6rem, 6vw, 4.5rem)",
-                          color: "#0A0A0A",
+                          color: "#0D0D0D",
                           lineHeight: 1,
                           letterSpacing: "-0.05em",
                         }}
@@ -351,7 +351,7 @@ export default function ProblemSection() {
                           fontSize: "11px",
                           textTransform: "uppercase",
                           letterSpacing: "0.08em",
-                          color: "#A59F97",
+                          color: "#888888",
                           marginTop: "8px",
                         }}
                       >
@@ -377,10 +377,10 @@ export default function ProblemSection() {
                     <>
                       <div
                         style={{
-                          fontFamily: "'DM Sans', sans-serif",
+                          fontFamily: "'Inter', sans-serif",
                           fontWeight: 500,
                           fontSize: "clamp(2.6rem, 6vw, 4.5rem)",
-                          color: "#0A0A0A",
+                          color: "#0D0D0D",
                           lineHeight: 1,
                           letterSpacing: "-0.05em",
                         }}
@@ -394,7 +394,7 @@ export default function ProblemSection() {
                           fontSize: "11px",
                           textTransform: "uppercase",
                           letterSpacing: "0.08em",
-                          color: "#A59F97",
+                          color: "#888888",
                           marginTop: "8px",
                           marginBottom: "24px",
                         }}
@@ -416,7 +416,7 @@ export default function ProblemSection() {
                               key={b.time}
                               className="bar-item"
                               data-height={b.h}
-                              style={{ background: "#0A0A0A" }}
+                              style={{ background: "#0D0D0D" }}
                             />
                           ))}
                           <div
@@ -436,7 +436,7 @@ export default function ProblemSection() {
                                 transform: "translateX(-50%)",
                                 fontFamily: "Inter, sans-serif",
                                 fontSize: "9px",
-                                color: "#A59F97",
+                                color: "#888888",
                                 whiteSpace: "nowrap",
                               }}
                             >
@@ -463,7 +463,7 @@ export default function ProblemSection() {
                             style={{
                               fontFamily: "Inter, sans-serif",
                               fontSize: "11px",
-                              color: "#A59F97",
+                              color: "#888888",
                             }}
                           >
                             Answered
@@ -487,10 +487,10 @@ export default function ProblemSection() {
                     <>
                       <div
                         style={{
-                          fontFamily: "'DM Sans', sans-serif",
+                          fontFamily: "'Inter', sans-serif",
                           fontWeight: 500,
                           fontSize: "clamp(2.6rem, 6vw, 4.5rem)",
-                          color: "#0A0A0A",
+                          color: "#0D0D0D",
                           lineHeight: 1,
                           letterSpacing: "-0.05em",
                         }}
@@ -504,7 +504,7 @@ export default function ProblemSection() {
                           fontSize: "11px",
                           textTransform: "uppercase",
                           letterSpacing: "0.08em",
-                          color: "#A59F97",
+                          color: "#888888",
                           marginTop: "8px",
                           marginBottom: "20px",
                         }}
@@ -553,7 +553,7 @@ export default function ProblemSection() {
                                   fontFamily: "Inter, sans-serif",
                                   fontWeight: 500,
                                   fontSize: "14px",
-                                  color: "#0A0A0A",
+                                  color: "#0D0D0D",
                                   marginLeft: "10px",
                                 }}
                               >
@@ -654,17 +654,17 @@ export default function ProblemSection() {
                               fontFamily: "Inter, sans-serif",
                               fontWeight: 500,
                               fontSize: "13px",
-                              color: "#0A0A0A",
+                              color: "#0D0D0D",
                             }}
                           >
                             Salary per receptionist
                           </span>
                           <span
                             style={{
-                              fontFamily: "'DM Sans', sans-serif",
+                              fontFamily: "'Inter', sans-serif",
                               fontWeight: 500,
                               fontSize: "14px",
-                              color: "#0A0A0A",
+                              color: "#0D0D0D",
                               letterSpacing: "-0.02em",
                             }}
                           >
@@ -679,7 +679,7 @@ export default function ProblemSection() {
                           value={salary}
                           onChange={(e) => setSalary(parseInt(e.target.value))}
                           style={{
-                            background: `linear-gradient(to right, #0A0A0A ${((salary - 6000) / 6000) * 100}%, #E5E5E5 ${((salary - 6000) / 6000) * 100}%)`,
+                            background: `linear-gradient(to right, #0D0D0D ${((salary - 6000) / 6000) * 100}%, #E5E5E5 ${((salary - 6000) / 6000) * 100}%)`,
                           }}
                         />
                       </div>
@@ -704,17 +704,17 @@ export default function ProblemSection() {
                               fontFamily: "Inter, sans-serif",
                               fontWeight: 500,
                               fontSize: "13px",
-                              color: "#0A0A0A",
+                              color: "#0D0D0D",
                             }}
                           >
                             Number of receptionists
                           </span>
                           <span
                             style={{
-                              fontFamily: "'DM Sans', sans-serif",
+                              fontFamily: "'Inter', sans-serif",
                               fontWeight: 500,
                               fontSize: "14px",
-                              color: "#0A0A0A",
+                              color: "#0D0D0D",
                               letterSpacing: "-0.02em",
                             }}
                           >
@@ -729,7 +729,7 @@ export default function ProblemSection() {
                           value={count}
                           onChange={(e) => setCount(parseInt(e.target.value))}
                           style={{
-                            background: `linear-gradient(to right, #0A0A0A ${((count - 1) / 4) * 100}%, #E5E5E5 ${((count - 1) / 4) * 100}%)`,
+                            background: `linear-gradient(to right, #0D0D0D ${((count - 1) / 4) * 100}%, #E5E5E5 ${((count - 1) / 4) * 100}%)`,
                           }}
                         />
                       </div>
@@ -753,7 +753,7 @@ export default function ProblemSection() {
                             fontSize: "11px",
                             textTransform: "uppercase",
                             letterSpacing: "0.08em",
-                            color: "#A59F97",
+                            color: "#888888",
                           }}
                         >
                           You pay
@@ -767,10 +767,10 @@ export default function ProblemSection() {
                         >
                           <span
                             style={{
-                              fontFamily: "'DM Sans', sans-serif",
+                              fontFamily: "'Inter', sans-serif",
                               fontWeight: 500,
                               fontSize: "2.5rem",
-                              color: "#0A0A0A",
+                              color: "#0D0D0D",
                               letterSpacing: "-0.05em",
                             }}
                           >
@@ -780,7 +780,7 @@ export default function ProblemSection() {
                             style={{
                               fontFamily: "Inter, sans-serif",
                               fontSize: "13px",
-                              color: "#A59F97",
+                              color: "#888888",
                             }}
                           >
                             / month
@@ -788,10 +788,10 @@ export default function ProblemSection() {
                         </div>
                         <span
                           style={{
-                            fontFamily: "'DM Sans', sans-serif",
+                            fontFamily: "'Inter', sans-serif",
                             fontWeight: 500,
                             fontSize: "1.3rem",
-                            color: "#777169",
+                            color: "#555555",
                             letterSpacing: "-0.02em",
                           }}
                         >
@@ -806,10 +806,10 @@ export default function ProblemSection() {
                 <div style={{ padding: "20px 32px 28px" }}>
                   <div
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Inter', sans-serif",
                       fontWeight: 500,
                       fontSize: "18px",
-                      color: "#0A0A0A",
+                      color: "#0D0D0D",
                       letterSpacing: "-0.02em",
                       marginBottom: "4px",
                     }}
