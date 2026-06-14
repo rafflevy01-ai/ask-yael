@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import VoiceOrb from "./VoiceOrb";
 import TabSwitcher from "./TabSwitcher";
-import BottomBar from "./BottomBar";
 
 export default function HeroSection() {
   const [activeTab, setActiveTab] = useState("en");
@@ -125,7 +124,6 @@ export default function HeroSection() {
 
           <VoiceOrb activeLang={activeTab} />
 
-          <BottomBar />
         </div>
       </div>
 
