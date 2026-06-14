@@ -1,9 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { base44 } from "@/api/base44Client";
 import VoiceOrb from "./VoiceOrb";
 import TabSwitcher from "./TabSwitcher";
 
+const TTS_TEXTS = {
+  en: "Hi there! I'm Yael, your AI dental assistant. I'm here to help you book appointments, answer your questions, and make sure you're taken care of — any time, day or night. What can I do for you today?",
+  fr: "Bonjour ! Je suis Yael, votre assistante dentaire virtuelle. Je suis là pour prendre vos rendez-vous, répondre à vos questions et m'assurer que vous êtes bien pris en charge — à toute heure. Qu'est-ce que je peux faire pour vous aujourd'hui ?",
+  he: "שלום ! אני יעל, העוזרת הדנטלית הדיגיטלית שלך. אני כאן כדי לקבוע תורים, לענות על שאלות ולדאוג שתקבלו את המענה הטוב ביותר — בכל שעה, יום או לילה. במה אוכל לעזור לך היום?",
+};
+
 export default function HeroSection() {
   const [activeTab, setActiveTab] = useState("en");
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  const handlePhoneClick = async () => {
+    if (isPlaying) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      setIsPlaying(false);
+      return;
+    }
+
+    try {
+      const response = await base44.functions.invoke("elevenLabsTTS", {
+        text: TTS_TEXTS[activeTab],
+      });
+
+      const base64 = response.data.audio;
+      const binaryString = atob(base64);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      const audioBlob = new Blob([bytes], { type: "audio/mpeg" });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+
+      audioRef.current = audio;
+      setIsPlaying(true);
+
+      audio.play();
+
+      audio.onended = () => {
+        setIsPlaying(false);
+        audioRef.current = null;
+        URL.revokeObjectURL(audioUrl);
+      };
+
+      audio.onerror = () => {
+        setIsPlaying(false);
+        audioRef.current = null;
+        URL.revokeObjectURL(audioUrl);
+      };
+    } catch (error) {
+      setIsPlaying(false);
+    }
+  };
 
   return (
     <section
@@ -122,7 +177,7 @@ export default function HeroSection() {
 
           <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
 
-          <VoiceOrb activeLang={activeTab} />
+          <VoiceOrb activeLang={activeTab} isPlaying={isPlaying} onPhoneClick={handlePhoneClick} />
 
         </div>
       </div>

@@ -41,11 +41,19 @@ const blobKeyframes = BLOBS.map((b, i) => `
   }
 `).join("\n");
 
-export default function VoiceOrb({ activeLang = "en" }) {
+export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhoneClick }) {
   const theme = LANG_THEMES[activeLang];
 
   return (
-    <div style={{ position: "relative", width: SIZE, height: SIZE, marginBottom: "28px" }}>
+    <div
+      style={{
+        position: "relative",
+        width: SIZE,
+        height: SIZE,
+        marginBottom: "28px",
+        transform: isPlaying ? "scale(1.06)" : "scale(1)",
+        transition: "transform 0.8s ease-in-out",
+      }}>
       <style>{blobKeyframes}</style>
 
       {/* Sphere shell with animated blobs clipped inside */}
@@ -59,6 +67,8 @@ export default function VoiceOrb({ activeLang = "en" }) {
           top: 0,
           left: 0,
           background: "radial-gradient(circle at 38% 32%, #F0F7F6 0%, #C8DDD8 45%, #8FB8B2 100%)",
+          transform: isPlaying ? "scale(1.04)" : "scale(1)",
+          transition: "transform 0.8s ease-in-out",
         }}>
 
         {/* Animated gradient blobs with crossfade */}
@@ -109,6 +119,7 @@ export default function VoiceOrb({ activeLang = "en" }) {
 
       {/* Phone button */}
       <button
+        onClick={onPhoneClick}
         style={{
           position: "absolute",
           bottom: "-18px",
@@ -117,14 +128,14 @@ export default function VoiceOrb({ activeLang = "en" }) {
           width: "52px",
           height: "52px",
           borderRadius: "50%",
-          backgroundColor: "#0A0A0A",
+          backgroundColor: isPlaying ? "#E53E3E" : "#0A0A0A",
           border: "3px solid #FFFFFF",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           zIndex: 2,
-          transition: "transform 0.15s ease",
+          transition: "transform 0.15s ease, background-color 0.3s ease",
         }}
         onMouseEnter={(e) => (e.currentTarget.style.transform = "translateX(-50%) scale(1.05)")}
         onMouseLeave={(e) => (e.currentTarget.style.transform = "translateX(-50%) scale(1)")}>
