@@ -24,6 +24,8 @@ export default function HeroSection() {
       return;
     }
 
+    setIsPlaying(true);
+
     try {
       const response = await base44.functions.invoke("elevenLabsTTS", {
         text: TTS_TEXTS[activeTab],
@@ -54,7 +56,6 @@ export default function HeroSection() {
         URL.revokeObjectURL(audioUrl);
       };
 
-      setIsPlaying(true);
       audio.play().catch((e) => {
         console.error("Audio play rejected:", e);
         setIsPlaying(false);

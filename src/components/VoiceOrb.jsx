@@ -69,6 +69,7 @@ export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhone
           background: "radial-gradient(circle at 38% 32%, #F0F7F6 0%, #C8DDD8 45%, #8FB8B2 100%)",
           transform: isPlaying ? "scale(1.04)" : "scale(1)",
           transition: "transform 0.8s ease-in-out",
+          pointerEvents: "none",
         }}>
 
         {/* Animated gradient blobs with crossfade */}
