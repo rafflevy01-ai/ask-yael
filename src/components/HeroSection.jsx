@@ -31,12 +31,11 @@ export default function HeroSection() {
               style={{
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 300,
-                fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
+                fontSize: "clamp(2rem, 4vw, 3.2rem)",
                 color: "#0A0A0A",
                 letterSpacing: "-0.025em",
                 lineHeight: 1.15,
                 margin: 0,
-                whiteSpace: "nowrap",
               }}>
               Meet Yael.<br />
               Your front desk on autopilot.
