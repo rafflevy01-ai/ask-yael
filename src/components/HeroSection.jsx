@@ -36,6 +36,7 @@ export default function HeroSection() {
                 letterSpacing: "-0.025em",
                 lineHeight: 1.15,
                 margin: 0,
+                whiteSpace: "nowrap",
               }}>
               Meet Yael.<br />
               Your front desk on autopilot.
