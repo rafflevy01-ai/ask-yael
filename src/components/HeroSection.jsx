@@ -40,9 +40,6 @@ export default function HeroSection() {
       const audio = new Audio(audioUrl);
 
       audioRef.current = audio;
-      setIsPlaying(true);
-
-      audio.play();
 
       audio.onended = () => {
         setIsPlaying(false);
@@ -50,12 +47,22 @@ export default function HeroSection() {
         URL.revokeObjectURL(audioUrl);
       };
 
-      audio.onerror = () => {
+      audio.onerror = (e) => {
+        console.error("Audio playback error:", e);
         setIsPlaying(false);
         audioRef.current = null;
         URL.revokeObjectURL(audioUrl);
       };
+
+      setIsPlaying(true);
+      audio.play().catch((e) => {
+        console.error("Audio play rejected:", e);
+        setIsPlaying(false);
+        audioRef.current = null;
+        URL.revokeObjectURL(audioUrl);
+      });
     } catch (error) {
+      console.error("TTS playback error:", error);
       setIsPlaying(false);
     }
   };
