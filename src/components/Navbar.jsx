@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const LANGUAGES = ["EN", "FR", "עב"];
 
 export default function Navbar() {
-  const [activeLang, setActiveLang] = useState("EN");
+  const [activeLang, setActiveLang] = useState("עב");
 
   return (
     <nav
