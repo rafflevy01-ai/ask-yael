@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import BrandLogo from "./BrandLogo";
+import AmbientBackground from "./AmbientBackground";
 
 const PHRASES = [
   "never misses a call.",
@@ -61,6 +62,13 @@ export default function HeroSection() {
         width: "100%",
         backgroundColor: "transparent",
       }}>
+
+      <AmbientBackground
+        color1="rgba(0, 122, 255, 0.25)"
+        color2="rgba(175, 82, 222, 0.2)"
+        color3="rgba(50, 173, 230, 0.2)"
+        overlayOpacity={0.05}
+      />
 
       <div
         className="hero-content"
