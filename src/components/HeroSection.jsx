@@ -16,7 +16,7 @@ export default function HeroSection() {
 
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "80px 32px 0" }}>
 
-        {/* ─── HEADLINE + DESCRIPTION ─── */}
+        {/* ─── TWO-COLUMN ROW ─── */}
         <div
           style={{
             display: "flex",
@@ -25,8 +25,8 @@ export default function HeroSection() {
             marginBottom: "40px",
           }}>
 
-          {/* LEFT — headline + buttons + description */}
-          <div style={{ flex: "0 0 55%", minWidth: 0 }}>
+          {/* LEFT — headline + buttons */}
+          <div style={{ flex: "0 0 50%", minWidth: 0 }}>
             <h1
               style={{
                 fontFamily: "Inter, sans-serif",
@@ -91,7 +91,10 @@ export default function HeroSection() {
                 See How It Works
               </a>
             </div>
+          </div>
 
+          {/* RIGHT — description */}
+          <div style={{ flex: "0 0 45%", minWidth: 0, paddingTop: "6px" }}>
             <p
               style={{
                 fontFamily: "Inter, sans-serif",
@@ -99,7 +102,7 @@ export default function HeroSection() {
                 fontSize: "16px",
                 color: "#555555",
                 lineHeight: 1.6,
-                margin: "24px 0 0 0",
+                margin: 0,
               }}>
               Yael answers every call in Hebrew, French, or English — booking appointments,
               registering new patients, and handling emergencies, 24/7, so your team never has to.
