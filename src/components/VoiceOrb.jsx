@@ -59,20 +59,22 @@ export default function VoiceOrb({ activeLang = "en" }) {
       glow: lerpColor(from.glow, to.glow, t),
     });
 
-    const lerpColor = (c1, c2, t) => {
-      const parse = (c) => {
-        const r = parseInt(c.slice(1, 3), 16);
-        const g = parseInt(c.slice(3, 5), 16);
-        const b = parseInt(c.slice(5, 7), 16);
-        return [r, g, b];
-      };
-      if (c1.startsWith("rgba")) {
-        const m = c1.match(/[\d.]+/g);
-        const m2 = c2.match(/[\d.]+/g);
-        return `rgba(${Math.round(lerp(+m[0], +m2[0], t))}, ${Math.round(lerp(+m[1], +m2[1], t))}, ${Math.round(lerp(+m[2], +m2[2], t))}, ${lerp(+m[3], +m2[3], t).toFixed(2)})`;
+    const parseColor = (c) => {
+      if (c.startsWith("rgba") || c.startsWith("rgb(")) {
+        const m = c.match(/[\d.]+/g);
+        return [parseInt(m[0]), parseInt(m[1]), parseInt(m[2])];
       }
-      const [r1, g1, b1] = parse(c1);
-      const [r2, g2, b2] = parse(c2);
+      // hex: #RRGGBB
+      return [
+        parseInt(c.slice(1, 3), 16),
+        parseInt(c.slice(3, 5), 16),
+        parseInt(c.slice(5, 7), 16),
+      ];
+    };
+
+    const lerpColor = (c1, c2, t) => {
+      const [r1, g1, b1] = parseColor(c1);
+      const [r2, g2, b2] = parseColor(c2);
       return `rgb(${Math.round(lerp(r1, r2, t))}, ${Math.round(lerp(g1, g2, t))}, ${Math.round(lerp(b1, b2, t))})`;
     };
 
