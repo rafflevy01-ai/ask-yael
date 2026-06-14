@@ -3,6 +3,17 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 const ELEVENLABS_API_KEY = "e4929f62c3a4284f9345b59ba414a5ebfe40a82e43201a34cacf6bcd949495f6";
 const VOICE_ID = "l4Coq6695JDX9xtLqXDE";
 
+function arrayBufferToBase64(buffer) {
+    const bytes = new Uint8Array(buffer);
+    const chunks = [];
+    const chunkSize = 0x8000; // 32KB chunks to avoid stack overflow
+    for (let i = 0; i < bytes.length; i += chunkSize) {
+        const chunk = bytes.subarray(i, i + chunkSize);
+        chunks.push(String.fromCharCode(...chunk));
+    }
+    return btoa(chunks.join(""));
+}
+
 Deno.serve(async (req) => {
     try {
         const base44 = createClientFromRequest(req);
@@ -39,7 +50,7 @@ Deno.serve(async (req) => {
         }
 
         const audioBuffer = await response.arrayBuffer();
-        const base64Audio = btoa(String.fromCharCode(...new Uint8Array(audioBuffer)));
+        const base64Audio = arrayBufferToBase64(audioBuffer);
 
         return Response.json({ audio: base64Audio });
     } catch (error) {
