@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import BrandLogo from "./BrandLogo";
 
 const LANGUAGES = ["EN", "FR", "עב"];
 
@@ -28,10 +27,7 @@ export default function Navbar() {
         }}>
 
         {/* Logo */}
-        <a href="/" style={{ display: "flex", alignItems: "center", gap: "4px", textDecoration: "none" }}>
-          <div style={{ width: "26px", height: "26px" }}>
-            <BrandLogo color="#FFFFFF" />
-          </div>
+        <a href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
           <span style={{
             fontFamily: "Inter, sans-serif",
             fontWeight: 600,
