@@ -37,9 +37,9 @@ function AnimatedNumber({ final, suffix, isString, start }) {
     <span
       style={{
         fontFamily: "Inter, sans-serif",
-        fontWeight: 300,
+        fontWeight: 400,
         fontSize: "28px",
-        color: "#0A0A0A",
+        color: "#0D0D0D",
         letterSpacing: "-0.02em",
       }}>
       {isString ? final : display}{suffix}
@@ -59,7 +59,7 @@ export default function BottomBar() {
     <div
       style={{
         width: "100%",
-        borderTop: "1px solid #E0DDD9",
+        borderTop: "1px solid rgba(0,0,0,0.08)",
         paddingTop: "20px",
         display: "flex",
         alignItems: "center",
@@ -90,7 +90,7 @@ export default function BottomBar() {
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 500,
                 fontSize: "10px",
-                color: "#999999",
+                color: "#888888",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
               }}>
@@ -117,7 +117,7 @@ export default function BottomBar() {
               fontFamily: "Inter, sans-serif",
               fontWeight: 500,
               fontSize: "14px",
-              color: "#333333",
+              color: "#1A1A1A",
             }}>
             Yael — AI Receptionist
           </span>
@@ -128,7 +128,7 @@ export default function BottomBar() {
             fontWeight: 400,
             fontStyle: "italic",
             fontSize: "13px",
-            color: "#999999",
+            color: "#888888",
             margin: 0,
           }}>
           Live at Les Experts Netanya · Handling calls since 2025

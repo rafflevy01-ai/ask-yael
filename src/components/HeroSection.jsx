@@ -98,10 +98,11 @@ export default function HeroSection() {
         backgroundColor: "#F7F7F5",
       }}>
 
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "80px 32px 0" }}>
+      <div className="hero-inner" style={{ maxWidth: "1200px", margin: "0 auto", padding: "80px 40px 0" }}>
 
         {/* ─── TWO-COLUMN ROW ─── */}
         <div
+          className="hero-row"
           style={{
             display: "flex",
             gap: "5%",
@@ -110,13 +111,13 @@ export default function HeroSection() {
           }}>
 
           {/* LEFT — headline + buttons */}
-          <div style={{ flex: "0 0 55%", minWidth: 0 }}>
+          <div className="hero-left" style={{ flex: "0 0 55%", minWidth: 0 }}>
             <h1
               style={{
                 fontFamily: "Inter, sans-serif",
-                fontWeight: 300,
-                fontSize: "clamp(1.9rem, 3.8vw, 3rem)",
-                color: "#0A0A0A",
+                fontWeight: 400,
+                fontSize: "clamp(2.2rem, 4vw, 3.5rem)",
+                color: "#0D0D0D",
                 letterSpacing: "-0.025em",
                 lineHeight: 1.15,
                 margin: 0,
@@ -133,7 +134,7 @@ export default function HeroSection() {
                   fontWeight: 400,
                   fontSize: "15px",
                   color: "#FFFFFF",
-                  backgroundColor: "#0A0A0A",
+                  backgroundColor: "#0D0D0D",
                   borderRadius: "999px",
                   padding: "14px 36px",
                   display: "inline-flex",
@@ -156,14 +157,14 @@ export default function HeroSection() {
                   fontFamily: "Inter, sans-serif",
                   fontWeight: 400,
                   fontSize: "15px",
-                  color: "#0A0A0A",
+                  color: "#0D0D0D",
                   backgroundColor: "transparent",
                   borderRadius: "999px",
                   padding: "14px 36px",
                   display: "inline-flex",
                   alignItems: "center",
                   textDecoration: "none",
-                  border: "1px solid #0A0A0A",
+                  border: "1px solid #0D0D0D",
                   cursor: "pointer",
                   minWidth: "200px",
                   justifyContent: "center",
@@ -177,7 +178,7 @@ export default function HeroSection() {
           </div>
 
           {/* RIGHT — description */}
-          <div style={{ flex: "0 0 40%", minWidth: 0, alignSelf: "flex-end" }}>
+          <div className="hero-right" style={{ flex: "0 0 40%", minWidth: 0, alignSelf: "flex-end" }}>
             <p
               style={{
                 fontFamily: "Inter, sans-serif",
@@ -203,7 +204,8 @@ export default function HeroSection() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}>
+          }}
+          className="hero-demo">
 
           <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
 
@@ -212,7 +214,17 @@ export default function HeroSection() {
         </div>
       </div>
 
-
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-inner { padding: 64px 20px 0 !important; }
+          .hero-row { flex-direction: column !important; gap: 24px !important; }
+          .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; }
+          .hero-demo { padding: 24px 20px 16px !important; }
+        }
+        @media (max-width: 1024px) {
+          .hero-inner { padding: 72px 32px 0 !important; }
+        }
+      `}</style>
     </section>
   );
 }

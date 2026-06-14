@@ -144,7 +144,7 @@ function ExpandableItem({ text, example }) {
           fontWeight: 400,
           fontStyle: "italic",
           fontSize: "13px",
-          color: "#777169",
+          color: "#555555",
           lineHeight: 1.6,
           margin: "6px 0 0 0",
         }}>
@@ -157,23 +157,23 @@ function ExpandableItem({ text, example }) {
 
 export default function CapabilitiesSection() {
   return (
-    <section data-capabilities style={{ padding: "100px 48px" }}>
+    <section data-capabilities style={{ padding: "80px 40px" }}>
       <div style={{ maxWidth: "1020px", margin: "0 auto" }}>
 
         {/* Label */}
         <span style={{
           fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "10px",
-          textTransform: "uppercase", letterSpacing: "0.12em", color: "#a59f97",
-          display: "block", marginBottom: "14px", textAlign: "center",
+          textTransform: "uppercase", letterSpacing: "0.12em", color: "#888888",
+          display: "block", marginBottom: "14px",
         }}>
           Capabilities
         </span>
 
         {/* Headline */}
         <h2 style={{
-          fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "36px",
-          color: "#000000", letterSpacing: "-0.72px", lineHeight: 1.15,
-          margin: "0 auto 48px auto", textAlign: "center", maxWidth: "480px",
+          fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(2rem, 3.5vw, 2.25rem)",
+          color: "#0D0D0D", letterSpacing: "-0.02em", lineHeight: 1.2,
+          margin: "0 0 48px 0", textAlign: "left", maxWidth: "560px",
         }}>
           Everything your front desk handles. Automated.
         </h2>
@@ -192,8 +192,8 @@ export default function CapabilitiesSection() {
         {/* Closing line */}
         <p style={{
           fontFamily: "Inter, sans-serif", fontWeight: 400, fontStyle: "italic",
-          fontSize: "14px", color: "#777169", lineHeight: 1.6,
-          margin: "48px auto 0 auto", textAlign: "center",
+          fontSize: "14px", color: "#555555", lineHeight: 1.6,
+          margin: "48px 0 0 0", textAlign: "left",
         }}>
           All of this in one call, in the patient's language, 24 hours a day.
         </p>
@@ -201,11 +201,11 @@ export default function CapabilitiesSection() {
 
       <style>{`
         @media (max-width: 768px) {
-          [data-capabilities] { padding: 48px 16px !important; }
+          [data-capabilities] { padding: 56px 20px !important; }
           .caps-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
         }
         @media (max-width: 1024px) {
-          [data-capabilities] { padding: 64px 24px !important; }
+          [data-capabilities] { padding: 64px 32px !important; }
         }
       `}</style>
     </section>

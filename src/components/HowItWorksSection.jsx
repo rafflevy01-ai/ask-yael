@@ -73,20 +73,20 @@ export default function HowItWorksSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} data-how-works style={{ padding: "100px 48px" }}>
+    <section ref={sectionRef} data-how-works style={{ padding: "80px 40px" }}>
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
 
         {/* Header */}
         <div style={{ marginBottom: "32px", textAlign: "center" }}>
           <span style={{
-            fontFamily: "'Geist Mono', monospace", fontSize: "11px", textTransform: "uppercase",
-            letterSpacing: "0.12em", color: "#a59f97", display: "block", marginBottom: "12px",
+            fontFamily: "Inter, sans-serif", fontSize: "11px", textTransform: "uppercase",
+            letterSpacing: "0.12em", color: "#888888", display: "block", marginBottom: "12px",
           }}>How it works</span>
           <h2 style={{
-            fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
-            fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000000",
-            letterSpacing: "-0.05em", lineHeight: 1.1, margin: 0,
-          }}>How Yael works.</h2>
+            fontFamily: "Inter, sans-serif", fontWeight: 400,
+                      fontSize: "clamp(2rem, 3.5vw, 2.25rem)", color: "#0D0D0D",
+                      letterSpacing: "-0.02em", lineHeight: 1.2, margin: 0,
+                    }}>How Yael works.</h2>
         </div>
 
         {/* ── DESKTOP ── */}
@@ -120,7 +120,7 @@ export default function HowItWorksSection() {
               <div style={{ position: "relative" }}>
                 <div style={{
                   position: "absolute", left: "0", top: 0, bottom: 0,
-                  width: "1px", background: "#e0ddd9", borderRadius: "9999px", zIndex: 0,
+                  width: "1px", background: "rgba(0,0,0,0.06)", borderRadius: "9999px", zIndex: 0,
                 }} />
                 <div style={{
                   position: "absolute", left: "0", top: 0, width: "1px",
@@ -137,17 +137,17 @@ export default function HowItWorksSection() {
                       position: "relative", zIndex: 2,
                     }}>
                     <span style={{
-                      fontFamily: "'Geist Mono', monospace", fontWeight: 400, fontSize: "12px",
-                      color: "#a59f97", display: "block", marginBottom: "16px",
+                      fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
+                      color: "#888888", display: "block", marginBottom: "16px",
                     }}>{step.number}</span>
                     <h3 style={{
-                      fontFamily: "'DM Sans', sans-serif", fontWeight: 300,
-                      fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)", color: "#000000",
-                      letterSpacing: "-0.05em", lineHeight: 1.15, margin: "0 0 12px 0",
+                      fontFamily: "Inter, sans-serif", fontWeight: 400,
+                      fontSize: "clamp(1.25rem, 2vw, 1.5rem)", color: "#0D0D0D",
+                      letterSpacing: "-0.02em", lineHeight: 1.2, margin: "0 0 12px 0",
                     }}>{step.title}</h3>
                     <p style={{
                       fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
-                      color: "#777169", lineHeight: 1.65, margin: 0, maxWidth: "520px",
+                      color: "#555555", lineHeight: 1.65, margin: 0, maxWidth: "520px",
                     }}>{step.description}</p>
                   </div>
                 ))}
@@ -162,7 +162,7 @@ export default function HowItWorksSection() {
             {/* Progress tracks */}
             <div style={{
               position: "absolute", left: "8px", top: 0, bottom: 0,
-              width: "1px", background: "#e0ddd9", borderRadius: "9999px", zIndex: 0,
+              width: "1px", background: "rgba(0,0,0,0.06)", borderRadius: "9999px", zIndex: 0,
             }} />
             <div style={{
               position: "absolute", left: "8px", top: 0, width: "1px",
@@ -182,18 +182,18 @@ export default function HowItWorksSection() {
                     transition: "opacity 0.7s ease",
                   }}>
                     <span style={{
-                      fontFamily: "'Geist Mono', monospace", fontWeight: i >= 1 ? 500 : 400, fontSize: "11px",
+                      fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px",
                       textTransform: "uppercase", letterSpacing: "0.1em",
-                      color: "#a59f97", display: "block", marginBottom: "12px",
+                      color: "#888888", display: "block", marginBottom: "12px",
                     }}>Step {step.number}</span>
                     <h3 style={{
-                      fontFamily: "'DM Sans', sans-serif", fontWeight: i >= 1 ? 400 : 300,
-                      fontSize: "1.4rem", color: "#000000", letterSpacing: "-0.04em",
+                      fontFamily: "Inter, sans-serif", fontWeight: 400,
+                      fontSize: "1.4rem", color: "#0D0D0D", letterSpacing: "-0.02em",
                       lineHeight: 1.15, margin: "0 0 8px 0",
                     }}>{step.title}</h3>
                     <p style={{
-                      fontFamily: "Inter, sans-serif", fontWeight: i >= 1 ? 500 : 400, fontSize: "15px",
-                      color: "#66605a", lineHeight: 1.6, margin: "0 0 20px 0",
+                      fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
+                      color: "#555555", lineHeight: 1.6, margin: "0 0 20px 0",
                     }}>{step.description}</p>
                   </div>
                   <div style={{ maxWidth: "340px", margin: "0 auto" }}>
@@ -212,11 +212,11 @@ export default function HowItWorksSection() {
 
       {/* Callout */}
       <div className="how-callout" style={{
-        marginTop: "80px", borderTop: "1px solid #e5e5e5", borderBottom: "1px solid #e5e5e5",
-        padding: "20px 48px", textAlign: "center",
+        marginTop: "80px", borderTop: "1px solid rgba(0,0,0,0.08)", borderBottom: "1px solid rgba(0,0,0,0.08)",
+        padding: "20px 40px", textAlign: "center",
       }}>
-        <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px", color: "#000000", margin: 0 }}>
-          <span style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 400 }}>2–4 weeks</span>
+        <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px", color: "#0D0D0D", margin: 0 }}>
+          <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 400 }}>2–4 weeks</span>
           {" "}— Live. We handle everything.
         </p>
       </div>
@@ -224,13 +224,13 @@ export default function HowItWorksSection() {
       <style>{`
         .how-mobile { display: none; }
         @media (max-width: 768px) {
-          [data-how-works] { padding: 48px 16px !important; }
+          [data-how-works] { padding: 56px 20px !important; }
           .how-desktop { display: none !important; }
           .how-mobile { display: block !important; }
           .how-callout { padding: 16px 16px !important; margin-top: 48px !important; }
         }
         @media (max-width: 1024px) {
-          [data-how-works] { padding: 64px 24px !important; }
+          [data-how-works] { padding: 64px 32px !important; }
         }
       `}</style>
     </section>
