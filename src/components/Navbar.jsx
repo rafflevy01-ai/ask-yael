@@ -20,12 +20,10 @@ export default function Navbar() {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
-          width: "100%",
-          maxWidth: "800px",
+          gap: "28px",
           backgroundColor: "#1A1A1A",
           borderRadius: "9999px",
-          padding: "8px 24px",
+          padding: "8px 28px",
           boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
           pointerEvents: "auto",
         }}>
