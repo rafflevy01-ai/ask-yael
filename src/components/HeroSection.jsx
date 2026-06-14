@@ -9,6 +9,7 @@ const TTS_TEXTS = {
 };
 
 const HEBREW_AUDIO_URL = "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/416b68379_ElevenLabs_2026-06-14T22_10_57_Christina-EnergeticCommercialAmericanFemaleVoice_pvc_sp109_s19_sb75_v3.mp3";
+const FRENCH_AUDIO_URL = "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/dc5eb367e_ElevenLabs_2026-06-14T22_10_57_Christina-EnergeticCommercialAmericanFemaleVoice_pvc_sp109_s19_sb75_v3.mp3";
 
 export default function HeroSection() {
   const [activeTab, setActiveTab] = useState("en");
@@ -32,6 +33,8 @@ export default function HeroSection() {
 
       if (activeTab === "he") {
         audioUrl = HEBREW_AUDIO_URL;
+      } else if (activeTab === "fr") {
+        audioUrl = FRENCH_AUDIO_URL;
       } else {
         const response = await base44.functions.invoke("elevenLabsTTS", {
           text: TTS_TEXTS[activeTab],
