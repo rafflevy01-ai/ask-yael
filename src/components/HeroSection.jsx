@@ -67,36 +67,6 @@ export default function HeroSection() {
       {/* Interactive dot grid */}
       <InteractiveDotGrid />
 
-      {/* Radial glow behind headline */}
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -55%)",
-          width: "clamp(400px, 60vw, 900px)",
-          height: "clamp(300px, 40vw, 600px)",
-          background: "radial-gradient(ellipse, rgba(59,130,246,0.08) 0%, rgba(147,197,253,0.04) 35%, rgba(248,251,255,0) 70%)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
-
-      {/* Second subtle glow */}
-      <div
-        style={{
-          position: "absolute",
-          top: "60%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "clamp(500px, 70vw, 1000px)",
-          height: "clamp(200px, 30vw, 500px)",
-          background: "radial-gradient(ellipse, rgba(56,189,248,0.05) 0%, transparent 65%)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
-
       <div
         className="hero-content"
         style={{
