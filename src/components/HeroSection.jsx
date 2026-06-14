@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import VoiceOrb from "./VoiceOrb";
 import TabSwitcher from "./TabSwitcher";
@@ -16,6 +16,14 @@ export default function HeroSection() {
   const [activeTab, setActiveTab] = useState("he");
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+    setIsPlaying(false);
+  }, [activeTab]);
 
   const handlePhoneClick = async () => {
     if (isPlaying) {
