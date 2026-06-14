@@ -64,10 +64,12 @@ export default function HeroSection() {
       }}>
 
       <AmbientBackground
-        color1="rgba(0, 122, 255, 0.25)"
-        color2="rgba(175, 82, 222, 0.2)"
-        color3="rgba(50, 173, 230, 0.2)"
-        overlayOpacity={0.05}
+        color1="rgba(180, 210, 255, 0.35)"
+        color2="rgba(210, 180, 240, 0.3)"
+        color3="rgba(170, 220, 245, 0.3)"
+        speedMultiplier={1.8}
+        blurAmount={70}
+        overlayOpacity={0.02}
       />
 
       <div
