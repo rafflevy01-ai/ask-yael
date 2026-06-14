@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import BrandLogo from "./BrandLogo";
-import AmbientBackground from "./AmbientBackground";
+import InteractiveDotGrid from "./InteractiveDotGrid";
 
 const PHRASES = [
   "never misses a call.",
@@ -8,9 +8,9 @@ const PHRASES = [
   "runs without a front desk.",
 ];
 
-const CHAR_SPEED = 45;   // ms per character typed
-const HOLD_MS   = 1800;  // ms to hold after fully typed
-const ERASE_SPEED = 28;  // ms per character erased
+const CHAR_SPEED = 45;
+const HOLD_MS   = 1800;
+const ERASE_SPEED = 28;
 
 function useTypewriter(phrases) {
   const [phraseIdx, setPhraseIdx] = useState(0);
@@ -52,24 +52,49 @@ export default function HeroSection() {
 
   return (
     <section
-      className="hero-section"
       style={{
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
+        justifyContent: "center",
         position: "relative",
         overflow: "hidden",
         width: "100%",
-        backgroundColor: "transparent",
+        backgroundColor: "#FFFFFF",
+        background: "linear-gradient(180deg, #FFFFFF 0%, #F8FBFF 40%, #F3F8FD 100%)",
       }}>
 
-      <AmbientBackground
-        color1="rgba(180, 210, 255, 0.35)"
-        color2="rgba(210, 180, 240, 0.3)"
-        color3="rgba(170, 220, 245, 0.3)"
-        speedMultiplier={1.8}
-        blurAmount={70}
-        overlayOpacity={0.02}
+      {/* Interactive dot grid */}
+      <InteractiveDotGrid />
+
+      {/* Radial glow behind headline */}
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -55%)",
+          width: "clamp(400px, 60vw, 900px)",
+          height: "clamp(300px, 40vw, 600px)",
+          background: "radial-gradient(ellipse, rgba(59,130,246,0.08) 0%, rgba(147,197,253,0.04) 35%, rgba(248,251,255,0) 70%)",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
+
+      {/* Second subtle glow */}
+      <div
+        style={{
+          position: "absolute",
+          top: "60%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "clamp(500px, 70vw, 1000px)",
+          height: "clamp(200px, 30vw, 500px)",
+          background: "radial-gradient(ellipse, rgba(56,189,248,0.05) 0%, transparent 65%)",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
       />
 
       <div
@@ -89,7 +114,7 @@ export default function HeroSection() {
 
         {/* Logo */}
         <div style={{ width: "clamp(5.5rem, 12vw, 10rem)", height: "clamp(5.5rem, 12vw, 10rem)" }}>
-          <BrandLogo color="#000000" />
+          <BrandLogo color="#3B82F6" />
         </div>
 
         {/* Headline */}
@@ -99,16 +124,39 @@ export default function HeroSection() {
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 400,
             fontSize: "clamp(2rem, 5vw, 4rem)",
-            color: "#000000",
+            color: "#1e293b",
             letterSpacing: "-0.96px",
             lineHeight: 1.15,
             margin: 0,
             display: "block",
-
           }}>
           <span style={{ display: "block" }}>Meet Yael.</span>
           <span style={{ display: "block" }}>Your front desk on autopilot.</span>
         </h1>
+
+        {/* Typewriter */}
+        <div
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 400,
+            fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)",
+            color: "#3B82F6",
+            marginTop: "16px",
+            height: "1.4em",
+          }}>
+          She {typed}
+          <span
+            style={{
+              display: "inline-block",
+              width: "2px",
+              height: "1.1em",
+              backgroundColor: "#3B82F6",
+              marginLeft: "2px",
+              verticalAlign: "text-bottom",
+              animation: "blink 0.8s step-end infinite",
+            }}
+          />
+        </div>
 
         {/* Subline */}
         <p
@@ -116,8 +164,8 @@ export default function HeroSection() {
             fontFamily: "Inter, sans-serif",
             fontWeight: 400,
             fontSize: "16px",
-            color: "#777169",
-            lineHeight: 1.5,
+            color: "#64748b",
+            lineHeight: 1.6,
             maxWidth: "54ch",
             marginTop: "24px",
             marginBottom: 0,
@@ -134,16 +182,26 @@ export default function HeroSection() {
               fontWeight: 500,
               fontSize: "15px",
               color: "#ffffff",
-              backgroundColor: "#000000",
+              backgroundColor: "#3B82F6",
               borderRadius: "9999px",
-              height: "40px",
-              padding: "0 20px",
+              height: "44px",
+              padding: "0 24px",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
               textDecoration: "none",
               border: "none",
               cursor: "pointer",
+              boxShadow: "0 2px 16px rgba(59,130,246,0.25)",
+              transition: "box-shadow 0.2s ease, transform 0.15s ease",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.boxShadow = "0 4px 24px rgba(59,130,246,0.35)";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.boxShadow = "0 2px 16px rgba(59,130,246,0.25)";
+              e.currentTarget.style.transform = "translateY(0)";
             }}>
             Book a Free Demo
           </a>
@@ -155,7 +213,7 @@ export default function HeroSection() {
               fontWeight: 400,
               fontStyle: "italic",
               fontSize: "13px",
-              color: "#a59f97",
+              color: "#94a3b8",
               margin: 0,
             }}>
             Live at Les Experts Netanya · 0 missed calls since deployment
@@ -163,8 +221,13 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Responsive styles */}
+      {/* Keyframe for cursor blink */}
       <style>{`
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+
         @media (min-width: 769px) {
           .hero-content { max-width: 900px !important; }
         }
@@ -185,7 +248,7 @@ export default function HeroSection() {
             align-items: center !important;
           }
           .hero-content a[href="#book-demo"] {
-            height: 36px !important;
+            height: 40px !important;
             font-size: 14px !important;
           }
         }
