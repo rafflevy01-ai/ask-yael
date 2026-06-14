@@ -1,4 +1,5 @@
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const SIZE = 280;
 
@@ -31,31 +32,44 @@ const BLOBS = [
   { size: 110, top: 20, left: 20, dx: -35, dy: 42, duration: 8, delay: 3.2 },
 ];
 
-const blobKeyframes = BLOBS.map((b, i) => `
-  @keyframes blobFloat${i} {
-    0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
-    25%  { transform: translate(${b.dx}px, ${b.dy}px) rotate(15deg) scale(1.15); }
-    50%  { transform: translate(${b.dx * 0.4}px, ${-b.dy * 0.6}px) rotate(-8deg) scale(0.9); }
-    75%  { transform: translate(${-b.dx * 0.8}px, ${-b.dy * 0.3}px) rotate(5deg) scale(1.1); }
-    100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-  }
-`).join("\n");
+function blobKeyframes(blob) {
+  return {
+    x: [0, blob.dx, blob.dx * 0.4, -blob.dx * 0.8, 0],
+    y: [0, blob.dy, -blob.dy * 0.6, -blob.dy * 0.3, 0],
+    rotate: [0, 15, -8, 5, 0],
+    scale: [1, 1.15, 0.9, 1.1, 1],
+  };
+}
+
+const shellBg = "radial-gradient(circle at 38% 32%, #F0F7F6 0%, #C8DDD8 45%, #8FB8B2 100%)";
 
 export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhoneClick }) {
   const theme = LANG_THEMES[activeLang];
 
   return (
-    <div
+    <motion.div
       style={{
         position: "relative",
         width: SIZE,
         height: SIZE,
         marginBottom: "28px",
-        transform: isPlaying ? "scale(1.06)" : "scale(1)",
-        transition: "transform 0.8s ease-in-out",
-      }}>
-      <style>{blobKeyframes}</style>
-
+      }}
+      animate={isPlaying ? {
+        scale: [1, 1.07, 0.97, 1.05, 0.98, 1.04, 1, 1.06, 0.99, 1],
+        rotate: [0, 1.5, -1, 0.8, -1.3, 0.5, -0.8, 1, 0],
+      } : {
+        scale: 1,
+        rotate: 0,
+      }}
+      transition={isPlaying ? {
+        duration: 3.2,
+        repeat: Infinity,
+        ease: "easeInOut",
+      } : {
+        duration: 0.8,
+        ease: "easeInOut",
+      }}
+    >
       {/* Sphere shell with animated blobs clipped inside */}
       <div
         style={{
@@ -66,31 +80,42 @@ export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhone
           position: "absolute",
           top: 0,
           left: 0,
-          background: "radial-gradient(circle at 38% 32%, #F0F7F6 0%, #C8DDD8 45%, #8FB8B2 100%)",
-          transform: isPlaying ? "scale(1.04)" : "scale(1)",
-          transition: "transform 0.8s ease-in-out",
+          background: shellBg,
           pointerEvents: "none",
-        }}>
-
-        {/* Animated gradient blobs with crossfade */}
-        {BLOBS.map((blob, i) => (
-          <div
-            key={`${activeLang}-${i}`}
-            style={{
-              position: "absolute",
-              width: blob.size,
-              height: blob.size,
-              top: `${blob.top}%`,
-              left: `${blob.left}%`,
-              borderRadius: "50%",
-              background: theme[i],
-              opacity: 0.65,
-              filter: "blur(22px)",
-              animation: `blobFloat${i} ${blob.duration}s ease-in-out ${blob.delay}s infinite`,
-              pointerEvents: "none",
-            }}
-          />
-        ))}
+        }}
+      >
+        {/* Animated gradient blobs with crossfade on language switch */}
+        <AnimatePresence mode="sync">
+          {BLOBS.map((blob, i) => (
+            <motion.div
+              key={`${activeLang}-${i}`}
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 0.65,
+                ...blobKeyframes(blob),
+              }}
+              exit={{ opacity: 0 }}
+              transition={{
+                opacity: { duration: 0.6, ease: "easeInOut" },
+                x: { duration: blob.duration, repeat: Infinity, ease: "easeInOut", delay: blob.delay },
+                y: { duration: blob.duration, repeat: Infinity, ease: "easeInOut", delay: blob.delay },
+                rotate: { duration: blob.duration, repeat: Infinity, ease: "easeInOut", delay: blob.delay },
+                scale: { duration: blob.duration, repeat: Infinity, ease: "easeInOut", delay: blob.delay },
+              }}
+              style={{
+                position: "absolute",
+                width: blob.size,
+                height: blob.size,
+                top: `${blob.top}%`,
+                left: `${blob.left}%`,
+                borderRadius: "50%",
+                background: theme[i],
+                filter: "blur(22px)",
+                pointerEvents: "none",
+              }}
+            />
+          ))}
+        </AnimatePresence>
 
         {/* Inner shadow for depth */}
         <div
@@ -119,27 +144,28 @@ export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhone
       />
 
       {/* Phone button */}
-      <button
+      <motion.button
         onClick={onPhoneClick}
         style={{
           position: "absolute",
           bottom: "-18px",
           left: "50%",
-          transform: "translateX(-50%)",
+          x: "-50%",
           width: "52px",
           height: "52px",
           borderRadius: "50%",
-          backgroundColor: isPlaying ? "#E53E3E" : "#0A0A0A",
+          backgroundColor: isPlaying ? "#E53E3E" : "#0D0D0D",
           border: "3px solid #FFFFFF",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           zIndex: 2,
-          transition: "transform 0.15s ease, background-color 0.3s ease",
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.transform = "translateX(-50%) scale(1.05)")}
-        onMouseLeave={(e) => (e.currentTarget.style.transform = "translateX(-50%) scale(1)")}>
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        transition={{ duration: 0.15 }}
+      >
         <svg
           width="22"
           height="22"
@@ -148,10 +174,11 @@ export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhone
           stroke="#FFFFFF"
           strokeWidth="2"
           strokeLinecap="round"
-          strokeLinejoin="round">
+          strokeLinejoin="round"
+        >
           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
         </svg>
-      </button>
-    </div>
+      </motion.button>
+    </motion.div>
   );
 }
