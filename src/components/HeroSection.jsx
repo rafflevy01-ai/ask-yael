@@ -38,8 +38,7 @@ export default function HeroSection() {
                 margin: 0,
               }}>
               Meet Yael.<br />
-              Your front desk<br />
-              on autopilot.
+              Your front desk on autopilot.
             </h1>
 
             <div style={{ display: "flex", gap: "16px", marginTop: "28px" }}>
