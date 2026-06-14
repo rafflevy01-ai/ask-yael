@@ -288,7 +288,7 @@ export default function ProblemSection() {
         <div id="problem-sticky">
           {/* Section label */}
           <div className="section-label" style={{ position: "absolute", top: "40px", left: "50%", transform: "translateX(-50%)", zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", textAlign: "center", width: "100%", padding: "0 16px", boxSizing: "border-box" }}>
-            <h1 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.6rem, 2.8vw, 2.25rem)", color: "#000", letterSpacing: "-0.05em", lineHeight: 1.1, margin: 0 }}>Sound familiar?</h1>
+            <h1 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: "clamp(1.6rem, 2.8vw, 2.25rem)", color: "#FFFFFF", letterSpacing: "-0.05em", lineHeight: 1.1, margin: 0 }}>Sound familiar?</h1>
             <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "14px", color: "#a59f97", margin: 0 }}>Calls go unanswered. Patients don't wait. Your front desk can't be everywhere at once.</p>
           </div>
 
