@@ -94,7 +94,7 @@ export default function HeroSection() {
           </div>
 
           {/* RIGHT — description */}
-          <div style={{ flex: "0 0 45%", minWidth: 0, paddingTop: "6px" }}>
+          <div style={{ flex: "0 0 45%", minWidth: 0, alignSelf: "flex-end" }}>
             <p
               style={{
                 fontFamily: "Inter, sans-serif",
