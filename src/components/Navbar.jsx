@@ -14,20 +14,24 @@ export default function Navbar() {
         display: "flex",
         justifyContent: "center",
         padding: "0 16px",
+        pointerEvents: "none",
       }}>
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "20px",
+          justifyContent: "space-between",
+          width: "100%",
+          maxWidth: "800px",
           backgroundColor: "#1A1A1A",
           borderRadius: "9999px",
-          padding: "8px 20px",
+          padding: "8px 24px",
           boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
+          pointerEvents: "auto",
         }}>
 
-        {/* Logo */}
-        <a href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+        {/* AskYael text — left */}
+        <a href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none", flexShrink: 0 }}>
           <span style={{
             fontFamily: "Inter, sans-serif",
             fontWeight: 600,
@@ -37,11 +41,8 @@ export default function Navbar() {
           }}>AskYael</span>
         </a>
 
-        {/* Separator */}
-        <div style={{ width: "1px", height: "18px", background: "rgba(255,255,255,0.25)" }} />
-
-        {/* Language switcher */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0" }}>
+        {/* Language switcher — center */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0", flexShrink: 0 }}>
           {LANGUAGES.map((lang, i) =>
             <span key={lang} style={{ display: "flex", alignItems: "center" }}>
               <button
@@ -69,7 +70,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* CTA Button */}
+        {/* CTA Button — right */}
         <a
           href="#book-demo"
           style={{
@@ -86,6 +87,7 @@ export default function Navbar() {
             justifyContent: "center",
             textDecoration: "none",
             whiteSpace: "nowrap",
+            flexShrink: 0,
             border: "none",
             cursor: "pointer",
             transition: "opacity 0.15s ease",
