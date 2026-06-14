@@ -6,8 +6,9 @@ import TabSwitcher from "./TabSwitcher";
 const TTS_TEXTS = {
   en: "Hi there! I'm Yael, your AI dental assistant. I'm here to help you book appointments, answer your questions, and make sure you're taken care of — any time, day or night. What can I do for you today?",
   fr: "Bonjour ! Je suis Yael, votre assistante dentaire virtuelle. Je suis là pour prendre vos rendez-vous, répondre à vos questions et m'assurer que vous êtes bien pris en charge — à toute heure. Qu'est-ce que je peux faire pour vous aujourd'hui ?",
-  he: "שלום ! אני יעל, העוזרת הדנטלית הדיגיטלית שלך. אני כאן כדי לקבוע תורים, לענות על שאלות ולדאוג שתקבלו את המענה הטוב ביותר — בכל שעה, יום או לילה. במה אוכל לעזור לך היום?",
 };
+
+const HEBREW_AUDIO_URL = "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/416b68379_ElevenLabs_2026-06-14T22_10_57_Christina-EnergeticCommercialAmericanFemaleVoice_pvc_sp109_s19_sb75_v3.mp3";
 
 export default function HeroSection() {
   const [activeTab, setActiveTab] = useState("en");
@@ -27,18 +28,25 @@ export default function HeroSection() {
     setIsPlaying(true);
 
     try {
-      const response = await base44.functions.invoke("elevenLabsTTS", {
-        text: TTS_TEXTS[activeTab],
-      });
+      let audioUrl;
 
-      const base64 = response.data.audio;
-      const binaryString = atob(base64);
-      const bytes = new Uint8Array(binaryString.length);
-      for (let i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
+      if (activeTab === "he") {
+        audioUrl = HEBREW_AUDIO_URL;
+      } else {
+        const response = await base44.functions.invoke("elevenLabsTTS", {
+          text: TTS_TEXTS[activeTab],
+        });
+
+        const base64 = response.data.audio;
+        const binaryString = atob(base64);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        const audioBlob = new Blob([bytes], { type: "audio/mpeg" });
+        audioUrl = URL.createObjectURL(audioBlob);
       }
-      const audioBlob = new Blob([bytes], { type: "audio/mpeg" });
-      const audioUrl = URL.createObjectURL(audioBlob);
+
       const audio = new Audio(audioUrl);
 
       audioRef.current = audio;
