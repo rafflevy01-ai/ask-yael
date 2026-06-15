@@ -335,7 +335,7 @@ export default function ProblemSection() {
                         id="stat-revenue"
                         style={{
                           fontFamily: "'Inter', sans-serif",
-                          fontWeight: 500,
+                          fontWeight: 200,
                           fontSize: "clamp(2.6rem, 6vw, 4.5rem)",
                           color: "#0D0D0D",
                           lineHeight: 1,
@@ -378,7 +378,7 @@ export default function ProblemSection() {
                       <div
                         style={{
                           fontFamily: "'Inter', sans-serif",
-                          fontWeight: 500,
+                          fontWeight: 200,
                           fontSize: "clamp(2.6rem, 6vw, 4.5rem)",
                           color: "#0D0D0D",
                           lineHeight: 1,
@@ -488,7 +488,7 @@ export default function ProblemSection() {
                       <div
                         style={{
                           fontFamily: "'Inter', sans-serif",
-                          fontWeight: 500,
+                          fontWeight: 200,
                           fontSize: "clamp(2.6rem, 6vw, 4.5rem)",
                           color: "#0D0D0D",
                           lineHeight: 1,
@@ -768,7 +768,7 @@ export default function ProblemSection() {
                           <span
                             style={{
                               fontFamily: "'Inter', sans-serif",
-                              fontWeight: 500,
+                              fontWeight: 200,
                               fontSize: "2.5rem",
                               color: "#0D0D0D",
                               letterSpacing: "-0.05em",
@@ -789,8 +789,8 @@ export default function ProblemSection() {
                         <span
                           style={{
                             fontFamily: "'Inter', sans-serif",
-                            fontWeight: 500,
-                            fontSize: "1.3rem",
+                                                fontWeight: 200,
+                                                fontSize: "1.3rem",
                             color: "#555555",
                             letterSpacing: "-0.02em",
                           }}
