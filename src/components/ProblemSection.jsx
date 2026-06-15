@@ -193,10 +193,9 @@ export default function ProblemSection() {
           <div
             style={{
               display: "flex",
-              alignItems: "baseline",
-              gap: "24px",
+              flexDirection: "column",
+              gap: "10px",
               marginBottom: "48px",
-              flexWrap: "wrap",
             }}
           >
             <h2
@@ -216,10 +215,10 @@ export default function ProblemSection() {
               style={{
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 400,
-                fontSize: "16px",
+                fontSize: "14px",
                 color: "#777777",
                 margin: 0,
-                lineHeight: 1.1,
+                lineHeight: 1.5,
               }}
             >
               Calls go unanswered. Patients don't wait. Your front desk can't be everywhere at once.
