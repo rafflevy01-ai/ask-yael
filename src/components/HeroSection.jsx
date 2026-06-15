@@ -122,8 +122,8 @@ export default function HeroSection() {
                 lineHeight: 1.15,
                 margin: 0,
               }}>
-              Meet Yael.<br />
-              Your front desk on autopilot.
+              Meet Yael. Your front desk<br />
+              on autopilot.
             </h1>
 
             <div style={{ display: "flex", gap: "16px", marginTop: "28px" }}>
