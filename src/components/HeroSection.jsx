@@ -116,14 +116,14 @@ export default function HeroSection() {
               style={{
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 400,
-                fontSize: "clamp(2.2rem, 4vw, 3.5rem)",
+                fontSize: "clamp(2rem, 3.5vw, 3.2rem)",
                 color: "#0D0D0D",
                 letterSpacing: "-0.025em",
                 lineHeight: 1.15,
                 margin: 0,
               }}>
-              Meet Yael. Your front desk<br />
-              on autopilot.
+              Meet Yael.<br />
+              Your front desk on autopilot.
             </h1>
 
             <div style={{ display: "flex", gap: "16px", marginTop: "28px" }}>
