@@ -5,6 +5,7 @@ import AnimatedTranscript from "@/components/capabilities/AnimatedTranscript";
 import SmsStaffPatient from "@/components/capabilities/SmsStaffPatient";
 import RegistrationTypewriter from "@/components/capabilities/RegistrationTypewriter";
 import MiniLanguageOrb from "@/components/capabilities/MiniLanguageOrb";
+import DeescalationTransfer from "@/components/capabilities/DeescalationTransfer";
 
 const LANGS = [
   { key: "he", label: "Hebrew" },
@@ -116,31 +117,8 @@ export default function CapabilitiesSection() {
             <div className="caps-card-inner">
               <h3 className="caps-card-title">De-escalation</h3>
               <p className="caps-card-desc">If a patient isn't satisfied, Yael transfers them instantly to a team member.</p>
-              <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "16px" }}>
-                {/* Flow: Frustrated call → Transfer → Team */}
-                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                  {/* Frustrated indicator */}
-                  <div style={{
-                    width: "40px", height: "40px", borderRadius: "50%",
-                    background: "#FFF3F0", border: "2px solid #FCA5A5",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                  }}>
-                    <span style={{ fontSize: "14px", lineHeight: 1 }}>😟</span>
-                  </div>
-                  {/* Arrow */}
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2px" }}>
-                    <div style={{ width: "28px", height: "1.5px", background: "#D1D5DB" }} />
-                    <span style={{ fontFamily: "Inter, sans-serif", fontSize: "9px", color: "#BBBBBB", fontWeight: 500 }}>TRANSFER</span>
-                  </div>
-                  {/* Team member */}
-                  <div style={{
-                    width: "40px", height: "40px", borderRadius: "50%",
-                    background: "#F0FDF4", border: "2px solid #86EFAC",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                  }}>
-                    <span style={{ fontSize: "14px", lineHeight: 1 }}>👩‍⚕️</span>
-                  </div>
-                </div>
+              <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                <DeescalationTransfer />
               </div>
             </div>
           </div>
