@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import NotifStack from "@/components/NotifStack";
-import { PhoneMissed, Clock, Globe, CircleDollarSign, ArrowUpRight } from "lucide-react";
+import { PhoneMissed, Clock, Globe, ArrowUpRight } from "lucide-react";
 
 // ── Panel data ──
 const PANELS = [
@@ -32,7 +32,7 @@ const PANELS = [
     id: "salary-cost",
     number: "04",
     label: "Salary Cost",
-    icon: CircleDollarSign,
+    icon: "shekel",
     title: "You're paying a full salary just to answer the phone.",
     description: "For a team that still goes home at 18:00.",
   },
@@ -246,7 +246,6 @@ export default function ProblemSection() {
               }}
             >
               {PANELS.map((panel, i) => {
-                const Icon = panel.icon;
                 const isActive = i === activeIndex;
                 return (
                   <button
@@ -267,11 +266,17 @@ export default function ProblemSection() {
                       transition: "opacity 0.25s ease",
                     }}
                   >
-                    <Icon
-                      size={18}
-                      strokeWidth={1.8}
-                      color={isActive ? "#0D0D0D" : "#999999"}
-                    />
+                    {panel.icon === "shekel" ? (
+                      <span style={{
+                        fontFamily: "Inter, sans-serif",
+                        fontWeight: 300,
+                        fontSize: "18px",
+                        color: isActive ? "#0D0D0D" : "#999999",
+                        lineHeight: 1,
+                      }}>₪</span>
+                    ) : (
+                      (() => { const Icon = panel.icon; return <Icon size={18} strokeWidth={1.8} color={isActive ? "#0D0D0D" : "#999999"} />; })()
+                    )}
                     <span
                       style={{
                         fontFamily: "'Inter', sans-serif",
