@@ -1,10 +1,26 @@
+import { useState, useEffect } from "react";
 import { AlertTriangle, Shield } from "lucide-react";
 import AnimatedTranscript from "@/components/capabilities/AnimatedTranscript";
 
 import SmsStaffPatient from "@/components/capabilities/SmsStaffPatient";
 import RegistrationTypewriter from "@/components/capabilities/RegistrationTypewriter";
+import MiniLanguageOrb from "@/components/capabilities/MiniLanguageOrb";
+
+const LANGS = [
+  { key: "he", label: "Hebrew" },
+  { key: "fr", label: "Français" },
+  { key: "en", label: "English" },
+];
 
 export default function CapabilitiesSection() {
+  const [activeLangIndex, setActiveLangIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveLangIndex((prev) => (prev + 1) % LANGS.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
   return (
     <section data-capabilities style={{ padding: "80px 40px", backgroundColor: "#FAFAF8" }}>
       <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
@@ -62,22 +78,24 @@ export default function CapabilitiesSection() {
             <div className="caps-card-inner">
               <h3 className="caps-card-title">Automatic language detection</h3>
               <p className="caps-card-desc">Yael switches languages the moment she hears the first word.</p>
-              <div className="caps-card-visual" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "24px" }}>
-                {[
-                  { label: "Hebrew", color: "#10B981" },
-                  { label: "Français", color: "#8B5CF6" },
-                  { label: "English", color: "#06B6D4" },
-                ].map((lang) => (
-                  <div key={lang.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
-                    <div style={{
-                      width: "28px", height: "28px", borderRadius: "50%",
-                      background: `radial-gradient(circle at 35% 35%, #FFF 0%, ${lang.color} 65%)`,
-                    }} />
-                    <span style={{ fontFamily: "Inter, sans-serif", fontSize: "10px", color: "#999999" }}>
-                      {lang.label}
-                    </span>
-                  </div>
-                ))}
+              <div className="caps-card-visual" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "28px" }}>
+                {LANGS.map((lang, i) => {
+                  const isActive = i === activeLangIndex;
+                  return (
+                    <div key={lang.key} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
+                      <MiniLanguageOrb langKey={lang.key} isActive={isActive} />
+                      <span style={{
+                        fontFamily: "Inter, sans-serif",
+                        fontSize: "10px",
+                        fontWeight: isActive ? 600 : 400,
+                        color: isActive ? "#0D0D0D" : "#BBBBBB",
+                        transition: "all 0.4s ease",
+                      }}>
+                        {lang.label}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
