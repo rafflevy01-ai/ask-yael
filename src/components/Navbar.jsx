@@ -21,10 +21,10 @@ export default function Navbar() {
           display: "flex",
           alignItems: "center",
           gap: "28px",
-          backgroundColor: "#E0FFFF",
+          backgroundColor: "#1A1A1A",
           borderRadius: "9999px",
           padding: "8px 28px",
-          boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+          boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
           pointerEvents: "auto",
         }}>
 
@@ -34,7 +34,7 @@ export default function Navbar() {
             fontFamily: "Inter, sans-serif",
             fontWeight: 600,
             fontSize: "15px",
-            color: "#0D0D0D",
+            color: "#FFFFFF",
             letterSpacing: "-0.02em",
           }}>AskYael</span>
         </a>
@@ -50,7 +50,7 @@ export default function Navbar() {
                   fontFamily: "Inter, sans-serif",
                   fontWeight: activeLang === lang ? 600 : 400,
                   fontSize: "13px",
-                  color: activeLang === lang ? "#0D0D0D" : "rgba(0,0,0,0.4)",
+                  color: activeLang === lang ? "#FFFFFF" : "rgba(255,255,255,0.5)",
                   background: "none",
                   border: "none",
                   cursor: "pointer",
@@ -62,7 +62,7 @@ export default function Navbar() {
                 {lang}
               </button>
               {i < LANGUAGES.length - 1 &&
-                <span style={{ color: "rgba(0,0,0,0.15)", margin: "0 2px", fontSize: "13px" }}>|</span>
+                <span style={{ color: "rgba(255,255,255,0.2)", margin: "0 2px", fontSize: "13px" }}>|</span>
               }
             </span>
           )}
@@ -75,8 +75,8 @@ export default function Navbar() {
             fontFamily: "Inter, sans-serif",
             fontWeight: 500,
             fontSize: "13px",
-            color: "#FFFFFF",
-            backgroundColor: "#0D0D0D",
+            color: "#000000",
+            backgroundColor: "#FFFFFF",
             borderRadius: "9999px",
             height: "32px",
             padding: "0 16px",
