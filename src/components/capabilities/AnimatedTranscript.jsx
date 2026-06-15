@@ -43,7 +43,7 @@ export default function AnimatedTranscript() {
   const [isTyping, setIsTyping] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const timerRef = useRef(null);
-  const bottomRef = useRef(null);
+  const scrollRef = useRef(null);
 
   const conv = CONVERSATIONS[convIndex];
 
@@ -82,9 +82,11 @@ export default function AnimatedTranscript() {
     return () => clearTimeout(t);
   }, [msgIndex, convIndex]);
 
-  // Auto-scroll
+  // Auto-scroll within card only
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
   }, [visibleMessages]);
 
   return (
@@ -113,8 +115,8 @@ export default function AnimatedTranscript() {
       </div>
 
       {/* Messages */}
-      <div style={{ flex: 1, overflow: "hidden", paddingRight: "4px", minHeight: 0 }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px", maxHeight: "100%", overflowY: "auto" }}>
+      <div ref={scrollRef} style={{ flex: 1, overflow: "auto", paddingRight: "4px", minHeight: 0 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
           {visibleMessages.map((msg, i) => (
             <div key={i} style={{
               display: "flex", justifyContent: msg.role === "patient" ? "flex-start" : "flex-end",
@@ -143,7 +145,7 @@ export default function AnimatedTranscript() {
               </div>
             </div>
           )}
-          <div ref={bottomRef} />
+          <div />
         </div>
       </div>
 
