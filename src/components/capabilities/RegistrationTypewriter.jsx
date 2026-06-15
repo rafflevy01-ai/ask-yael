@@ -7,7 +7,7 @@ const FIELDS = [
   { label: "Teudat Zehut", value: "031-456789" },
   { label: "Date of birth", value: "15/03/1985" },
   { label: "HMO", value: "Clalit" },
-  { label: "Appointment", value: "Wed 18 Jun · 10:00" },
+  { label: "Appointment", value: "Wed 18 Jun 10:00" },
 ];
 
 const CHAR_DELAY = 55;
@@ -83,22 +83,23 @@ export default function RegistrationTypewriter() {
           <span style={{
             fontFamily: "Inter, sans-serif",
             fontWeight: 400,
-            fontSize: "12px",
+            fontSize: "11px",
             color: "#999999",
             whiteSpace: "nowrap",
+            flexShrink: 0,
           }}>
             {field.label}
           </span>
 
           {/* Value + checkmark */}
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
             <span style={{
               fontFamily: "'Inter', sans-serif",
               fontWeight: 500,
-              fontSize: "12px",
+              fontSize: "11px",
               color: "#0D0D0D",
               letterSpacing: "-0.01em",
-              minWidth: "80px",
+              whiteSpace: "nowrap",
               textAlign: "right",
             }}>
               {field.typedValue}
