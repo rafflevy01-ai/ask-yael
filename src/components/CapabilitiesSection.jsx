@@ -1,9 +1,9 @@
 import { AlertTriangle, Shield } from "lucide-react";
 import AnimatedTranscript from "@/components/capabilities/AnimatedTranscript";
 import LanguagePills from "@/components/capabilities/LanguagePills";
-import SmsSequence from "@/components/capabilities/SmsSequence";
 import DataPillsSequence from "@/components/capabilities/DataPillsSequence";
 import RecoveryChart from "@/components/capabilities/RecoveryChart";
+import SmsStaffPatient from "@/components/capabilities/SmsStaffPatient";
 
 export default function CapabilitiesSection() {
   return (
@@ -28,68 +28,71 @@ export default function CapabilitiesSection() {
 
         {/* Bento Grid */}
         <div className="caps-bento">
-          {/* ROW 1 */}
+
+          {/* ROW 1 — Two 2-column cards */}
           <div className="caps-bento-row">
-            {/* Card 1: Live Call Handling (2 cols) */}
-            <div className="caps-bento-card caps-card-wide caps-card-1" style={{ gridColumn: "span 2" }}>
+
+            {/* Left: Live Call Handling (2 cols) */}
+            <div className="caps-bento-card caps-card-col2">
               <div className="caps-card-inner">
                 <h3 className="caps-card-title">Live Call Handling</h3>
                 <p className="caps-card-desc">Real conversations handled in real time — all three languages, all day.</p>
-                <div className="caps-card-visual caps-card-visual-tall">
+                <div className="caps-card-visual-tall">
                   <AnimatedTranscript />
                 </div>
               </div>
             </div>
 
-            {/* Card 2: Language Detection (1 col) */}
-            <div className="caps-bento-card caps-card-2">
+            {/* Right: Real-time SMS to Staff and Patient (2 cols) */}
+            <div className="caps-bento-card caps-card-col2">
               <div className="caps-card-inner">
-                <h3 className="caps-card-title">Automatic language detection</h3>
-                <p className="caps-card-desc">Yael switches languages the moment she hears the first word.</p>
-                <div className="caps-card-visual">
-                  <LanguagePills />
+                <h3 className="caps-card-title">Real-time SMS to Staff and Patient</h3>
+                <p className="caps-card-desc">Your team and your patients get notified instantly.</p>
+                <div className="caps-card-visual-tall">
+                  <SmsStaffPatient />
                 </div>
               </div>
             </div>
           </div>
 
-          {/* ROW 2 */}
-          <div className="caps-bento-row" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
-            {/* Card 4: SMS to Staff (1 col) */}
-            <div className="caps-bento-card caps-card-4">
+          {/* ROW 2 — Four equal cards */}
+          <div className="caps-bento-row">
+
+            {/* Card 1: Automatic Language Detection */}
+            <div className="caps-bento-card">
               <div className="caps-card-inner">
-                <h3 className="caps-card-title">Real-time SMS to staff</h3>
-                <p className="caps-card-desc">Your team knows every action Yael takes, instantly.</p>
-                <div className="caps-card-visual">
-                  <SmsSequence />
+                <h3 className="caps-card-title">Automatic language detection</h3>
+                <p className="caps-card-desc">Yael switches languages the moment she hears the first word.</p>
+                <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                  <LanguagePills />
                 </div>
               </div>
             </div>
 
-            {/* Card 5: New Patient Registration (1 col) */}
-            <div className="caps-bento-card caps-card-5">
+            {/* Card 2: New Patient Registration */}
+            <div className="caps-bento-card">
               <div className="caps-card-inner">
                 <h3 className="caps-card-title">New patient registration</h3>
                 <p className="caps-card-desc">All details captured before the patient hangs up.</p>
-                <div className="caps-card-visual">
+                <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                   <DataPillsSequence />
                 </div>
               </div>
             </div>
 
-            {/* Card 6: Missed Call Recovery (1 col) */}
-            <div className="caps-bento-card caps-card-6">
+            {/* Card 3: Missed Call Recovery */}
+            <div className="caps-bento-card">
               <div className="caps-card-inner">
                 <h3 className="caps-card-title">Missed call recovery</h3>
                 <p className="caps-card-desc">Patients who don't leave a message get called back within minutes.</p>
-                <div className="caps-card-visual">
+                <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                   <RecoveryChart />
                 </div>
               </div>
             </div>
 
-            {/* Card 3: 24/7 Availability (1 col) */}
-            <div className="caps-bento-card caps-card-3">
+            {/* Card 4: 24/7 Availability */}
+            <div className="caps-bento-card">
               <div className="caps-card-inner">
                 <h3 className="caps-card-title">24/7 Availability</h3>
                 <p className="caps-card-desc">No voicemail, no missed calls — Yael answers every time.</p>
@@ -113,62 +116,60 @@ export default function CapabilitiesSection() {
             </div>
           </div>
 
-          {/* ROW 3 */}
+          {/* ROW 3 — One wide card full width */}
           <div className="caps-bento-row">
-            {/* Card 7: Emergency + HMO (2 cols) */}
-            <div className="caps-bento-card caps-card-wide caps-card-7" style={{ gridColumn: "span 2" }}>
-              <div className="caps-card-inner">
-                <div className="caps-card-visual" style={{ padding: "20px 0 8px" }}>
+            <div className="caps-bento-card caps-card-col4">
+              <div className="caps-card-inner" style={{ padding: "16px 24px" }}>
+                <div style={{
+                  display: "flex", alignItems: "stretch", gap: "0",
+                }}>
+                  {/* Left: Emergency */}
                   <div style={{
-                    display: "flex", alignItems: "stretch", gap: "0",
+                    flex: 1, display: "flex", flexDirection: "column",
+                    alignItems: "center", textAlign: "center", padding: "24px 20px",
                   }}>
-                    {/* Left: Emergency */}
-                    <div style={{
-                      flex: 1, display: "flex", flexDirection: "column",
-                      alignItems: "center", textAlign: "center", padding: "24px 20px",
+                    <AlertTriangle size={28} strokeWidth={1.6} color="#EF4444" />
+                    <h4 style={{
+                      fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
+                      color: "#0D0D0D", margin: "12px 0 6px",
                     }}>
-                      <AlertTriangle size={28} strokeWidth={1.6} color="#EF4444" />
-                      <h4 style={{
-                        fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
-                        color: "#0D0D0D", margin: "12px 0 6px",
-                      }}>
-                        Emergency triage
-                      </h4>
-                      <p style={{
-                        fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
-                        color: "#888888", lineHeight: 1.5, margin: 0,
-                      }}>
-                        Same-day appointments with fee disclosure
-                      </p>
-                    </div>
-
-                    {/* Divider */}
-                    <div style={{ width: "1px", background: "rgba(0,0,0,0.08)", alignSelf: "stretch" }} />
-
-                    {/* Right: HMO */}
-                    <div style={{
-                      flex: 1, display: "flex", flexDirection: "column",
-                      alignItems: "center", textAlign: "center", padding: "24px 20px",
+                      Emergency triage
+                    </h4>
+                    <p style={{
+                      fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
+                      color: "#888888", lineHeight: 1.5, margin: 0,
                     }}>
-                      <Shield size={28} strokeWidth={1.6} color="#3B82F6" />
-                      <h4 style={{
-                        fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
-                        color: "#0D0D0D", margin: "12px 0 6px",
-                      }}>
-                        HMO and insurance
-                      </h4>
-                      <p style={{
-                        fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
-                        color: "#888888", lineHeight: 1.5, margin: 0,
-                      }}>
-                        Price and treatment inquiries answered instantly
-                      </p>
-                    </div>
+                      Same-day appointments with fee disclosure
+                    </p>
+                  </div>
+
+                  {/* Divider */}
+                  <div style={{ width: "1px", background: "rgba(0,0,0,0.08)", alignSelf: "stretch" }} />
+
+                  {/* Right: HMO */}
+                  <div style={{
+                    flex: 1, display: "flex", flexDirection: "column",
+                    alignItems: "center", textAlign: "center", padding: "24px 20px",
+                  }}>
+                    <Shield size={28} strokeWidth={1.6} color="#3B82F6" />
+                    <h4 style={{
+                      fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
+                      color: "#0D0D0D", margin: "12px 0 6px",
+                    }}>
+                      HMO and insurance
+                    </h4>
+                    <p style={{
+                      fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
+                      color: "#888888", lineHeight: 1.5, margin: 0,
+                    }}>
+                      Price and treatment inquiries answered instantly
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -181,7 +182,7 @@ export default function CapabilitiesSection() {
 
         .caps-bento-row {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           gap: 16px;
         }
 
@@ -190,6 +191,14 @@ export default function CapabilitiesSection() {
           border-radius: 16px;
           border: 1px solid rgba(0,0,0,0.06);
           overflow: hidden;
+        }
+
+        .caps-card-col2 {
+          grid-column: span 2;
+        }
+
+        .caps-card-col4 {
+          grid-column: span 4;
         }
 
         .caps-card-inner {
@@ -223,11 +232,8 @@ export default function CapabilitiesSection() {
         }
 
         .caps-card-visual-tall {
-          min-height: 260px;
-        }
-
-        .caps-card-7 .caps-card-inner {
-          padding: 12px 24px;
+          flex: 1;
+          min-height: 280px;
         }
 
         @keyframes bounce {
@@ -239,7 +245,8 @@ export default function CapabilitiesSection() {
           .caps-bento-row {
             grid-template-columns: 1fr !important;
           }
-          .caps-card-wide {
+          .caps-card-col2,
+          .caps-card-col4 {
             grid-column: span 1 !important;
           }
         }
