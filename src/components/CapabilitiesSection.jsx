@@ -1,7 +1,5 @@
 import { AlertTriangle, Shield } from "lucide-react";
 import AnimatedTranscript from "@/components/capabilities/AnimatedTranscript";
-import LanguagePills from "@/components/capabilities/LanguagePills";
-import DataPillsSequence from "@/components/capabilities/DataPillsSequence";
 import RecoveryChart from "@/components/capabilities/RecoveryChart";
 import SmsStaffPatient from "@/components/capabilities/SmsStaffPatient";
 
@@ -58,29 +56,7 @@ export default function CapabilitiesSection() {
           {/* ROW 2 — Four equal cards */}
           <div className="caps-bento-row">
 
-            {/* Card 1: Automatic Language Detection */}
-            <div className="caps-bento-card">
-              <div className="caps-card-inner">
-                <h3 className="caps-card-title">Automatic language detection</h3>
-                <p className="caps-card-desc">Yael switches languages the moment she hears the first word.</p>
-                <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                  <LanguagePills />
-                </div>
-              </div>
-            </div>
-
-            {/* Card 2: New Patient Registration */}
-            <div className="caps-bento-card">
-              <div className="caps-card-inner">
-                <h3 className="caps-card-title">New patient registration</h3>
-                <p className="caps-card-desc">All details captured before the patient hangs up.</p>
-                <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                  <DataPillsSequence />
-                </div>
-              </div>
-            </div>
-
-            {/* Card 3: Missed Call Recovery */}
+            {/* Card: Missed Call Recovery */}
             <div className="caps-bento-card">
               <div className="caps-card-inner">
                 <h3 className="caps-card-title">Missed call recovery</h3>
