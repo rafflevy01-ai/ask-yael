@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import NotifStack from "@/components/NotifStack";
-import { PhoneMissed, Clock, Globe, DollarSign, ArrowUpRight } from "lucide-react";
+import { PhoneMissed, Clock, Globe, CircleDollarSign, ArrowUpRight } from "lucide-react";
 
 // ── Panel data ──
 const PANELS = [
@@ -32,7 +32,7 @@ const PANELS = [
     id: "salary-cost",
     number: "04",
     label: "Salary Cost",
-    icon: DollarSign,
+    icon: CircleDollarSign,
     title: "You're paying a full salary just to answer the phone.",
     description: "For a team that still goes home at 18:00.",
   },
