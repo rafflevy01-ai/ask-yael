@@ -111,12 +111,12 @@ export default function HeroSection() {
           }}>
 
           {/* LEFT — headline + buttons */}
-          <div className="hero-left" style={{ flex: "0 0 55%", minWidth: 0 }}>
+          <div className="hero-left" style={{ flex: "0 0 60%", minWidth: 0 }}>
             <h1
               style={{
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 400,
-                fontSize: "clamp(2rem, 3.5vw, 3.2rem)",
+                fontSize: "clamp(1.75rem, 2.5vw, 2.5rem)",
                 color: "#0D0D0D",
                 letterSpacing: "-0.025em",
                 lineHeight: 1.15,
@@ -178,7 +178,7 @@ export default function HeroSection() {
           </div>
 
           {/* RIGHT — description */}
-          <div className="hero-right" style={{ flex: "0 0 40%", minWidth: 0, alignSelf: "flex-end" }}>
+          <div className="hero-right" style={{ flex: "0 0 35%", minWidth: 0, alignSelf: "flex-end" }}>
             <p
               style={{
                 fontFamily: "Inter, sans-serif",
