@@ -1,166 +1,16 @@
-import { useState } from "react";
-
-const COLUMNS = [
-  {
-    label: "PATIENT JOURNEY",
-    color: "#c9a882",
-    items: [
-      {
-        text: "Appointment booking, modification, and cancellation",
-        example: "\u201cJe vous r\u00e9serve le jeudi 12 \u00e0 9h. On confirme?\u201d \u2014 Yael books it, sends the SMS, and closes the call.",
-      },
-      {
-        text: "Emergency triage with same-day fee disclosure",
-        example: "\u201cUn cr\u00e9neau urgent inclut un suppl\u00e9ment de 1\u00a0000\u00a0\u20aa. J\u2019ai 10h30 de libre \u2014 \u00e7a vous va?\u201d",
-      },
-      {
-        text: "New patient registration \u2014 name, date of birth, HMO, and reason collected during the call",
-        example: "Yael collects all 5 details \u2014 name, date of birth, HMO, ID, reason \u2014 and registers the patient before hanging up.",
-      },
-      {
-        text: "Returning patient recognition by phone number",
-        example: "\u201cShalom Leah \u2014 I can see your last appointment was in March. What can I do for you today?\u201d",
-      },
-      {
-        text: "Missed call recovery \u2014 calls back patients who didn\u2019t leave a message",
-        example: "Yael calls back within minutes. No voicemail. No callback request needed from the patient.",
-      },
-    ],
-  },
-  {
-    label: "LIVE ASSISTANCE",
-    color: "#9ab5a0",
-    items: [
-      {
-        text: "Price and treatment inquiries",
-        example: "\u201cA crown at our clinic is typically between \u20aa2,500 and \u20aa3,500 depending on the case.\u201d",
-      },
-      {
-        text: "HMO and health insurance questions",
-        example: "\u201cThe clinic is private \u2014 we\u2019ll give you an invoice so you can file with your health fund.\u201d",
-      },
-      {
-        text: "Real-time SMS to staff for every action Yael takes",
-        example: "Staff receives a summary SMS the moment any booking, intake, or transfer completes.",
-      },
-    ],
-  },
-  {
-    label: "ALWAYS ON",
-    color: "#b8a0c8",
-    items: [
-      {
-        text: "Automatic language detection \u2014 Hebrew, French, English",
-        example: "Yael opens in Hebrew and switches to French the moment she hears \u201cbonjour.\u201d",
-      },
-      {
-        text: "24/7 availability \u2014 no voicemail, no missed calls",
-        example: "A patient calls at 21:00. Yael answers instantly. An appointment is booked before midnight.",
-      },
-    ],
-  },
-];
-
-function Column({ label, color, items }) {
-  return (
-    <div style={{ borderTop: `3px solid ${color}`, paddingTop: "28px" }}>
-      <span style={{
-        fontFamily: "Inter, sans-serif",
-        fontWeight: 500,
-        fontSize: "11px",
-        textTransform: "uppercase",
-        letterSpacing: "0.09em",
-        color: color,
-        display: "block",
-        marginBottom: "24px",
-      }}>
-        {label}
-      </span>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
-        {items.map((item) => (
-          <ExpandableItem key={item.text} text={item.text} example={item.example} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ExpandableItem({ text, example }) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div>
-      <button
-        onClick={() => setOpen(!open)}
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
-          gap: "12px",
-          width: "100%",
-          textAlign: "left",
-          background: "none",
-          border: "none",
-          padding: 0,
-          cursor: "pointer",
-          font: "inherit",
-          color: "inherit",
-        }}
-      >
-        <span style={{
-          fontFamily: "Inter, sans-serif",
-          fontWeight: 400,
-          fontSize: "15px",
-          color: "#1a1a1a",
-          lineHeight: 1.6,
-        }}>
-          {text}
-        </span>
-        <span style={{
-          display: "flex",
-          alignItems: "center",
-          flexShrink: 0,
-          color: "#c8c0b8",
-          transform: open ? "rotate(180deg)" : "rotate(0deg)",
-          transition: "transform 200ms ease",
-        }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </span>
-      </button>
-
-      <div
-        style={{
-          overflow: "hidden",
-          maxHeight: open ? "80px" : "0",
-          opacity: open ? 1 : 0,
-          transition: "max-height 200ms ease, opacity 200ms ease",
-        }}
-      >
-        <p style={{
-          fontFamily: "Inter, sans-serif",
-          fontWeight: 400,
-          fontStyle: "italic",
-          fontSize: "13px",
-          color: "#555555",
-          lineHeight: 1.6,
-          margin: "6px 0 0 0",
-        }}>
-          {example}
-        </p>
-      </div>
-    </div>
-  );
-}
+import { AlertTriangle, Shield } from "lucide-react";
+import AnimatedTranscript from "@/components/capabilities/AnimatedTranscript";
+import LanguagePills from "@/components/capabilities/LanguagePills";
+import SmsSequence from "@/components/capabilities/SmsSequence";
+import DataPillsSequence from "@/components/capabilities/DataPillsSequence";
+import RecoveryChart from "@/components/capabilities/RecoveryChart";
 
 export default function CapabilitiesSection() {
   return (
-    <section data-capabilities style={{ padding: "80px 40px" }}>
-      <div style={{ maxWidth: "1020px", margin: "0 auto" }}>
+    <section data-capabilities style={{ padding: "80px 40px", backgroundColor: "#FAFAF8" }}>
+      <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
 
-        {/* Label */}
+        {/* Header */}
         <span style={{
           fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "10px",
           textTransform: "uppercase", letterSpacing: "0.12em", color: "#888888",
@@ -168,42 +18,236 @@ export default function CapabilitiesSection() {
         }}>
           Capabilities
         </span>
-
-        {/* Headline */}
         <h2 style={{
           fontFamily: "Inter, sans-serif", fontWeight: 200, fontSize: "clamp(2rem, 3.5vw, 2.25rem)",
           color: "#0D0D0D", letterSpacing: "-0.02em", lineHeight: 1.2,
-          margin: "0 0 48px 0", textAlign: "left", maxWidth: "560px",
+          margin: "0 0 40px 0", textAlign: "left", maxWidth: "560px",
         }}>
           Everything your front desk handles. Automated.
         </h2>
 
-        {/* 3-column grid */}
-        <div className="caps-grid" style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "48px",
-        }}>
-          {COLUMNS.map((col) => (
-            <Column key={col.label} label={col.label} color={col.color} items={col.items} />
-          ))}
-        </div>
+        {/* Bento Grid */}
+        <div className="caps-bento">
+          {/* ROW 1 */}
+          <div className="caps-bento-row">
+            {/* Card 1: Live Call Handling (2 cols) */}
+            <div className="caps-bento-card caps-card-wide caps-card-1" style={{ gridColumn: "span 2" }}>
+              <div className="caps-card-inner">
+                <h3 className="caps-card-title">Live Call Handling</h3>
+                <p className="caps-card-desc">Real conversations handled in real time — all three languages, all day.</p>
+                <div className="caps-card-visual caps-card-visual-tall">
+                  <AnimatedTranscript />
+                </div>
+              </div>
+            </div>
 
-        {/* Closing line */}
-        <p style={{
-          fontFamily: "Inter, sans-serif", fontWeight: 400, fontStyle: "italic",
-          fontSize: "14px", color: "#555555", lineHeight: 1.6,
-          margin: "48px 0 0 0", textAlign: "left",
-        }}>
-          All of this in one call, in the patient's language, 24 hours a day.
-        </p>
+            {/* Card 2: Language Detection (1 col) */}
+            <div className="caps-bento-card caps-card-2">
+              <div className="caps-card-inner">
+                <h3 className="caps-card-title">Automatic language detection</h3>
+                <p className="caps-card-desc">Yael switches languages the moment she hears the first word.</p>
+                <div className="caps-card-visual">
+                  <LanguagePills />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ROW 2 */}
+          <div className="caps-bento-row" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
+            {/* Card 4: SMS to Staff (1 col) */}
+            <div className="caps-bento-card caps-card-4">
+              <div className="caps-card-inner">
+                <h3 className="caps-card-title">Real-time SMS to staff</h3>
+                <p className="caps-card-desc">Your team knows every action Yael takes, instantly.</p>
+                <div className="caps-card-visual">
+                  <SmsSequence />
+                </div>
+              </div>
+            </div>
+
+            {/* Card 5: New Patient Registration (1 col) */}
+            <div className="caps-bento-card caps-card-5">
+              <div className="caps-card-inner">
+                <h3 className="caps-card-title">New patient registration</h3>
+                <p className="caps-card-desc">All details captured before the patient hangs up.</p>
+                <div className="caps-card-visual">
+                  <DataPillsSequence />
+                </div>
+              </div>
+            </div>
+
+            {/* Card 6: Missed Call Recovery (1 col) */}
+            <div className="caps-bento-card caps-card-6">
+              <div className="caps-card-inner">
+                <h3 className="caps-card-title">Missed call recovery</h3>
+                <p className="caps-card-desc">Patients who don't leave a message get called back within minutes.</p>
+                <div className="caps-card-visual">
+                  <RecoveryChart />
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3: 24/7 Availability (1 col) */}
+            <div className="caps-bento-card caps-card-3">
+              <div className="caps-card-inner">
+                <h3 className="caps-card-title">24/7 Availability</h3>
+                <p className="caps-card-desc">No voicemail, no missed calls — Yael answers every time.</p>
+                <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 0 20px" }}>
+                  <span style={{
+                    fontFamily: "Inter, sans-serif", fontWeight: 300,
+                    fontSize: "clamp(3rem, 5vw, 4rem)",
+                    color: "#0D0D0D", letterSpacing: "-0.04em", lineHeight: 1,
+                  }}>
+                    24/7
+                  </span>
+                  <span style={{
+                    fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "10px",
+                    textTransform: "uppercase", letterSpacing: "0.1em", color: "#AAAAAA",
+                    marginTop: "6px",
+                  }}>
+                    Always available
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ROW 3 */}
+          <div className="caps-bento-row">
+            {/* Card 7: Emergency + HMO (2 cols) */}
+            <div className="caps-bento-card caps-card-wide caps-card-7" style={{ gridColumn: "span 2" }}>
+              <div className="caps-card-inner">
+                <div className="caps-card-visual" style={{ padding: "20px 0 8px" }}>
+                  <div style={{
+                    display: "flex", alignItems: "stretch", gap: "0",
+                  }}>
+                    {/* Left: Emergency */}
+                    <div style={{
+                      flex: 1, display: "flex", flexDirection: "column",
+                      alignItems: "center", textAlign: "center", padding: "24px 20px",
+                    }}>
+                      <AlertTriangle size={28} strokeWidth={1.6} color="#EF4444" />
+                      <h4 style={{
+                        fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
+                        color: "#0D0D0D", margin: "12px 0 6px",
+                      }}>
+                        Emergency triage
+                      </h4>
+                      <p style={{
+                        fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
+                        color: "#888888", lineHeight: 1.5, margin: 0,
+                      }}>
+                        Same-day appointments with fee disclosure
+                      </p>
+                    </div>
+
+                    {/* Divider */}
+                    <div style={{ width: "1px", background: "rgba(0,0,0,0.08)", alignSelf: "stretch" }} />
+
+                    {/* Right: HMO */}
+                    <div style={{
+                      flex: 1, display: "flex", flexDirection: "column",
+                      alignItems: "center", textAlign: "center", padding: "24px 20px",
+                    }}>
+                      <Shield size={28} strokeWidth={1.6} color="#3B82F6" />
+                      <h4 style={{
+                        fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
+                        color: "#0D0D0D", margin: "12px 0 6px",
+                      }}>
+                        HMO and insurance
+                      </h4>
+                      <p style={{
+                        fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
+                        color: "#888888", lineHeight: 1.5, margin: 0,
+                      }}>
+                        Price and treatment inquiries answered instantly
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <style>{`
+        .caps-bento {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .caps-bento-row {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+        }
+
+        .caps-bento-card {
+          background: #FFFFFF;
+          border-radius: 16px;
+          border: 1px solid rgba(0,0,0,0.06);
+          overflow: hidden;
+        }
+
+        .caps-card-inner {
+          padding: 20px 24px;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+
+        .caps-card-title {
+          font-family: "Inter", sans-serif;
+          font-weight: 500;
+          font-size: 14px;
+          color: #0D0D0D;
+          margin: 0 0 4px;
+          letter-spacing: -0.01em;
+        }
+
+        .caps-card-desc {
+          font-family: "Inter", sans-serif;
+          font-weight: 400;
+          font-size: 12px;
+          color: #888888;
+          margin: 0 0 16px;
+          line-height: 1.5;
+        }
+
+        .caps-card-visual {
+          flex: 1;
+          min-height: 120px;
+        }
+
+        .caps-card-visual-tall {
+          min-height: 260px;
+        }
+
+        .caps-card-7 .caps-card-inner {
+          padding: 12px 24px;
+        }
+
+        @keyframes bounce {
+          0%, 60%, 100% { transform: translateY(0); }
+          30% { transform: translateY(-4px); }
+        }
+
+        @media (max-width: 900px) {
+          .caps-bento-row {
+            grid-template-columns: 1fr !important;
+          }
+          .caps-card-wide {
+            grid-column: span 1 !important;
+          }
+        }
+
         @media (max-width: 768px) {
           [data-capabilities] { padding: 56px 20px !important; }
-          .caps-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
         }
+
         @media (max-width: 1024px) {
           [data-capabilities] { padding: 64px 32px !important; }
         }
