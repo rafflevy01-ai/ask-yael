@@ -2,7 +2,7 @@ import { AlertTriangle, Shield } from "lucide-react";
 import AnimatedTranscript from "@/components/capabilities/AnimatedTranscript";
 
 import SmsStaffPatient from "@/components/capabilities/SmsStaffPatient";
-import RegistrationChecklist from "@/components/capabilities/RegistrationChecklist";
+import RegistrationTypewriter from "@/components/capabilities/RegistrationTypewriter";
 
 export default function CapabilitiesSection() {
   return (
@@ -82,49 +82,13 @@ export default function CapabilitiesSection() {
             </div>
           </div>
 
-          {/* Card: Emergency & HMO */}
+          {/* Card: New Patient Registration */}
           <div className="caps-bento-card">
-            <div className="caps-card-inner" style={{ padding: "12px 20px" }}>
-              <div style={{
-                display: "flex", alignItems: "stretch", gap: "0",
-              }}>
-                <div style={{
-                  flex: 1, display: "flex", flexDirection: "column",
-                  alignItems: "center", textAlign: "center", padding: "16px 12px",
-                }}>
-                  <AlertTriangle size={22} strokeWidth={1.6} color="#EF4444" />
-                  <h4 style={{
-                    fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "13px",
-                    color: "#0D0D0D", margin: "8px 0 4px",
-                  }}>
-                    Emergency triage
-                  </h4>
-                  <p style={{
-                    fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "11px",
-                    color: "#888888", lineHeight: 1.4, margin: 0,
-                  }}>
-                    Same-day appointments with fee disclosure
-                  </p>
-                </div>
-                <div style={{ width: "1px", background: "rgba(0,0,0,0.08)", alignSelf: "stretch" }} />
-                <div style={{
-                  flex: 1, display: "flex", flexDirection: "column",
-                  alignItems: "center", textAlign: "center", padding: "16px 12px",
-                }}>
-                  <Shield size={22} strokeWidth={1.6} color="#3B82F6" />
-                  <h4 style={{
-                    fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "13px",
-                    color: "#0D0D0D", margin: "8px 0 4px",
-                  }}>
-                    HMO and insurance
-                  </h4>
-                  <p style={{
-                    fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "11px",
-                    color: "#888888", lineHeight: 1.4, margin: 0,
-                  }}>
-                    Price and treatment inquiries answered instantly
-                  </p>
-                </div>
+            <div className="caps-card-inner">
+              <h3 className="caps-card-title">New patient registration</h3>
+              <p className="caps-card-desc">All details captured before the patient hangs up.</p>
+              <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                <RegistrationTypewriter />
               </div>
             </div>
           </div>
@@ -188,17 +152,47 @@ export default function CapabilitiesSection() {
             </div>
           </div>
 
-          {/* ROW 3 — One wide card full width */}
+          {/* ROW 3 — Emergency & HMO as separate cards */}
           <div className="caps-bento-row">
-            <div className="caps-bento-card caps-card-col4">
-              <div className="caps-card-inner">
-                <h3 className="caps-card-title">New patient registration</h3>
-                <p className="caps-card-desc">All details captured before the patient hangs up.</p>
-                <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", justifyContent: "center", minHeight: "200px" }}>
-                  <RegistrationChecklist />
-                </div>
+
+            {/* Left: Emergency Triage */}
+            <div className="caps-bento-card caps-card-col2">
+              <div className="caps-card-inner" style={{ alignItems: "center", textAlign: "center", padding: "28px 24px" }}>
+                <AlertTriangle size={28} strokeWidth={1.6} color="#EF4444" />
+                <h4 style={{
+                  fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
+                  color: "#0D0D0D", margin: "14px 0 6px",
+                }}>
+                  Emergency triage
+                </h4>
+                <p style={{
+                  fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
+                  color: "#888888", lineHeight: 1.5, margin: 0,
+                }}>
+                  Same-day appointments with fee disclosure
+                </p>
               </div>
             </div>
+
+            {/* Right: HMO and Insurance */}
+            <div className="caps-bento-card caps-card-col2">
+              <div className="caps-card-inner" style={{ alignItems: "center", textAlign: "center", padding: "28px 24px" }}>
+                <Shield size={28} strokeWidth={1.6} color="#3B82F6" />
+                <h4 style={{
+                  fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
+                  color: "#0D0D0D", margin: "14px 0 6px",
+                }}>
+                  HMO and insurance
+                </h4>
+                <p style={{
+                  fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
+                  color: "#888888", lineHeight: 1.5, margin: 0,
+                }}>
+                  Price and treatment inquiries answered instantly
+                </p>
+              </div>
+            </div>
+
           </div>
 
         </div>
