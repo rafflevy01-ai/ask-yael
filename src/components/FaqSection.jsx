@@ -33,12 +33,12 @@ export default function FaqSection() {
       <div style={{ maxWidth: "680px", margin: "0 auto" }}>
 
         <h2 style={{
-          fontFamily: "'DM Sans', sans-serif",
-          fontWeight: 300,
-          fontSize: "36px",
-          color: "#000000",
-          letterSpacing: "-0.72px",
-          lineHeight: 1.15,
+          fontFamily: "Inter, sans-serif",
+          fontWeight: 200,
+          fontSize: "clamp(2rem, 3.5vw, 2.25rem)",
+          color: "#0D0D0D",
+          letterSpacing: "-0.02em",
+          lineHeight: 1.2,
           margin: "0 0 40px 0",
         }}>
           Questions

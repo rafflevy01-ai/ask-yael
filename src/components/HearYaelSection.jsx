@@ -297,12 +297,12 @@ export default function HearYaelSection() {
             Real Calls
           </span>
           <h2 style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontWeight: 300,
-            fontSize: "clamp(1.5rem, 2.8vw, 2.25rem)",
-            color: "#000000",
-            letterSpacing: "-0.6px",
-            lineHeight: 1.15,
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 200,
+            fontSize: "clamp(2rem, 3.5vw, 2.25rem)",
+            color: "#0D0D0D",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.2,
             margin: 0,
           }}>
             Hear Yael on a real call.

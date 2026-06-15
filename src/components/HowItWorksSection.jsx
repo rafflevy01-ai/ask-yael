@@ -83,7 +83,7 @@ export default function HowItWorksSection() {
             letterSpacing: "0.12em", color: "#888888", display: "block", marginBottom: "12px",
           }}>How it works</span>
           <h2 style={{
-            fontFamily: "Inter, sans-serif", fontWeight: 400,
+            fontFamily: "Inter, sans-serif", fontWeight: 200,
                       fontSize: "clamp(2rem, 3.5vw, 2.25rem)", color: "#0D0D0D",
                       letterSpacing: "-0.02em", lineHeight: 1.2, margin: 0,
                     }}>How Yael works.</h2>

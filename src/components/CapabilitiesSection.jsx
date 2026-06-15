@@ -171,7 +171,7 @@ export default function CapabilitiesSection() {
 
         {/* Headline */}
         <h2 style={{
-          fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(2rem, 3.5vw, 2.25rem)",
+          fontFamily: "Inter, sans-serif", fontWeight: 200, fontSize: "clamp(2rem, 3.5vw, 2.25rem)",
           color: "#0D0D0D", letterSpacing: "-0.02em", lineHeight: 1.2,
           margin: "0 0 48px 0", textAlign: "left", maxWidth: "560px",
         }}>

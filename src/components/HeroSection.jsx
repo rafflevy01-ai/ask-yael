@@ -115,7 +115,7 @@ export default function HeroSection() {
             <h1
               style={{
                 fontFamily: "Inter, sans-serif",
-                fontWeight: 400,
+                fontWeight: 200,
                 fontSize: "clamp(1.75rem, 2.5vw, 2.5rem)",
                 color: "#0D0D0D",
                 letterSpacing: "-0.025em",

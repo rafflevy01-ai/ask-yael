@@ -201,8 +201,8 @@ export default function ProblemSection() {
           >
             <h2
               style={{
-                fontFamily: "'Inter', sans-serif",
-                fontWeight: 400,
+                fontFamily: "Inter, sans-serif",
+                fontWeight: 200,
                 fontSize: "clamp(2rem, 3.5vw, 2.6rem)",
                 color: "#0D0D0D",
                 letterSpacing: "-0.02em",
