@@ -23,8 +23,8 @@ function AnimatedNumber({ end, suffix, start }) {
     <span style={{ display: "inline-flex", alignItems: "baseline" }}>
       <motion.span
         style={{
-          fontFamily: "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace",
-          fontWeight: 400,
+          fontFamily: "Inter, sans-serif",
+          fontWeight: 300,
           fontSize: "2.5rem",
           color: "#000000",
           letterSpacing: "-0.02em",
@@ -36,8 +36,8 @@ function AnimatedNumber({ end, suffix, start }) {
       </motion.span>
       {suffix && (
         <span style={{
-          fontFamily: "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace",
-          fontWeight: 400,
+          fontFamily: "Inter, sans-serif",
+          fontWeight: 300,
           fontSize: "2.5rem",
           color: "#000000",
           letterSpacing: "-0.02em",
