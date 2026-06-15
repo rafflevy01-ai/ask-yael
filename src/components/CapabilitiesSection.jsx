@@ -56,7 +56,52 @@ export default function CapabilitiesSection() {
           {/* ROW 2 — Four equal cards */}
           <div className="caps-bento-row">
 
-            {/* Card: Missed Call Recovery */}
+            {/* Card: Automatic Language Detection */}
+          <div className="caps-bento-card">
+            <div className="caps-card-inner">
+              <h3 className="caps-card-title">Automatic language detection</h3>
+              <p className="caps-card-desc">Yael switches languages the moment she hears the first word.</p>
+              <div className="caps-card-visual" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "24px" }}>
+                {[
+                  { label: "Hebrew", color: "#10B981" },
+                  { label: "Français", color: "#8B5CF6" },
+                  { label: "English", color: "#06B6D4" },
+                ].map((lang) => (
+                  <div key={lang.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
+                    <div style={{
+                      width: "28px", height: "28px", borderRadius: "50%",
+                      background: `radial-gradient(circle at 35% 35%, #FFF 0%, ${lang.color} 65%)`,
+                    }} />
+                    <span style={{ fontFamily: "Inter, sans-serif", fontSize: "10px", color: "#999999" }}>
+                      {lang.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Card: New Patient Registration */}
+          <div className="caps-bento-card">
+            <div className="caps-card-inner">
+              <h3 className="caps-card-title">New patient registration</h3>
+              <p className="caps-card-desc">All details captured before the patient hangs up.</p>
+              <div className="caps-card-visual" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center", gap: "8px" }}>
+                {["Name", "Phone", "ID", "Insurance", "History"].map((item, i) => (
+                  <span key={item} style={{
+                    fontFamily: "Inter, sans-serif", fontSize: "11px", fontWeight: 500,
+                    color: i === 0 ? "#0D0D0D" : "#BBBBBB",
+                    background: i === 0 ? "#F0F0EE" : "transparent",
+                    padding: "4px 12px", borderRadius: "20px",
+                  }}>
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Card: Missed Call Recovery */}
             <div className="caps-bento-card">
               <div className="caps-card-inner">
                 <h3 className="caps-card-title">Missed call recovery</h3>
