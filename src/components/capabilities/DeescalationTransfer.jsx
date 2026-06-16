@@ -1,220 +1,180 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Phone, AlertTriangle, ArrowLeftRight, Check } from "lucide-react";
 
 const STEPS = [
   {
     icon: Phone,
     label: "Patient calling",
-    subtitle: "+972 54 123 4567 · Frustrated",
-    bg: "#FCEBEB",
-    border: "#F09595",
-    iconColor: "#A32D2D",
+    bg: "#FCEBEB", border: "#F09595", iconColor: "#A32D2D",
   },
   {
     icon: AlertTriangle,
-    label: "Yael detects frustration",
-    subtitle: "Sentiment threshold reached",
-    bg: "#FDF3E0",
-    border: "#FAC775",
-    iconColor: "#8A5A00",
+    label: "Yael detects",
+    bg: "#FDF3E0", border: "#FAC775", iconColor: "#8A5A00",
   },
   {
     icon: ArrowLeftRight,
-    label: "Transferring call",
-    subtitle: "Routing to Dr. Cohen",
-    bg: "#EEF2FF",
-    border: "#A5B4FC",
-    iconColor: "#3730A3",
+    label: "Transferring",
+    bg: "#EEF2FF", border: "#A5B4FC", iconColor: "#3730A3",
   },
   {
     icon: Check,
     label: "Resolved",
-    subtitle: "Patient connected to staff",
-    bg: "#EAF3DE",
-    border: "#97C459",
-    iconColor: "#27500A",
+    bg: "#EAF3DE", border: "#97C459", iconColor: "#27500A",
   },
 ];
 
-const STEP_DELAY = 900; // ms between each step appearance
-const CONNECTOR_DELAY = 450; // ms after step appears before connector draws
-const FINAL_HOLD = 2200; // ms to hold step 4 before resetting
+const STEP_DELAY = 900;
+const FINAL_PAUSE = 1500;
+const TOTAL = STEPS.length * STEP_DELAY + FINAL_PAUSE;
 
-// Total cycle: 3 * STEP_DELAY + FINAL_HOLD = 2700 + 2200 = 4900ms
-const TOTAL_CYCLE = (STEPS.length - 1) * STEP_DELAY + FINAL_HOLD;
+const CIRCLE = 36;
+const CONNECTOR_W = 40;
 
 export default function DeescalationTransfer() {
-  const [activeSteps, setActiveSteps] = useState([]); // { index, connectorDone }
-  const cycleRef = useRef(null);
-  const startRef = useRef(0);
+  const [progress, setProgress] = useState(0); // 0 to TOTAL
+  const rafRef = useRef(null);
+  const startRef = useRef(null);
 
   useEffect(() => {
-    let frameId;
-    let stepsState = [];
+    const run = (ts) => {
+      if (!startRef.current) startRef.current = ts;
+      const elapsed = ts - startRef.current;
 
-    const run = (timestamp) => {
-      if (!startRef.current) startRef.current = timestamp;
-      const elapsed = timestamp - startRef.current;
-
-      // Determine which steps should be active
-      const newSteps = [];
-      for (let i = 0; i < STEPS.length; i++) {
-        const appearTime = i * STEP_DELAY;
-        if (elapsed >= appearTime) {
-          const connectorDone = elapsed >= appearTime + CONNECTOR_DELAY;
-          newSteps.push({ index: i, connectorDone });
-        }
+      if (elapsed >= TOTAL) {
+        startRef.current = ts;
+        setProgress(0);
+      } else {
+        setProgress(elapsed);
       }
 
-      // Check if sequence changed
-      const changed =
-        newSteps.length !== stepsState.length ||
-        newSteps.some((s, i) => s.connectorDone !== stepsState[i]?.connectorDone);
-
-      if (changed) {
-        stepsState = newSteps;
-        setActiveSteps([...newSteps]);
-      }
-
-      // Reset cycle
-      if (elapsed >= TOTAL_CYCLE) {
-        startRef.current = timestamp;
-        stepsState = [];
-        setActiveSteps([]);
-      }
-
-      frameId = requestAnimationFrame(run);
+      rafRef.current = requestAnimationFrame(run);
     };
 
-    frameId = requestAnimationFrame(run);
-    return () => cancelAnimationFrame(frameId);
+    rafRef.current = requestAnimationFrame(run);
+    return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
-  const maxIndex = activeSteps.length > 0 ? activeSteps[activeSteps.length - 1].index : -1;
+  // Determine activation state for each step
+  const stepsState = STEPS.map((_, i) => {
+    const start = i * STEP_DELAY;
+    const end = start + STEP_DELAY;
+    if (progress < start) return 0; // not yet
+    if (progress >= end) return 1; // completed
+    return (progress - start) / STEP_DELAY; // animating (0→1)
+  });
+
+  // Connector progress for each of the 3 connectors
+  const connectorProgress = [0, 1, 2].map((i) => {
+    const start = (i + 1) * STEP_DELAY - 300; // start drawing 300ms before next step
+    const end = (i + 1) * STEP_DELAY;
+    if (progress < start) return 0;
+    if (progress >= end) return 1;
+    return (progress - start) / (end - start);
+  });
 
   return (
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
         gap: "0px",
-        padding: "4px 0",
-        maxWidth: "280px",
-        margin: "0 auto",
+        padding: "20px 0",
         width: "100%",
+        maxWidth: "500px",
+        margin: "0 auto",
       }}
     >
       {STEPS.map((step, i) => {
-        const active = activeSteps.find((s) => s.index === i);
-        const isVisible = !!active;
-        const connectorDone = active?.connectorDone || false;
-        const isLast = i === STEPS.length - 1;
-        const isDimmed = maxIndex > i;
-
         const Icon = step.icon;
+        const state = stepsState[i];
+        const isActive = state > 0;
+        const isAnimating = state > 0 && state < 1;
+        const isLast = i === STEPS.length - 1;
+
+        // Circle scale: pops up during activation, settles at 1
+        const scale = isAnimating ? 1 + 0.15 * Math.sin(state * Math.PI) : isActive ? 1 : 0.92;
+        const opacity = isActive ? 1 : 0.35;
 
         return (
-          <div key={i} style={{ position: "relative" }}>
-            <AnimatePresence>
-              {isVisible && (
-                <motion.div
-                  initial={{ opacity: 0, y: 4 }}
-                  animate={{ opacity: isDimmed ? 0.25 : 1, y: 0 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    paddingBottom: isLast ? "0px" : "0px",
-                  }}
-                >
-                  {/* Circle icon */}
-                  <div
-                    style={{
-                      width: "32px",
-                      height: "32px",
-                      minWidth: "32px",
-                      borderRadius: "50%",
-                      background: step.bg,
-                      border: `2px solid ${step.border}`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Icon size={13} strokeWidth={2.5} color={step.iconColor} />
-                  </div>
-
-                  {/* Label + subtitle */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontWeight: 500,
-                        fontSize: "11px",
-                        color: "#0D0D0D",
-                        letterSpacing: "-0.01em",
-                        lineHeight: 1.4,
-                      }}
-                    >
-                      {step.label}
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontWeight: 400,
-                        fontSize: "10px",
-                        color: "#999999",
-                        lineHeight: 1.4,
-                      }}
-                    >
-                      {step.subtitle}
-                    </span>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Connector line */}
-            {!isLast && isVisible && (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: "0px" }}>
+            {/* Step node */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "8px",
+                flexShrink: 0,
+              }}
+            >
+              {/* Circle */}
               <div
                 style={{
-                  marginLeft: "15px",
-                  width: "2px",
-                  height: "16px",
+                  width: `${CIRCLE}px`,
+                  height: `${CIRCLE}px`,
+                  borderRadius: "50%",
+                  background: isActive ? step.bg : "#F1F5F9",
+                  border: `2px solid ${isActive ? step.border : "#E2E8F0"}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transform: `scale(${scale})`,
+                  transition: "transform 0.3s ease, background 0.3s ease, border-color 0.3s ease",
+                }}
+              >
+                <Icon
+                  size={14}
+                  strokeWidth={2.2}
+                  color={isActive ? step.iconColor : "#CBD5E1"}
+                  style={{ transition: "color 0.3s ease" }}
+                />
+              </div>
+
+              {/* Label */}
+              <span
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontWeight: isActive ? 600 : 400,
+                  fontSize: "9px",
+                  color: isActive ? "#0D0D0D" : "#CBD5E1",
+                  textAlign: "center",
+                  lineHeight: 1.3,
+                  maxWidth: "64px",
+                  transition: "color 0.3s ease, font-weight 0.3s ease",
+                }}
+              >
+                {step.label}
+              </span>
+            </div>
+
+            {/* Connector line */}
+            {!isLast && (
+              <div
+                style={{
+                  width: `${CONNECTOR_W}px`,
+                  height: "2px",
                   background: "#E2E8F0",
                   borderRadius: "1px",
                   position: "relative",
                   overflow: "hidden",
+                  flexShrink: 0,
+                  marginBottom: "20px",
                 }}
               >
-                <motion.div
-                  initial={{ height: "0%" }}
-                  animate={{ height: connectorDone ? "100%" : "0%" }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
+                <div
                   style={{
                     position: "absolute",
                     top: 0,
                     left: 0,
-                    width: "100%",
+                    height: "100%",
+                    width: `${connectorProgress[i] * 100}%`,
                     background: step.border,
                     borderRadius: "1px",
                   }}
                 />
               </div>
-            )}
-
-            {/* Connector placeholder when not visible */}
-            {!isLast && !isVisible && (
-              <div
-                style={{
-                  marginLeft: "15px",
-                  width: "2px",
-                  height: "16px",
-                  background: "transparent",
-                }}
-              />
             )}
           </div>
         );

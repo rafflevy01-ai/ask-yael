@@ -112,14 +112,22 @@ export default function CapabilitiesSection() {
             </div>
           </div>
 
-          {/* Card: De-escalation */}
+          {/* Card: HMO and Insurance */}
           <div className="caps-bento-card">
-            <div className="caps-card-inner">
-              <h3 className="caps-card-title">De-escalation</h3>
-              <p className="caps-card-desc">If a patient isn't satisfied, Yael transfers them instantly to a team member.</p>
-              <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                <DeescalationTransfer />
-              </div>
+            <div className="caps-card-inner" style={{ alignItems: "center", textAlign: "center", justifyContent: "center" }}>
+              <Shield size={28} strokeWidth={1.6} color="#3B82F6" style={{ marginBottom: "14px" }} />
+              <h4 style={{
+                fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
+                color: "#0D0D0D", margin: "0 0 6px",
+              }}>
+                HMO and insurance
+              </h4>
+              <p style={{
+                fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
+                color: "#888888", lineHeight: 1.5, margin: 0,
+              }}>
+                Price and treatment inquiries answered instantly
+              </p>
             </div>
           </div>
 
@@ -148,7 +156,7 @@ export default function CapabilitiesSection() {
             </div>
           </div>
 
-          {/* ROW 3 — Emergency & HMO as separate cards */}
+          {/* ROW 3 — Emergency & De-escalation wide cards */}
           <div className="caps-bento-row">
 
             {/* Left: Emergency Triage */}
@@ -170,22 +178,14 @@ export default function CapabilitiesSection() {
               </div>
             </div>
 
-            {/* Right: HMO and Insurance */}
+            {/* Right: De-escalation (2 cols) */}
             <div className="caps-bento-card caps-card-col2">
-              <div className="caps-card-inner" style={{ alignItems: "center", textAlign: "center", padding: "28px 24px" }}>
-                <Shield size={28} strokeWidth={1.6} color="#3B82F6" />
-                <h4 style={{
-                  fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
-                  color: "#0D0D0D", margin: "14px 0 6px",
-                }}>
-                  HMO and insurance
-                </h4>
-                <p style={{
-                  fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
-                  color: "#888888", lineHeight: 1.5, margin: 0,
-                }}>
-                  Price and treatment inquiries answered instantly
-                </p>
+              <div className="caps-card-inner">
+                <h3 className="caps-card-title">De-escalation</h3>
+                <p className="caps-card-desc">If a patient isn't satisfied, Yael transfers them instantly to a team member.</p>
+                <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                  <DeescalationTransfer />
+                </div>
               </div>
             </div>
 
