@@ -154,7 +154,7 @@ export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhone
           width: "52px",
           height: "52px",
           borderRadius: "50%",
-          backgroundColor: isPlaying ? "#E53E3E" : "#40E0D0",
+          backgroundColor: isPlaying ? "#E53E3E" : "#0DB8A9",
           border: "3px solid #FFFFFF",
           cursor: "pointer",
           display: "flex",

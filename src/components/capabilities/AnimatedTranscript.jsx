@@ -98,7 +98,7 @@ export default function AnimatedTranscript() {
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <span style={{
-            width: "8px", height: "8px", borderRadius: "50%", background: "#40E0D0",
+            width: "8px", height: "8px", borderRadius: "50%", background: "#0DB8A9",
             display: "inline-block", animation: "pulse-dot 1.5s ease-in-out infinite",
           }} />
           <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "12px", color: "#0D0D0D" }}>
@@ -187,7 +187,7 @@ function WaveformBars() {
     <div style={{ display: "flex", alignItems: "flex-end", gap: "1.5px", height: "14px" }}>
       {[0,1,2,3].map((i) => (
         <span key={i} style={{
-          width: "2px", height: "100%", background: "#40E0D0", borderRadius: "1px",
+          width: "2px", height: "100%", background: "#0DB8A9", borderRadius: "1px",
           animation: `wave-${i} 0.7s ease-in-out infinite`,
           animationDelay: `${i * 0.15}s`,
         }} />
