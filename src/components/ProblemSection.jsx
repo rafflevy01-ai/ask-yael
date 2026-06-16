@@ -161,7 +161,7 @@ export default function ProblemSection() {
         }
 
         @media (max-width: 768px) {
-          [data-problem-section] { padding: 56px 0 !important; scroll-margin-top: 80px; }
+          [data-problem-section] { padding: 88px 0 !important; scroll-margin-top: 100px; }
           [data-problem-section] > div { padding: 0 16px !important; }
           .ps-two-col {
             flex-direction: column !important;
