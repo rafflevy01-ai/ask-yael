@@ -6,6 +6,7 @@ import SmsStaffPatient from "@/components/capabilities/SmsStaffPatient";
 import RegistrationTypewriter from "@/components/capabilities/RegistrationTypewriter";
 import MiniLanguageOrb from "@/components/capabilities/MiniLanguageOrb";
 import DeescalationTransfer from "@/components/capabilities/DeescalationTransfer";
+import OnlineStatusBadge from "@/components/capabilities/OnlineStatusBadge";
 
 const LANGS = [
   { key: "he", label: "Hebrew" },
@@ -136,21 +137,8 @@ export default function CapabilitiesSection() {
               <div className="caps-card-inner">
                 <h3 className="caps-card-title">24/7 Availability</h3>
                 <p className="caps-card-desc">No voicemail, no missed calls — Yael answers every time.</p>
-                <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 0 20px" }}>
-                  <span style={{
-                    fontFamily: "Inter, sans-serif", fontWeight: 300,
-                    fontSize: "clamp(3rem, 5vw, 4rem)",
-                    color: "#0D0D0D", letterSpacing: "-0.04em", lineHeight: 1,
-                  }}>
-                    24/7
-                  </span>
-                  <span style={{
-                    fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "10px",
-                    textTransform: "uppercase", letterSpacing: "0.1em", color: "#AAAAAA",
-                    marginTop: "6px",
-                  }}>
-                    Always available
-                  </span>
+                <div className="caps-card-visual">
+                  <OnlineStatusBadge />
                 </div>
               </div>
             </div>
