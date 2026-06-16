@@ -200,9 +200,6 @@ export default function HeroSection() {
         {/* ─── DEMO CARD ─── */}
         <div
           style={{
-            backgroundColor: "#EEECEA",
-            border: "1px solid #E0DDD9",
-            borderRadius: "16px",
             padding: "40px 40px 24px",
             display: "flex",
             flexDirection: "column",
@@ -268,7 +265,6 @@ export default function HeroSection() {
             width: calc(100% - 32px) !important;
             margin: 0 auto 32px !important;
             padding: 36px 20px 24px !important;
-            border-radius: 16px !important;
             overflow: visible !important;
           }
 
