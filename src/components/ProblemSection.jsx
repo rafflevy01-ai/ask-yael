@@ -180,6 +180,7 @@ export default function ProblemSection() {
             -webkit-overflow-scrolling: touch !important;
           }
           .ps-left-col button {
+            width: auto !important;
             white-space: nowrap !important;
             flex-shrink: 0 !important;
             border-top: none !important;
