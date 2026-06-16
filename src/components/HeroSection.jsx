@@ -246,15 +246,15 @@ export default function HeroSection() {
           .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; }
           .hero-demo {
             padding: 16px 24px 0 !important;
-            margin: 0 8px 16px !important;
+            margin: 0 16px 16px !important;
             border-radius: 20px !important;
             overflow: hidden !important;
           }
           .hero-cta-row { flex-direction: column !important; gap: 12px !important; }
           .hero-cta-row a { width: 100% !important; min-width: 0 !important; }
           .hero-orb-wrap {
-            width: 200px !important;
-            height: 200px !important;
+            width: min(200px, 70%) !important;
+            height: min(200px, 70%) !important;
             margin: 0 auto !important;
             position: relative !important;
             overflow: hidden !important;

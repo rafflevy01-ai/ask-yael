@@ -59,7 +59,21 @@ export default function TabSwitcher({ activeTab, onTabChange }) {
       }}>
 <style>{`
   @media (max-width: 768px) {
-    .tab-switcher { margin-bottom: 28px !important; }
+    .tab-switcher {
+      margin-bottom: 28px !important;
+      width: 100% !important;
+      justify-content: center !important;
+      display: flex !important;
+    }
+    .tab-switcher button {
+      font-size: 13px !important;
+      padding: 6px 12px !important;
+      gap: 6px !important;
+    }
+    .tab-switcher .mini-orb {
+      width: 14px !important;
+      height: 14px !important;
+    }
   }
 `}</style>
       {TABS.map(tab => {
