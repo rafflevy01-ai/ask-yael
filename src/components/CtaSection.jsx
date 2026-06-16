@@ -33,7 +33,7 @@ export default function CtaSection() {
   }, []);
 
   return (
-    <section style={{ backgroundColor: "#000000", padding: "80px 40px 48px" }}>
+    <section style={{ backgroundColor: "#000000", padding: "80px 40px 24px" }}>
       <div style={{ maxWidth: "600px", margin: "0 auto", textAlign: "center" }}>
         <h2
           style={{
@@ -123,7 +123,7 @@ export default function CtaSection() {
             fontWeight: 400,
             fontSize: "13px",
             color: "rgba(255,255,255,0.4)",
-            margin: "0 0 40px",
+            margin: "0 0 24px",
           }}
         >
           No sales pitch. No contract. Just a live demo.
@@ -132,9 +132,10 @@ export default function CtaSection() {
         <div
           ref={calendlyRef}
           style={{
+            width: "100%",
             maxWidth: "480px",
+            height: "500px",
             margin: "0 auto",
-            minHeight: "700px",
             borderRadius: "12px",
             overflow: "hidden",
           }}
