@@ -264,8 +264,8 @@ export default function HeroSection() {
             padding: 0 !important;
             margin-bottom: 32px !important;
           }
-          .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; }
-          .hero-left h1 { font-size: 1.75rem !important; }
+          .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; text-align: center !important; }
+          .hero-left h1 { font-size: 1.6rem !important; }
           .hero-cta-row { flex-direction: column !important; gap: 10px !important; margin-top: 20px !important; }
           .hero-cta-row a {
             width: 100% !important;

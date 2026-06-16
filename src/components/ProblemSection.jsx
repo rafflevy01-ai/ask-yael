@@ -163,6 +163,8 @@ export default function ProblemSection() {
         @media (max-width: 768px) {
           [data-problem-section] { padding: 160px 0 !important; scroll-margin-top: 160px; }
           [data-problem-section] > div { padding: 0 16px !important; }
+          .ps-title-block { text-align: center !important; align-items: center !important; }
+          [data-problem-section] h2 { font-size: 1.6rem !important; }
           .ps-two-col {
             flex-direction: column !important;
           }
@@ -218,6 +220,7 @@ export default function ProblemSection() {
         >
           {/* ── TITLE + SUBTITLE ROW ── */}
           <div
+            className="ps-title-block"
             style={{
               display: "flex",
               flexDirection: "column",

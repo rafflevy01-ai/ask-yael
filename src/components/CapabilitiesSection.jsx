@@ -262,7 +262,8 @@ export default function CapabilitiesSection() {
 
         @media (max-width: 768px) {
           [data-capabilities] { padding: 56px 16px !important; }
-          [data-capabilities] h2 { font-size: 1.6rem !important; max-width: 100% !important; }
+          [data-capabilities] h2 { font-size: 1.6rem !important; max-width: 100% !important; text-align: center !important; }
+          [data-capabilities] > div > span { display: block !important; text-align: center !important; }
         }
 
         @media (max-width: 1024px) {
