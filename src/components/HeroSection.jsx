@@ -263,7 +263,7 @@ export default function HeroSection() {
           .hero-right p { font-size: 14px !important; }
 
           .hero-demo {
-            width: calc(100% - 32px) !important;
+            width: calc(100% - 8px) !important;
             margin: 0 auto 32px !important;
             padding: 24px 8px 60px !important;
             border-radius: 16px !important;
@@ -271,8 +271,8 @@ export default function HeroSection() {
           }
 
           .hero-orb-wrap {
-            width: 260px !important;
-            height: 280px !important;
+            width: 100% !important;
+            height: 260px !important;
             margin: 0 auto !important;
             display: flex !important;
             align-items: center !important;
@@ -282,8 +282,8 @@ export default function HeroSection() {
           }
 
           .hero-orb-clip {
-            width: 260px !important;
-            height: 280px !important;
+            width: 100% !important;
+            height: 260px !important;
             overflow: hidden !important;
             border-radius: 50% !important;
             display: flex !important;
