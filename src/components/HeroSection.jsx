@@ -240,7 +240,9 @@ export default function HeroSection() {
         {/* ─── DEMO CARD ─── */}
         <div
           style={{
-            backgroundColor: "#F4F1EE",
+            backgroundColor: "rgba(244, 241, 238, 0.45)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
             borderRadius: "16px",
             padding: "40px 40px 24px",
             display: "flex",
