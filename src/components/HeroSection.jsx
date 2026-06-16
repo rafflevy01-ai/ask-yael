@@ -97,6 +97,8 @@ export default function HeroSection() {
         position: "relative",
         width: "100%",
         backgroundColor: "#F7F7F5",
+        minHeight: "100vh",
+        paddingBottom: "60px",
       }}>
 
       <div className="hero-inner" style={{ maxWidth: "1200px", margin: "0 auto", padding: "80px 40px 0" }}>
