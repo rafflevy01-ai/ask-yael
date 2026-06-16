@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Search } from "lucide-react";
 
 const GREEN = "#1D9E75";
@@ -45,6 +45,10 @@ export default function FaqSection() {
       return { ...acc, items: [...acc.items, { ...faq, origIdx: idx }] };
     }, { items: [] });
   }, [search, activeTag]);
+
+  useEffect(() => {
+    setOpenIndex(null);
+  }, [activeTag, search]);
 
   const toggle = (i) => setOpenIndex(openIndex === i ? null : i);
 
@@ -154,7 +158,7 @@ export default function FaqSection() {
           </div>
 
           {/* Accordion list */}
-          <div>
+          <div style={{ minHeight: "420px" }}>
             {filtered.items.length === 0 ? (
               <div style={{ padding: "36px", textAlign: "center" }}>
                 <p style={{
