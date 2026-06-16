@@ -125,7 +125,7 @@ export default function HowItWorksSection() {
                 <div style={{
                   position: "absolute", left: "0", top: 0, width: "1px",
                   height: `${progress * 100}%`, maxHeight: "100%",
-                  background: "#007aff", borderRadius: "9999px", zIndex: 1,
+                  background: "#40E0D0", borderRadius: "9999px", zIndex: 1,
                   transition: "height 0.08s linear",
                 }} />
                 {STEPS.map((step, i) => (
@@ -167,7 +167,7 @@ export default function HowItWorksSection() {
             <div style={{
               position: "absolute", left: "8px", top: 0, width: "1px",
               height: `${progress * 100}%`, maxHeight: "100%",
-              background: "#007aff", borderRadius: "9999px", zIndex: 1,
+              background: "#40E0D0", borderRadius: "9999px", zIndex: 1,
               transition: "height 0.08s linear",
             }} />
             {STEPS.map((step, i) => {
