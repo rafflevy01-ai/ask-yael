@@ -129,7 +129,7 @@ export default function RegistrationTypewriter() {
                   transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   style={{
                     width: "18px", height: "18px", borderRadius: "50%",
-                    background: "#E0FFFF",
+                    background: "#B8F5F0",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     flexShrink: 0,
                   }}

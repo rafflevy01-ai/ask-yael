@@ -158,7 +158,7 @@ export default function AnimatedTranscript() {
           <span key={l.key} style={{
             fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "10px",
             padding: "4px 10px", borderRadius: "999px",
-            background: conv.lang === l.key ? "#0D0D0D" : "transparent",
+            background: conv.lang === l.key ? "#0DB8A9" : "transparent",
             color: conv.lang === l.key ? "#FFFFFF" : "#888888",
             border: conv.lang === l.key ? "none" : "1px solid #E5E5E5",
             transition: "all 0.3s ease",
