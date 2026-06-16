@@ -18,6 +18,8 @@ export default function CtaSection() {
         window.Calendly.initInlineWidget({
           url: CALENDLY_URL,
           parentElement: calendlyRef.current,
+          hideLandingPageDetails: true,
+          hideEventTypeDetails: true,
         });
       }
     };
@@ -31,7 +33,7 @@ export default function CtaSection() {
   }, []);
 
   return (
-    <section style={{ backgroundColor: "#000000", padding: "96px 40px" }}>
+    <section style={{ backgroundColor: "#000000", padding: "80px 40px 48px" }}>
       <div style={{ maxWidth: "600px", margin: "0 auto", textAlign: "center" }}>
         <h2
           style={{
@@ -132,7 +134,7 @@ export default function CtaSection() {
           style={{
             maxWidth: "480px",
             margin: "0 auto",
-            minHeight: "500px",
+            minHeight: "700px",
             borderRadius: "12px",
             overflow: "hidden",
           }}
