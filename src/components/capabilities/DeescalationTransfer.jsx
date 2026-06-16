@@ -11,15 +11,13 @@ const STEPS = [
 const STEP_DELAY = 900;
 const FINAL_PAUSE = 1500;
 
-// SVG geometry
-const D = 36;                     // circle diameter
-const G = 36;                     // gap between circle edges
-const STEP = D + G;              // 72px center-to-center
-const CX = [D / 2, D / 2 + STEP, D / 2 + 2 * STEP, D / 2 + 3 * STEP]; // [18, 90, 162, 234]
-const SVG_W = CX[3] + D / 2;     // 252
-const SVG_H = D + 30;            // room for labels below
+const D = 36;
+const G = 64;
+const SEG = D + G;
+const CX = [D / 2, D / 2 + SEG, D / 2 + 2 * SEG, D / 2 + 3 * SEG];
+const SVG_W = CX[3] + D / 2;
 
-const FILL_TARGETS = [0, 0, STEP, 2 * STEP, 3 * STEP]; // fill width per active step
+const FILL_TARGETS = [0, 0, SEG, 2 * SEG, 3 * SEG];
 
 export default function DeescalationTransfer() {
   const [activeStep, setActiveStep] = useState(0);
@@ -47,93 +45,72 @@ export default function DeescalationTransfer() {
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-      <div style={{ position: "relative", width: SVG_W, height: SVG_H + 48 }}>
-        <svg width={SVG_W} height={SVG_H} style={{ overflow: "visible" }}>
+      <div style={{ position: "relative", width: SVG_W, height: D }}>
+        <svg width={SVG_W} height={D} style={{ overflow: "visible" }}>
           <defs>
-            <linearGradient id="lineGrad" x1={CX[0]} y1="0" x2={CX[3]} y2="0" gradientUnits="userSpaceOnUse">
+            <linearGradient id="lg" x1={CX[0]} y1="0" x2={CX[3]} y2="0" gradientUnits="userSpaceOnUse">
               <stop offset="0" stopColor={STEPS[0].border} />
               <stop offset="0.333" stopColor={STEPS[1].border} />
               <stop offset="0.667" stopColor={STEPS[2].border} />
               <stop offset="1" stopColor={STEPS[3].border} />
             </linearGradient>
-            <clipPath id="fillClip">
+            <clipPath id="fc">
               <rect x={CX[0]} y={D / 2 - 1.5} width={fillWidth} height={3} />
             </clipPath>
           </defs>
 
-          {/* Background track line */}
-          <line
-            x1={CX[0]} y1={D / 2} x2={CX[3]} y2={D / 2}
-            stroke="#E5E7EB" strokeWidth="2" strokeLinecap="round"
-          />
+          <line x1={CX[0]} y1={D / 2} x2={CX[3]} y2={D / 2} stroke="#E5E7EB" strokeWidth="2" strokeLinecap="round" />
 
-          {/* Colored fill line */}
-          <line
-            x1={CX[0]} y1={D / 2} x2={CX[3]} y2={D / 2}
-            stroke="url(#lineGrad)" strokeWidth="2" strokeLinecap="round"
-            clipPath="url(#fillClip)"
-            style={{ transition: "all 0.7s ease" }}
-          />
+          <line x1={CX[0]} y1={D / 2} x2={CX[3]} y2={D / 2} stroke="url(#lg)" strokeWidth="2" strokeLinecap="round"
+            clipPath="url(#fc)" style={{ transition: "all 0.7s ease" }} />
 
-          {/* Circles */}
-          {STEPS.map((step, i) => {
-            const isActive = i < activeStep;
-            return (
-              <g key={i}>
-                <circle
-                  cx={CX[i]} cy={D / 2} r={D / 2}
-                  fill={isActive ? step.bg : "#F1F5F9"}
-                  stroke={isActive ? step.border : "#E2E8F0"}
-                  strokeWidth="2"
-                  style={{
-                    transition: "all 0.3s ease",
-                    transformOrigin: `${CX[i]}px ${D / 2}px`,
-                    transform: isActive ? "scale(1)" : "scale(0.92)",
-                  }}
-                />
-              </g>
-            );
-          })}
+          {STEPS.map((step, i) => (
+            <circle key={i} cx={CX[i]} cy={D / 2} r={D / 2}
+              fill={(i < activeStep) ? step.bg : "#F1F5F9"}
+              stroke={(i < activeStep) ? step.border : "#E2E8F0"} strokeWidth="2"
+              style={{
+                transition: "all 0.3s ease",
+                transformOrigin: `${CX[i]}px ${D / 2}px`,
+                transform: (i < activeStep) ? "scale(1)" : "scale(0.92)",
+              }} />
+          ))}
         </svg>
 
-        {/* Icons and labels (positioned absolutely over the circles) */}
+        {/* Icons over circles */}
         {STEPS.map((step, i) => {
-          const isActive = i < activeStep;
           const Icon = step.icon;
+          const active = i < activeStep;
           return (
-            <div
-              key={i}
+            <Icon key={`ic${i}`} size={14} strokeWidth={2.2}
+              color={active ? step.iconColor : "#CBD5E1"}
+              style={{ position: "absolute", left: CX[i] - 7, top: (D - 14) / 2,
+                transition: "color 0.3s ease", pointerEvents: "none" }} />
+          );
+        })}
+
+        {/* Labels between circles */}
+        {STEPS.map((step, i) => {
+          const active = i < activeStep;
+          const isLast = i === STEPS.length - 1;
+          const labelX = isLast ? CX[i] + D / 2 + 10 : (CX[i] + CX[i + 1]) / 2;
+
+          return (
+            <span key={`lb${i}`}
               style={{
                 position: "absolute",
-                left: CX[i] - D / 2,
-                top: 0,
-                width: D,
-                display: "flex", flexDirection: "column", alignItems: "center",
-              }}
-            >
-              {/* Icon inside circle */}
-              <div style={{
-                width: D, height: D,
-                display: "flex", alignItems: "center", justifyContent: "center",
+                left: labelX,
+                top: (D - 14) / 2,
+                transform: isLast ? "none" : "translateX(-50%)",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: active ? 600 : 400,
+                fontSize: "11px",
+                color: active ? "#0D0D0D" : "#CBD5E1",
+                whiteSpace: "nowrap",
+                transition: "all 0.3s ease",
                 pointerEvents: "none",
               }}>
-                <Icon
-                  size={14} strokeWidth={2.2}
-                  color={isActive ? step.iconColor : "#CBD5E1"}
-                  style={{ transition: "color 0.3s ease" }}
-                />
-              </div>
-
-              {/* Label */}
-              <span style={{
-                fontFamily: "Inter, sans-serif", fontWeight: isActive ? 600 : 400,
-                fontSize: "9px", color: isActive ? "#0D0D0D" : "#CBD5E1",
-                textAlign: "center", lineHeight: 1.3, marginTop: 6,
-                transition: "all 0.3s ease",
-              }}>
-                {step.label}
-              </span>
-            </div>
+              {step.label}
+            </span>
           );
         })}
       </div>
