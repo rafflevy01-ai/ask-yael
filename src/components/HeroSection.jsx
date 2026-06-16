@@ -105,7 +105,7 @@ export default function HeroSection() {
       style={{
         position: "relative",
         width: "100%",
-        backgroundColor: "#F7F7F5",
+        backgroundColor: "#edf5f7",
         minHeight: "100vh",
         paddingBottom: "60px",
       }}>
@@ -146,7 +146,7 @@ export default function HeroSection() {
                   fontWeight: 400,
                   fontSize: "15px",
                   color: "#FFFFFF",
-                  backgroundColor: "#73C2FB",
+                  backgroundColor: "#5893d6",
                   borderRadius: "999px",
                   padding: "14px 36px",
                   display: "inline-flex",
@@ -169,14 +169,14 @@ export default function HeroSection() {
                   fontFamily: "Inter, sans-serif",
                   fontWeight: 400,
                   fontSize: "15px",
-                  color: "rgba(115, 194, 251, 0.7)",
+                  color: "rgba(88, 147, 214, 0.7)",
                   backgroundColor: "transparent",
                   borderRadius: "999px",
                   padding: "14px 36px",
                   display: "inline-flex",
                   alignItems: "center",
                   textDecoration: "none",
-                  border: "1.5px solid #73C2FB",
+                  border: "1.5px solid #5893d6",
                   cursor: "pointer",
                   minWidth: "200px",
                   justifyContent: "center",
@@ -209,6 +209,8 @@ export default function HeroSection() {
         {/* ─── DEMO CARD ─── */}
         <div
           style={{
+            backgroundColor: "#d9eef5",
+            borderRadius: "16px",
             padding: "40px 40px 24px",
             display: "flex",
             flexDirection: "column",
@@ -237,7 +239,7 @@ export default function HeroSection() {
                 width: "52px",
                 height: "52px",
                 borderRadius: "50%",
-                backgroundColor: isPlaying ? "#E53E3E" : "#73C2FB",
+                backgroundColor: isPlaying ? "#E53E3E" : "#5893d6",
                 border: "3px solid #FFFFFF",
                 cursor: "pointer",
                 display: "none",

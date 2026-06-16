@@ -315,7 +315,7 @@ export default function ProblemSection() {
         }
       `}</style>
 
-      <section data-problem-section style={{ width:"100%", backgroundColor:"#F5F5F3", padding:"80px 0" }}>
+      <section data-problem-section style={{ width:"100%", backgroundColor:"#edf5f7", padding:"80px 0" }}>
         <div style={{ maxWidth:"1200px", margin:"0 auto", padding:"0 48px" }}>
 
           <div className="ps-title-block" style={{ display:"flex", flexDirection:"column", gap:"10px", marginBottom:"48px" }}>

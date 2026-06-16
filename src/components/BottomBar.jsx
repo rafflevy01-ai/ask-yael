@@ -108,7 +108,7 @@ export default function BottomBar() {
               width: "32px",
               height: "32px",
               borderRadius: "50%",
-              background: "linear-gradient(135deg, #73C2FB, #A8DAFC)",
+              background: "linear-gradient(135deg, #5893d6, #7ab3e8)",
               flexShrink: 0,
             }}
           />

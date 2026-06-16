@@ -138,9 +138,9 @@ function AudioCard({ card }) {
       flexDirection: "column",
       gap: "14px",
       boxShadow: card.featured
-        ? "0 4px 24px rgba(115,194,251,0.15), 0 0 0 1px #73C2FB"
+        ? "0 4px 24px rgba(88,147,214,0.15), 0 0 0 1px #5893d6"
         : "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.05) 0px 4px 12px 0px",
-      border: card.featured ? "1px solid #73C2FB" : "none",
+      border: card.featured ? "1px solid #5893d6" : "none",
       position: "relative",
     }}>
       {card.featured && (
@@ -148,7 +148,7 @@ function AudioCard({ card }) {
           position: "absolute",
           top: "-10px",
           left: "20px",
-          background: "#73C2FB",
+          background: "#5893d6",
           color: "#ffffff",
           fontFamily: "Inter, sans-serif",
           fontWeight: 500,
@@ -192,14 +192,14 @@ function AudioCard({ card }) {
             width: "36px",
             height: "36px",
             borderRadius: "9999px",
-            background: "#73C2FB",
+            background: "#5893d6",
             border: "none",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             flexShrink: 0,
-            boxShadow: "0 2px 8px rgba(115,194,251,0.3)",
+            boxShadow: "0 2px 8px rgba(88,147,214,0.3)",
             transition: "opacity 0.15s ease",
           }}
           onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
@@ -237,7 +237,7 @@ function AudioCard({ card }) {
           <div style={{
             width: `${progress * 100}%`,
             height: "100%",
-            background: "#73C2FB",
+            background: "#5893d6",
             borderRadius: "9999px",
             transition: "width 0.1s linear",
           }} />
