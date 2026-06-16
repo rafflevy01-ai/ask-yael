@@ -126,13 +126,16 @@ export default function ProofBar() {
           [data-proof-bar] { padding: 0 16px 32px !important; }
         }
         @media (max-width: 767px) {
-          [data-proof-bar] [style*="flex"] {
+          [data-proof-bar] { padding: 0 16px 16px !important; }
+          [data-proof-bar] > div {
             display: grid !important;
             grid-template-columns: repeat(2, 1fr) !important;
+            gap: 8px !important;
+            max-width: 100% !important;
           }
-          [data-proof-bar] [style*="flex"] > div {
+          [data-proof-bar] > div > div {
             flex: none !important;
-            padding: 28px 12px !important;
+            padding: 24px 12px !important;
           }
         }
       `}</style>
