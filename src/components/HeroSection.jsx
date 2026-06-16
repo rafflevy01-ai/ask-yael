@@ -4,6 +4,7 @@ export default function HeroSection() {
 
   return (
     <section
+      data-hero-section
       style={{
         position: "relative",
         width: "100%",
