@@ -271,8 +271,8 @@ export default function HeroSection() {
           }
 
           .hero-orb-wrap {
-            width: 240px !important;
-            height: 240px !important;
+            width: 260px !important;
+            height: 260px !important;
             margin: 0 auto !important;
             display: flex !important;
             align-items: center !important;
@@ -282,8 +282,8 @@ export default function HeroSection() {
           }
 
           .hero-orb-clip {
-            width: 240px !important;
-            height: 240px !important;
+            width: 260px !important;
+            height: 260px !important;
             overflow: hidden !important;
             border-radius: 50% !important;
             display: flex !important;
@@ -291,7 +291,7 @@ export default function HeroSection() {
             justify-content: center !important;
           }
           .hero-orb-clip > div:first-child {
-            transform: scale(0.85) !important;
+            transform: scale(0.75) !important;
             transform-origin: center center !important;
           }
           .hero-orb-clip > div:first-child > button { display: none !important; }
