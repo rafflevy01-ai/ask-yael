@@ -33,14 +33,14 @@ export default function CtaSection() {
   }, []);
 
   return (
-    <section style={{ backgroundColor: "#000000", padding: "80px 40px 24px" }}>
+    <section style={{ backgroundColor: "#F7F7F5", padding: "80px 40px 40px" }}>
       <div style={{ maxWidth: "600px", margin: "0 auto", textAlign: "center" }}>
         <h2
           style={{
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 300,
             fontSize: "36px",
-            color: "#FFFFFF",
+            color: "#0D0D0D",
             letterSpacing: "-0.72px",
             margin: "0 0 16px",
           }}
@@ -53,7 +53,7 @@ export default function CtaSection() {
             fontFamily: "Inter, sans-serif",
             fontWeight: 400,
             fontSize: "16px",
-            color: "rgba(255,255,255,0.55)",
+            color: "#555555",
             lineHeight: 1.5,
             margin: "0 0 32px",
           }}
@@ -76,8 +76,8 @@ export default function CtaSection() {
               fontFamily: "Inter, sans-serif",
               fontWeight: 500,
               fontSize: "15px",
-              color: "#000000",
-              background: "#FFFFFF",
+              color: "#FFFFFF",
+              background: "#0DB8A9",
               borderRadius: "9999px",
               height: "40px",
               padding: "0 20px",
@@ -99,9 +99,9 @@ export default function CtaSection() {
               fontFamily: "Inter, sans-serif",
               fontWeight: 500,
               fontSize: "15px",
-              color: "#FFFFFF",
+              color: "#0DB8A9",
               background: "transparent",
-              border: "1px solid rgba(255,255,255,0.25)",
+              border: "1.5px solid #0DB8A9",
               borderRadius: "9999px",
               height: "40px",
               padding: "0 20px",
@@ -122,7 +122,7 @@ export default function CtaSection() {
             fontFamily: "Inter, sans-serif",
             fontWeight: 400,
             fontSize: "13px",
-            color: "rgba(255,255,255,0.4)",
+            color: "#888888",
             margin: "0 0 24px",
           }}
         >
