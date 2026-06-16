@@ -40,7 +40,7 @@ export default function Navbar() {
         </a>
 
         {/* Language switcher — center */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0", flexShrink: 0 }}>
+        <div className="nav-lang-switcher" style={{ display: "flex", alignItems: "center", gap: "0", flexShrink: 0 }}>
           {LANGUAGES.map((lang, i) =>
             <span key={lang} style={{ display: "flex", alignItems: "center" }}>
               <button
@@ -67,6 +67,12 @@ export default function Navbar() {
             </span>
           )}
         </div>
+
+        <style>{`
+          @media (max-width: 767px) {
+            .nav-lang-switcher { display: none !important; }
+          }
+        `}</style>
 
         {/* CTA Button — right */}
         <a

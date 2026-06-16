@@ -170,12 +170,27 @@ export default function ProblemSection() {
             width: 100% !important;
             flex-shrink: 1 !important;
             padding-top: 8px !important;
+            overflow-x: auto !important;
+            display: flex !important;
+            flex-direction: row !important;
+          }
+          .ps-left-col button {
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
+            border-top: none !important;
+            margin-right: 8px !important;
+            padding: 8px 12px !important;
+            border-radius: 8px !important;
+            background: rgba(0,0,0,0.04) !important;
           }
           .ps-right-col {
             width: 100% !important;
             flex-shrink: 1 !important;
             margin-bottom: 24px !important;
           }
+          .ps-gray-container { padding: 32px 16px 20px !important; min-height: auto !important; }
+          .ps-notif-stack { margin-top: 40px !important; }
+          .ps-bottom-label { padding: 24px 20px !important; }
         }
       `}</style>
 
@@ -327,6 +342,7 @@ export default function ProblemSection() {
 
                 {/* Visual area with light gray inner background */}
                 <div
+                  className="ps-gray-container"
                   style={{
                     backgroundColor: "#F0F0EE",
                     padding: "40px 40px 24px",
@@ -367,6 +383,7 @@ export default function ProblemSection() {
                           in unrealized revenue per year
                       </div>
                       <div
+                        className="ps-notif-stack"
                         style={{
                           height: "180px",
                           width: "100%",
@@ -812,7 +829,7 @@ export default function ProblemSection() {
                 </div>
 
                 {/* Bottom label area */}
-                <div style={{ padding: "20px 32px 28px" }}>
+                <div className="ps-bottom-label" style={{ padding: "20px 32px 28px" }}>
                   <div
                     style={{
                       fontFamily: "'Inter', sans-serif",

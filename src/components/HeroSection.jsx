@@ -219,13 +219,14 @@ export default function HeroSection() {
 
       <style>{`
         @media (max-width: 768px) {
-          .hero-inner { padding: 64px 16px 0 !important; }
-          .hero-row { flex-direction: column !important; gap: 24px !important; }
+          .hero-inner { padding: 32px 16px 0 !important; }
+          .hero-row { flex-direction: column !important; gap: 16px !important; }
           .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; }
-          .hero-demo { padding: 24px 16px !important; }
+          .hero-demo { padding: 20px 16px !important; }
           .hero-cta-row { flex-direction: column !important; gap: 12px !important; }
           .hero-cta-row a { width: 100% !important; min-width: 0 !important; }
-          .hero-orb-wrap { width: 240px !important; height: 240px !important; margin: 0 auto !important; }
+          .hero-orb-wrap { width: 240px !important; height: 240px !important; margin: 0 auto !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+          .hero-right p { font-size: 14px !important; }
         }
         @media (max-width: 1024px) {
           .hero-inner { padding: 72px 32px 0 !important; }
