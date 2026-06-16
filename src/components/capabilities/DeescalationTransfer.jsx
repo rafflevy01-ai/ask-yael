@@ -18,11 +18,17 @@ const ROW_WIDTH = 4 * CIRCLE + 3 * GAP;   // 228
 const LINE_Y = CIRCLE / 2;                  // 18
 const LINE_START = LINE_Y;                  // 18
 const LINE_END = ROW_WIDTH - LINE_Y;        // 210
-const LINE_LENGTH = LINE_END - LINE_START;  // 192
+const LINE_LENGTH = LINE_END - LINE_START;   // 192
 
-// Gradient stop positions as fractions of LINE_LENGTH
-const SEG = CIRCLE + GAP; // 64px between circle centers
-const STOPS = STEPS.map((_, i) => ({ offset: (i === 0 ? 0 : (i * SEG) / LINE_LENGTH), color: STEPS[i].border }));
+const SEG = CIRCLE + GAP; // 64
+
+// Gradient stops along the full line — exactly at each circle center
+const GRADIENT_STOPS = [
+  { offset: 0, color: STEPS[0].border },
+  { offset: SEG / LINE_LENGTH, color: STEPS[1].border },
+  { offset: (2 * SEG) / LINE_LENGTH, color: STEPS[2].border },
+  { offset: 1, color: STEPS[3].border },
+];
 
 export default function DeescalationTransfer() {
   const [progress, setProgress] = useState(0);
@@ -50,13 +56,13 @@ export default function DeescalationTransfer() {
   });
 
   // Fill width grows from circle 1 center to circle 4 center
-  const getFilledWidth = () => {
-    if (progress >= 3 * STEP_DELAY) return LINE_LENGTH;
-    const seg = Math.floor(progress / STEP_DELAY);
-    const segProgress = (progress % STEP_DELAY) / STEP_DELAY;
-    return seg * SEG + segProgress * SEG;
-  };
-  const filledWidth = getFilledWidth();
+  const filledWidth =
+    progress >= 3 * STEP_DELAY
+      ? LINE_LENGTH
+      : Math.floor(progress / STEP_DELAY) * SEG + ((progress % STEP_DELAY) / STEP_DELAY) * SEG;
+
+  // stroke-dashoffset: LINE_LENGTH = fully hidden, 0 = fully drawn
+  const dashOffset = LINE_LENGTH - filledWidth;
 
   return (
     <div style={{ position: "relative", width: ROW_WIDTH, margin: "0 auto", padding: "20px 0" }}>
@@ -64,36 +70,32 @@ export default function DeescalationTransfer() {
       {/* Continuous line behind all circles */}
       <svg width={ROW_WIDTH} height={CIRCLE} style={{ position: "absolute", top: 20, left: 0, zIndex: 0 }}>
         <defs>
-          <linearGradient id="line-fill" x1="0" y1="0" x2="1" y2="0">
-            {STOPS.map((s) => (
+          <linearGradient id="line-grad" x1="0" y1="0" x2="1" y2="0">
+            {GRADIENT_STOPS.map((s) => (
               <stop key={s.offset} offset={s.offset} stopColor={s.color} />
             ))}
           </linearGradient>
         </defs>
 
-        {/* Background track (full length, light gray) */}
+        {/* Background track */}
         <line
           x1={LINE_START} y1={LINE_Y}
           x2={LINE_END} y2={LINE_Y}
           stroke="#E5E7EB"
-          strokeWidth="2"
+          strokeWidth="3"
+          strokeLinecap="round"
         />
 
-        {/* Colored fill (clips to filledWidth via a clipPath) */}
-        {filledWidth > 0 && (
-          <>
-            <clipPath id="fill-clip">
-              <rect x={LINE_START} y={0} width={filledWidth} height={CIRCLE} />
-            </clipPath>
-            <line
-              x1={LINE_START} y1={LINE_Y}
-              x2={LINE_END} y2={LINE_Y}
-              stroke="url(#line-fill)"
-              strokeWidth="2"
-              clipPath="url(#fill-clip)"
-            />
-          </>
-        )}
+        {/* Animated colored fill */}
+        <line
+          x1={LINE_START} y1={LINE_Y}
+          x2={LINE_END} y2={LINE_Y}
+          stroke="url(#line-grad)"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeDasharray={LINE_LENGTH}
+          strokeDashoffset={dashOffset}
+        />
       </svg>
 
       {/* Circles row */}
