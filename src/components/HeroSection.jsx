@@ -299,7 +299,7 @@ export default function HeroSection() {
           .hero-phone-btn-mobile {
             display: inline-flex !important;
             position: absolute !important;
-            bottom: 0 !important;
+            bottom: 26px !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
             z-index: 2 !important;
