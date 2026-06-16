@@ -244,12 +244,12 @@ export default function HeroSection() {
 
       <style>{`
         @media (max-width: 768px) {
-          .hero-inner { padding: 32px 16px 0 !important; }
+          .hero-inner { padding: 56px 16px 0 !important; }
           .hero-row {
             flex-direction: column !important;
             gap: 14px !important;
             padding: 0 !important;
-            margin-bottom: 24px !important;
+            margin-bottom: 40px !important;
           }
           .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; }
           .hero-left h1 { font-size: 2rem !important; }
