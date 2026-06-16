@@ -165,6 +165,7 @@ export default function ProblemSection() {
           [data-problem-section] > div { padding: 0 16px !important; }
           .ps-title-block { text-align: center !important; align-items: center !important; }
           [data-problem-section] h2 { font-size: 1.6rem !important; }
+          .ps-left-col button, .ps-left-col button span { font-size: 13px !important; }
           .ps-two-col {
             flex-direction: column !important;
           }

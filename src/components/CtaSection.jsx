@@ -146,6 +146,7 @@ export default function CtaSection() {
         @media (max-width: 768px) {
           [data-cta] { padding: 64px 20px !important; }
           [data-cta] h2 { font-size: 1.6rem !important; }
+          [data-cta] p  { font-size: 15px !important; }
         }
       `}</style>
     </section>

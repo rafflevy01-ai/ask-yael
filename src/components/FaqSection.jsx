@@ -252,6 +252,7 @@ export default function FaqSection() {
         @media (max-width: 768px) {
           [data-faq] { padding: 56px 16px !important; }
           [data-faq] h2 { font-size: 1.6rem !important; text-align: center !important; }
+          [data-faq] p  { font-size: 14px !important; }
         }
         @media (max-width: 1024px) {
           [data-faq] { padding: 64px 24px !important; }

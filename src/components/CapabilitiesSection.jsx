@@ -264,6 +264,9 @@ export default function CapabilitiesSection() {
           [data-capabilities] { padding: 56px 16px !important; }
           [data-capabilities] h2 { font-size: 1.6rem !important; max-width: 100% !important; text-align: center !important; }
           [data-capabilities] > div > span { display: block !important; text-align: center !important; }
+          .caps-card-title { font-size: 15px !important; }
+          [data-capabilities] p  { font-size: 13px !important; }
+          [data-capabilities] h4 { font-size: 15px !important; }
         }
 
         @media (max-width: 1024px) {

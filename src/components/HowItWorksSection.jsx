@@ -226,6 +226,8 @@ export default function HowItWorksSection() {
         @media (max-width: 768px) {
           [data-how-works] { padding: 56px 20px !important; }
           [data-how-works] h2 { font-size: 1.6rem !important; text-align: center !important; }
+          [data-how-works] h3 { font-size: 1.1rem !important; }
+          [data-how-works] p  { font-size: 14px !important; }
           .how-desktop { display: none !important; }
           .how-mobile { display: block !important; }
           .how-callout { padding: 16px 16px !important; margin-top: 48px !important; }
