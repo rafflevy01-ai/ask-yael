@@ -302,6 +302,7 @@ export default function HeroSection() {
             justify-content: center !important;
           }
           .hero-orb-clip > div:first-child {
+            flex-shrink: 0 !important;
             transform: scale(0.75) !important;
             transform-origin: center center !important;
           }
