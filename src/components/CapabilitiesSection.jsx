@@ -161,7 +161,7 @@ export default function CapabilitiesSection() {
 
             {/* Left: Emergency Triage */}
             <div className="caps-bento-card caps-card-col2">
-              <div className="caps-card-inner" style={{ alignItems: "center", textAlign: "center", padding: "28px 24px" }}>
+              <div className="caps-card-inner" style={{ alignItems: "center", justifyContent: "center", textAlign: "center", padding: "28px 24px" }}>
                 <AlertTriangle size={28} strokeWidth={1.6} color="#EF4444" />
                 <h4 style={{
                   fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
