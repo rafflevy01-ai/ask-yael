@@ -244,11 +244,11 @@ export default function HeroSection() {
 
       <style>{`
         @media (max-width: 768px) {
-          .hero-inner { padding: 32px 0 0 !important; }
+          .hero-inner { padding: 32px 16px 0 !important; }
           .hero-row {
             flex-direction: column !important;
             gap: 14px !important;
-            padding: 0 16px !important;
+            padding: 0 !important;
             margin-bottom: 24px !important;
           }
           .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; }
@@ -263,7 +263,7 @@ export default function HeroSection() {
           .hero-right p { font-size: 14px !important; }
 
           .hero-demo {
-            width: calc(100% - 64px) !important;
+            width: calc(100% - 16px) !important;
             margin: 0 auto 32px !important;
             padding: 24px 8px 60px !important;
             border-radius: 16px !important;
