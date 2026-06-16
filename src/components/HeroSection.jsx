@@ -203,7 +203,7 @@ export default function HeroSection() {
             backgroundColor: "#EEECEA",
             border: "1px solid #E0DDD9",
             borderRadius: "16px",
-            padding: "36px 32px 24px",
+            padding: "40px 40px 24px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
