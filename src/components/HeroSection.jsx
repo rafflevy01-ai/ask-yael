@@ -242,32 +242,52 @@ export default function HeroSection() {
       <style>{`
         @media (max-width: 768px) {
           .hero-inner { padding: 32px 0 0 !important; }
-          .hero-row { flex-direction: column !important; gap: 16px !important; padding: 0 16px !important; }
-          .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; }
-          .hero-demo {
-            padding: 24px 20px 0 !important;
-            width: calc(100% - 24px) !important;
-            margin: 0 auto 24px !important;
-            border-radius: 20px !important;
-            overflow: visible !important;
+          .hero-row {
+            flex-direction: column !important;
+            gap: 14px !important;
+            padding: 0 16px !important;
+            margin-bottom: 24px !important;
           }
-          .hero-cta-row { flex-direction: column !important; gap: 12px !important; }
-          .hero-cta-row a { width: 100% !important; min-width: 0 !important; }
-          .hero-orb-wrap {
+          .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; }
+          .hero-left h1 { font-size: 2rem !important; }
+          .hero-cta-row { flex-direction: column !important; gap: 10px !important; }
+          .hero-cta-row a {
             width: 100% !important;
+            min-width: 0 !important;
+            padding: 12px 24px !important;
+            font-size: 14px !important;
+          }
+          .hero-right p { font-size: 14px !important; }
+
+          .hero-demo {
+            width: calc(100% - 24px) !important;
+            margin: 0 auto 32px !important;
+            padding: 24px 20px 24px !important;
+            border-radius: 20px !important;
+          }
+
+          .hero-orb-wrap {
+            width: 260px !important;
+            height: 260px !important;
+            margin: 0 auto !important;
+            overflow: hidden !important;
             display: flex !important;
+            align-items: center !important;
             justify-content: center !important;
-            padding: 16px 0 0 !important;
-            overflow: visible !important;
+            flex-shrink: 0 !important;
           }
           .hero-orb-wrap > div:first-child {
-            transform: scale(0.78) !important;
-            transform-origin: center top !important;
-            margin-bottom: 4px !important;
+            transform: scale(0.85) !important;
+            transform-origin: center center !important;
+            margin-bottom: 0 !important;
           }
           .hero-orb-wrap button { display: none !important; }
-          .hero-phone-btn-mobile { display: inline-flex !important; margin-top: -12px !important; margin-bottom: 20px !important; }
-          .hero-right p { font-size: 14px !important; }
+
+          .hero-phone-btn-mobile {
+            display: inline-flex !important;
+            margin-top: 16px !important;
+            margin-bottom: 0 !important;
+          }
         }
         @media (max-width: 1024px) {
           .hero-inner { padding: 72px 32px 0 !important; }
