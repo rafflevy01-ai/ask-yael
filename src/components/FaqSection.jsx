@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { Search } from "lucide-react";
 
-const ACCENT = "#40E0D0";
+const ACCENT = "#0DB8A9";
 
 const FAQS = [
   { q: "How long does it take to go live?", a: "Setup takes 48–72 hours. We handle all configuration and testing before handoff — no technical work needed from your side.", tags: ["Setup"] },
