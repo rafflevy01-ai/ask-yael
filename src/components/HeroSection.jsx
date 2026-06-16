@@ -236,119 +236,59 @@ export default function HeroSection() {
             </svg>
           </button>
 
-          {/* Stats grid — mobile only */}
-          <div className="hero-stats-grid" style={{ display: "none" }}>
-            <div className="hero-stat-cell" style={{ textAlign: "center" }}>
-              <div className="hero-stat-num" style={{ fontFamily: "Inter, sans-serif", fontWeight: 300, fontSize: "28px", color: "#0D0D0D", lineHeight: 1 }}>500+</div>
-              <div className="hero-stat-label" style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "11px", color: "#888888", marginTop: "4px" }}>Calls monthly</div>
-            </div>
-            <div className="hero-stat-cell" style={{ textAlign: "center" }}>
-              <div className="hero-stat-num" style={{ fontFamily: "Inter, sans-serif", fontWeight: 300, fontSize: "28px", color: "#0D0D0D", lineHeight: 1 }}>24/7</div>
-              <div className="hero-stat-label" style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "11px", color: "#888888", marginTop: "4px" }}>Always on</div>
-            </div>
-            <div className="hero-stat-cell" style={{ textAlign: "center" }}>
-              <div className="hero-stat-num" style={{ fontFamily: "Inter, sans-serif", fontWeight: 300, fontSize: "28px", color: "#0D0D0D", lineHeight: 1 }}>3</div>
-              <div className="hero-stat-label" style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "11px", color: "#888888", marginTop: "4px" }}>Languages</div>
-            </div>
-            <div className="hero-stat-cell" style={{ textAlign: "center" }}>
-              <div className="hero-stat-num" style={{ fontFamily: "Inter, sans-serif", fontWeight: 300, fontSize: "28px", color: "#0D0D0D", lineHeight: 1 }}>98%</div>
-              <div className="hero-stat-label" style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "11px", color: "#888888", marginTop: "4px" }}>Satisfaction</div>
-            </div>
-          </div>
-
         </div>
       </div>
 
       <style>{`
-        /* ── MOBILE: ≤ 767px ── */
-        @media (max-width: 767px) {
-          .hero-inner { padding: 0 !important; }
-
+        @media (max-width: 768px) {
+          .hero-inner { padding: 32px 0 0 !important; }
           .hero-row {
             flex-direction: column !important;
-            gap: 0 !important;
+            gap: 14px !important;
             padding: 0 16px !important;
-            margin-bottom: 0 !important;
+            margin-bottom: 24px !important;
           }
           .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; }
-
-          .hero-left h1 {
-            font-size: 28px !important;
-            line-height: 1.2 !important;
-            margin-top: 24px !important;
-          }
-
-          .hero-right p {
-            font-size: 14px !important;
-            line-height: 1.5 !important;
-            margin-top: 12px !important;
-          }
-
-          .hero-cta-row {
-            flex-direction: column !important;
-            gap: 12px !important;
-            margin-top: 20px !important;
-          }
+          .hero-left h1 { font-size: 2rem !important; }
+          .hero-cta-row { flex-direction: column !important; gap: 10px !important; }
           .hero-cta-row a {
             width: 100% !important;
             min-width: 0 !important;
             padding: 12px 24px !important;
             font-size: 14px !important;
           }
+          .hero-right p { font-size: 14px !important; }
 
           .hero-demo {
-            width: calc(100% - 32px) !important;
-            margin: 20px auto 0 !important;
-            padding: 24px !important;
-            border-radius: 16px !important;
-            overflow: hidden !important;
+            width: calc(100% - 24px) !important;
+            margin: 0 auto 32px !important;
+            padding: 24px 20px 24px !important;
+            border-radius: 20px !important;
           }
 
           .hero-orb-wrap {
-            width: 70% !important;
-            aspect-ratio: 1 !important;
-            margin: 16px auto !important;
+            width: 260px !important;
+            height: 260px !important;
+            margin: 0 auto !important;
             overflow: hidden !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
+            flex-shrink: 0 !important;
           }
           .hero-orb-wrap > div:first-child {
-            transform: scale(0.82) !important;
+            transform: scale(0.85) !important;
             transform-origin: center center !important;
             margin-bottom: 0 !important;
           }
           .hero-orb-wrap button { display: none !important; }
 
           .hero-phone-btn-mobile {
-            display: block !important;
-            margin: 16px auto 8px !important;
-          }
-
-          .hero-stats-grid {
-            display: grid !important;
-            grid-template-columns: 1fr 1fr !important;
-            gap: 12px !important;
+            display: inline-flex !important;
             margin-top: 16px !important;
-            width: 100% !important;
-          }
-          .hero-stat-num {
-            font-family: "Inter", sans-serif !important;
-            font-weight: 300 !important;
-            font-size: 28px !important;
-            color: #0D0D0D !important;
-            line-height: 1 !important;
-          }
-          .hero-stat-label {
-            font-family: "Inter", sans-serif !important;
-            font-weight: 400 !important;
-            font-size: 11px !important;
-            color: #888888 !important;
-            margin-top: 4px !important;
+            margin-bottom: 0 !important;
           }
         }
-
-        /* ── IPAD: 768–1024px ── */
         @media (max-width: 1024px) {
           .hero-inner { padding: 72px 32px 0 !important; }
         }
