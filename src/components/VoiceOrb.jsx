@@ -50,6 +50,7 @@ export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhone
     <motion.div
       style={{
         position: "relative",
+        zIndex: 1,
         width: SIZE,
         height: SIZE,
         marginBottom: "28px",

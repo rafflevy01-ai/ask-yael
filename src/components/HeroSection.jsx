@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import VoiceOrb from "./VoiceOrb";
 import TabSwitcher from "./TabSwitcher";
+import FluidGradient from "./FluidGradient";
 
 const TTS_TEXTS = {
   en: "Hi there! I'm Yael, your AI dental assistant. I'm here to help you book appointments, answer your questions, and make sure you're taken care of — any time, day or night. What can I do for you today?",
@@ -197,7 +198,8 @@ export default function HeroSection() {
         {/* ─── DEMO CARD ─── */}
         <div
           style={{
-            backgroundColor: "#EEECEA",
+            position: "relative",
+            overflow: "hidden",
             border: "1px solid #E0DDD9",
             borderRadius: "16px",
             padding: "36px 32px 24px",
@@ -206,6 +208,8 @@ export default function HeroSection() {
             alignItems: "center",
           }}
           className="hero-demo">
+
+          <FluidGradient />
 
           <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
 
