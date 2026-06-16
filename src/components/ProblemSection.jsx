@@ -13,10 +13,10 @@ const PANELS = [
 const BUSINESS_BARS   = [65,95,85,60,40,50,70,65,55,45];
 const AFTER_HOURS_BARS = [6,5,4,3,2];
 
-const slideVariants = {
-  enter:  (dir) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0 }),
-  center:          { x: 0, opacity: 1 },
-  exit:   (dir) => ({ x: dir > 0 ? "-100%" : "100%", opacity: 0 }),
+const panelVariants = {
+  enter:  { opacity: 0, y: 10 },
+  center: { opacity: 1, y: 0 },
+  exit:   { opacity: 0, y: -6 },
 };
 
 function countUp(el, target, duration) {
@@ -188,7 +188,7 @@ function MobileCard({ panel, index, salary, count, setSalary, setCount }) {
 
 export default function ProblemSection() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection]     = useState(1);
+  const [direction, setDirection]     = useState(1); // kept for mobile card compat
   const [isMobile, setIsMobile]       = useState(false);
   const [salary, setSalary]           = useState(8500);
   const [count, setCount]             = useState(2);
@@ -237,8 +237,8 @@ export default function ProblemSection() {
       <div style={{ position:"absolute", top:"16px", right:"16px", zIndex:2 }}>
         <ArrowUpRight size={18} strokeWidth={1.8} color="#999" />
       </div>
-      <AnimatePresence mode="wait" custom={direction}>
-        <motion.div key={activeIndex} custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration:0.32, ease:[0.22,1,0.36,1] }}>
+      <AnimatePresence mode="wait">
+        <motion.div key={activeIndex} variants={panelVariants} initial="enter" animate="center" exit="exit" transition={{ duration:0.22, ease:[0.22,1,0.36,1] }}>
           <div className="ps-gray-container" style={{ backgroundColor:"#F4F1EE", padding:"40px 40px 24px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"320px" }}>
             {activeIndex === 0 && (
               <>
@@ -342,7 +342,7 @@ export default function ProblemSection() {
                 const Icon = panel.icon !== "shekel" ? panel.icon : null;
                 return (
                   <button key={panel.id}
-                    onClick={() => { setDirection(i > activeIndex ? 1 : -1); setActiveIndex(i); }}
+                    onClick={() => setActiveIndex(i)}
                     style={{ display:"flex", alignItems:"center", gap:"14px", width:"100%", padding:"16px 0", background:"none", border:"none", borderTop:i>0?"1px solid rgba(0,0,0,0.08)":"none", cursor:"pointer", textAlign:"left", opacity:isActive?1:0.35, transition:"opacity 0.25s ease" }}
                   >
                     {Icon ? <Icon size={18} strokeWidth={1.8} color={isActive?"#0D0D0D":"#999"} />
