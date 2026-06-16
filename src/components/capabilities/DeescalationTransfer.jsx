@@ -14,21 +14,22 @@ const TOTAL = 4 * STEP_DELAY + FINAL_PAUSE;
 
 const CIRCLE = 36;
 const GAP = 28;
-const ROW_WIDTH = 4 * CIRCLE + 3 * GAP;   // 228
-const LINE_Y = CIRCLE / 2;                  // 18
-const LINE_START = LINE_Y;                  // 18
-const LINE_END = ROW_WIDTH - LINE_Y;        // 210
-const LINE_LENGTH = LINE_END - LINE_START;   // 192
+const SEG = CIRCLE + GAP;    // 64
+const LINE_Y = CIRCLE / 2;   // 18
 
-const SEG = CIRCLE + GAP; // 64
+// Circle center X positions
+const CX = [LINE_Y, LINE_Y + SEG, LINE_Y + 2 * SEG, LINE_Y + 3 * SEG]; // 18, 82, 146, 210
+const SVG_W = CX[3] + LINE_Y + 4;  // 210 + 18 + 4 = 232  (padding at ends)
+const SVG_H = CIRCLE + 32;          // 68
+const LINE_X1 = CX[0];
+const LINE_X2 = CX[3];
+const LINE_LEN = LINE_X2 - LINE_X1; // 192
 
-// Gradient stops along the full line — exactly at each circle center
-const GRADIENT_STOPS = [
-  { offset: 0, color: STEPS[0].border },
-  { offset: SEG / LINE_LENGTH, color: STEPS[1].border },
-  { offset: (2 * SEG) / LINE_LENGTH, color: STEPS[2].border },
-  { offset: 1, color: STEPS[3].border },
-];
+// Gradient stops
+const GRADIENT_STOPS = STEPS.map((s, i) => ({
+  offset: i / 3,
+  color: s.border,
+}));
 
 export default function DeescalationTransfer() {
   const [progress, setProgress] = useState(0);
@@ -47,6 +48,7 @@ export default function DeescalationTransfer() {
     return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
+  // Per-step activation (0→1)
   const stepsState = STEPS.map((_, i) => {
     const start = i * STEP_DELAY;
     const end = start + STEP_DELAY;
@@ -55,92 +57,113 @@ export default function DeescalationTransfer() {
     return (progress - start) / STEP_DELAY;
   });
 
-  // Fill width grows from circle 1 center to circle 4 center
-  const filledWidth =
+  // Filled width of the line
+  const filled =
     progress >= 3 * STEP_DELAY
-      ? LINE_LENGTH
-      : Math.floor(progress / STEP_DELAY) * SEG + ((progress % STEP_DELAY) / STEP_DELAY) * SEG;
-
-  // stroke-dashoffset: LINE_LENGTH = fully hidden, 0 = fully drawn
-  const dashOffset = LINE_LENGTH - filledWidth;
+      ? LINE_LEN
+      : Math.min(LINE_LEN, Math.floor(progress / STEP_DELAY) * SEG + ((progress % STEP_DELAY) / STEP_DELAY) * SEG);
 
   return (
-    <div style={{ position: "relative", width: ROW_WIDTH, margin: "0 auto", padding: "20px 0" }}>
+    <svg
+      width={SVG_W}
+      height={SVG_H}
+      viewBox={`0 0 ${SVG_W} ${SVG_H}`}
+      style={{ display: "block", margin: "0 auto" }}
+    >
+      <defs>
+        <linearGradient id="dl-grad" x1={LINE_X1} y1="0" x2={LINE_X2} y2="0" gradientUnits="userSpaceOnUse">
+          {GRADIENT_STOPS.map((s) => (
+            <stop key={s.offset} offset={s.offset} stopColor={s.color} />
+          ))}
+        </linearGradient>
 
-      {/* Continuous line behind all circles */}
-      <svg width={ROW_WIDTH} height={CIRCLE} style={{ position: "absolute", top: 20, left: 0, zIndex: 0 }}>
-        <defs>
-          <linearGradient id="line-grad" x1="0" y1="0" x2="1" y2="0">
-            {GRADIENT_STOPS.map((s) => (
-              <stop key={s.offset} offset={s.offset} stopColor={s.color} />
-            ))}
-          </linearGradient>
-        </defs>
+        {/* Clip path for the animated fill */}
+        <clipPath id="dl-clip">
+          <rect x={LINE_X1} y={LINE_Y - 2} width={filled} height={4} />
+        </clipPath>
+      </defs>
 
-        {/* Background track */}
-        <line
-          x1={LINE_START} y1={LINE_Y}
-          x2={LINE_END} y2={LINE_Y}
-          stroke="#E5E7EB"
-          strokeWidth="3"
-          strokeLinecap="round"
+      {/* ── Background track ── */}
+      <line
+        x1={LINE_X1} y1={LINE_Y}
+        x2={LINE_X2} y2={LINE_Y}
+        stroke="#E5E7EB"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+
+      {/* ── Colored fill line ── */}
+      <line
+        x1={LINE_X1} y1={LINE_Y}
+        x2={LINE_X2} y2={LINE_Y}
+        stroke="url(#dl-grad)"
+        strokeWidth="3"
+        strokeLinecap="round"
+        clipPath="url(#dl-clip)"
+      />
+
+      {/* ── Leading edge dot ── */}
+      {filled > 0 && (
+        <circle
+          cx={LINE_X1 + filled}
+          cy={LINE_Y}
+          r={3.5}
+          fill="url(#dl-grad)"
+          style={{ transition: "none" }}
         />
+      )}
 
-        {/* Animated colored fill */}
-        <line
-          x1={LINE_START} y1={LINE_Y}
-          x2={LINE_END} y2={LINE_Y}
-          stroke="url(#line-grad)"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeDasharray={LINE_LENGTH}
-          strokeDashoffset={dashOffset}
-        />
-      </svg>
+      {/* ── Circles + labels ── */}
+      {STEPS.map((step, i) => {
+        const state = stepsState[i];
+        const active = state > 0;
+        const animating = state > 0 && state < 1;
+        const scale = animating ? 1 + 0.12 * Math.sin(state * Math.PI) : active ? 1 : 0.92;
+        const r = CIRCLE / 2;
+        const cy = LINE_Y;
 
-      {/* Circles row */}
-      <div
-        style={{
-          position: "relative", zIndex: 1,
-          display: "flex", alignItems: "flex-start", gap: `${GAP}px`,
-        }}
-      >
-        {STEPS.map((step, i) => {
-          const Icon = step.icon;
-          const state = stepsState[i];
-          const isActive = state > 0;
-          const isAnimating = state > 0 && state < 1;
+        return (
+          <g key={i} transform={`translate(${CX[i]}, ${cy})`}>
+            {/* Circle bg */}
+            <circle
+              r={r}
+              fill={active ? step.bg : "#F1F5F9"}
+              stroke={active ? step.border : "#E2E8F0"}
+              strokeWidth="2"
+              style={{
+                transformOrigin: "center",
+                transform: `scale(${scale})`,
+                transition: "transform 0.3s ease, fill 0.3s ease, stroke 0.3s ease",
+              }}
+            />
 
-          const scale = isAnimating
-            ? 1 + 0.12 * Math.sin(state * Math.PI)
-            : isActive ? 1 : 0.92;
-
-          return (
-            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", flexShrink: 0 }}>
-              <div
-                style={{
-                  width: CIRCLE, height: CIRCLE, borderRadius: "50%",
-                  background: isActive ? step.bg : "#F1F5F9",
-                  border: `2px solid ${isActive ? step.border : "#E2E8F0"}`,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  transform: `scale(${scale})`,
-                  transition: "transform 0.3s ease, background 0.3s ease, border-color 0.3s ease",
-                }}
-              >
-                <Icon size={14} strokeWidth={2.2} color={isActive ? step.iconColor : "#CBD5E1"} style={{ transition: "color 0.3s ease" }} />
+            {/* Icon via foreignObject */}
+            <foreignObject x={-7} y={-7} width={14} height={14}>
+              <div style={{ width: 14, height: 14, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {(() => {
+                  const I = step.icon;
+                  return <I size={14} strokeWidth={2.2} color={active ? step.iconColor : "#CBD5E1"} style={{ transition: "color 0.3s ease" }} />;
+                })()}
               </div>
-              <span style={{
-                fontFamily: "Inter, sans-serif", fontWeight: isActive ? 600 : 400,
-                fontSize: "9px", color: isActive ? "#0D0D0D" : "#CBD5E1",
-                textAlign: "center", lineHeight: 1.3, maxWidth: "64px",
-                transition: "color 0.3s ease, font-weight 0.3s ease",
-              }}>
-                {step.label}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+            </foreignObject>
+
+            {/* Label */}
+            <text
+              y={r + 14}
+              textAnchor="middle"
+              style={{
+                fontFamily: "Inter, sans-serif",
+                fontWeight: active ? 600 : 400,
+                fontSize: "9px",
+                fill: active ? "#0D0D0D" : "#CBD5E1",
+                transition: "fill 0.3s ease, font-weight 0.3s ease",
+              }}
+            >
+              {step.label}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
   );
 }
