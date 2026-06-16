@@ -246,7 +246,7 @@ export default function HeroSection() {
 
       <style>{`
         @media (max-width: 768px) {
-          .hero-inner { padding: 56px 16px 0 !important; }
+          .hero-inner { padding: 56px 0 0 !important; }
           .hero-row {
             flex-direction: column !important;
             gap: 14px !important;
