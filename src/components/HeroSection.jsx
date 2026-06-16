@@ -1,98 +1,124 @@
 import React from "react";
 
-export default function HeroSection() {
+const VIDEO_URL = "https://media.base44.com/videos/public/6a2ab0818c0d050752d1521b/3f09837ab_Cinematic_background_video_12__Veo_31_59928.mp4";
 
+export default function HeroSection() {
   return (
     <section
       data-hero-section
       style={{
         position: "relative",
         width: "100%",
-        minHeight: "100vh",
-        paddingBottom: "0px",
+        height: "100vh",          /* explicit height so children can use height:100% */
         overflow: "hidden",
-      }}>
-
-      {/* Video background */}
+      }}
+    >
+      {/* ── Video background ── */}
       <video
-        autoPlay
-        muted
-        loop
-        playsInline
+        autoPlay muted loop playsInline
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
+          inset: 0,
           width: "100%",
           height: "100%",
           objectFit: "cover",
+          objectPosition: "center",
           zIndex: 0,
           pointerEvents: "none",
         }}
       >
-        <source src="https://media.base44.com/videos/public/6a2ab0818c0d050752d1521b/3f09837ab_Cinematic_background_video_12__Veo_31_59928.mp4" type="video/mp4" />
+        <source src={VIDEO_URL} type="video/mp4" />
       </video>
 
-      {/* Dark gradient overlay for text readability */}
+      {/* ── Gradient overlay — dark at bottom where text lives ── */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        background: "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.72) 100%)",
+        zIndex: 1,
+        pointerEvents: "none",
+      }} />
+
+      {/* ── Content — pinned to bottom, Wonderful-style ── */}
       <div
+        className="hero-inner"
         style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(180deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.35) 100%)",
-          zIndex: 1,
-          pointerEvents: "none",
+          position: "relative",
+          zIndex: 2,
+          height: "100%",
+          maxWidth: "1280px",
+          margin: "0 auto",
+          padding: "0 56px 72px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
         }}
-      />
-
-      <div className="hero-inner" style={{ position: "relative", zIndex: 2, maxWidth: "1200px", margin: "0 auto", padding: "0 40px 80px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-
-        {/* ─── TWO-COLUMN ROW ─── */}
+      >
         <div
           className="hero-row"
           style={{
             display: "flex",
-            gap: "5%",
-            alignItems: "flex-start",
-          }}>
-
-          {/* LEFT — headline + buttons */}
-          <div className="hero-left" style={{ flex: "0 0 60%", minWidth: 0 }}>
+            alignItems: "flex-end",
+            gap: "8%",
+          }}
+        >
+          {/* LEFT — large title */}
+          <div className="hero-left" style={{ flex: "0 0 52%", minWidth: 0 }}>
             <h1
               style={{
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 300,
-                fontSize: "clamp(2rem, 3vw, 2.75rem)",
+                fontSize: "clamp(2.4rem, 4.5vw, 4rem)",
                 color: "#FFFFFF",
                 letterSpacing: "-0.03em",
-                lineHeight: 1.12,
+                lineHeight: 1.08,
                 margin: 0,
-              }}>
+              }}
+            >
               Meet Yael.<br />
-              Your front desk on autopilot.
+              Your front desk<br />
+              on autopilot.
             </h1>
+          </div>
 
-            <div className="hero-cta-row" style={{ display: "flex", gap: "16px", marginTop: "28px" }}>
+          {/* RIGHT — description + CTAs */}
+          <div className="hero-right" style={{ flex: "0 0 36%", minWidth: 0 }}>
+            <p
+              style={{
+                fontFamily: "Inter, sans-serif",
+                fontWeight: 400,
+                fontSize: "15px",
+                color: "rgba(255,255,255,0.72)",
+                lineHeight: 1.65,
+                margin: "0 0 28px 0",
+              }}
+            >
+              Yael answers every call in Hebrew, French, or English —
+              booking appointments, registering new patients, and handling
+              emergencies, 24/7, so your team never has to.
+            </p>
+
+            <div className="hero-cta-row" style={{ display: "flex", gap: "12px" }}>
               <a
                 href="#book-demo"
                 style={{
                   fontFamily: "Inter, sans-serif",
-                  fontWeight: 400,
-                  fontSize: "15px",
-                  color: "#FFFFFF",
-                  backgroundColor: "#000000",
+                  fontWeight: 500,
+                  fontSize: "14px",
+                  color: "#000000",
+                  backgroundColor: "#FFFFFF",
                   borderRadius: "999px",
-                  padding: "14px 36px",
+                  padding: "13px 28px",
                   display: "inline-flex",
                   alignItems: "center",
                   textDecoration: "none",
-                  border: "none",
                   cursor: "pointer",
-                  minWidth: "200px",
-                  justifyContent: "center",
                   transition: "opacity 0.15s ease",
+                  whiteSpace: "nowrap",
                 }}
                 onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-                onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+              >
                 Book a Free Demo
               </a>
 
@@ -101,67 +127,63 @@ export default function HeroSection() {
                 style={{
                   fontFamily: "Inter, sans-serif",
                   fontWeight: 400,
-                  fontSize: "15px",
-                  color: "rgba(255, 255, 255, 0.85)",
+                  fontSize: "14px",
+                  color: "rgba(255,255,255,0.85)",
                   backgroundColor: "transparent",
                   borderRadius: "999px",
-                  padding: "14px 36px",
+                  padding: "13px 28px",
                   display: "inline-flex",
                   alignItems: "center",
                   textDecoration: "none",
-                  border: "1.5px solid rgba(255, 255, 255, 0.4)",
+                  border: "1px solid rgba(255,255,255,0.35)",
                   cursor: "pointer",
-                  minWidth: "200px",
-                  justifyContent: "center",
                   transition: "opacity 0.15s ease",
+                  whiteSpace: "nowrap",
                 }}
                 onMouseEnter={e => e.currentTarget.style.opacity = "0.7"}
-                onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+              >
                 See How It Works
               </a>
             </div>
           </div>
-
-          {/* RIGHT — description */}
-          <div className="hero-right" style={{ flex: "0 0 35%", minWidth: 0, alignSelf: "flex-end" }}>
-            <p
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 400,
-                fontSize: "16px",
-                color: "rgba(255, 255, 255, 0.75)",
-                lineHeight: 1.6,
-                margin: 0,
-              }}>
-              Yael answers every call in Hebrew, French, or English — booking appointments,
-              registering new patients, and handling emergencies, 24/7, so your team never has to.
-            </p>
-          </div>
         </div>
-
       </div>
 
       <style>{`
+        /* ── Mobile ── */
         @media (max-width: 768px) {
-          .hero-inner { padding: 0 16px 64px !important; height: 100% !important; display: flex !important; flex-direction: column !important; justify-content: flex-end !important; }
+          .hero-inner {
+            padding: 0 24px 56px !important;
+          }
           .hero-row {
             flex-direction: column !important;
-            gap: 14px !important;
-            padding: 0 !important;
+            align-items: flex-start !important;
+            gap: 20px !important;
           }
-          .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; text-align: center !important; }
-          .hero-left h1 { font-size: 2rem !important; font-weight: 300 !important; }
-          .hero-cta-row { flex-direction: row !important; gap: 8px !important; margin-top: 20px !important; justify-content: center !important; }
+          .hero-left, .hero-right {
+            flex: none !important;
+            width: 100% !important;
+          }
+          .hero-left h1 {
+            font-size: clamp(2rem, 8vw, 2.6rem) !important;
+          }
+          .hero-cta-row {
+            flex-direction: row !important;
+            gap: 10px !important;
+          }
           .hero-cta-row a {
             flex: 1 !important;
-            min-width: 0 !important;
-            padding: 10px 14px !important;
+            justify-content: center !important;
             font-size: 13px !important;
+            padding: 11px 16px !important;
           }
-          .hero-right p { font-size: 14px !important; }
         }
+
+        /* ── iPad / tablet ── */
         @media (min-width: 769px) and (max-width: 1024px) {
-          .hero-inner { padding: 0 32px 72px !important; height: 100% !important; display: flex !important; flex-direction: column !important; justify-content: flex-end !important; }
+          .hero-inner { padding: 0 40px 64px !important; }
+          .hero-left h1 { font-size: clamp(2.2rem, 4vw, 3rem) !important; }
         }
       `}</style>
     </section>
