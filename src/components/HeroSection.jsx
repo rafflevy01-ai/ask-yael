@@ -265,14 +265,14 @@ export default function HeroSection() {
           .hero-demo {
             width: calc(100% - 32px) !important;
             margin: 0 auto 32px !important;
-            padding: 24px 20px 56px !important;
+            padding: 24px 8px 60px !important;
             border-radius: 16px !important;
             overflow: visible !important;
           }
 
           .hero-orb-wrap {
             width: 260px !important;
-            height: 260px !important;
+            height: 280px !important;
             margin: 0 auto !important;
             display: flex !important;
             align-items: center !important;
@@ -283,7 +283,7 @@ export default function HeroSection() {
 
           .hero-orb-clip {
             width: 260px !important;
-            height: 260px !important;
+            height: 280px !important;
             overflow: hidden !important;
             border-radius: 50% !important;
             display: flex !important;
