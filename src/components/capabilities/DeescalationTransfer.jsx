@@ -32,7 +32,7 @@ const CIRCLE = 36;
 const CONNECTOR_W = 40;
 
 export default function DeescalationTransfer() {
-  const [progress, setProgress] = useState(0); // 0 to TOTAL
+  const [progress, setProgress] = useState(0);
   const rafRef = useRef(null);
   const startRef = useRef(null);
 
@@ -55,22 +55,29 @@ export default function DeescalationTransfer() {
     return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
-  // Determine activation state for each step
   const stepsState = STEPS.map((_, i) => {
     const start = i * STEP_DELAY;
     const end = start + STEP_DELAY;
-    if (progress < start) return 0; // not yet
-    if (progress >= end) return 1; // completed
-    return (progress - start) / STEP_DELAY; // animating (0→1)
-  });
-
-  // Connector progress for each of the 3 connectors
-  const connectorProgress = [0, 1, 2].map((i) => {
-    const start = (i + 1) * STEP_DELAY - 300; // start drawing 300ms before next step
-    const end = (i + 1) * STEP_DELAY;
     if (progress < start) return 0;
     if (progress >= end) return 1;
-    return (progress - start) / (end - start);
+    return (progress - start) / STEP_DELAY;
+  });
+
+  // Connector fill progress with eased curve
+  const connectorProgress = [0, 1, 2].map((i) => {
+    const drawStart = (i + 1) * STEP_DELAY - 600;
+    const drawEnd = (i + 1) * STEP_DELAY;
+    if (progress < drawStart) return 0;
+    if (progress >= drawEnd) return 1;
+    const t = (progress - drawStart) / (drawEnd - drawStart);
+    return 1 - Math.pow(1 - t, 3);
+  });
+
+  // Traveling dot offset along each connector
+  const dotOffset = [0, 1, 2].map((i) => {
+    if (connectorProgress[i] <= 0.02) return -1;
+    if (connectorProgress[i] >= 0.99) return CONNECTOR_W;
+    return connectorProgress[i] * CONNECTOR_W;
   });
 
   return (
@@ -80,9 +87,9 @@ export default function DeescalationTransfer() {
         alignItems: "center",
         justifyContent: "center",
         gap: "0px",
-        padding: "20px 0",
+        padding: "20px 10px",
         width: "100%",
-        maxWidth: "500px",
+        maxWidth: "520px",
         margin: "0 auto",
       }}
     >
@@ -93,9 +100,11 @@ export default function DeescalationTransfer() {
         const isAnimating = state > 0 && state < 1;
         const isLast = i === STEPS.length - 1;
 
-        // Circle scale: pops up during activation, settles at 1
-        const scale = isAnimating ? 1 + 0.15 * Math.sin(state * Math.PI) : isActive ? 1 : 0.92;
-        const opacity = isActive ? 1 : 0.35;
+        const scale = isAnimating
+          ? 1 + 0.15 * Math.sin(state * Math.PI)
+          : isActive
+            ? 1
+            : 0.92;
 
         return (
           <div key={i} style={{ display: "flex", alignItems: "center", gap: "0px" }}>
@@ -112,8 +121,8 @@ export default function DeescalationTransfer() {
               {/* Circle */}
               <div
                 style={{
-                  width: `${CIRCLE}px`,
-                  height: `${CIRCLE}px`,
+                  width: CIRCLE,
+                  height: CIRCLE,
                   borderRadius: "50%",
                   background: isActive ? step.bg : "#F1F5F9",
                   border: `2px solid ${isActive ? step.border : "#E2E8F0"}`,
@@ -121,7 +130,9 @@ export default function DeescalationTransfer() {
                   alignItems: "center",
                   justifyContent: "center",
                   transform: `scale(${scale})`,
-                  transition: "transform 0.3s ease, background 0.3s ease, border-color 0.3s ease",
+                  transition:
+                    "transform 0.3s ease, background 0.3s ease, border-color 0.3s ease",
+                  boxShadow: isActive ? `0 0 14px ${step.border}44` : "none",
                 }}
               >
                 <Icon
@@ -153,27 +164,80 @@ export default function DeescalationTransfer() {
             {!isLast && (
               <div
                 style={{
-                  width: `${CONNECTOR_W}px`,
-                  height: "2px",
-                  background: "#E2E8F0",
-                  borderRadius: "1px",
+                  width: CONNECTOR_W,
+                  height: "3px",
+                  borderRadius: "2px",
                   position: "relative",
-                  overflow: "hidden",
+                  overflow: "visible",
                   flexShrink: 0,
                   marginBottom: "20px",
                 }}
               >
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    height: "100%",
-                    width: `${connectorProgress[i] * 100}%`,
-                    background: step.border,
-                    borderRadius: "1px",
-                  }}
-                />
+                {/* Dashed unfilled track */}
+                <svg
+                  width={CONNECTOR_W}
+                  height="3"
+                  style={{ position: "absolute", top: 0, left: 0 }}
+                >
+                  <line
+                    x1="0" y1="1.5"
+                    x2={CONNECTOR_W} y2="1.5"
+                    stroke="#E5E7EB"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeDasharray={connectorProgress[i] >= 0.99 ? "none" : "5 4"}
+                  />
+                </svg>
+
+                {/* Filled gradient portion */}
+                <svg
+                  width={CONNECTOR_W}
+                  height="3"
+                  style={{ position: "absolute", top: 0, left: 0 }}
+                >
+                  <defs>
+                    <linearGradient id={`grad-${i}`} x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor={STEPS[i].border} stopOpacity="1" />
+                      <stop offset="100%" stopColor={STEPS[i + 1].border} stopOpacity="1" />
+                    </linearGradient>
+                    <filter id={`glow-${i}`}>
+                      <feGaussianBlur stdDeviation="1.5" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  {connectorProgress[i] > 0 && (
+                    <line
+                      x1="0" y1="1.5"
+                      x2={Math.min(connectorProgress[i] * CONNECTOR_W, CONNECTOR_W)}
+                      y2="1.5"
+                      stroke={`url(#grad-${i})`}
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      filter={`url(#glow-${i})`}
+                    />
+                  )}
+                </svg>
+
+                {/* Traveling dot at leading edge */}
+                {dotOffset[i] >= 0 && dotOffset[i] <= CONNECTOR_W && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: dotOffset[i],
+                      transform: "translate(-50%, -50%)",
+                      width: "8px",
+                      height: "8px",
+                      borderRadius: "50%",
+                      background: STEPS[i + 1].border,
+                      boxShadow: `0 0 10px 2px ${STEPS[i + 1].border}88`,
+                      transition: "left 0.05s linear",
+                    }}
+                  />
+                )}
               </div>
             )}
           </div>
