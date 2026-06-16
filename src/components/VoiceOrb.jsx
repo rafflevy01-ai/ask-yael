@@ -43,16 +43,17 @@ function blobKeyframes(blob) {
 
 const shellBg = "radial-gradient(circle at 38% 32%, #F0F7F6 0%, #C8DDD8 45%, #8FB8B2 100%)";
 
-export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhoneClick }) {
+export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhoneClick, size = SIZE }) {
   const theme = LANG_THEMES[activeLang];
+  const scale = size / SIZE;
 
   return (
     <motion.div
       style={{
         position: "relative",
-        width: SIZE,
-        height: SIZE,
-        marginBottom: "28px",
+        width: size,
+        height: size,
+        marginBottom: 28 * scale,
       }}
       animate={isPlaying ? {
         scale: [1, 1.07, 0.97, 1.05, 0.98, 1.04, 1, 1.06, 0.99, 1],
@@ -73,8 +74,8 @@ export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhone
       {/* Sphere shell with animated blobs clipped inside */}
       <div
         style={{
-          width: SIZE,
-          height: SIZE,
+          width: size,
+          height: size,
           borderRadius: "50%",
           overflow: "hidden",
           position: "absolute",
@@ -104,8 +105,8 @@ export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhone
               }}
               style={{
                 position: "absolute",
-                width: blob.size,
-                height: blob.size,
+                width: blob.size * scale,
+                height: blob.size * scale,
                 top: `${blob.top}%`,
                 left: `${blob.left}%`,
                 borderRadius: "50%",
@@ -135,8 +136,8 @@ export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhone
           position: "absolute",
           top: 0,
           left: 0,
-          width: SIZE,
-          height: SIZE,
+          width: size,
+          height: size,
           borderRadius: "50%",
           background: "radial-gradient(circle at 32% 28%, rgba(255,255,255,0.4) 0%, transparent 30%)",
           pointerEvents: "none",

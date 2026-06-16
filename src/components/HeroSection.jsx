@@ -16,7 +16,16 @@ const ENGLISH_AUDIO_URL = "https://media.base44.com/files/public/6a2ab0818c0d050
 export default function HeroSection() {
   const [activeTab, setActiveTab] = useState("he");
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const audioRef = useRef(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const handleChange = () => setIsMobile(mq.matches);
+    handleChange();
+    mq.addEventListener("change", handleChange);
+    return () => mq.removeEventListener("change", handleChange);
+  }, []);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -212,7 +221,12 @@ export default function HeroSection() {
           <div className="hero-orb-wrap">
             {/* Inner clip wrapper — clips the orb, but not the phone button */}
             <div className="hero-orb-clip">
-              <VoiceOrb activeLang={activeTab} isPlaying={isPlaying} onPhoneClick={handlePhoneClick} />
+              <VoiceOrb
+                activeLang={activeTab}
+                isPlaying={isPlaying}
+                onPhoneClick={handlePhoneClick}
+                size={isMobile ? 210 : 280}
+              />
             </div>
 
             {/* Mobile phone button — absolutely positioned, half-inside half-below the orb */}
@@ -277,47 +291,45 @@ export default function HeroSection() {
             flex: 0 1 auto !important;
           }
 
+          /* The orb now renders natively at 210px on mobile (via VoiceOrb's size prop) instead of
+             being CSS-scaled, so the clip box just needs to auto-size to match it exactly. */
           .hero-orb-wrap {
             width: 100% !important;
-            height: 250px !important;
             margin: 0 auto !important;
+            padding-bottom: 24px !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            flex-shrink: 0 !important;
             position: relative !important;
             overflow: visible !important;
           }
 
-          /* Clip box must be a square matching the scaled orb's visual diameter (280 * 0.75 = 210) —
-             a non-square box with border-radius:50% makes an ellipse that crops the circle unevenly. */
           .hero-orb-clip {
-            width: 210px !important;
-            height: 210px !important;
-            margin: 0 auto !important;
+            flex-shrink: 0 !important;
             overflow: hidden !important;
             border-radius: 50% !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
           }
+          /* The orb's own marginBottom makes room for its built-in phone button, which is hidden
+             here in favor of the separate .hero-phone-btn-mobile — without removing it, the clip's
+             auto-height would include that empty space and stop being a perfect square. */
           .hero-orb-clip > div:first-child {
-            flex-shrink: 0 !important;
-            transform: scale(0.75) !important;
-            transform-origin: center center !important;
+            margin-bottom: 0 !important;
           }
           .hero-orb-clip > div:first-child > button { display: none !important; }
 
           .hero-phone-btn-mobile {
             display: inline-flex !important;
             position: absolute !important;
-            bottom: 14px !important;
+            bottom: 0 !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
             z-index: 2 !important;
           }
         }
-        @media (max-width: 1024px) {
+        @media (min-width: 769px) and (max-width: 1024px) {
           .hero-inner { padding: 72px 32px 0 !important; }
         }
       `}</style>
