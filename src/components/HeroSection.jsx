@@ -265,7 +265,7 @@ export default function HeroSection() {
           .hero-demo {
             width: calc(100% - 32px) !important;
             margin: 0 auto 32px !important;
-            padding: 24px 20px 44px !important;
+            padding: 24px 20px 40px !important;
             border-radius: 16px !important;
             overflow: visible !important;
           }
@@ -299,7 +299,7 @@ export default function HeroSection() {
           .hero-phone-btn-mobile {
             display: inline-flex !important;
             position: absolute !important;
-            bottom: -20px !important;
+            bottom: -24px !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
             z-index: 2 !important;
