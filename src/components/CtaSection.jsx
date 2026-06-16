@@ -1,4 +1,35 @@
+import { useEffect, useRef } from "react";
+
+const CALENDLY_URL = "https://calendly.com/askyael/30min";
+
 export default function CtaSection() {
+  const calendlyRef = useRef(null);
+  const initializedRef = useRef(false);
+
+  useEffect(() => {
+    if (initializedRef.current) return;
+    initializedRef.current = true;
+
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    script.onload = () => {
+      if (window.Calendly && calendlyRef.current) {
+        window.Calendly.initInlineWidget({
+          url: CALENDLY_URL,
+          parentElement: calendlyRef.current,
+        });
+      }
+    };
+    document.head.appendChild(script);
+
+    return () => {
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+    };
+  }, []);
+
   return (
     <section style={{ backgroundColor: "#000000", padding: "96px 40px" }}>
       <div style={{ maxWidth: "600px", margin: "0 auto", textAlign: "center" }}>
@@ -90,11 +121,22 @@ export default function CtaSection() {
             fontWeight: 400,
             fontSize: "13px",
             color: "rgba(255,255,255,0.4)",
-            margin: 0,
+            margin: "0 0 40px",
           }}
         >
           No sales pitch. No contract. Just a live demo.
         </p>
+
+        <div
+          ref={calendlyRef}
+          style={{
+            maxWidth: "480px",
+            margin: "0 auto",
+            minHeight: "500px",
+            borderRadius: "12px",
+            overflow: "hidden",
+          }}
+        />
       </div>
 
       <style>{`

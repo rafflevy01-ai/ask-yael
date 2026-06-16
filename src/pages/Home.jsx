@@ -7,7 +7,6 @@ import HowItWorksSection from "@/components/HowItWorksSection";
 import CapabilitiesSection from "@/components/CapabilitiesSection";
 import FaqSection from "@/components/FaqSection";
 import CtaSection from "@/components/CtaSection";
-import CalendlySection from "@/components/CalendlySection";
 
 export default function Home() {
   return (
@@ -20,7 +19,6 @@ export default function Home() {
       <CapabilitiesSection />
       <FaqSection />
       <CtaSection />
-      <CalendlySection />
     </main>
   );
 }
