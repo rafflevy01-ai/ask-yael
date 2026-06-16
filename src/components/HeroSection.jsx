@@ -211,9 +211,12 @@ export default function HeroSection() {
           <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
 
           <div className="hero-orb-wrap">
-            <VoiceOrb activeLang={activeTab} isPlaying={isPlaying} onPhoneClick={handlePhoneClick} />
+            {/* Inner clip wrapper — clips the orb, but not the phone button */}
+            <div className="hero-orb-clip">
+              <VoiceOrb activeLang={activeTab} isPlaying={isPlaying} onPhoneClick={handlePhoneClick} />
+            </div>
 
-            {/* Mobile phone button — positioned absolutely over the orb */}
+            {/* Mobile phone button — absolutely positioned, half-inside half-below the orb */}
             <button
               className="hero-phone-btn-mobile"
               onClick={handlePhoneClick}
@@ -260,34 +263,43 @@ export default function HeroSection() {
           .hero-right p { font-size: 14px !important; }
 
           .hero-demo {
-            width: calc(100% - 24px) !important;
+            width: calc(100% - 32px) !important;
             margin: 0 auto 32px !important;
-            padding: 24px 20px 24px !important;
-            border-radius: 20px !important;
+            padding: 24px 20px 44px !important;
+            border-radius: 16px !important;
+            overflow: visible !important;
           }
 
           .hero-orb-wrap {
             width: 260px !important;
             height: 260px !important;
             margin: 0 auto !important;
-            overflow: hidden !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             flex-shrink: 0 !important;
             position: relative !important;
           }
-          .hero-orb-wrap > div:first-child {
+
+          .hero-orb-clip {
+            width: 260px !important;
+            height: 260px !important;
+            overflow: hidden !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+          }
+          .hero-orb-clip > div:first-child {
             transform: scale(0.85) !important;
             transform-origin: center center !important;
-            margin-bottom: 0 !important;
           }
-          .hero-orb-wrap > div:first-child > button { display: none !important; }
+          .hero-orb-clip > div:first-child > button { display: none !important; }
 
           .hero-phone-btn-mobile {
             display: inline-flex !important;
             position: absolute !important;
-            bottom: 10% !important;
+            bottom: -20px !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
             z-index: 2 !important;
