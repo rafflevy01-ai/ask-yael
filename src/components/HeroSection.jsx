@@ -127,11 +127,11 @@ export default function HeroSection() {
             <h1
               style={{
                 fontFamily: "Inter, sans-serif",
-                fontWeight: 200,
-                fontSize: "clamp(1.75rem, 2.5vw, 2.5rem)",
+                fontWeight: 300,
+                fontSize: "clamp(2rem, 3vw, 2.75rem)",
                 color: "#0D0D0D",
-                letterSpacing: "-0.025em",
-                lineHeight: 1.15,
+                letterSpacing: "-0.03em",
+                lineHeight: 1.12,
                 margin: 0,
               }}>
               Meet Yael.<br />
@@ -265,7 +265,7 @@ export default function HeroSection() {
             margin-bottom: 32px !important;
           }
           .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; text-align: center !important; }
-          .hero-left h1 { font-size: 1.6rem !important; }
+          .hero-left h1 { font-size: 2rem !important; font-weight: 300 !important; }
           .hero-cta-row { flex-direction: row !important; gap: 8px !important; margin-top: 20px !important; justify-content: center !important; }
           .hero-cta-row a {
             flex: 1 !important;
