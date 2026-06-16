@@ -116,7 +116,7 @@ export default function CapabilitiesSection() {
           {/* Card: HMO and Insurance */}
           <div className="caps-bento-card">
             <div className="caps-card-inner" style={{ alignItems: "center", textAlign: "center", justifyContent: "center" }}>
-              <Shield size={28} strokeWidth={1.6} color="#0DB8A9" style={{ marginBottom: "14px" }} />
+              <Shield size={28} strokeWidth={1.6} color="#73C2FB" style={{ marginBottom: "14px" }} />
               <h4 style={{
                 fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
                 color: "#0D0D0D", margin: "0 0 6px",

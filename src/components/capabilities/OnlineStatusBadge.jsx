@@ -31,18 +31,18 @@ export default function OnlineStatusBadge() {
       {/* Green pill badge */}
       <div style={{
         display: "flex", alignItems: "center", gap: "8px",
-        background: "#E6FFF9", border: "1px solid #0DB8A9",
+        background: "#EFF6FF", border: "1px solid #73C2FB",
         borderRadius: "999px", padding: "6px 16px",
       }}>
         {/* Pulsing green dot */}
         <span style={{
-          width: 8, height: 8, borderRadius: "50%", background: "#0DB8A9",
+          width: 8, height: 8, borderRadius: "50%", background: "#73C2FB",
           display: "inline-block", flexShrink: 0,
           animation: "pulse-green 1.3s ease-in-out infinite",
         }} />
         <span style={{
           fontFamily: "Inter, sans-serif", fontWeight: 600,
-          fontSize: "12px", color: "#0DB8A9",
+          fontSize: "12px", color: "#73C2FB",
         }}>
           Yael is online
         </span>

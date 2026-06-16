@@ -17,10 +17,10 @@ const LANG_THEMES = {
     "radial-gradient(circle at 20% 70%, #DDD6FE, #7C3AED)",
   ],
   he: [
-    "radial-gradient(circle at 30% 30%, #80EAE0, #0D7377)",
-    "radial-gradient(circle at 70% 60%, #60E8D8, #0A6058)",
-    "radial-gradient(circle at 50% 80%, #40E0D0, #0B4C4A)",
-    "radial-gradient(circle at 20% 70%, #B8F5F0, #0D7377)",
+    "radial-gradient(circle at 30% 30%, #A8D8FF, #1560BD)",
+    "radial-gradient(circle at 70% 60%, #5BB8F5, #1457A0)",
+    "radial-gradient(circle at 50% 80%, #73C2FB, #13508E)",
+    "radial-gradient(circle at 20% 70%, #C5E8FF, #1560BD)",
   ],
 };
 
@@ -155,7 +155,7 @@ export default function VoiceOrb({ activeLang = "en", isPlaying = false, onPhone
           width: "52px",
           height: "52px",
           borderRadius: "50%",
-          backgroundColor: isPlaying ? "#E53E3E" : "#0DB8A9",
+          backgroundColor: isPlaying ? "#E53E3E" : "#73C2FB",
           border: "3px solid #FFFFFF",
           cursor: "pointer",
           display: "flex",

@@ -4,7 +4,7 @@ const TABS = [
   {
     key: "he",
     label: "Hebrew",
-    gradient: "radial-gradient(circle at 40% 35%, #80EAE0 0%, #40E0D0 40%, #0D7377 100%)",
+    gradient: "radial-gradient(circle at 40% 35%, #A8D8FF 0%, #73C2FB 40%, #1560BD 100%)",
   },
   {
     key: "fr",
