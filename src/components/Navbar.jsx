@@ -7,6 +7,7 @@ export default function Navbar() {
 
   return (
     <nav
+      className="askyael-navbar"
       style={{
         position: "sticky",
         top: "20px",
@@ -17,6 +18,7 @@ export default function Navbar() {
         pointerEvents: "none",
       }}>
       <div
+        className="navbar-pill"
         style={{
           display: "flex",
           alignItems: "center",
@@ -26,6 +28,7 @@ export default function Navbar() {
           padding: "8px 28px",
           boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
           pointerEvents: "auto",
+          maxWidth: "100%",
         }}>
 
         {/* AskYael text — left */}
@@ -71,6 +74,10 @@ export default function Navbar() {
         <style>{`
           @media (max-width: 767px) {
             .nav-lang-switcher { display: none !important; }
+            .navbar-pill { gap: 14px !important; padding: 8px 18px !important; }
+          }
+          @supports (top: env(safe-area-inset-top)) {
+            nav.askyael-navbar { top: max(20px, env(safe-area-inset-top)) !important; }
           }
         `}</style>
 

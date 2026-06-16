@@ -243,24 +243,25 @@ export default function HeroSection() {
 
       <style>{`
         @media (max-width: 768px) {
-          .hero-inner { padding: 56px 0 0 !important; }
+          .hero-inner { padding: 100px 16px 0 !important; }
           .hero-row {
             flex-direction: column !important;
             gap: 14px !important;
             padding: 0 !important;
-            margin-bottom: 40px !important;
+            margin-bottom: 32px !important;
           }
           .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; }
-          .hero-left h1 { font-size: 2rem !important; }
-          .hero-cta-row { flex-direction: column !important; gap: 10px !important; }
+          .hero-left h1 { font-size: 1.75rem !important; }
+          .hero-cta-row { flex-direction: column !important; gap: 10px !important; margin-top: 20px !important; }
           .hero-cta-row a {
             width: 100% !important;
             min-width: 0 !important;
-            padding: 12px 24px !important;
-            font-size: 14px !important;
+            padding: 11px 20px !important;
+            font-size: 13px !important;
           }
           .hero-right p { font-size: 14px !important; }
 
+          /* Matches ProblemSection's nested-inset pattern: 16px container padding + 16px card margin = 32px from edge */
           .hero-demo {
             width: calc(100% - 32px) !important;
             margin: 0 auto 32px !important;
@@ -268,20 +269,32 @@ export default function HeroSection() {
             overflow: visible !important;
           }
 
+          .hero-demo .tab-switcher {
+            justify-content: center !important;
+            gap: 8px !important;
+          }
+          .hero-demo .tab-switcher button {
+            flex: 0 1 auto !important;
+          }
+
           .hero-orb-wrap {
             width: 100% !important;
-            height: 260px !important;
+            height: 250px !important;
             margin: 0 auto !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             flex-shrink: 0 !important;
             position: relative !important;
+            overflow: visible !important;
           }
 
+          /* Clip box must be a square matching the scaled orb's visual diameter (280 * 0.75 = 210) —
+             a non-square box with border-radius:50% makes an ellipse that crops the circle unevenly. */
           .hero-orb-clip {
-            width: 100% !important;
-            height: 260px !important;
+            width: 210px !important;
+            height: 210px !important;
+            margin: 0 auto !important;
             overflow: hidden !important;
             border-radius: 50% !important;
             display: flex !important;
@@ -297,7 +310,7 @@ export default function HeroSection() {
           .hero-phone-btn-mobile {
             display: inline-flex !important;
             position: absolute !important;
-            bottom: 20px !important;
+            bottom: 14px !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
             z-index: 2 !important;
