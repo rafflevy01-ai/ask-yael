@@ -105,12 +105,43 @@ export default function HeroSection() {
       style={{
         position: "relative",
         width: "100%",
-        backgroundColor: "#FDFCFC",
         minHeight: "100vh",
         paddingBottom: "60px",
+        overflow: "hidden",
       }}>
 
-      <div className="hero-inner" style={{ maxWidth: "1200px", margin: "0 auto", padding: "80px 40px 0" }}>
+      {/* Video background */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      >
+        <source src="https://media.base44.com/videos/public/6a2ab0818c0d050752d1521b/3f09837ab_Cinematic_background_video_12__Veo_31_59928.mp4" type="video/mp4" />
+      </video>
+
+      {/* Dark gradient overlay for text readability */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(180deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.35) 100%)",
+          zIndex: 1,
+          pointerEvents: "none",
+        }}
+      />
+
+      <div className="hero-inner" style={{ position: "relative", zIndex: 2, maxWidth: "1200px", margin: "0 auto", padding: "80px 40px 0" }}>
 
         {/* ─── TWO-COLUMN ROW ─── */}
         <div
@@ -129,7 +160,7 @@ export default function HeroSection() {
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 300,
                 fontSize: "clamp(2rem, 3vw, 2.75rem)",
-                color: "#0D0D0D",
+                color: "#FFFFFF",
                 letterSpacing: "-0.03em",
                 lineHeight: 1.12,
                 margin: 0,
@@ -169,14 +200,14 @@ export default function HeroSection() {
                   fontFamily: "Inter, sans-serif",
                   fontWeight: 400,
                   fontSize: "15px",
-                  color: "rgba(0, 0, 0, 0.6)",
+                  color: "rgba(255, 255, 255, 0.85)",
                   backgroundColor: "transparent",
                   borderRadius: "999px",
                   padding: "14px 36px",
                   display: "inline-flex",
                   alignItems: "center",
                   textDecoration: "none",
-                  border: "1.5px solid #000000",
+                  border: "1.5px solid rgba(255, 255, 255, 0.4)",
                   cursor: "pointer",
                   minWidth: "200px",
                   justifyContent: "center",
@@ -196,7 +227,7 @@ export default function HeroSection() {
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 400,
                 fontSize: "16px",
-                color: "#555555",
+                color: "rgba(255, 255, 255, 0.75)",
                 lineHeight: 1.6,
                 margin: 0,
               }}>
