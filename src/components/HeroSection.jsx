@@ -265,10 +265,10 @@ export default function HeroSection() {
           .hero-right p { font-size: 14px !important; }
 
           .hero-demo {
-            width: 100% !important;
-            margin: 0 0 32px !important;
+            width: calc(100% - 32px) !important;
+            margin: 0 auto 32px !important;
             padding: 24px 8px 60px !important;
-            border-radius: 0 !important;
+            border-radius: 16px !important;
             overflow: visible !important;
           }
 
