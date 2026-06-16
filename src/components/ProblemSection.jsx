@@ -161,21 +161,26 @@ export default function ProblemSection() {
         }
 
         @media (max-width: 768px) {
+          [data-problem-section] { padding: 56px 0 !important; scroll-margin-top: 80px; }
+          [data-problem-section] > div { padding: 0 16px !important; }
           .ps-two-col {
             flex-direction: column !important;
           }
           .ps-left-col {
             width: 100% !important;
             flex-shrink: 1 !important;
+            padding-top: 8px !important;
           }
           .ps-right-col {
             width: 100% !important;
             flex-shrink: 1 !important;
+            margin-bottom: 24px !important;
           }
         }
       `}</style>
 
       <section
+        data-problem-section
         style={{
           width: "100%",
           backgroundColor: "#F5F5F3",
@@ -352,14 +357,14 @@ export default function ProblemSection() {
                         style={{
                           fontFamily: "Inter, sans-serif",
                           fontWeight: 500,
-                          fontSize: "11px",
+                          fontSize: "12px",
                           textTransform: "uppercase",
-                          letterSpacing: "0.08em",
+                          letterSpacing: "0.1em",
                           color: "#888888",
                           marginTop: "8px",
-                        }}
-                      >
-                        in unrealized revenue per year
+                          }}
+                          >
+                          in unrealized revenue per year
                       </div>
                       <div
                         style={{
@@ -395,15 +400,15 @@ export default function ProblemSection() {
                         style={{
                           fontFamily: "Inter, sans-serif",
                           fontWeight: 500,
-                          fontSize: "11px",
+                          fontSize: "12px",
                           textTransform: "uppercase",
-                          letterSpacing: "0.08em",
+                          letterSpacing: "0.1em",
                           color: "#888888",
                           marginTop: "8px",
                           marginBottom: "24px",
-                        }}
-                      >
-                        of appointment requests come after hours
+                          }}
+                          >
+                          of appointment requests come after hours
                       </div>
                       <div style={{ width: "min(560px, 100%)" }}>
                         <div
@@ -505,15 +510,15 @@ export default function ProblemSection() {
                         style={{
                           fontFamily: "Inter, sans-serif",
                           fontWeight: 500,
-                          fontSize: "11px",
+                          fontSize: "12px",
                           textTransform: "uppercase",
-                          letterSpacing: "0.08em",
+                          letterSpacing: "0.1em",
                           color: "#888888",
                           marginTop: "8px",
                           marginBottom: "20px",
-                        }}
-                      >
-                        French-speaking residents in Netanya
+                          }}
+                          >
+                          French-speaking residents in Netanya
                       </div>
                       {/* Language card */}
                       <div
@@ -754,13 +759,13 @@ export default function ProblemSection() {
                           style={{
                             fontFamily: "Inter, sans-serif",
                             fontWeight: 500,
-                            fontSize: "11px",
+                            fontSize: "12px",
                             textTransform: "uppercase",
-                            letterSpacing: "0.08em",
+                            letterSpacing: "0.1em",
                             color: "#888888",
-                          }}
-                        >
-                          You pay
+                            }}
+                            >
+                            You pay
                         </span>
                         <div
                           style={{

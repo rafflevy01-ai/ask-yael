@@ -127,7 +127,7 @@ export default function HeroSection() {
               Your front desk on autopilot.
             </h1>
 
-            <div style={{ display: "flex", gap: "16px", marginTop: "28px" }}>
+            <div className="hero-cta-row" style={{ display: "flex", gap: "16px", marginTop: "28px" }}>
               <a
                 href="#book-demo"
                 style={{
@@ -210,17 +210,22 @@ export default function HeroSection() {
 
           <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
 
-          <VoiceOrb activeLang={activeTab} isPlaying={isPlaying} onPhoneClick={handlePhoneClick} />
+          <div className="hero-orb-wrap">
+            <VoiceOrb activeLang={activeTab} isPlaying={isPlaying} onPhoneClick={handlePhoneClick} />
+          </div>
 
         </div>
       </div>
 
       <style>{`
         @media (max-width: 768px) {
-          .hero-inner { padding: 64px 20px 0 !important; }
+          .hero-inner { padding: 64px 16px 0 !important; }
           .hero-row { flex-direction: column !important; gap: 24px !important; }
           .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; }
-          .hero-demo { padding: 24px 20px 16px !important; }
+          .hero-demo { padding: 24px 16px !important; }
+          .hero-cta-row { flex-direction: column !important; gap: 12px !important; }
+          .hero-cta-row a { width: 100% !important; min-width: 0 !important; }
+          .hero-orb-wrap { width: 240px !important; height: 240px !important; margin: 0 auto !important; }
         }
         @media (max-width: 1024px) {
           .hero-inner { padding: 72px 32px 0 !important; }
