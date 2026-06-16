@@ -83,7 +83,7 @@ export default function HowItWorksSection() {
             letterSpacing: "0.12em", color: "#888888", display: "block", marginBottom: "12px",
           }}>How it works</span>
           <h2 style={{
-            fontFamily: "Inter, sans-serif", fontWeight: 200,
+            fontFamily: "Inter, sans-serif", fontWeight: 300,
                       fontSize: "clamp(2rem, 3.5vw, 2.25rem)", color: "#0D0D0D",
                       letterSpacing: "-0.02em", lineHeight: 1.2, margin: 0,
                     }}>How Yael works.</h2>
@@ -125,7 +125,7 @@ export default function HowItWorksSection() {
                 <div style={{
                   position: "absolute", left: "0", top: 0, width: "1px",
                   height: `${progress * 100}%`, maxHeight: "100%",
-                  background: "#5893d6", borderRadius: "9999px", zIndex: 1,
+                  background: "#000000", borderRadius: "9999px", zIndex: 1,
                   transition: "height 0.08s linear",
                 }} />
                 {STEPS.map((step, i) => (
@@ -167,7 +167,7 @@ export default function HowItWorksSection() {
             <div style={{
               position: "absolute", left: "8px", top: 0, width: "1px",
               height: `${progress * 100}%`, maxHeight: "100%",
-              background: "#5893d6", borderRadius: "9999px", zIndex: 1,
+              background: "#000000", borderRadius: "9999px", zIndex: 1,
               transition: "height 0.08s linear",
             }} />
             {STEPS.map((step, i) => {

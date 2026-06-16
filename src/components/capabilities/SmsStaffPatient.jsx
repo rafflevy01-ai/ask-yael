@@ -47,7 +47,7 @@ export default function SmsStaffPatient() {
         transition={{ duration: 0.3 }}
         style={{
           fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "9px",
-          textTransform: "uppercase", letterSpacing: "0.1em", color: "#BBBBBB",
+          textTransform: "uppercase", letterSpacing: "0.1em", color: "#B8B1A8",
           marginBottom: "16px",
         }}
       >

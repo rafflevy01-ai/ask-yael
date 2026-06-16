@@ -17,7 +17,7 @@ export default function RecoveryChart() {
         {BARS.map((bar, i) => (
           <div key={i} style={{
             width: "18px", height: `${bar.h}%`,
-            background: bar.dark ? "#0D0D0D" : "#E0DDD9",
+            background: bar.dark ? "#0D0D0D" : "#E5E5E5",
             borderRadius: "3px 3px 0 0",
           }} />
         ))}
@@ -27,12 +27,12 @@ export default function RecoveryChart() {
         marginTop: "10px", padding: "0 4px",
       }}>
         <span style={{
-          fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "10px", color: "#AAAAAA",
+          fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "10px", color: "#B8B1A8",
         }}>
           Recovered
         </span>
         <span style={{
-          fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "10px", color: "#AAAAAA",
+          fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "10px", color: "#B8B1A8",
         }}>
           Missed
         </span>

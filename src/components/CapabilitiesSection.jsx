@@ -24,7 +24,7 @@ export default function CapabilitiesSection() {
     return () => clearInterval(interval);
   }, []);
   return (
-    <section data-capabilities style={{ padding: "80px 40px", backgroundColor: "#edf5f7" }}>
+    <section data-capabilities style={{ padding: "80px 40px", backgroundColor: "#FDFCFC" }}>
       <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
 
         {/* Header */}
@@ -36,7 +36,7 @@ export default function CapabilitiesSection() {
           Capabilities
         </span>
         <h2 style={{
-          fontFamily: "Inter, sans-serif", fontWeight: 200, fontSize: "clamp(2rem, 3.5vw, 2.25rem)",
+          fontFamily: "Inter, sans-serif", fontWeight: 300, fontSize: "clamp(2rem, 3.5vw, 2.25rem)",
           color: "#0D0D0D", letterSpacing: "-0.02em", lineHeight: 1.2,
           margin: "0 0 40px 0", textAlign: "left", maxWidth: "560px",
         }}>
@@ -90,7 +90,7 @@ export default function CapabilitiesSection() {
                         fontFamily: "Inter, sans-serif",
                         fontSize: "10px",
                         fontWeight: isActive ? 600 : 400,
-                        color: isActive ? "#0D0D0D" : "#BBBBBB",
+                        color: isActive ? "#0D0D0D" : "#B8B1A8",
                         transition: "all 0.4s ease",
                       }}>
                         {lang.label}
@@ -116,7 +116,7 @@ export default function CapabilitiesSection() {
           {/* Card: HMO and Insurance */}
           <div className="caps-bento-card">
             <div className="caps-card-inner" style={{ alignItems: "center", textAlign: "center", justifyContent: "center" }}>
-              <Shield size={28} strokeWidth={1.6} color="#5893d6" style={{ marginBottom: "14px" }} />
+              <Shield size={28} strokeWidth={1.6} color="#000000" style={{ marginBottom: "14px" }} />
               <h4 style={{
                 fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
                 color: "#0D0D0D", margin: "0 0 6px",

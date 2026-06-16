@@ -31,18 +31,18 @@ export default function OnlineStatusBadge() {
       {/* Green pill badge */}
       <div style={{
         display: "flex", alignItems: "center", gap: "8px",
-        background: "#e8f2fa", border: "1px solid #5893d6",
+        background: "#F4F1EE", border: "1px solid #000000",
         borderRadius: "999px", padding: "6px 16px",
       }}>
         {/* Pulsing green dot */}
         <span style={{
-          width: 8, height: 8, borderRadius: "50%", background: "#5893d6",
+          width: 8, height: 8, borderRadius: "50%", background: "#000000",
           display: "inline-block", flexShrink: 0,
           animation: "pulse-green 1.3s ease-in-out infinite",
         }} />
         <span style={{
           fontFamily: "Inter, sans-serif", fontWeight: 600,
-          fontSize: "12px", color: "#5893d6",
+          fontSize: "12px", color: "#000000",
         }}>
           Yael is online
         </span>
@@ -51,7 +51,7 @@ export default function OnlineStatusBadge() {
       {/* Rotating subtitle */}
       <span style={{
         fontFamily: "Inter, sans-serif", fontWeight: 400,
-        fontSize: "11px", color: "#999999",
+        fontSize: "11px", color: "#B8B1A8",
         opacity: visible ? 1 : 0,
         transition: "opacity 0.4s ease",
         minHeight: "16px",

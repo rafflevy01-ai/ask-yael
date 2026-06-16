@@ -43,7 +43,7 @@ function LangCard() {
             <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"14px", color:"#0D0D0D", marginLeft:"10px" }}>{row.lang}</span>
           </div>
           <div style={{ display:"flex", alignItems:"center", gap:"8px" }}>
-            <div style={{ width:"34px", height:"18px", borderRadius:"9999px", background:row.ok?"#16A34A":"#D1D5DB", position:"relative" }}>
+            <div style={{ width:"34px", height:"18px", borderRadius:"9999px", background:row.ok?"#16A34A":"#E5E5E5", position:"relative" }}>
               <div style={{ width:"14px", height:"14px", background:"#FFF", borderRadius:"9999px", position:"absolute", top:"2px", ...(row.ok?{right:"2px"}:{left:"2px"}), boxShadow:"0 1px 3px rgba(0,0,0,0.2)" }} />
             </div>
             <div style={{ width:"14px", height:"14px", background:row.ok?"#16A34A":"#DC2626", borderRadius:"9999px", display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -111,13 +111,13 @@ function MobileCard({ panel, index, salary, count, setSalary, setCount }) {
         <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"13px", color:"#0D0D0D", letterSpacing:"-0.01em" }}>
           {panel.label}
         </span>
-        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"11px", color:"#BBBBBB", marginLeft:"auto" }}>
+        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"11px", color:"#B8B1A8", marginLeft:"auto" }}>
           {panel.number} / 04
         </span>
       </div>
 
       {/* Visual area */}
-      <div style={{ backgroundColor:"#F0F0EE", margin:"16px 0 0", padding:"28px 20px 20px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"200px" }}>
+      <div style={{ backgroundColor:"#F4F1EE", margin:"16px 0 0", padding:"28px 20px 20px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"200px" }}>
 
         {index === 0 && (
           <motion.div
@@ -152,7 +152,7 @@ function MobileCard({ panel, index, salary, count, setSalary, setCount }) {
             <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"11px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#888", marginTop:"8px", marginBottom:"16px" }}>of appointment requests after hours</div>
             <div style={{ width:"100%", height:"80px", display:"flex", alignItems:"flex-end", gap:"3px" }}>
               {BUSINESS_BARS.map((h,i) => <div key={i} className="ps-mobile-bar" data-height={h} style={{ flex:1, borderRadius:"4px 4px 0 0", height:"0", background:"#0D0D0D" }} />)}
-              <div style={{ position:"relative", width:"1px", height:"100%", background:"#D1D5DB", flexShrink:0 }}>
+              <div style={{ position:"relative", width:"1px", height:"100%", background:"#E5E5E5", flexShrink:0 }}>
                 <span style={{ position:"absolute", bottom:"-16px", left:"50%", transform:"translateX(-50%)", fontFamily:"Inter,sans-serif", fontSize:"8px", color:"#888", whiteSpace:"nowrap" }}>18:00</span>
               </div>
               {AFTER_HOURS_BARS.map((h,i) => <div key={i} className="ps-mobile-bar" data-height={h} style={{ flex:1, borderRadius:"4px 4px 0 0", height:"0", background:"#E5E5E5" }} />)}
@@ -239,7 +239,7 @@ export default function ProblemSection() {
       </div>
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div key={activeIndex} custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration:0.32, ease:[0.22,1,0.36,1] }}>
-          <div className="ps-gray-container" style={{ backgroundColor:"#F0F0EE", padding:"40px 40px 24px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"320px" }}>
+          <div className="ps-gray-container" style={{ backgroundColor:"#F4F1EE", padding:"40px 40px 24px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"320px" }}>
             {activeIndex === 0 && (
               <>
                 <div id="stat-revenue-desktop" style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(2.6rem,6vw,4.5rem)", color:"#0D0D0D", lineHeight:1, letterSpacing:"-0.05em" }}>₪0</div>
@@ -254,7 +254,7 @@ export default function ProblemSection() {
                 <div style={{ width:"min(560px,100%)" }}>
                   <div style={{ width:"100%", height:"clamp(80px,14vw,130px)", display:"flex", alignItems:"flex-end", gap:"3px" }}>
                     {BUSINESS_BARS.map((h,i) => <div key={i} className="bar-item" data-height={h} style={{ background:"#0D0D0D" }} />)}
-                    <div style={{ position:"relative", width:"1px", height:"100%", background:"#D1D5DB", flexShrink:0 }}>
+                    <div style={{ position:"relative", width:"1px", height:"100%", background:"#E5E5E5", flexShrink:0 }}>
                       <span style={{ position:"absolute", bottom:"-18px", left:"50%", transform:"translateX(-50%)", fontFamily:"Inter,sans-serif", fontSize:"9px", color:"#888", whiteSpace:"nowrap" }}>18:00</span>
                     </div>
                     {AFTER_HOURS_BARS.map((h,i) => <div key={i} className="bar-item" data-height={h} style={{ background:"#E5E5E5" }} />)}
@@ -315,11 +315,11 @@ export default function ProblemSection() {
         }
       `}</style>
 
-      <section data-problem-section style={{ width:"100%", backgroundColor:"#edf5f7", padding:"80px 0" }}>
+      <section data-problem-section style={{ width:"100%", backgroundColor:"#FDFCFC", padding:"80px 0" }}>
         <div style={{ maxWidth:"1200px", margin:"0 auto", padding:"0 48px" }}>
 
           <div className="ps-title-block" style={{ display:"flex", flexDirection:"column", gap:"10px", marginBottom:"48px" }}>
-            <h2 style={{ fontFamily:"Inter,sans-serif", fontWeight:200, fontSize:"clamp(2rem,3.5vw,2.6rem)", color:"#0D0D0D", letterSpacing:"-0.02em", lineHeight:1.1, margin:0 }}>
+            <h2 style={{ fontFamily:"Inter,sans-serif", fontWeight: 300, fontSize:"clamp(2rem,3.5vw,2.6rem)", color:"#0D0D0D", letterSpacing:"-0.02em", lineHeight:1.1, margin:0 }}>
               Sound familiar?
             </h2>
             <p style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"14px", color:"#777", margin:0, lineHeight:1.5 }}>

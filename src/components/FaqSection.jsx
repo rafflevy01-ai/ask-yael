@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { Search } from "lucide-react";
 
-const ACCENT = "#5893d6";
+const ACCENT = "#000000";
 
 const FAQS = [
   { q: "How long does it take to go live?", a: "Setup takes 48–72 hours. We handle all configuration and testing before handoff — no technical work needed from your side.", tags: ["Setup"] },
@@ -89,7 +89,7 @@ export default function FaqSection() {
             {/* Heading */}
             <h2 style={{
               fontFamily: "Inter, sans-serif",
-              fontWeight: 200,
+              fontWeight: 300,
               fontSize: "clamp(1.75rem, 3vw, 2rem)",
               color: "#0D0D0D",
               letterSpacing: "-0.02em",
@@ -111,7 +111,7 @@ export default function FaqSection() {
               background: "#FFFFFF",
               transition: "border-color 0.2s ease",
             }}>
-              <Search size={16} strokeWidth={1.8} color={searchFocused ? ACCENT : "#BBBBBB"} style={{ flexShrink: 0, transition: "color 0.2s ease" }} />
+              <Search size={16} strokeWidth={1.8} color={searchFocused ? ACCENT : "#B8B1A8"} style={{ flexShrink: 0, transition: "color 0.2s ease" }} />
               <input
                 type="text"
                 placeholder="Search questions..."
@@ -165,7 +165,7 @@ export default function FaqSection() {
                   fontFamily: "Inter, sans-serif",
                   fontWeight: 400,
                   fontSize: "13px",
-                  color: "#BBBBBB",
+                  color: "#B8B1A8",
                   margin: 0,
                 }}>
                   No results found
@@ -208,7 +208,7 @@ export default function FaqSection() {
                         fontFamily: "Inter, sans-serif",
                         fontWeight: 400,
                         fontSize: "18px",
-                        color: isOpen ? ACCENT : "#AAAAAA",
+                        color: isOpen ? ACCENT : "#B8B1A8",
                         lineHeight: 1,
                         flexShrink: 0,
                         marginTop: "-1px",

@@ -85,7 +85,7 @@ export default function RegistrationTypewriter() {
             fontFamily: "Inter, sans-serif",
             fontWeight: 400,
             fontSize: "11px",
-            color: "#999999",
+            color: "#B8B1A8",
             whiteSpace: "nowrap",
             flexShrink: 0,
           }}>
@@ -129,7 +129,7 @@ export default function RegistrationTypewriter() {
                   transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   style={{
                     width: "18px", height: "18px", borderRadius: "50%",
-                    background: "#c4d9f5",
+                    background: "#EAE8E4",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     flexShrink: 0,
                   }}

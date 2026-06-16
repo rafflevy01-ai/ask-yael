@@ -33,7 +33,7 @@ export default function CtaSection() {
   }, []);
 
   return (
-    <section data-cta style={{ backgroundColor: "#edf5f7", padding: "80px 40px 40px" }}>
+    <section data-cta style={{ backgroundColor: "#FDFCFC", padding: "80px 40px 40px" }}>
       <div style={{ maxWidth: "600px", margin: "0 auto", textAlign: "center" }}>
         <h2
           style={{
@@ -77,7 +77,7 @@ export default function CtaSection() {
               fontWeight: 500,
               fontSize: "15px",
               color: "#FFFFFF",
-              background: "#5893d6",
+              background: "#000000",
               borderRadius: "9999px",
               height: "40px",
               padding: "0 20px",
@@ -99,9 +99,9 @@ export default function CtaSection() {
               fontFamily: "Inter, sans-serif",
               fontWeight: 500,
               fontSize: "15px",
-              color: "#5893d6",
+              color: "#000000",
               background: "transparent",
-              border: "1.5px solid #5893d6",
+              border: "1.5px solid #000000",
               borderRadius: "9999px",
               height: "40px",
               padding: "0 20px",

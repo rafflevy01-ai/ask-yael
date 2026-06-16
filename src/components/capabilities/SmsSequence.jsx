@@ -41,7 +41,7 @@ export default function SmsSequence() {
           </div>
           <div style={{
             fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "10px",
-            color: "#AAAAAA", marginTop: "6px",
+            color: "#B8B1A8", marginTop: "6px",
           }}>
             {sms.sender}
           </div>

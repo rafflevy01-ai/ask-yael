@@ -4,7 +4,7 @@ const TABS = [
   {
     key: "he",
     label: "Hebrew",
-    gradient: "radial-gradient(circle at 40% 35%, #bcd4f0 0%, #5893d6 40%, #2b6bb5 100%)",
+    gradient: "radial-gradient(circle at 40% 35%, #bcd4f0 0%, #000000 40%, #2b6bb5 100%)",
   },
   {
     key: "fr",
@@ -91,7 +91,7 @@ export default function TabSwitcher({ activeTab, onTabChange }) {
               fontSize: "13px",
               color: isActive ? "#0A0A0A" : "#888888",
               backgroundColor: isActive ? "#FFFFFF" : "transparent",
-              border: isActive ? "1px solid #D0CCC8" : "1px solid transparent",
+              border: isActive ? "1px solid #E5E5E5" : "1px solid transparent",
               borderRadius: "999px",
               padding: "6px 24px",
               display: "inline-flex",
