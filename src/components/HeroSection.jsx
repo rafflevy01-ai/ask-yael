@@ -266,11 +266,11 @@ export default function HeroSection() {
           }
           .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; text-align: center !important; }
           .hero-left h1 { font-size: 1.6rem !important; }
-          .hero-cta-row { flex-direction: column !important; gap: 10px !important; margin-top: 20px !important; }
+          .hero-cta-row { flex-direction: row !important; gap: 8px !important; margin-top: 20px !important; justify-content: center !important; }
           .hero-cta-row a {
-            width: 100% !important;
+            flex: 1 !important;
             min-width: 0 !important;
-            padding: 11px 20px !important;
+            padding: 10px 14px !important;
             font-size: 13px !important;
           }
           .hero-right p { font-size: 14px !important; }

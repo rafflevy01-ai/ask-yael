@@ -351,12 +351,10 @@ export default function HearYaelSection() {
           [data-hear-yael] {
             padding: 64px 16px !important;
           }
-          [data-hear-yael] [style*="text-align: center"] {
-            text-align: left !important;
-          }
           [data-hear-yael] h2 {
-            font-size: 1.75rem !important;
-            max-width: 260px !important;
+            font-size: 1.6rem !important;
+            max-width: 100% !important;
+            text-align: center !important;
           }
         }
         @media (max-width: 1024px) {
