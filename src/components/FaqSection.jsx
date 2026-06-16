@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { Search } from "lucide-react";
 
-const GREEN = "#1D9E75";
+const ACCENT = "#3B82F6";
 
 const FAQS = [
   { q: "How long does it take to go live?", a: "Setup takes 48–72 hours. We handle all configuration and testing before handoff — no technical work needed from your side.", tags: ["Setup"] },
@@ -21,7 +21,7 @@ function highlightMatch(text, query) {
   const parts = text.split(regex);
   return parts.map((part, i) =>
     regex.test(part) ? (
-      <span key={i} style={{ color: GREEN }}>{part}</span>
+      <span key={i} style={{ color: ACCENT }}>{part}</span>
     ) : (
       <span key={i}>{part}</span>
     )
@@ -79,7 +79,7 @@ export default function FaqSection() {
               fontSize: "10px",
               textTransform: "uppercase",
               letterSpacing: "0.12em",
-              color: GREEN,
+              color: ACCENT,
               display: "block",
               marginBottom: "10px",
             }}>
@@ -107,11 +107,11 @@ export default function FaqSection() {
               gap: "10px",
               padding: "10px 14px",
               borderRadius: "10px",
-              border: `1px solid ${searchFocused ? GREEN : "#E2E2E2"}`,
+              border: `1px solid ${searchFocused ? ACCENT : "#E2E2E2"}`,
               background: "#FFFFFF",
               transition: "border-color 0.2s ease",
             }}>
-              <Search size={16} strokeWidth={1.8} color={searchFocused ? GREEN : "#BBBBBB"} style={{ flexShrink: 0, transition: "color 0.2s ease" }} />
+              <Search size={16} strokeWidth={1.8} color={searchFocused ? ACCENT : "#BBBBBB"} style={{ flexShrink: 0, transition: "color 0.2s ease" }} />
               <input
                 type="text"
                 placeholder="Search questions..."
@@ -144,8 +144,8 @@ export default function FaqSection() {
                     fontSize: "12px",
                     padding: "6px 14px",
                     borderRadius: "999px",
-                    border: activeTag === cat ? `1px solid ${GREEN}` : "1px solid #E2E2E2",
-                    background: activeTag === cat ? GREEN : "transparent",
+                    border: activeTag === cat ? `1px solid ${ACCENT}` : "1px solid #E2E2E2",
+                    background: activeTag === cat ? ACCENT : "transparent",
                     color: activeTag === cat ? "#FFFFFF" : "#666666",
                     cursor: "pointer",
                     transition: "all 0.15s ease",
@@ -196,7 +196,7 @@ export default function FaqSection() {
                         fontFamily: "Inter, sans-serif",
                         fontWeight: 500,
                         fontSize: "14px",
-                        color: isOpen ? GREEN : "#0D0D0D",
+                        color: isOpen ? ACCENT : "#0D0D0D",
                         lineHeight: 1.5,
                         transition: "color 0.15s ease",
                       }}
@@ -208,7 +208,7 @@ export default function FaqSection() {
                         fontFamily: "Inter, sans-serif",
                         fontWeight: 400,
                         fontSize: "18px",
-                        color: isOpen ? GREEN : "#AAAAAA",
+                        color: isOpen ? ACCENT : "#AAAAAA",
                         lineHeight: 1,
                         flexShrink: 0,
                         marginTop: "-1px",
@@ -247,7 +247,7 @@ export default function FaqSection() {
       </div>
 
       <style>{`
-        .faq-question-text:hover { color: ${GREEN} !important; }
+        .faq-question-text:hover { color: ${ACCENT} !important; }
 
         @media (max-width: 768px) {
           [data-faq] { padding: 56px 16px !important; }
