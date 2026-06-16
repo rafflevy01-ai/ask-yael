@@ -11,17 +11,8 @@ const STEPS = [
 const STEP_DELAY = 900;
 const FINAL_PAUSE = 1500;
 
-const D = 36;
-const G = 64;
-const SEG = D + G;
-const CX = [D / 2, D / 2 + SEG, D / 2 + 2 * SEG, D / 2 + 3 * SEG];
-const SVG_W = CX[3] + D / 2;
-
-const FILL_TARGETS = [0, 0, SEG, 2 * SEG, 3 * SEG];
-
 export default function DeescalationTransfer() {
   const [activeStep, setActiveStep] = useState(0);
-  const [fillWidth, setFillWidth] = useState(0);
   const [phase, setPhase] = useState(0);
 
   useEffect(() => {
@@ -29,91 +20,61 @@ export default function DeescalationTransfer() {
       const t = setTimeout(() => {
         setActiveStep(0);
         setPhase(0);
-        setFillWidth(0);
       }, FINAL_PAUSE);
       return () => clearTimeout(t);
     }
 
     const t = setTimeout(() => {
-      const next = phase + 1;
-      setActiveStep(next);
-      setPhase(next);
-      setFillWidth(FILL_TARGETS[next]);
+      setActiveStep(phase + 1);
+      setPhase(phase + 1);
     }, STEP_DELAY);
     return () => clearTimeout(t);
   }, [phase]);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-      <div style={{ position: "relative", width: SVG_W, height: D }}>
-        <svg width={SVG_W} height={D} style={{ overflow: "visible" }}>
-          <defs>
-            <linearGradient id="lg" x1={CX[0]} y1="0" x2={CX[3]} y2="0" gradientUnits="userSpaceOnUse">
-              <stop offset="0" stopColor={STEPS[0].border} />
-              <stop offset="0.333" stopColor={STEPS[1].border} />
-              <stop offset="0.667" stopColor={STEPS[2].border} />
-              <stop offset="1" stopColor={STEPS[3].border} />
-            </linearGradient>
-            <clipPath id="fc">
-              <rect x={CX[0]} y={D / 2 - 1.5} width={fillWidth} height={3} />
-            </clipPath>
-          </defs>
+    <div style={{
+      display: "flex", alignItems: "center", justifyContent: "center",
+      gap: "0px", padding: "16px 0", width: "100%",
+    }}>
+      {STEPS.map((step, i) => {
+        const isActive = i < activeStep;
+        const Icon = step.icon;
+        const isLast = i === STEPS.length - 1;
 
-          <line x1={CX[0]} y1={D / 2} x2={CX[3]} y2={D / 2} stroke="#E5E7EB" strokeWidth="2" strokeLinecap="round" />
-
-          <line x1={CX[0]} y1={D / 2} x2={CX[3]} y2={D / 2} stroke="url(#lg)" strokeWidth="2" strokeLinecap="round"
-            clipPath="url(#fc)" style={{ transition: "all 0.7s ease" }} />
-
-          {STEPS.map((step, i) => (
-            <circle key={i} cx={CX[i]} cy={D / 2} r={D / 2}
-              fill={(i < activeStep) ? step.bg : "#F1F5F9"}
-              stroke={(i < activeStep) ? step.border : "#E2E8F0"} strokeWidth="2"
-              style={{
+        return (
+          <div key={i} style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}>
+              <div style={{
+                width: 36, height: 36, borderRadius: "50%",
+                background: isActive ? step.bg : "#F1F5F9",
+                border: "2px solid",
+                borderColor: isActive ? step.border : "#E2E8F0",
+                display: "flex", alignItems: "center", justifyContent: "center",
                 transition: "all 0.3s ease",
-                transformOrigin: `${CX[i]}px ${D / 2}px`,
-                transform: (i < activeStep) ? "scale(1)" : "scale(0.92)",
-              }} />
-          ))}
-        </svg>
-
-        {/* Icons over circles */}
-        {STEPS.map((step, i) => {
-          const Icon = step.icon;
-          const active = i < activeStep;
-          return (
-            <Icon key={`ic${i}`} size={14} strokeWidth={2.2}
-              color={active ? step.iconColor : "#CBD5E1"}
-              style={{ position: "absolute", left: CX[i] - 7, top: (D - 14) / 2,
-                transition: "color 0.3s ease", pointerEvents: "none" }} />
-          );
-        })}
-
-        {/* Labels between circles */}
-        {STEPS.map((step, i) => {
-          const active = i < activeStep;
-          const isLast = i === STEPS.length - 1;
-          const labelX = isLast ? CX[i] + D / 2 + 10 : (CX[i] + CX[i + 1]) / 2;
-
-          return (
-            <span key={`lb${i}`}
-              style={{
-                position: "absolute",
-                left: labelX,
-                top: (D - 14) / 2,
-                transform: isLast ? "none" : "translateX(-50%)",
-                fontFamily: "Inter, sans-serif",
-                fontWeight: active ? 600 : 400,
-                fontSize: "11px",
-                color: active ? "#0D0D0D" : "#CBD5E1",
-                whiteSpace: "nowrap",
-                transition: "all 0.3s ease",
-                pointerEvents: "none",
+                transform: isActive ? "scale(1)" : "scale(0.92)",
               }}>
-              {step.label}
-            </span>
-          );
-        })}
-      </div>
+                <Icon size={14} strokeWidth={2.2} color={isActive ? step.iconColor : "#CBD5E1"} style={{ transition: "color 0.3s ease" }} />
+              </div>
+              <span style={{
+                fontFamily: "Inter, sans-serif", fontWeight: isActive ? 600 : 400,
+                fontSize: "9px", color: isActive ? "#0D0D0D" : "#CBD5E1",
+                textAlign: "center", lineHeight: 1.3, transition: "all 0.3s ease",
+              }}>
+                {step.label}
+              </span>
+            </div>
+
+            {!isLast && (
+              <div style={{
+                width: 28, height: 3, borderRadius: "2px",
+                background: i < activeStep ? step.border : "#E5E7EB",
+                transition: "background 0.3s ease",
+                marginBottom: "20px",
+              }} />
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
