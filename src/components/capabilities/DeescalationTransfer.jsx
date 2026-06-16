@@ -1,54 +1,87 @@
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { Phone, User } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Phone, AlertTriangle, ArrowLeftRight, Check } from "lucide-react";
 
-const STATES = [
-  { label: "Patient frustrated", color: "#F1F5F9", textColor: "#64748B", duration: 1000 },
-  { label: "Transferring...", color: "#FEF3C7", textColor: "#D97706", duration: 900 },
-  { label: "Connected to staff", color: "#DCFCE7", textColor: "#16A34A", duration: 1900 },
+const STEPS = [
+  {
+    icon: Phone,
+    label: "Patient calling",
+    subtitle: "+972 54 123 4567 · Frustrated",
+    bg: "#FCEBEB",
+    border: "#F09595",
+    iconColor: "#A32D2D",
+  },
+  {
+    icon: AlertTriangle,
+    label: "Yael detects frustration",
+    subtitle: "Sentiment threshold reached",
+    bg: "#FDF3E0",
+    border: "#FAC775",
+    iconColor: "#8A5A00",
+  },
+  {
+    icon: ArrowLeftRight,
+    label: "Transferring call",
+    subtitle: "Routing to Dr. Cohen",
+    bg: "#EEF2FF",
+    border: "#A5B4FC",
+    iconColor: "#3730A3",
+  },
+  {
+    icon: Check,
+    label: "Resolved",
+    subtitle: "Patient connected to staff",
+    bg: "#EAF3DE",
+    border: "#97C459",
+    iconColor: "#27500A",
+  },
 ];
 
-const TOTAL_CYCLE = STATES.reduce((sum, s) => sum + s.duration, 0);
+const STEP_DELAY = 900; // ms between each step appearance
+const CONNECTOR_DELAY = 450; // ms after step appears before connector draws
+const FINAL_HOLD = 2200; // ms to hold step 4 before resetting
+
+// Total cycle: 3 * STEP_DELAY + FINAL_HOLD = 2700 + 2200 = 4900ms
+const TOTAL_CYCLE = (STEPS.length - 1) * STEP_DELAY + FINAL_HOLD;
 
 export default function DeescalationTransfer() {
-  const [stage, setStage] = useState(0);
-  const [lineProgress, setLineProgress] = useState(0);
-  const timerRef = useRef(null);
+  const [activeSteps, setActiveSteps] = useState([]); // { index, connectorDone }
+  const cycleRef = useRef(null);
+  const startRef = useRef(0);
 
   useEffect(() => {
     let frameId;
-    let stageStart = performance.now();
-    let prevProgress = 0;
+    let stepsState = [];
 
     const run = (timestamp) => {
-      const elapsed = timestamp - stageStart;
+      if (!startRef.current) startRef.current = timestamp;
+      const elapsed = timestamp - startRef.current;
 
-      if (stage === 0) {
-        // Line stays at 0, dot still on left
-        setLineProgress(0);
-        if (elapsed >= STATES[0].duration) {
-          setStage(1);
-          stageStart = timestamp;
-          prevProgress = 0;
+      // Determine which steps should be active
+      const newSteps = [];
+      for (let i = 0; i < STEPS.length; i++) {
+        const appearTime = i * STEP_DELAY;
+        if (elapsed >= appearTime) {
+          const connectorDone = elapsed >= appearTime + CONNECTOR_DELAY;
+          newSteps.push({ index: i, connectorDone });
         }
-      } else if (stage === 1) {
-        // Line draws from 0 to ~47% (0.9s out of total draw time of 1.9s ≈ 47%)
-        const progress = Math.min((elapsed / STATES[1].duration) * 0.47, 0.47);
-        setLineProgress(progress);
-        if (elapsed >= STATES[1].duration) {
-          setStage(2);
-          stageStart = timestamp;
-          prevProgress = 0.47;
-        }
-      } else if (stage === 2) {
-        // Line completes drawing: 47% → 100% over 1.9s
-        const progress = Math.min(prevProgress + (elapsed / STATES[2].duration) * 0.53, 1);
-        setLineProgress(progress);
-        if (elapsed >= STATES[2].duration) {
-          setStage(0);
-          stageStart = timestamp;
-          setLineProgress(0);
-        }
+      }
+
+      // Check if sequence changed
+      const changed =
+        newSteps.length !== stepsState.length ||
+        newSteps.some((s, i) => s.connectorDone !== stepsState[i]?.connectorDone);
+
+      if (changed) {
+        stepsState = newSteps;
+        setActiveSteps([...newSteps]);
+      }
+
+      // Reset cycle
+      if (elapsed >= TOTAL_CYCLE) {
+        startRef.current = timestamp;
+        stepsState = [];
+        setActiveSteps([]);
       }
 
       frameId = requestAnimationFrame(run);
@@ -56,174 +89,136 @@ export default function DeescalationTransfer() {
 
     frameId = requestAnimationFrame(run);
     return () => cancelAnimationFrame(frameId);
-  }, [stage]);
+  }, []);
 
-  const currentState = STATES[stage];
-  const dotX = `${lineProgress * 100}%`;
+  const maxIndex = activeSteps.length > 0 ? activeSteps[activeSteps.length - 1].index : -1;
 
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "16px",
+        gap: "0px",
+        padding: "4px 0",
+        maxWidth: "280px",
+        margin: "0 auto",
+        width: "100%",
       }}
     >
-      {/* Row: Patient node → track → Staff node */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0px",
-          width: "100%",
-          maxWidth: "260px",
-        }}
-      >
-        {/* Left: Patient */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "5px",
-            flexShrink: 0,
-          }}
-        >
-          <div
-            style={{
-              width: "36px",
-              height: "36px",
-              borderRadius: "50%",
-              background: "#FEF2F2",
-              border: "2px solid #FCA5A5",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Phone size={14} strokeWidth={2} color="#EF4444" />
+      {STEPS.map((step, i) => {
+        const active = activeSteps.find((s) => s.index === i);
+        const isVisible = !!active;
+        const connectorDone = active?.connectorDone || false;
+        const isLast = i === STEPS.length - 1;
+        const isDimmed = maxIndex > i;
+
+        const Icon = step.icon;
+
+        return (
+          <div key={i} style={{ position: "relative" }}>
+            <AnimatePresence>
+              {isVisible && (
+                <motion.div
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: isDimmed ? 0.25 : 1, y: 0 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    paddingBottom: isLast ? "0px" : "0px",
+                  }}
+                >
+                  {/* Circle icon */}
+                  <div
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                      minWidth: "32px",
+                      borderRadius: "50%",
+                      background: step.bg,
+                      border: `2px solid ${step.border}`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Icon size={13} strokeWidth={2.5} color={step.iconColor} />
+                  </div>
+
+                  {/* Label + subtitle */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+                    <span
+                      style={{
+                        fontFamily: "Inter, sans-serif",
+                        fontWeight: 500,
+                        fontSize: "11px",
+                        color: "#0D0D0D",
+                        letterSpacing: "-0.01em",
+                        lineHeight: 1.4,
+                      }}
+                    >
+                      {step.label}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "Inter, sans-serif",
+                        fontWeight: 400,
+                        fontSize: "10px",
+                        color: "#999999",
+                        lineHeight: 1.4,
+                      }}
+                    >
+                      {step.subtitle}
+                    </span>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Connector line */}
+            {!isLast && isVisible && (
+              <div
+                style={{
+                  marginLeft: "15px",
+                  width: "2px",
+                  height: "16px",
+                  background: "#E2E8F0",
+                  borderRadius: "1px",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                <motion.div
+                  initial={{ height: "0%" }}
+                  animate={{ height: connectorDone ? "100%" : "0%" }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    background: step.border,
+                    borderRadius: "1px",
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Connector placeholder when not visible */}
+            {!isLast && !isVisible && (
+              <div
+                style={{
+                  marginLeft: "15px",
+                  width: "2px",
+                  height: "16px",
+                  background: "transparent",
+                }}
+              />
+            )}
           </div>
-          <span
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontWeight: 600,
-              fontSize: "8px",
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-              color: "#EF4444",
-            }}
-          >
-            Patient
-          </span>
-        </div>
-
-        {/* Track */}
-        <div
-          style={{
-            flex: 1,
-            height: "4px",
-            background: "#E2E8F0",
-            borderRadius: "2px",
-            position: "relative",
-            margin: "0 4px",
-          }}
-        >
-          {/* Animated gradient fill */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              height: "100%",
-              width: `${lineProgress * 100}%`,
-              borderRadius: "2px",
-              background: "linear-gradient(to right, #EF4444, #22C55E)",
-              transition: "none",
-            }}
-          />
-          {/* Sliding dot */}
-          <motion.div
-            animate={{ left: dotX }}
-            transition={{ duration: 0.05, ease: "linear" }}
-            style={{
-              position: "absolute",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-              left: dotX,
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              background: "#FFFFFF",
-              border: "2px solid #0D0D0D",
-            }}
-          />
-        </div>
-
-        {/* Right: Staff */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "5px",
-            flexShrink: 0,
-          }}
-        >
-          <div
-            style={{
-              width: "36px",
-              height: "36px",
-              borderRadius: "50%",
-              background: "#F0FDF4",
-              border: "2px solid #86EFAC",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <User size={14} strokeWidth={2} color="#22C55E" />
-          </div>
-          <span
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontWeight: 600,
-              fontSize: "8px",
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-              color: "#16A34A",
-            }}
-          >
-            Staff
-          </span>
-        </div>
-      </div>
-
-      {/* Status badge */}
-      <motion.div
-        key={stage}
-        initial={{ opacity: 0, y: 3, scale: 0.96 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.25, ease: "easeOut" }}
-        style={{
-          padding: "5px 14px",
-          borderRadius: "999px",
-          background: currentState.color,
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontWeight: 500,
-            fontSize: "10px",
-            color: currentState.textColor,
-            letterSpacing: "-0.01em",
-          }}
-        >
-          {currentState.label}
-        </span>
-      </motion.div>
+        );
+      })}
     </div>
   );
 }
