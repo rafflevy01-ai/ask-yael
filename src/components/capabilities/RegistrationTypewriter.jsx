@@ -71,8 +71,9 @@ export default function RegistrationTypewriter() {
 
   return (
     <div style={{
-      display: "flex", flexDirection: "column", gap: "10px",
-      padding: "4px 0", maxWidth: "340px", margin: "0 auto", width: "100%",
+      display: "flex", flexDirection: "column", gap: "5px",
+      padding: "0", maxWidth: "340px", margin: "0 auto", width: "100%",
+      minHeight: "130px",
     }}>
       {visibleFields.map((field, i) => (
         <div key={i} style={{
