@@ -263,7 +263,7 @@ export default function HeroSection() {
           .hero-right p { font-size: 14px !important; }
 
           .hero-demo {
-            width: calc(100% - 32px) !important;
+            width: calc(100% - 64px) !important;
             margin: 0 auto 32px !important;
             padding: 24px 8px 60px !important;
             border-radius: 16px !important;
