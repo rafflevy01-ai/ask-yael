@@ -52,8 +52,6 @@ export default function TabSwitcher({ activeTab, onTabChange }) {
   return (
     <div
       style={{
-        position: "relative",
-        zIndex: 1,
         display: "inline-flex",
         gap: "4px",
         marginBottom: "40px",
