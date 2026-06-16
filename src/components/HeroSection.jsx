@@ -43,7 +43,7 @@ export default function HeroSection() {
         }}
       />
 
-      <div className="hero-inner" style={{ position: "relative", zIndex: 2, maxWidth: "1200px", margin: "0 auto", padding: "80px 40px 0" }}>
+      <div className="hero-inner" style={{ position: "relative", zIndex: 2, maxWidth: "1200px", margin: "0 auto", padding: "0 40px 80px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
 
         {/* ─── TWO-COLUMN ROW ─── */}
         <div
@@ -142,7 +142,7 @@ export default function HeroSection() {
 
       <style>{`
         @media (max-width: 768px) {
-          .hero-inner { padding: 100px 16px 0 !important; }
+          .hero-inner { padding: 0 16px 64px !important; height: 100% !important; display: flex !important; flex-direction: column !important; justify-content: flex-end !important; }
           .hero-row {
             flex-direction: column !important;
             gap: 14px !important;
@@ -160,7 +160,7 @@ export default function HeroSection() {
           .hero-right p { font-size: 14px !important; }
         }
         @media (min-width: 769px) and (max-width: 1024px) {
-          .hero-inner { padding: 72px 32px 0 !important; }
+          .hero-inner { padding: 0 32px 72px !important; height: 100% !important; display: flex !important; flex-direction: column !important; justify-content: flex-end !important; }
         }
       `}</style>
     </section>
