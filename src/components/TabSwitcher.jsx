@@ -51,11 +51,17 @@ function MiniOrb({ gradient }) {
 export default function TabSwitcher({ activeTab, onTabChange }) {
   return (
     <div
+      className="tab-switcher"
       style={{
         display: "inline-flex",
         gap: "4px",
         marginBottom: "40px",
       }}>
+<style>{`
+  @media (max-width: 768px) {
+    .tab-switcher { margin-bottom: 28px !important; }
+  }
+`}</style>
       {TABS.map(tab => {
         const isActive = activeTab === tab.key;
         return (

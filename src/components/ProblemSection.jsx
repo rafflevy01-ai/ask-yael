@@ -188,8 +188,8 @@ export default function ProblemSection() {
             flex-shrink: 1 !important;
             margin-bottom: 24px !important;
           }
-          .ps-gray-container { padding: 32px 16px 20px !important; min-height: auto !important; }
-          .ps-notif-stack { margin-top: 40px !important; }
+          .ps-gray-container { padding: 36px 20px 24px !important; min-height: auto !important; }
+          .ps-notif-stack { margin-top: 36px !important; width: 100% !important; max-width: 100% !important; }
           .ps-bottom-label { padding: 24px 20px !important; }
         }
       `}</style>
