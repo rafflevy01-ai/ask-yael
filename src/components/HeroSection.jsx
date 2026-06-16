@@ -246,26 +246,24 @@ export default function HeroSection() {
           .hero-left, .hero-right { flex: 1 1 auto !important; width: 100% !important; }
           .hero-demo {
             padding: 16px 24px 0 !important;
-            margin: 0 16px 16px !important;
+            width: calc(100% - 32px) !important;
+            margin: 0 auto 16px !important;
             border-radius: 20px !important;
             overflow: hidden !important;
           }
           .hero-cta-row { flex-direction: column !important; gap: 12px !important; }
           .hero-cta-row a { width: 100% !important; min-width: 0 !important; }
           .hero-orb-wrap {
-            width: min(200px, 70%) !important;
-            height: min(200px, 70%) !important;
+            width: 75% !important;
+            aspect-ratio: 1 !important;
             margin: 0 auto !important;
-            position: relative !important;
             overflow: hidden !important;
-          }
-          .hero-orb-wrap > div:first-child {
-            transform: scale(0.714) !important;
-            transform-origin: top center !important;
-            margin-bottom: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
           }
           .hero-orb-wrap button { display: none !important; }
-          .hero-phone-btn-mobile { display: inline-flex !important; margin-top: 8px !important; margin-bottom: 16px !important; }
+          .hero-phone-btn-mobile { display: inline-flex !important; margin-top: 12px !important; margin-bottom: 16px !important; }
           .hero-right p { font-size: 14px !important; }
         }
         @media (max-width: 1024px) {

@@ -62,7 +62,7 @@ export default function TabSwitcher({ activeTab, onTabChange }) {
     .tab-switcher {
       margin-bottom: 28px !important;
       width: 100% !important;
-      justify-content: center !important;
+      justify-content: space-evenly !important;
       display: flex !important;
     }
     .tab-switcher button {

@@ -186,6 +186,7 @@ export default function ProblemSection() {
           .ps-right-col {
             width: 100% !important;
             flex-shrink: 1 !important;
+            margin-top: 16px !important;
             margin-bottom: 24px !important;
           }
           .ps-gray-container { padding: 36px 20px 24px !important; min-height: auto !important; }
