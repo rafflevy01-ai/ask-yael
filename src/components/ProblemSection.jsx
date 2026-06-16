@@ -171,8 +171,10 @@ export default function ProblemSection() {
             flex-shrink: 1 !important;
             padding-top: 8px !important;
             overflow-x: auto !important;
+            white-space: nowrap !important;
             display: flex !important;
             flex-direction: row !important;
+            -webkit-overflow-scrolling: touch !important;
           }
           .ps-left-col button {
             white-space: nowrap !important;
@@ -188,6 +190,10 @@ export default function ProblemSection() {
             flex-shrink: 1 !important;
             margin-top: 16px !important;
             margin-bottom: 24px !important;
+          }
+          .ps-right-col > div:first-child {
+            width: calc(100% - 32px) !important;
+            margin: 0 auto !important;
           }
           .ps-gray-container { padding: 36px 20px 24px !important; min-height: auto !important; }
           .ps-notif-stack { margin-top: 36px !important; width: 100% !important; max-width: 100% !important; }

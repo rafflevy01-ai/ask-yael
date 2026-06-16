@@ -212,29 +212,29 @@ export default function HeroSection() {
 
           <div className="hero-orb-wrap">
             <VoiceOrb activeLang={activeTab} isPlaying={isPlaying} onPhoneClick={handlePhoneClick} />
-          </div>
 
-          {/* Mobile phone button — shown below orb, centered in card */}
-          <button
-            className="hero-phone-btn-mobile"
-            onClick={handlePhoneClick}
-            style={{
-              width: "52px",
-              height: "52px",
-              borderRadius: "50%",
-              backgroundColor: isPlaying ? "#E53E3E" : "#0DB8A9",
-              border: "3px solid #FFFFFF",
-              cursor: "pointer",
-              display: "none",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-            </svg>
-          </button>
+            {/* Mobile phone button — positioned absolutely over the orb */}
+            <button
+              className="hero-phone-btn-mobile"
+              onClick={handlePhoneClick}
+              style={{
+                width: "52px",
+                height: "52px",
+                borderRadius: "50%",
+                backgroundColor: isPlaying ? "#E53E3E" : "#0DB8A9",
+                border: "3px solid #FFFFFF",
+                cursor: "pointer",
+                display: "none",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+            </button>
+          </div>
 
         </div>
       </div>
@@ -275,18 +275,22 @@ export default function HeroSection() {
             align-items: center !important;
             justify-content: center !important;
             flex-shrink: 0 !important;
+            position: relative !important;
           }
           .hero-orb-wrap > div:first-child {
             transform: scale(0.85) !important;
             transform-origin: center center !important;
             margin-bottom: 0 !important;
           }
-          .hero-orb-wrap button { display: none !important; }
+          .hero-orb-wrap > div:first-child > button { display: none !important; }
 
           .hero-phone-btn-mobile {
             display: inline-flex !important;
-            margin-top: 16px !important;
-            margin-bottom: 0 !important;
+            position: absolute !important;
+            bottom: 10% !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            z-index: 2 !important;
           }
         }
         @media (max-width: 1024px) {
