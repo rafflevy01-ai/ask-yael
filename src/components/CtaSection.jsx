@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const CALENDLY_URL = "https://calendly.com/askyael/30min";
+const CALENDLY_URL = "https://calendly.com/rafflevy01/30min";
 
 export default function CtaSection() {
   const calendlyRef = useRef(null);
