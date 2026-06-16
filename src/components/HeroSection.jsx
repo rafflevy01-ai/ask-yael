@@ -267,7 +267,7 @@ export default function HeroSection() {
           .hero-demo {
             width: calc(100% - 32px) !important;
             margin: 0 auto 32px !important;
-            padding: 24px 8px 60px !important;
+            padding: 36px 20px 24px !important;
             border-radius: 16px !important;
             overflow: visible !important;
           }
