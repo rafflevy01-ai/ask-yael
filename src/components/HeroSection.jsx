@@ -119,8 +119,28 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Mobile-only CTAs (always visible on small screens) */}
-        <div className="hero-cta-mobile" style={{ display: "none" }}>
+        {/* Mobile-only: language + description + CTAs */}
+        <div className="hero-mobile-block" style={{ display: "none" }}>
+          {/* Language indicator — core differentiator, shows what Yael speaks */}
+          <div className="hero-lang-row">
+            {["EN", "FR", "עב"].map(l => (
+              <span key={l} style={{
+                fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "11px",
+                color: "rgba(255,255,255,0.65)", letterSpacing: "0.06em",
+                border: "1px solid rgba(255,255,255,0.2)", borderRadius: "9999px",
+                padding: "3px 10px",
+              }}>{l}</span>
+            ))}
+          </div>
+
+          {/* Description */}
+          <p className="hero-desc-mobile">
+            Yael answers every call in Hebrew, French, or English —
+            booking appointments and handling emergencies, 24/7.
+          </p>
+
+          {/* CTAs */}
+          <div className="hero-cta-mobile-row">
           <a href="#book-demo"
             style={{
               fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
@@ -140,7 +160,8 @@ export default function HeroSection() {
               cursor: "pointer", flex: 1,
             }}
           >See How It Works</a>
-        </div>
+          </div>{/* end hero-cta-mobile-row */}
+        </div>{/* end hero-mobile-block */}
 
       </div>
 
@@ -167,22 +188,33 @@ export default function HeroSection() {
         /* ── Mobile (≤768px) ── */
         @media (max-width: 768px) {
           .hero-inner {
-            padding: 0 22px calc(env(safe-area-inset-bottom, 0px) + 52px) !important;
+            padding: 0 22px calc(env(safe-area-inset-bottom, 0px) + 44px) !important;
           }
+          .hero-row       { flex-direction: column !important; align-items: flex-start !important; gap: 0 !important; }
+          .hero-left      { flex: none !important; width: 100% !important; }
+          .hero-right     { display: none !important; }
+          .hero-h1        { font-size: clamp(1.75rem, 7.5vw, 2.2rem) !important; margin-bottom: 20px !important; }
 
-          /* Stack title + mobile CTAs only — hide desktop right column */
-          .hero-row      { flex-direction: column !important; align-items: flex-start !important; gap: 0 !important; }
-          .hero-left     { flex: none !important; width: 100% !important; }
-          .hero-right    { display: none !important; }            /* hide desc+CTAs on mobile */
-
-          /* Larger title on mobile */
-          .hero-h1 {
-            font-size: clamp(1.75rem, 7.5vw, 2.2rem) !important;
-            margin-bottom: 24px !important;
+          /* Mobile block: lang + desc + CTAs */
+          .hero-mobile-block {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 14px !important;
+            width: 100% !important;
           }
-
-          /* Show mobile CTAs */
-          .hero-cta-mobile {
+          .hero-lang-row {
+            display: flex !important;
+            gap: 8px !important;
+          }
+          .hero-desc-mobile {
+            font-family: Inter, sans-serif !important;
+            font-weight: 400 !important;
+            font-size: 14px !important;
+            color: rgba(255,255,255,0.72) !important;
+            line-height: 1.55 !important;
+            margin: 0 !important;
+          }
+          .hero-cta-mobile-row {
             display: flex !important;
             gap: 10px !important;
             width: 100% !important;

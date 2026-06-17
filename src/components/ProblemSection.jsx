@@ -1,23 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import NotifStack from "@/components/NotifStack";
-import { PhoneMissed, Clock, Globe, ArrowUpRight } from "lucide-react";
-
-const PANELS = [
-  { id: "missed-calls",  number: "01", label: "Missed Calls",  icon: PhoneMissed, title: "Every missed call is a lost patient.",                             description: "Five missed calls a day at ₪900 each, 250 working days." },
-  { id: "after-hours",   number: "02", label: "After Hours",   icon: Clock,        title: "Your receptionist leaves at 18:00. Patients don't.",              description: "40% of appointment requests come after hours." },
-  { id: "language-gap",  number: "03", label: "Language Gap",  icon: Globe,        title: "Your receptionist speaks one language. Your patients speak three.", description: "30,000+ French-speaking residents in Netanya." },
-  { id: "salary-cost",   number: "04", label: "Salary Cost",   icon: "shekel",     title: "You're paying a full salary just to answer the phone.",            description: "For a team that still goes home at 18:00." },
-];
 
 const BUSINESS_BARS   = [65,95,85,60,40,50,70,65,55,45];
 const AFTER_HOURS_BARS = [6,5,4,3,2];
-
-const panelVariants = {
-  enter:  { opacity: 0, y: 10 },
-  center: { opacity: 1, y: 0 },
-  exit:   { opacity: 0, y: -6 },
-};
 
 function countUp(el, target, duration) {
   const start = performance.now();
@@ -31,332 +16,252 @@ function countUp(el, target, duration) {
   requestAnimationFrame(step);
 }
 
-// ─── Top-level subcomponents (stable references = no unmount on parent re-render) ───
-
-function LangCard() {
+function MissedCallsCard({ isVisible }) {
+  const statRef = useRef(null);
+  const counted = useRef(false);
+  useEffect(() => {
+    if (isVisible && !counted.current && statRef.current) {
+      counted.current = true;
+      countUp(statRef.current, 1125000, 1400);
+    }
+  }, [isVisible]);
   return (
-    <div style={{ width:"min(360px,90%)", background:"#FFFFFF", border:"1px solid #E5E5E5", borderRadius:"14px", boxShadow:"rgba(0,0,0,0.4) 0px 0px 1px,rgba(0,0,0,0.04) 0px 2px 4px", overflow:"hidden" }}>
-      {[{ flag:"🇮🇱", lang:"Hebrew", ok:true },{ flag:"🇫🇷", lang:"Français", ok:false },{ flag:"🇬🇧", lang:"English", ok:false }].map((row,i) => (
-        <div key={row.lang} style={{ opacity:i===0?1:0.4, padding:"14px 18px", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:i<2?"1px solid #E5E5E5":"none" }}>
-          <div style={{ display:"flex", alignItems:"center" }}>
-            <span style={{ fontSize:"16px" }}>{row.flag}</span>
-            <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"14px", color:"#0D0D0D", marginLeft:"10px" }}>{row.lang}</span>
-          </div>
-          <div style={{ display:"flex", alignItems:"center", gap:"8px" }}>
-            <div style={{ width:"34px", height:"18px", borderRadius:"9999px", background:row.ok?"#16A34A":"#E5E5E5", position:"relative" }}>
-              <div style={{ width:"14px", height:"14px", background:"#FFF", borderRadius:"9999px", position:"absolute", top:"2px", ...(row.ok?{right:"2px"}:{left:"2px"}), boxShadow:"0 1px 3px rgba(0,0,0,0.2)" }} />
-            </div>
-            <div style={{ width:"14px", height:"14px", background:row.ok?"#16A34A":"#DC2626", borderRadius:"9999px", display:"flex", alignItems:"center", justifyContent:"center" }}>
-              <span style={{ color:"#FFF", fontSize:"9px", lineHeight:1 }}>{row.ok?"✓":"✕"}</span>
-            </div>
-          </div>
+    <div className="ps-card">
+      <div className="ps-card-top">
+        <span className="ps-card-label">Missed Calls</span>
+        <div ref={statRef} className="ps-card-stat">₪0</div>
+        <p className="ps-card-subdesc">in unrealized revenue per year</p>
+        <p className="ps-card-copy">Five missed calls a day at ₪900 each, 250 working days — gone.</p>
+      </div>
+      <div className="ps-card-visual">
+        <div style={{ height:"160px", position:"relative", overflow:"hidden" }}>
+          <NotifStack />
         </div>
-      ))}
+      </div>
     </div>
   );
 }
 
-function SalaryCard({ salary, count, setSalary, setCount }) {
+function AfterHoursCard({ isVisible }) {
+  const barsRef = useRef(null);
+  const animated = useRef(false);
+  useEffect(() => {
+    if (isVisible && !animated.current && barsRef.current) {
+      animated.current = true;
+      const bars = barsRef.current.querySelectorAll(".ps-ah-bar");
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        bars.forEach((bar, i) => setTimeout(() => {
+          bar.style.transition = "height 0.5s cubic-bezier(0.22,1,0.36,1)";
+          bar.style.height = bar.getAttribute("data-h") + "%";
+        }, i * 80));
+      }));
+    }
+  }, [isVisible]);
+  return (
+    <div className="ps-card">
+      <div className="ps-card-top">
+        <span className="ps-card-label">After Hours</span>
+        <div className="ps-card-stat">40%</div>
+        <p className="ps-card-subdesc">of appointment requests after hours</p>
+        <p className="ps-card-copy">Your receptionist leaves at 18:00. Patients don't.</p>
+      </div>
+      <div className="ps-card-visual" style={{ padding:"0 28px 28px" }}>
+        <div ref={barsRef} style={{ display:"flex", alignItems:"flex-end", gap:"3px", height:"90px" }}>
+          {BUSINESS_BARS.map((h,i) => <div key={i} className="ps-ah-bar" data-h={h} style={{ flex:1, borderRadius:"3px 3px 0 0", height:"0", background:"#0D0D0D" }} />)}
+          <div style={{ width:"1px", height:"100%", background:"#D1D5DB", flexShrink:0, position:"relative" }}>
+            <span style={{ position:"absolute", bottom:"-16px", left:"50%", transform:"translateX(-50%)", fontSize:"9px", color:"#888", whiteSpace:"nowrap", fontFamily:"Inter,sans-serif" }}>18:00</span>
+          </div>
+          {AFTER_HOURS_BARS.map((h,i) => <div key={i} className="ps-ah-bar" data-h={h} style={{ flex:1, borderRadius:"3px 3px 0 0", height:"0", background:"#D1D5DB" }} />)}
+        </div>
+        <div style={{ display:"flex", justifyContent:"space-between", marginTop:"20px", fontFamily:"Inter,sans-serif", fontSize:"11px" }}>
+          <span style={{ color:"#888" }}>Answered</span>
+          <span style={{ color:"#DC2626" }}>No answer</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LanguageGapCard() {
+  return (
+    <div className="ps-card">
+      <div className="ps-card-top">
+        <span className="ps-card-label">Language Gap</span>
+        <div className="ps-card-stat">30,000+</div>
+        <p className="ps-card-subdesc">French-speaking residents in Netanya</p>
+        <p className="ps-card-copy">Your receptionist speaks one language. Your patients speak three.</p>
+      </div>
+      <div className="ps-card-visual" style={{ padding:"0 28px 28px" }}>
+        <div style={{ background:"#FFFFFF", borderRadius:"12px", overflow:"hidden", boxShadow:"0 1px 4px rgba(0,0,0,0.08)" }}>
+          {[{ flag:"🇮🇱", lang:"Hebrew", ok:true },{ flag:"🇫🇷", lang:"Français", ok:false },{ flag:"🇬🇧", lang:"English", ok:false }].map((row,i) => (
+            <div key={row.lang} style={{ opacity:i===0?1:0.45, padding:"13px 16px", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:i<2?"1px solid #F0F0EE":"none" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:"10px" }}>
+                <span style={{ fontSize:"16px" }}>{row.flag}</span>
+                <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"14px", color:"#0D0D0D" }}>{row.lang}</span>
+              </div>
+              <div style={{ width:"34px", height:"18px", borderRadius:"9999px", background:row.ok?"#16A34A":"#E5E5E5", position:"relative" }}>
+                <div style={{ width:"14px", height:"14px", background:"#FFF", borderRadius:"9999px", position:"absolute", top:"2px", ...(row.ok?{right:"2px"}:{left:"2px"}), boxShadow:"0 1px 3px rgba(0,0,0,0.15)" }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SalaryCostCard() {
+  const [salary, setSalary] = useState(8500);
+  const [count, setCount]   = useState(2);
   const monthly = salary * count;
   const annual  = monthly * 12;
   return (
-    <div style={{ width:"min(440px,95%)", background:"#FFFFFF", border:"1px solid #E5E5E5", borderRadius:"14px", boxShadow:"rgba(0,0,0,0.4) 0px 0px 1px,rgba(0,0,0,0.04) 0px 2px 4px", padding:"28px", display:"flex", flexDirection:"column", gap:"20px" }}>
-      <div style={{ display:"flex", flexDirection:"column", gap:"10px" }}>
-        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"13px", color:"#0D0D0D" }}>Salary per receptionist</span>
-          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"14px", color:"#0D0D0D", letterSpacing:"-0.04em" }}>₪{salary.toLocaleString()} / month</span>
-        </div>
-        <input type="range" min="6000" max="12000" step="500" value={salary}
-          onChange={e => setSalary(parseInt(e.target.value))}
-          style={{ background:`linear-gradient(to right,#0D0D0D ${((salary-6000)/6000)*100}%,#E5E5E5 ${((salary-6000)/6000)*100}%)` }} />
+    <div className="ps-card">
+      <div className="ps-card-top">
+        <span className="ps-card-label">Salary Cost</span>
+        <div className="ps-card-stat" style={{ fontSize:"clamp(1.6rem,3.5vw,2.4rem)" }}>₪{monthly.toLocaleString()}</div>
+        <p className="ps-card-subdesc">per month in receptionist salaries</p>
+        <p className="ps-card-copy">You're paying a full salary just to answer the phone.</p>
       </div>
-      <div style={{ display:"flex", flexDirection:"column", gap:"10px" }}>
-        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"13px", color:"#0D0D0D" }}>Number of receptionists</span>
-          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"14px", color:"#0D0D0D", letterSpacing:"-0.04em" }}>{count}</span>
+      <div className="ps-card-visual" style={{ padding:"0 28px 28px", display:"flex", flexDirection:"column", gap:"14px", justifyContent:"flex-end" }}>
+        {[
+          { label:"Salary / receptionist", value:"₪"+salary.toLocaleString()+" / mo", min:6000, max:12000, step:500, val:salary, set:setSalary, pct:((salary-6000)/6000)*100 },
+          { label:"Receptionists", value:String(count), min:1, max:5, step:1, val:count, set:setCount, pct:((count-1)/4)*100 },
+        ].map(({ label, value, min, max, step, val, set, pct }) => (
+          <div key={label}>
+            <div style={{ display:"flex", justifyContent:"space-between", fontFamily:"Inter,sans-serif", fontSize:"12px", color:"#555", marginBottom:"6px" }}>
+              <span>{label}</span><span style={{ fontWeight:500, color:"#0D0D0D" }}>{value}</span>
+            </div>
+            <input type="range" min={min} max={max} step={step} value={val}
+              onChange={e => set(parseInt(e.target.value))}
+              style={{ width:"100%", height:"3px", borderRadius:"9999px", outline:"none", appearance:"none", WebkitAppearance:"none",
+                background:"linear-gradient(to right,#0D0D0D "+pct+"%,#E5E5E5 "+pct+"%)", cursor:"pointer" }} />
+          </div>
+        ))}
+        <div style={{ borderTop:"1px solid #E5E5E5", paddingTop:"10px", fontFamily:"Inter,sans-serif", fontSize:"12px", color:"#888", textAlign:"center" }}>
+          ₪{annual.toLocaleString()} / year
         </div>
-        <input type="range" min="1" max="5" step="1" value={count}
-          onChange={e => setCount(parseInt(e.target.value))}
-          style={{ background:`linear-gradient(to right,#0D0D0D ${((count-1)/4)*100}%,#E5E5E5 ${((count-1)/4)*100}%)` }} />
-      </div>
-      <div style={{ height:"1px", background:"#E5E5E5" }} />
-      <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:"4px" }}>
-        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"12px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B" }}>You pay</span>
-        <div style={{ display:"flex", alignItems:"baseline", gap:"6px" }}>
-          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"2.5rem", color:"#0D0D0D", letterSpacing:"-0.05em" }}>₪{monthly.toLocaleString()}</span>
-          <span style={{ fontFamily:"Inter,sans-serif", fontSize:"13px", color:"#6B6B6B" }}>/ month</span>
-        </div>
-        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"1.3rem", color:"#B8B8B8", letterSpacing:"-0.04em" }}>₪{annual.toLocaleString()} / year</span>
       </div>
     </div>
   );
 }
 
-function MobileCard({ panel, index, salary, count, setSalary, setCount }) {
-  const Icon = panel.icon !== "shekel" ? panel.icon : null;
+function ConfirmationCard() {
   return (
-    <motion.div
-      initial={{ opacity:0, y:24 }}
-      whileInView={{ opacity:1, y:0 }}
-      viewport={{ once:true, amount:0.12 }}
-      transition={{ duration:0.5, ease:[0.22,1,0.36,1] }}
-      style={{ backgroundColor:"#FFFFFF", border:"1px solid #E5E5E5", borderRadius:"16px", overflow:"hidden", marginBottom:"16px" }}
-    >
-      {/* Card header */}
-      <div style={{ padding:"18px 20px 0", display:"flex", alignItems:"center", gap:"10px" }}>
-        {Icon
-          ? <Icon size={15} strokeWidth={1.8} color="#0D0D0D" />
-          : <span style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"15px", color:"#0D0D0D", lineHeight:1 }}>₪</span>
-        }
-        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"13px", color:"#0D0D0D", letterSpacing:"-0.01em" }}>
-          {panel.label}
-        </span>
-        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"11px", color:"#6B6B6B", marginLeft:"auto" }}>
-          {panel.number} / 04
-        </span>
+    <div className="ps-card ps-card-dark">
+      <div className="ps-card-top">
+        <span className="ps-card-label" style={{ color:"rgba(255,255,255,0.5)" }}>Patient Confirmation</span>
+        <div className="ps-card-stat" style={{ color:"#FFFFFF", fontSize:"clamp(1.8rem,3.5vw,2.8rem)" }}>Instant.</div>
+        <p className="ps-card-copy" style={{ color:"rgba(255,255,255,0.72)" }}>
+          The moment Yael books, the patient gets an SMS confirmation — automatically, 24/7.
+        </p>
       </div>
-
-      {/* Visual area */}
-      <div style={{ backgroundColor:"#F5F5F3", margin:"16px 0 0", padding:"28px 20px 20px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"200px" }}>
-
-        {index === 0 && (
-          <motion.div
-            style={{ display:"flex", flexDirection:"column", alignItems:"center", width:"100%" }}
-            onViewportEnter={() => {
-              const el = document.getElementById("stat-revenue-m0");
-              if (el) countUp(el, 1125000, 1400);
-            }}
-            viewport={{ once:true }}
-          >
-            <div id="stat-revenue-m0" style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,7vw,2.6rem)", color:"#0D0D0D", lineHeight:1, letterSpacing:"-0.05em" }}>₪0</div>
-            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"11px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B", marginTop:"8px" }}>in unrealized revenue per year</div>
-            <div style={{ height:"130px", width:"100%", maxWidth:"300px", position:"relative", overflow:"hidden", marginTop:"16px" }}><NotifStack /></div>
-          </motion.div>
-        )}
-
-        {index === 1 && (
-          <motion.div
-            style={{ display:"flex", flexDirection:"column", alignItems:"center", width:"100%" }}
-            onViewportEnter={() => {
-              const bars = document.querySelectorAll(".ps-mobile-bar");
-              requestAnimationFrame(() => requestAnimationFrame(() => {
-                bars.forEach((bar, i) => setTimeout(() => {
-                  bar.style.transition = "height 0.5s cubic-bezier(0.22,1,0.36,1)";
-                  bar.style.height = bar.getAttribute("data-height") + "%";
-                }, i * 80));
-              }));
-            }}
-            viewport={{ once:true }}
-          >
-            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,7vw,2.6rem)", color:"#0D0D0D", lineHeight:1, letterSpacing:"-0.05em" }}>40%</div>
-            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"11px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B", marginTop:"8px", marginBottom:"16px" }}>of appointment requests after hours</div>
-            <div style={{ width:"100%", height:"80px", display:"flex", alignItems:"flex-end", gap:"3px" }}>
-              {BUSINESS_BARS.map((h,i) => <div key={i} className="ps-mobile-bar" data-height={h} style={{ flex:1, borderRadius:"4px 4px 0 0", height:"0", background:"#0D0D0D" }} />)}
-              <div style={{ position:"relative", width:"1px", height:"100%", background:"#E5E5E5", flexShrink:0 }}>
-                <span style={{ position:"absolute", bottom:"-16px", left:"50%", transform:"translateX(-50%)", fontFamily:"Inter,sans-serif", fontSize:"8px", color:"#6B6B6B", whiteSpace:"nowrap" }}>18:00</span>
-              </div>
-              {AFTER_HOURS_BARS.map((h,i) => <div key={i} className="ps-mobile-bar" data-height={h} style={{ flex:1, borderRadius:"4px 4px 0 0", height:"0", background:"#E5E5E5" }} />)}
-            </div>
-            <div style={{ display:"flex", justifyContent:"space-between", width:"100%", marginTop:"18px" }}>
-              <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", color:"#6B6B6B" }}>Answered</span>
-              <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", color:"#DC2626" }}>No answer</span>
-            </div>
-          </motion.div>
-        )}
-
-        {index === 2 && (
-          <>
-            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,7vw,2.6rem)", color:"#0D0D0D", lineHeight:1, letterSpacing:"-0.05em" }}>30,000+</div>
-            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"11px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B", marginTop:"8px", marginBottom:"16px" }}>French-speaking residents in Netanya</div>
-            <LangCard />
-          </>
-        )}
-
-        {index === 3 && <SalaryCard salary={salary} count={count} setSalary={setSalary} setCount={setCount} />}
+      <div className="ps-card-visual" style={{ padding:0, flex:1, minHeight:0, position:"relative", overflow:"hidden" }}>
+        {/* Upload your iPhone SMS photo to Base44 and replace this URL */}
+        <img
+          src="https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/sms-photo.jpg"
+          alt="Patient receiving Yael SMS"
+          style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"top center" }}
+          onError={e => { e.target.style.display="none"; }}
+        />
+        {/* Fallback gradient if image not found */}
+        <div style={{ position:"absolute", inset:0, background:"linear-gradient(160deg,#1a2744,#2d4a8a)", zIndex:-1 }} />
       </div>
-
-      {/* Bottom label */}
-      <div style={{ padding:"18px 20px" }}>
-        <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"16px", color:"#0D0D0D", letterSpacing:"-0.04em", marginBottom:"4px" }}>{panel.title}</div>
-        <div style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"14px", color:"#777", lineHeight:1.5 }}>{panel.description}</div>
-      </div>
-    </motion.div>
+    </div>
   );
 }
-
-// ─── Main component ───
 
 export default function ProblemSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection]     = useState(1); // kept for mobile card compat
-  const [isMobile, setIsMobile]       = useState(false);
-  const [salary, setSalary]           = useState(8500);
-  const [count, setCount]             = useState(2);
-  const barsAnimatedRef = useRef(false);
+  const trackRef  = useRef(null);
+  const card0Ref  = useRef(null);
+  const card1Ref  = useRef(null);
+  const [vis0, setVis0] = useState(false);
+  const [vis1, setVis1] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 768px)");
-    const handler = () => setIsMobile(mq.matches);
-    handler();
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.target === card0Ref.current && e.isIntersecting) setVis0(true);
+        if (e.target === card1Ref.current && e.isIntersecting) setVis1(true);
+      });
+    }, { threshold: 0.3 });
+    if (card0Ref.current) obs.observe(card0Ref.current);
+    if (card1Ref.current) obs.observe(card1Ref.current);
+    return () => obs.disconnect();
   }, []);
 
-  // Desktop: bar animation
-  useEffect(() => {
-    if (isMobile || activeIndex !== 1) {
-      barsAnimatedRef.current = false;
-      document.querySelectorAll("[data-height]:not(.ps-mobile-bar)").forEach(bar => {
-        bar.style.transition = "none"; bar.style.height = "0%";
-      });
-      return;
-    }
-    if (barsAnimatedRef.current) return;
-    barsAnimatedRef.current = true;
-    const bars = document.querySelectorAll("[data-height]:not(.ps-mobile-bar)");
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      bars.forEach((bar, i) => setTimeout(() => {
-        bar.style.transition = "height 0.5s cubic-bezier(0.22,1,0.36,1)";
-        bar.style.height = bar.getAttribute("data-height") + "%";
-      }, i * 120));
-    }));
-  }, [activeIndex, isMobile]);
-
-  // Desktop: revenue counter
-  useEffect(() => {
-    if (isMobile || activeIndex !== 0) return;
-    const el = document.getElementById("stat-revenue-desktop");
-    if (el) countUp(el, 1125000, 1400);
-  }, [activeIndex, isMobile]);
-
-  const activePanel = PANELS[activeIndex];
-
-  // Desktop card
-  const desktopCard = (
-    <div style={{ backgroundColor:"#FFFFFF", border:"1px solid #E5E5E5", borderRadius:"16px", overflow:"hidden", position:"relative" }}>
-      <div style={{ position:"absolute", top:"16px", right:"16px", zIndex:2 }}>
-        <ArrowUpRight size={18} strokeWidth={1.8} color="#999" />
-      </div>
-      <AnimatePresence mode="wait">
-        <motion.div key={activeIndex} variants={panelVariants} initial="enter" animate="center" exit="exit" transition={{ duration:0.22, ease:[0.22,1,0.36,1] }}>
-          <div className="ps-gray-container" style={{ backgroundColor:"#F5F5F3", padding:"40px 40px 24px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"320px" }}>
-            {activeIndex === 0 && (
-              <>
-                <div id="stat-revenue-desktop" style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(2.6rem,6vw,4.5rem)", color:"#0D0D0D", lineHeight:1, letterSpacing:"-0.05em" }}>₪0</div>
-                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"12px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B", marginTop:"8px" }}>in unrealized revenue per year</div>
-                <div className="ps-notif-stack" style={{ height:"180px", width:"100%", maxWidth:"340px", position:"relative", overflow:"hidden", marginTop:"20px" }}><NotifStack /></div>
-              </>
-            )}
-            {activeIndex === 1 && (
-              <>
-                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(2.6rem,6vw,4.5rem)", color:"#0D0D0D", lineHeight:1, letterSpacing:"-0.05em" }}>40%</div>
-                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"12px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B", marginTop:"8px", marginBottom:"24px" }}>of appointment requests come after hours</div>
-                <div style={{ width:"min(560px,100%)" }}>
-                  <div style={{ width:"100%", height:"clamp(80px,14vw,130px)", display:"flex", alignItems:"flex-end", gap:"3px" }}>
-                    {BUSINESS_BARS.map((h,i) => <div key={i} className="bar-item" data-height={h} style={{ background:"#0D0D0D" }} />)}
-                    <div style={{ position:"relative", width:"1px", height:"100%", background:"#E5E5E5", flexShrink:0 }}>
-                      <span style={{ position:"absolute", bottom:"-18px", left:"50%", transform:"translateX(-50%)", fontFamily:"Inter,sans-serif", fontSize:"9px", color:"#6B6B6B", whiteSpace:"nowrap" }}>18:00</span>
-                    </div>
-                    {AFTER_HOURS_BARS.map((h,i) => <div key={i} className="bar-item" data-height={h} style={{ background:"#E5E5E5" }} />)}
-                  </div>
-                  <div style={{ display:"flex", justifyContent:"space-between", marginTop:"24px" }}>
-                    <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", color:"#6B6B6B" }}>Answered</span>
-                    <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", color:"#DC2626" }}>No answer</span>
-                  </div>
-                </div>
-              </>
-            )}
-            {activeIndex === 2 && (
-              <>
-                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(2.6rem,6vw,4.5rem)", color:"#0D0D0D", lineHeight:1, letterSpacing:"-0.05em" }}>30,000+</div>
-                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"12px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B", marginTop:"8px", marginBottom:"20px" }}>French-speaking residents in Netanya</div>
-                <LangCard />
-              </>
-            )}
-            {activeIndex === 3 && <SalaryCard salary={salary} count={count} setSalary={setSalary} setCount={setCount} />}
-          </div>
-          <div className="ps-bottom-label" style={{ padding:"20px 32px 28px" }}>
-            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"18px", color:"#0D0D0D", letterSpacing:"-0.04em", marginBottom:"4px" }}>{activePanel.title}</div>
-            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"14px", color:"#777", lineHeight:1.5 }}>{activePanel.description}</div>
-          </div>
-        </motion.div>
-      </AnimatePresence>
-    </div>
-  );
+  const scroll = (dir) => {
+    if (!trackRef.current) return;
+    const card = trackRef.current.querySelector(".ps-card");
+    const w = card ? card.offsetWidth + 16 : 420;
+    trackRef.current.scrollBy({ left: dir * w, behavior: "smooth" });
+  };
 
   return (
-    <>
+    <section data-problem-section style={{ width:"100%", backgroundColor:"#FFFFFF", padding:"80px 0 64px" }}>
+      <div style={{ maxWidth:"1280px", margin:"0 auto", padding:"0 56px" }}>
+
+        <div style={{ marginBottom:"48px" }}>
+          <h2 style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(2rem,3.5vw,2.8rem)", color:"#0D0D0D", letterSpacing:"-0.04em", lineHeight:1.1, margin:"0 0 14px" }}>
+            Sound familiar?
+          </h2>
+          <p style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"16px", color:"#6B6B6B", margin:0, lineHeight:1.6, maxWidth:"520px" }}>
+            Calls go unanswered. Patients don't wait. Your front desk can't be everywhere at once.
+          </p>
+        </div>
+
+        <div style={{ position:"relative" }}>
+          <div ref={trackRef} className="ps-track">
+            <div ref={card0Ref}><MissedCallsCard isVisible={vis0} /></div>
+            <div ref={card1Ref}><AfterHoursCard isVisible={vis1} /></div>
+            <LanguageGapCard />
+            <SalaryCostCard />
+            <ConfirmationCard />
+          </div>
+          <button className="ps-arrow ps-arrow-left"  onClick={() => scroll(-1)} aria-label="Previous">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button className="ps-arrow ps-arrow-right" onClick={() => scroll(1)} aria-label="Next">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Inter:wght@400;500&display=swap');
-        input[type="range"] { -webkit-appearance:none; appearance:none; width:100%; height:3px; border-radius:9999px; outline:none; cursor:pointer; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:9999px; background:#000; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.2); }
-        input[type="range"]::-moz-range-thumb { width:18px; height:18px; border-radius:9999px; background:#000; border:none; cursor:pointer; }
-        .bar-item { flex:1; border-radius:4px 4px 0 0; height:0; }
+        input[type="range"]                      { -webkit-appearance:none; appearance:none; }
+        input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; width:16px; height:16px; border-radius:9999px; background:#0D0D0D; cursor:pointer; }
+        input[type="range"]::-moz-range-thumb    { width:16px; height:16px; border-radius:9999px; background:#0D0D0D; border:none; cursor:pointer; }
 
-        @media (max-width: 768px) {
-          [data-problem-section] { padding: 80px 0 40px !important; }
-          [data-problem-section] > div { padding: 0 32px !important; }
-          .ps-title-block { text-align: center !important; align-items: center !important; margin-bottom: 24px !important; }
-          [data-problem-section] h2 { font-size: 1.6rem !important; }
-          .ps-desktop-layout { display: none !important; }
-          .ps-mobile-layout  { display: block !important; }
-          .ps-gray-container { padding: 36px 20px 24px !important; min-height: auto !important; }
-          .ps-notif-stack { margin-top: 36px !important; width: 100% !important; max-width: 100% !important; }
-          .ps-bottom-label { padding: 24px 20px !important; }
+        .ps-track { display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; -ms-overflow-style:none; padding-bottom:4px; }
+        .ps-track::-webkit-scrollbar { display:none; }
+        .ps-track > div { scroll-snap-align:start; flex:0 0 auto; }
+
+        .ps-card { width:420px; height:520px; background:#F5F5F3; border-radius:20px; display:flex; flex-direction:column; overflow:hidden; }
+        .ps-card-dark { background:#16213e; }
+        .ps-card-top  { padding:28px 28px 16px; flex-shrink:0; }
+        .ps-card-label { font-family:Inter,sans-serif; font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#888; display:block; margin-bottom:12px; }
+        .ps-card-stat  { font-family:Inter,sans-serif; font-weight:300; font-size:clamp(2rem,4.5vw,3.2rem); color:#0D0D0D; letter-spacing:-0.05em; line-height:1; margin-bottom:6px; }
+        .ps-card-subdesc { font-family:Inter,sans-serif; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color:#888; margin:0 0 12px; }
+        .ps-card-copy    { font-family:Inter,sans-serif; font-size:14px; font-weight:400; color:#555; line-height:1.55; margin:0; }
+        .ps-card-visual  { flex:1; min-height:0; padding:0 28px 28px; display:flex; flex-direction:column; justify-content:flex-end; }
+
+        .ps-arrow { position:absolute; top:50%; transform:translateY(-50%); width:36px; height:36px; border-radius:50%; background:#FFFFFF; border:1px solid #E5E5E5; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#0D0D0D; box-shadow:0 1px 6px rgba(0,0,0,0.08); transition:opacity 0.15s; z-index:2; }
+        .ps-arrow:hover { opacity:0.7; }
+        .ps-arrow-left  { left:-18px; }
+        .ps-arrow-right { right:-18px; }
+
+        @media (max-width:1024px) {
+          [data-problem-section] > div { padding:0 32px !important; }
+          .ps-card { width:360px !important; height:500px !important; }
         }
-
-        @media (min-width: 769px) {
-          .ps-mobile-layout  { display: none !important; }
-          .ps-desktop-layout { display: flex !important; }
-        }
-
-        @media (min-width: 769px) and (max-width: 1024px) {
-          [data-problem-section] > div { padding: 0 32px !important; }
+        @media (max-width:768px) {
+          [data-problem-section] { padding:56px 0 48px !important; }
+          [data-problem-section] > div { padding:0 20px !important; }
+          .ps-card { width:calc(82vw) !important; height:460px !important; }
+          [data-problem-section] h2 { font-size:1.6rem !important; }
+          .ps-arrow { display:none !important; }
         }
       `}</style>
-
-      <section data-problem-section style={{ width:"100%", backgroundColor:"#FFFFFF", padding:"80px 0" }}>
-        <div style={{ maxWidth:"1200px", margin:"0 auto", padding:"0 48px" }}>
-
-          <div className="ps-title-block" style={{ display:"flex", flexDirection:"column", gap:"10px", marginBottom:"48px" }}>
-            <h2 style={{ fontFamily:"Inter,sans-serif", fontWeight: 300, fontSize:"clamp(2rem,3.5vw,2.6rem)", color:"#0D0D0D", letterSpacing:"-0.04em", lineHeight:1.1, margin:0 }}>
-              Sound familiar?
-            </h2>
-            <p style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"14px", color:"#777", margin:0, lineHeight:1.5 }}>
-              Calls go unanswered. Patients don't wait. Your front desk can't be everywhere at once.
-            </p>
-          </div>
-
-          {/* Mobile: 4 stacked cards */}
-          <div className="ps-mobile-layout">
-            {PANELS.map((panel, i) => (
-              <MobileCard key={panel.id} panel={panel} index={i} salary={salary} count={count} setSalary={setSalary} setCount={setCount} />
-            ))}
-          </div>
-
-          {/* Desktop: tab list + animated card */}
-          <div className="ps-desktop-layout" style={{ gap:"5%", alignItems:"flex-start" }}>
-            <div style={{ width:"35%", flexShrink:0, display:"flex", flexDirection:"column" }}>
-              {PANELS.map((panel, i) => {
-                const isActive = i === activeIndex;
-                const Icon = panel.icon !== "shekel" ? panel.icon : null;
-                return (
-                  <button key={panel.id}
-                    onClick={() => setActiveIndex(i)}
-                    style={{ display:"flex", alignItems:"center", gap:"14px", width:"100%", padding:"16px 0", background:"none", border:"none", borderTop:i>0?"1px solid rgba(0,0,0,0.08)":"none", cursor:"pointer", textAlign:"left", opacity:isActive?1:0.35, transition:"opacity 0.25s ease" }}
-                  >
-                    {Icon ? <Icon size={18} strokeWidth={1.8} color={isActive?"#0D0D0D":"#999"} />
-                           : <span style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"18px", color:isActive?"#0D0D0D":"#999", lineHeight:1 }}>₪</span>}
-                    <span style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"15px", color:isActive?"#0D0D0D":"#999", letterSpacing:"-0.01em" }}>{panel.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-            <div style={{ width:"65%", flexShrink:0 }}>{desktopCard}</div>
-          </div>
-
-        </div>
-      </section>
-    </>
+    </section>
   );
 }
