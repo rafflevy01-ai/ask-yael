@@ -34,7 +34,7 @@ export default function HeroSection() {
       <div style={{
         position: "absolute",
         inset: 0,
-        background: "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.72) 100%)",
+        background: "linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.52) 50%, rgba(0,0,0,0.85) 100%)",
         zIndex: 1,
         pointerEvents: "none",
       }} />
@@ -62,38 +62,22 @@ export default function HeroSection() {
             gap: "8%",
           }}
         >
-          {/* LEFT — brand name + tagline */}
+          {/* LEFT — two equal lines */}
           <div className="hero-left" style={{ flex: "0 0 52%", minWidth: 0 }}>
-            {/* Brand name — primary, large */}
             <h1
               style={{
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 300,
-                fontSize: "clamp(2.8rem, 5vw, 4.5rem)",
+                fontSize: "clamp(1.9rem, 3.2vw, 2.8rem)",
                 color: "#FFFFFF",
-                letterSpacing: "-0.03em",
-                lineHeight: 1.05,
-                margin: "0 0 14px 0",
-              }}
-            >
-              Meet Yael.
-            </h1>
-
-            {/* Tagline — secondary, clearly smaller */}
-            <p
-              className="hero-tagline"
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 300,
-                fontSize: "clamp(1.1rem, 2vw, 1.5rem)",
-                color: "rgba(255,255,255,0.82)",
-                letterSpacing: "-0.015em",
-                lineHeight: 1.35,
+                letterSpacing: "-0.025em",
+                lineHeight: 1.25,
                 margin: 0,
               }}
             >
+              Meet Yael.<br />
               Your front desk on autopilot.
-            </p>
+            </h1>
           </div>
 
           {/* RIGHT — description + CTAs */}
@@ -181,10 +165,7 @@ export default function HeroSection() {
             width: 100% !important;
           }
           .hero-left h1 {
-            font-size: clamp(2.2rem, 8vw, 2.8rem) !important;
-          }
-          .hero-tagline {
-            font-size: 1rem !important;
+            font-size: clamp(1.6rem, 6vw, 2rem) !important;
           }
           .hero-cta-row {
             flex-direction: row !important;
@@ -201,7 +182,7 @@ export default function HeroSection() {
         /* ── iPad / tablet ── */
         @media (min-width: 769px) and (max-width: 1024px) {
           .hero-inner { padding: 0 40px 64px !important; }
-          .hero-left h1 { font-size: clamp(2.2rem, 4vw, 3rem) !important; }
+          .hero-left h1 { font-size: clamp(1.7rem, 3vw, 2.4rem) !important; }
         }
       `}</style>
     </section>
