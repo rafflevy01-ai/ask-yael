@@ -17,7 +17,7 @@ export default function RecoveryChart() {
         {BARS.map((bar, i) => (
           <div key={i} style={{
             width: "18px", height: `${bar.h}%`,
-            background: bar.dark ? "#FAFAFA" : "#374151",
+            background: bar.dark ? "#0D0D0D" : "#E5E5E5",
             borderRadius: "3px 3px 0 0",
           }} />
         ))}

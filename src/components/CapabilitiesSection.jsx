@@ -24,7 +24,7 @@ export default function CapabilitiesSection() {
     return () => clearInterval(interval);
   }, []);
   return (
-    <section data-capabilities style={{ padding: "80px 40px", backgroundColor: "#121212" }}>
+    <section data-capabilities style={{ padding: "80px 40px", backgroundColor: "#FFFFFF" }}>
       <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
 
         {/* Header */}
@@ -37,7 +37,7 @@ export default function CapabilitiesSection() {
         </span>
         <h2 style={{
           fontFamily: "Inter, sans-serif", fontWeight: 300, fontSize: "clamp(2rem, 3.5vw, 2.25rem)",
-          color: "#FAFAFA", letterSpacing: "-0.04em", lineHeight: 1.2,
+          color: "#0D0D0D", letterSpacing: "-0.04em", lineHeight: 1.2,
           margin: "0 0 40px 0", textAlign: "left", maxWidth: "560px",
         }}>
           Everything your front desk handles. Automated.
@@ -90,7 +90,7 @@ export default function CapabilitiesSection() {
                         fontFamily: "Inter, sans-serif",
                         fontSize: "10px",
                         fontWeight: isActive ? 600 : 400,
-                        color: isActive ? "#FAFAFA" : "#6B6B6B",
+                        color: isActive ? "#0D0D0D" : "#6B6B6B",
                         transition: "all 0.4s ease",
                       }}>
                         {lang.label}
@@ -119,7 +119,7 @@ export default function CapabilitiesSection() {
               <Shield size={28} strokeWidth={1.6} color="#000000" style={{ marginBottom: "14px" }} />
               <h4 style={{
                 fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
-                color: "#FAFAFA", margin: "0 0 6px",
+                color: "#0D0D0D", margin: "0 0 6px",
               }}>
                 HMO and insurance
               </h4>
@@ -153,7 +153,7 @@ export default function CapabilitiesSection() {
                 <AlertTriangle size={28} strokeWidth={1.6} color="#EF4444" />
                 <h4 style={{
                   fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
-                  color: "#FAFAFA", margin: "14px 0 6px",
+                  color: "#0D0D0D", margin: "14px 0 6px",
                 }}>
                   Emergency triage
                 </h4>
@@ -196,9 +196,9 @@ export default function CapabilitiesSection() {
         }
 
         .caps-bento-card {
-          background: #1A1A1A;
+          background: #FFFFFF;
           border-radius: 16px;
-          border: 1px solid #374151;
+          border: 1px solid rgba(0,0,0,0.06);
           overflow: hidden;
         }
 

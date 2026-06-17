@@ -56,8 +56,8 @@ export default function RegistrationChecklist() {
             {/* Circle */}
             <motion.div
               animate={{
-                backgroundColor: done ? "#FAFAFA" : "#1E1E1E",
-                borderColor: done ? "#FAFAFA" : "#E0E0E0",
+                backgroundColor: done ? "#0D0D0D" : "#F5F5F3",
+                borderColor: done ? "#0D0D0D" : "#E0E0E0",
               }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               style={{
@@ -78,7 +78,7 @@ export default function RegistrationChecklist() {
             {/* Label */}
             <motion.span
               animate={{
-                color: done ? "#FAFAFA" : "#6B6B6B",
+                color: done ? "#0D0D0D" : "#6B6B6B",
                 fontWeight: done ? 600 : 400,
               }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}

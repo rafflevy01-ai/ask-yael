@@ -33,14 +33,14 @@ export default function CtaSection() {
   }, []);
 
   return (
-    <section data-cta style={{ backgroundColor: "#121212", padding: "80px 40px 40px" }}>
+    <section data-cta style={{ backgroundColor: "#FFFFFF", padding: "80px 40px 40px" }}>
       <div style={{ maxWidth: "600px", margin: "0 auto", textAlign: "center" }}>
         <h2
           style={{
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 300,
             fontSize: "36px",
-            color: "#FAFAFA",
+            color: "#0D0D0D",
             letterSpacing: "-0.72px",
             margin: "0 0 16px",
           }}
@@ -53,7 +53,7 @@ export default function CtaSection() {
             fontFamily: "Inter, sans-serif",
             fontWeight: 400,
             fontSize: "16px",
-            color: "#B8B8B8",
+            color: "#555555",
             lineHeight: 1.5,
             margin: "0 0 32px",
           }}
@@ -76,8 +76,8 @@ export default function CtaSection() {
               fontFamily: "Inter, sans-serif",
               fontWeight: 500,
               fontSize: "15px",
-              color: "#121212",
-              background: "#FAFAFA",
+              color: "#FFFFFF",
+              background: "#0D0D0D",
               borderRadius: "9999px",
               height: "40px",
               padding: "0 20px",
@@ -99,9 +99,9 @@ export default function CtaSection() {
               fontFamily: "Inter, sans-serif",
               fontWeight: 500,
               fontSize: "15px",
-              color: "#FAFAFA",
+              color: "#0D0D0D",
               background: "transparent",
-              border: "1.5px solid #374151",
+              border: "1.5px solid #E5E5E5",
               borderRadius: "9999px",
               height: "40px",
               padding: "0 20px",

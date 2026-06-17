@@ -300,7 +300,7 @@ export default function HearYaelSection() {
             fontFamily: "Inter, sans-serif",
             fontWeight: 300,
             fontSize: "clamp(2rem, 3.5vw, 2.25rem)",
-            color: "#FAFAFA",
+            color: "#0D0D0D",
             letterSpacing: "-0.04em",
             lineHeight: 1.2,
             margin: 0,

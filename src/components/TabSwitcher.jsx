@@ -91,7 +91,7 @@ export default function TabSwitcher({ activeTab, onTabChange }) {
               fontSize: "13px",
               color: isActive ? "#0A0A0A" : "#888888",
               backgroundColor: isActive ? "#FFFFFF" : "transparent",
-              border: isActive ? "1px solid #374151" : "1px solid transparent",
+              border: isActive ? "1px solid #E5E5E5" : "1px solid transparent",
               borderRadius: "999px",
               padding: "6px 24px",
               display: "inline-flex",

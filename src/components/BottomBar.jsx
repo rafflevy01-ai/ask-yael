@@ -39,7 +39,7 @@ function AnimatedNumber({ final, suffix, isString, start }) {
         fontFamily: "Inter, sans-serif",
         fontWeight: 400,
         fontSize: "28px",
-        color: "#FAFAFA",
+        color: "#0D0D0D",
         letterSpacing: "-0.04em",
       }}>
       {isString ? final : display}{suffix}
@@ -117,7 +117,7 @@ export default function BottomBar() {
               fontFamily: "Inter, sans-serif",
               fontWeight: 500,
               fontSize: "14px",
-              color: "#1A1A1A",
+              color: "#FFFFFF",
             }}>
             Yael — AI Receptionist
           </span>

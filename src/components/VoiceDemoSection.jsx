@@ -103,7 +103,7 @@ export default function VoiceDemoSection() {
       style={{
         position: "relative",
         width: "100%",
-        backgroundColor: "#121212",
+        backgroundColor: "#FFFFFF",
         padding: "0 0 80px",
         marginTop: "-60px",
         zIndex: 2,

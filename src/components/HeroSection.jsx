@@ -94,7 +94,7 @@ export default function HeroSection() {
               <a href="#book-demo" className="hero-btn-primary"
                 style={{
                   fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
-                  color: "#000000", backgroundColor: "#1A1A1A", borderRadius: "999px",
+                  color: "#000000", backgroundColor: "#FFFFFF", borderRadius: "999px",
                   padding: "13px 28px", display: "inline-flex", alignItems: "center",
                   textDecoration: "none", cursor: "pointer", whiteSpace: "nowrap",
                   transition: "opacity 0.15s ease",
@@ -124,7 +124,7 @@ export default function HeroSection() {
           <a href="#book-demo"
             style={{
               fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
-              color: "#000000", backgroundColor: "#1A1A1A", borderRadius: "999px",
+              color: "#000000", backgroundColor: "#FFFFFF", borderRadius: "999px",
               padding: "13px 0", display: "flex", alignItems: "center",
               justifyContent: "center", textDecoration: "none", cursor: "pointer",
               flex: 1,

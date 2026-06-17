@@ -58,7 +58,7 @@ export default function FaqSection() {
 
         {/* Outer card */}
         <div style={{
-          background: "#1A1A1A",
+          background: "#FFFFFF",
           borderRadius: "16px",
           border: "0.5px solid #E2E2E2",
           overflow: "hidden",
@@ -91,7 +91,7 @@ export default function FaqSection() {
               fontFamily: "Inter, sans-serif",
               fontWeight: 300,
               fontSize: "clamp(1.75rem, 3vw, 2rem)",
-              color: "#FAFAFA",
+              color: "#0D0D0D",
               letterSpacing: "-0.04em",
               lineHeight: 1.2,
               margin: "0 0 24px 0",
@@ -107,8 +107,8 @@ export default function FaqSection() {
               gap: "10px",
               padding: "10px 14px",
               borderRadius: "10px",
-              border: `1px solid ${searchFocused ? ACCENT : "#374151"}`,
-              background: "#1A1A1A",
+              border: `1px solid ${searchFocused ? ACCENT : "#E5E5E5"}`,
+              background: "#FFFFFF",
               transition: "border-color 0.2s ease",
             }}>
               <Search size={16} strokeWidth={1.8} color={searchFocused ? ACCENT : "#6B6B6B"} style={{ flexShrink: 0, transition: "color 0.2s ease" }} />
@@ -127,7 +127,7 @@ export default function FaqSection() {
                   fontFamily: "Inter, sans-serif",
                   fontWeight: 400,
                   fontSize: "14px",
-                  color: "#FAFAFA",
+                  color: "#0D0D0D",
                 }}
               />
             </div>
@@ -145,8 +145,8 @@ export default function FaqSection() {
                     padding: "6px 14px",
                     borderRadius: "999px",
                     border: activeTag === cat ? `1px solid ${ACCENT}` : "1px solid #E2E2E2",
-                    background: activeTag === cat ? "#FAFAFA" : "#FFFFFF12",
-                    color: activeTag === cat ? "#121212" : "#B8B8B8",
+                    background: activeTag === cat ? "#0D0D0D" : "#FFFFFF12",
+                    color: activeTag === cat ? "#FFFFFF" : "#555555",
                     cursor: "pointer",
                     transition: "all 0.15s ease",
                   }}
@@ -196,7 +196,7 @@ export default function FaqSection() {
                         fontFamily: "Inter, sans-serif",
                         fontWeight: 500,
                         fontSize: "14px",
-                        color: isOpen ? ACCENT : "#FAFAFA",
+                        color: isOpen ? ACCENT : "#0D0D0D",
                         lineHeight: 1.5,
                         transition: "color 0.15s ease",
                       }}

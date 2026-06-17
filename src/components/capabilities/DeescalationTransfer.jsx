@@ -57,7 +57,7 @@ export default function DeescalationTransfer() {
               </div>
               <span style={{
                 fontFamily: "Inter, sans-serif", fontWeight: isActive ? 600 : 400,
-                fontSize: "9px", color: isActive ? "#FAFAFA" : "#CBD5E1",
+                fontSize: "9px", color: isActive ? "#0D0D0D" : "#CBD5E1",
                 textAlign: "center", lineHeight: 1.3, transition: "all 0.3s ease",
               }}>
                 {step.label}
@@ -67,7 +67,7 @@ export default function DeescalationTransfer() {
             {!isLast && (
               <div style={{
                 width: 28, height: 3, borderRadius: "2px",
-                background: i < activeStep ? step.border : "#374151",
+                background: i < activeStep ? step.border : "#E5E5E5",
                 transition: "background 0.3s ease",
                 marginBottom: "20px",
               }} />

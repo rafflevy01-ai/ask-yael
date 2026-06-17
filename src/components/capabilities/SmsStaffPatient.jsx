@@ -110,7 +110,7 @@ export default function SmsStaffPatient() {
                 {/* App icon */}
                 <div style={{
                   width: "26px", height: "26px", borderRadius: "6px",
-                  background: "#FAFAFA", flexShrink: 0,
+                  background: "#0D0D0D", flexShrink: 0,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   <span style={{ color: "#FFF", fontSize: "12px", fontWeight: 700, lineHeight: 1 }}>Y</span>
@@ -119,19 +119,19 @@ export default function SmsStaffPatient() {
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{
                     fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: "10px",
-                    color: "#FAFAFA", marginBottom: "3px",
+                    color: "#0D0D0D", marginBottom: "3px",
                   }}>
                     {NOTIF.title}
                   </div>
                   <div style={{
                     fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px",
-                    color: "#FAFAFA", lineHeight: 1.35, marginBottom: "2px",
+                    color: "#0D0D0D", lineHeight: 1.35, marginBottom: "2px",
                   }}>
                     {NOTIF.subtitle}
                   </div>
                   <div style={{
                     fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "10px",
-                    color: "#B8B8B8", lineHeight: 1.35,
+                    color: "#555555", lineHeight: 1.35,
                   }}>
                     {NOTIF.body}
                   </div>

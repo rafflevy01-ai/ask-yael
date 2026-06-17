@@ -31,7 +31,7 @@ export default function OnlineStatusBadge() {
       {/* Green pill badge */}
       <div style={{
         display: "flex", alignItems: "center", gap: "8px",
-        background: "#1E1E1E", border: "1px solid #000000",
+        background: "#F5F5F3", border: "1px solid #000000",
         borderRadius: "999px", padding: "6px 16px",
       }}>
         {/* Pulsing green dot */}

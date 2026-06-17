@@ -35,7 +35,7 @@ export default function SmsSequence() {
         }}>
           <div style={{
             fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "12px",
-            color: "#FAFAFA", lineHeight: 1.5, whiteSpace: "pre-line",
+            color: "#0D0D0D", lineHeight: 1.5, whiteSpace: "pre-line",
           }}>
             {sms.body}
           </div>
