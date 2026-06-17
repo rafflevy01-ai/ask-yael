@@ -20,7 +20,7 @@ const LANG_THEMES = {
     "radial-gradient(circle at 30% 30%, #bcd4f0, #2b6bb5)",
     "radial-gradient(circle at 70% 60%, #5b93d6, #2562aa)",
     "radial-gradient(circle at 50% 80%, #000000, #1f5299)",
-    "radial-gradient(circle at 20% 70%, #EAE8E4, #2b6bb5)",
+    "radial-gradient(circle at 20% 70%, #1E1E1E, #2b6bb5)",
   ],
 };
 

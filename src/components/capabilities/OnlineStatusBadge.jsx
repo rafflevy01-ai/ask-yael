@@ -31,7 +31,7 @@ export default function OnlineStatusBadge() {
       {/* Green pill badge */}
       <div style={{
         display: "flex", alignItems: "center", gap: "8px",
-        background: "#F4F1EE", border: "1px solid #000000",
+        background: "#1E1E1E", border: "1px solid #000000",
         borderRadius: "999px", padding: "6px 16px",
       }}>
         {/* Pulsing green dot */}
@@ -51,7 +51,7 @@ export default function OnlineStatusBadge() {
       {/* Rotating subtitle */}
       <span style={{
         fontFamily: "Inter, sans-serif", fontWeight: 400,
-        fontSize: "11px", color: "#B8B1A8",
+        fontSize: "11px", color: "#6B6B6B",
         opacity: visible ? 1 : 0,
         transition: "opacity 0.4s ease",
         minHeight: "16px",

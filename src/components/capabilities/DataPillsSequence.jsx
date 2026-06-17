@@ -33,7 +33,7 @@ export default function DataPillsSequence() {
     <div style={{ padding: "8px 0" }}>
       <span style={{
         fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "10px",
-        color: "#B8B1A8", display: "block", marginBottom: "12px",
+        color: "#6B6B6B", display: "block", marginBottom: "12px",
       }}>
         Collected during the call
       </span>

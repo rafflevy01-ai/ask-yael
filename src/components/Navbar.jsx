@@ -17,10 +17,10 @@ export default function Navbar() {
     return () => obs.disconnect();
   }, []);
 
-  const textColor    = overHero ? "#FFFFFF"                  : "#0D0D0D";
-  const subColor     = overHero ? "rgba(255,255,255,0.5)"    : "#B8B1A8";
-  const divColor     = overHero ? "rgba(255,255,255,0.18)"   : "#E5E5E5";
-  const navBg        = overHero ? "transparent"              : "rgba(253,252,252,0.92)";
+  const textColor    = overHero ? "#FFFFFF"                  : "#FAFAFA";
+  const subColor     = overHero ? "rgba(255,255,255,0.5)"    : "#6B6B6B";
+  const divColor     = overHero ? "rgba(255,255,255,0.18)"   : "#374151";
+  const navBg        = overHero ? "transparent"              : "rgba(18,18,18,0.95)";
   const btnBg        = overHero ? "rgba(255,255,255,0.14)"   : "#000000";
   const btnBorder    = overHero ? "rgba(255,255,255,0.22)"   : "transparent";
 
@@ -41,7 +41,7 @@ export default function Navbar() {
         backgroundColor: navBg,
         backdropFilter: overHero ? "none" : "blur(16px)",
         WebkitBackdropFilter: overHero ? "none" : "blur(16px)",
-        borderBottom: overHero ? "none" : "1px solid rgba(0,0,0,0.06)",
+        borderBottom: overHero ? "none" : "1px solid rgba(255,255,255,0.06)",
         transition: "background-color 0.3s ease, border-color 0.3s ease",
         pointerEvents: "auto",
       }}
@@ -51,7 +51,7 @@ export default function Navbar() {
         <span style={{
           fontFamily: "Inter, sans-serif",
           fontSize: "16px",
-          letterSpacing: "-0.02em",
+          letterSpacing: "-0.04em",
           color: textColor,
           transition: "color 0.3s ease",
         }}>

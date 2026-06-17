@@ -80,12 +80,12 @@ export default function HowItWorksSection() {
         <div style={{ marginBottom: "32px", textAlign: "center" }}>
           <span style={{
             fontFamily: "Inter, sans-serif", fontSize: "11px", textTransform: "uppercase",
-            letterSpacing: "0.12em", color: "#888888", display: "block", marginBottom: "12px",
+            letterSpacing: "0.12em", color: "#6B6B6B", display: "block", marginBottom: "12px",
           }}>How it works</span>
           <h2 style={{
             fontFamily: "Inter, sans-serif", fontWeight: 300,
-                      fontSize: "clamp(2rem, 3.5vw, 2.25rem)", color: "#0D0D0D",
-                      letterSpacing: "-0.02em", lineHeight: 1.2, margin: 0,
+                      fontSize: "clamp(2rem, 3.5vw, 2.25rem)", color: "#FAFAFA",
+                      letterSpacing: "-0.04em", lineHeight: 1.2, margin: 0,
                     }}>How Yael works.</h2>
         </div>
 
@@ -138,16 +138,16 @@ export default function HowItWorksSection() {
                     }}>
                     <span style={{
                       fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
-                      color: "#888888", display: "block", marginBottom: "16px",
+                      color: "#6B6B6B", display: "block", marginBottom: "16px",
                     }}>{step.number}</span>
                     <h3 style={{
                       fontFamily: "Inter, sans-serif", fontWeight: 400,
-                      fontSize: "clamp(1.25rem, 2vw, 1.5rem)", color: "#0D0D0D",
-                      letterSpacing: "-0.02em", lineHeight: 1.2, margin: "0 0 12px 0",
+                      fontSize: "clamp(1.25rem, 2vw, 1.5rem)", color: "#FAFAFA",
+                      letterSpacing: "-0.04em", lineHeight: 1.2, margin: "0 0 12px 0",
                     }}>{step.title}</h3>
                     <p style={{
                       fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
-                      color: "#555555", lineHeight: 1.65, margin: 0, maxWidth: "520px",
+                      color: "#B8B8B8", lineHeight: 1.65, margin: 0, maxWidth: "520px",
                     }}>{step.description}</p>
                   </div>
                 ))}
@@ -184,16 +184,16 @@ export default function HowItWorksSection() {
                     <span style={{
                       fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px",
                       textTransform: "uppercase", letterSpacing: "0.1em",
-                      color: "#888888", display: "block", marginBottom: "12px",
+                      color: "#6B6B6B", display: "block", marginBottom: "12px",
                     }}>Step {step.number}</span>
                     <h3 style={{
                       fontFamily: "Inter, sans-serif", fontWeight: 400,
-                      fontSize: "1.4rem", color: "#0D0D0D", letterSpacing: "-0.02em",
+                      fontSize: "1.4rem", color: "#FAFAFA", letterSpacing: "-0.04em",
                       lineHeight: 1.15, margin: "0 0 8px 0",
                     }}>{step.title}</h3>
                     <p style={{
                       fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px",
-                      color: "#555555", lineHeight: 1.6, margin: "0 0 20px 0",
+                      color: "#B8B8B8", lineHeight: 1.6, margin: "0 0 20px 0",
                     }}>{step.description}</p>
                   </div>
                   <div style={{ maxWidth: "340px", margin: "0 auto" }}>
@@ -215,7 +215,7 @@ export default function HowItWorksSection() {
         marginTop: "80px", borderTop: "1px solid rgba(0,0,0,0.08)", borderBottom: "1px solid rgba(0,0,0,0.08)",
         padding: "20px 40px", textAlign: "center",
       }}>
-        <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px", color: "#0D0D0D", margin: 0 }}>
+        <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px", color: "#FAFAFA", margin: 0 }}>
           <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 400 }}>2–4 weeks</span>
           {" "}— Live. We handle everything.
         </p>

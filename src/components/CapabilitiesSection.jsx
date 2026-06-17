@@ -24,20 +24,20 @@ export default function CapabilitiesSection() {
     return () => clearInterval(interval);
   }, []);
   return (
-    <section data-capabilities style={{ padding: "80px 40px", backgroundColor: "#FDFCFC" }}>
+    <section data-capabilities style={{ padding: "80px 40px", backgroundColor: "#121212" }}>
       <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
 
         {/* Header */}
         <span style={{
           fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "10px",
-          textTransform: "uppercase", letterSpacing: "0.12em", color: "#888888",
+          textTransform: "uppercase", letterSpacing: "0.12em", color: "#6B6B6B",
           display: "block", marginBottom: "14px",
         }}>
           Capabilities
         </span>
         <h2 style={{
           fontFamily: "Inter, sans-serif", fontWeight: 300, fontSize: "clamp(2rem, 3.5vw, 2.25rem)",
-          color: "#0D0D0D", letterSpacing: "-0.02em", lineHeight: 1.2,
+          color: "#FAFAFA", letterSpacing: "-0.04em", lineHeight: 1.2,
           margin: "0 0 40px 0", textAlign: "left", maxWidth: "560px",
         }}>
           Everything your front desk handles. Automated.
@@ -90,7 +90,7 @@ export default function CapabilitiesSection() {
                         fontFamily: "Inter, sans-serif",
                         fontSize: "10px",
                         fontWeight: isActive ? 600 : 400,
-                        color: isActive ? "#0D0D0D" : "#B8B1A8",
+                        color: isActive ? "#FAFAFA" : "#6B6B6B",
                         transition: "all 0.4s ease",
                       }}>
                         {lang.label}
@@ -119,13 +119,13 @@ export default function CapabilitiesSection() {
               <Shield size={28} strokeWidth={1.6} color="#000000" style={{ marginBottom: "14px" }} />
               <h4 style={{
                 fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
-                color: "#0D0D0D", margin: "0 0 6px",
+                color: "#FAFAFA", margin: "0 0 6px",
               }}>
                 HMO and insurance
               </h4>
               <p style={{
                 fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
-                color: "#888888", lineHeight: 1.5, margin: 0,
+                color: "#6B6B6B", lineHeight: 1.5, margin: 0,
               }}>
                 Price and treatment inquiries answered instantly
               </p>
@@ -153,13 +153,13 @@ export default function CapabilitiesSection() {
                 <AlertTriangle size={28} strokeWidth={1.6} color="#EF4444" />
                 <h4 style={{
                   fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
-                  color: "#0D0D0D", margin: "14px 0 6px",
+                  color: "#FAFAFA", margin: "14px 0 6px",
                 }}>
                   Emergency triage
                 </h4>
                 <p style={{
                   fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
-                  color: "#888888", lineHeight: 1.5, margin: 0,
+                  color: "#6B6B6B", lineHeight: 1.5, margin: 0,
                 }}>
                   Same-day appointments with fee disclosure
                 </p>
@@ -196,9 +196,9 @@ export default function CapabilitiesSection() {
         }
 
         .caps-bento-card {
-          background: #FFFFFF;
+          background: #1A1A1A;
           border-radius: 16px;
-          border: 1px solid rgba(0,0,0,0.06);
+          border: 1px solid #374151;
           overflow: hidden;
         }
 
@@ -221,7 +221,7 @@ export default function CapabilitiesSection() {
           font-family: "Inter", sans-serif;
           font-weight: 500;
           font-size: 14px;
-          color: #0D0D0D;
+          color: #FAFAFA;
           margin: 0 0 4px;
           letter-spacing: -0.01em;
         }
@@ -230,7 +230,7 @@ export default function CapabilitiesSection() {
           font-family: "Inter", sans-serif;
           font-weight: 400;
           font-size: 12px;
-          color: #888888;
+          color: #6B6B6B;
           margin: 0 0 16px;
           line-height: 1.5;
         }

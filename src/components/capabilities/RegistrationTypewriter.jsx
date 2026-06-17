@@ -85,7 +85,7 @@ export default function RegistrationTypewriter() {
             fontFamily: "Inter, sans-serif",
             fontWeight: 400,
             fontSize: "11px",
-            color: "#B8B1A8",
+            color: "#6B6B6B",
             whiteSpace: "nowrap",
             flexShrink: 0,
           }}>
@@ -98,7 +98,7 @@ export default function RegistrationTypewriter() {
               fontFamily: "'Inter', sans-serif",
               fontWeight: 500,
               fontSize: "11px",
-              color: "#0D0D0D",
+              color: "#FAFAFA",
               letterSpacing: "-0.01em",
               whiteSpace: "nowrap",
               textAlign: "right",
@@ -112,7 +112,7 @@ export default function RegistrationTypewriter() {
                     display: "inline-block",
                     width: "1px",
                     height: "13px",
-                    background: "#0D0D0D",
+                    background: "#FAFAFA",
                     marginLeft: "1px",
                     verticalAlign: "middle",
                   }}
@@ -129,12 +129,12 @@ export default function RegistrationTypewriter() {
                   transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   style={{
                     width: "18px", height: "18px", borderRadius: "50%",
-                    background: "#EAE8E4",
+                    background: "#1E1E1E",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     flexShrink: 0,
                   }}
                 >
-                  <Check size={10} strokeWidth={3} color="#0D0D0D" />
+                  <Check size={10} strokeWidth={3} color="#FAFAFA" />
                 </motion.div>
               )}
             </AnimatePresence>

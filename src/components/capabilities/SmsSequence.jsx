@@ -35,13 +35,13 @@ export default function SmsSequence() {
         }}>
           <div style={{
             fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "12px",
-            color: "#0D0D0D", lineHeight: 1.5, whiteSpace: "pre-line",
+            color: "#FAFAFA", lineHeight: 1.5, whiteSpace: "pre-line",
           }}>
             {sms.body}
           </div>
           <div style={{
             fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "10px",
-            color: "#B8B1A8", marginTop: "6px",
+            color: "#6B6B6B", marginTop: "6px",
           }}>
             {sms.sender}
           </div>

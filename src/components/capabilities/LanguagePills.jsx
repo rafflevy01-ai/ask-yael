@@ -50,7 +50,7 @@ export default function LanguagePills() {
             {/* Label */}
             <motion.span
               animate={{
-                color: isActive ? "#0D0D0D" : "#B8B1A8",
+                color: isActive ? "#FAFAFA" : "#6B6B6B",
                 fontWeight: isActive ? 600 : 400,
               }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}

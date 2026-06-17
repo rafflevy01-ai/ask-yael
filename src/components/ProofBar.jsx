@@ -27,7 +27,7 @@ function AnimatedNumber({ end, suffix, start }) {
           fontWeight: 300,
           fontSize: "2.5rem",
           color: "#000000",
-          letterSpacing: "-0.02em",
+          letterSpacing: "-0.04em",
           lineHeight: 1,
           display: "inline-block",
         }}
@@ -40,7 +40,7 @@ function AnimatedNumber({ end, suffix, start }) {
           fontWeight: 300,
           fontSize: "2.5rem",
           color: "#000000",
-          letterSpacing: "-0.02em",
+          letterSpacing: "-0.04em",
           lineHeight: 1,
         }}>
           {suffix}

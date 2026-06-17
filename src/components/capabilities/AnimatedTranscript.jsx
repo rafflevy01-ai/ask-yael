@@ -101,13 +101,13 @@ export default function AnimatedTranscript() {
             width: "8px", height: "8px", borderRadius: "50%", background: "#000000",
             display: "inline-block", animation: "pulse-dot 1.5s ease-in-out infinite",
           }} />
-          <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "12px", color: "#0D0D0D" }}>
+          <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "12px", color: "#FAFAFA" }}>
             Live call
           </span>
           <WaveformBars />
         </div>
         <span style={{
-          fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px", color: "#888",
+          fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px", color: "#6B6B6B",
           fontVariantNumeric: "tabular-nums",
         }}>
           {formatTime(elapsed)}
@@ -125,8 +125,8 @@ export default function AnimatedTranscript() {
               <div style={{
                 maxWidth: "78%", padding: "8px 12px", borderRadius: "12px",
                 fontFamily: "Inter, sans-serif", fontSize: "12px", lineHeight: 1.5,
-                background: msg.role === "patient" ? "#F1F0EE" : "#DBEAFE",
-                color: "#0D0D0D",
+                background: msg.role === "patient" ? "#1E1E1E" : "#DBEAFE",
+                color: "#FAFAFA",
                 borderTopLeftRadius: msg.role === "patient" ? "2px" : "12px",
                 borderTopRightRadius: msg.role === "patient" ? "12px" : "2px",
               }}>
@@ -138,7 +138,7 @@ export default function AnimatedTranscript() {
             <div style={{ display: "flex", justifyContent: msgIndex % 2 === 0 ? "flex-start" : "flex-end" }}>
               <div style={{
                 padding: "8px 16px", borderRadius: "12px",
-                background: msgIndex % 2 === 0 ? "#F1F0EE" : "#DBEAFE",
+                background: msgIndex % 2 === 0 ? "#1E1E1E" : "#DBEAFE",
                 display: "flex", gap: "3px",
               }}>
                 <TypingDot delay="0s" /><TypingDot delay="0.2s" /><TypingDot delay="0.4s" />
@@ -160,7 +160,7 @@ export default function AnimatedTranscript() {
             padding: "4px 10px", borderRadius: "999px",
             background: conv.lang === l.key ? "#000000" : "transparent",
             color: conv.lang === l.key ? "#FFFFFF" : "#888888",
-            border: conv.lang === l.key ? "none" : "1px solid #E5E5E5",
+            border: conv.lang === l.key ? "none" : "1px solid #374151",
             transition: "all 0.3s ease",
           }}>
             {l.label}

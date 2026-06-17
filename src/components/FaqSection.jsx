@@ -58,7 +58,7 @@ export default function FaqSection() {
 
         {/* Outer card */}
         <div style={{
-          background: "#FFFFFF",
+          background: "#1A1A1A",
           borderRadius: "16px",
           border: "0.5px solid #E2E2E2",
           overflow: "hidden",
@@ -91,8 +91,8 @@ export default function FaqSection() {
               fontFamily: "Inter, sans-serif",
               fontWeight: 300,
               fontSize: "clamp(1.75rem, 3vw, 2rem)",
-              color: "#0D0D0D",
-              letterSpacing: "-0.02em",
+              color: "#FAFAFA",
+              letterSpacing: "-0.04em",
               lineHeight: 1.2,
               margin: "0 0 24px 0",
             }}>
@@ -107,11 +107,11 @@ export default function FaqSection() {
               gap: "10px",
               padding: "10px 14px",
               borderRadius: "10px",
-              border: `1px solid ${searchFocused ? ACCENT : "#E2E2E2"}`,
-              background: "#FFFFFF",
+              border: `1px solid ${searchFocused ? ACCENT : "#374151"}`,
+              background: "#1A1A1A",
               transition: "border-color 0.2s ease",
             }}>
-              <Search size={16} strokeWidth={1.8} color={searchFocused ? ACCENT : "#B8B1A8"} style={{ flexShrink: 0, transition: "color 0.2s ease" }} />
+              <Search size={16} strokeWidth={1.8} color={searchFocused ? ACCENT : "#6B6B6B"} style={{ flexShrink: 0, transition: "color 0.2s ease" }} />
               <input
                 type="text"
                 placeholder="Search questions..."
@@ -127,7 +127,7 @@ export default function FaqSection() {
                   fontFamily: "Inter, sans-serif",
                   fontWeight: 400,
                   fontSize: "14px",
-                  color: "#0D0D0D",
+                  color: "#FAFAFA",
                 }}
               />
             </div>
@@ -145,8 +145,8 @@ export default function FaqSection() {
                     padding: "6px 14px",
                     borderRadius: "999px",
                     border: activeTag === cat ? `1px solid ${ACCENT}` : "1px solid #E2E2E2",
-                    background: activeTag === cat ? ACCENT : "transparent",
-                    color: activeTag === cat ? "#FFFFFF" : "#666666",
+                    background: activeTag === cat ? "#FAFAFA" : "#FFFFFF12",
+                    color: activeTag === cat ? "#121212" : "#B8B8B8",
                     cursor: "pointer",
                     transition: "all 0.15s ease",
                   }}
@@ -165,7 +165,7 @@ export default function FaqSection() {
                   fontFamily: "Inter, sans-serif",
                   fontWeight: 400,
                   fontSize: "13px",
-                  color: "#B8B1A8",
+                  color: "#6B6B6B",
                   margin: 0,
                 }}>
                   No results found
@@ -196,7 +196,7 @@ export default function FaqSection() {
                         fontFamily: "Inter, sans-serif",
                         fontWeight: 500,
                         fontSize: "14px",
-                        color: isOpen ? ACCENT : "#0D0D0D",
+                        color: isOpen ? ACCENT : "#FAFAFA",
                         lineHeight: 1.5,
                         transition: "color 0.15s ease",
                       }}
@@ -208,7 +208,7 @@ export default function FaqSection() {
                         fontFamily: "Inter, sans-serif",
                         fontWeight: 400,
                         fontSize: "18px",
-                        color: isOpen ? ACCENT : "#B8B1A8",
+                        color: isOpen ? ACCENT : "#6B6B6B",
                         lineHeight: 1,
                         flexShrink: 0,
                         marginTop: "-1px",
@@ -229,7 +229,7 @@ export default function FaqSection() {
                         fontFamily: "Inter, sans-serif",
                         fontWeight: 400,
                         fontSize: "13px",
-                        color: "#888888",
+                        color: "#6B6B6B",
                         lineHeight: 1.65,
                         margin: "0",
                         padding: "0 36px 20px",

@@ -35,15 +35,15 @@ function countUp(el, target, duration) {
 
 function LangCard() {
   return (
-    <div style={{ width:"min(360px,90%)", background:"#FFF", borderRadius:"14px", boxShadow:"rgba(0,0,0,0.4) 0px 0px 1px,rgba(0,0,0,0.04) 0px 2px 4px", overflow:"hidden" }}>
+    <div style={{ width:"min(360px,90%)", background:"#1A1A1A", border:"1px solid #374151", borderRadius:"14px", boxShadow:"rgba(0,0,0,0.4) 0px 0px 1px,rgba(0,0,0,0.04) 0px 2px 4px", overflow:"hidden" }}>
       {[{ flag:"🇮🇱", lang:"Hebrew", ok:true },{ flag:"🇫🇷", lang:"Français", ok:false },{ flag:"🇬🇧", lang:"English", ok:false }].map((row,i) => (
-        <div key={row.lang} style={{ opacity:i===0?1:0.4, padding:"14px 18px", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:i<2?"1px solid #E5E5E5":"none" }}>
+        <div key={row.lang} style={{ opacity:i===0?1:0.4, padding:"14px 18px", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:i<2?"1px solid #374151":"none" }}>
           <div style={{ display:"flex", alignItems:"center" }}>
             <span style={{ fontSize:"16px" }}>{row.flag}</span>
-            <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"14px", color:"#0D0D0D", marginLeft:"10px" }}>{row.lang}</span>
+            <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"14px", color:"#FAFAFA", marginLeft:"10px" }}>{row.lang}</span>
           </div>
           <div style={{ display:"flex", alignItems:"center", gap:"8px" }}>
-            <div style={{ width:"34px", height:"18px", borderRadius:"9999px", background:row.ok?"#16A34A":"#E5E5E5", position:"relative" }}>
+            <div style={{ width:"34px", height:"18px", borderRadius:"9999px", background:row.ok?"#16A34A":"#374151", position:"relative" }}>
               <div style={{ width:"14px", height:"14px", background:"#FFF", borderRadius:"9999px", position:"absolute", top:"2px", ...(row.ok?{right:"2px"}:{left:"2px"}), boxShadow:"0 1px 3px rgba(0,0,0,0.2)" }} />
             </div>
             <div style={{ width:"14px", height:"14px", background:row.ok?"#16A34A":"#DC2626", borderRadius:"9999px", display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -60,33 +60,33 @@ function SalaryCard({ salary, count, setSalary, setCount }) {
   const monthly = salary * count;
   const annual  = monthly * 12;
   return (
-    <div style={{ width:"min(440px,95%)", background:"#FFF", borderRadius:"14px", boxShadow:"rgba(0,0,0,0.4) 0px 0px 1px,rgba(0,0,0,0.04) 0px 2px 4px", padding:"28px", display:"flex", flexDirection:"column", gap:"20px" }}>
+    <div style={{ width:"min(440px,95%)", background:"#1A1A1A", border:"1px solid #374151", borderRadius:"14px", boxShadow:"rgba(0,0,0,0.4) 0px 0px 1px,rgba(0,0,0,0.04) 0px 2px 4px", padding:"28px", display:"flex", flexDirection:"column", gap:"20px" }}>
       <div style={{ display:"flex", flexDirection:"column", gap:"10px" }}>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"13px", color:"#0D0D0D" }}>Salary per receptionist</span>
-          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"14px", color:"#0D0D0D", letterSpacing:"-0.02em" }}>₪{salary.toLocaleString()} / month</span>
+          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"13px", color:"#FAFAFA" }}>Salary per receptionist</span>
+          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"14px", color:"#FAFAFA", letterSpacing:"-0.04em" }}>₪{salary.toLocaleString()} / month</span>
         </div>
         <input type="range" min="6000" max="12000" step="500" value={salary}
           onChange={e => setSalary(parseInt(e.target.value))}
-          style={{ background:`linear-gradient(to right,#0D0D0D ${((salary-6000)/6000)*100}%,#E5E5E5 ${((salary-6000)/6000)*100}%)` }} />
+          style={{ background:`linear-gradient(to right,#0D0D0D ${((salary-6000)/6000)*100}%,#374151 ${((salary-6000)/6000)*100}%)` }} />
       </div>
       <div style={{ display:"flex", flexDirection:"column", gap:"10px" }}>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"13px", color:"#0D0D0D" }}>Number of receptionists</span>
-          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"14px", color:"#0D0D0D", letterSpacing:"-0.02em" }}>{count}</span>
+          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"13px", color:"#FAFAFA" }}>Number of receptionists</span>
+          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"14px", color:"#FAFAFA", letterSpacing:"-0.04em" }}>{count}</span>
         </div>
         <input type="range" min="1" max="5" step="1" value={count}
           onChange={e => setCount(parseInt(e.target.value))}
-          style={{ background:`linear-gradient(to right,#0D0D0D ${((count-1)/4)*100}%,#E5E5E5 ${((count-1)/4)*100}%)` }} />
+          style={{ background:`linear-gradient(to right,#0D0D0D ${((count-1)/4)*100}%,#374151 ${((count-1)/4)*100}%)` }} />
       </div>
-      <div style={{ height:"1px", background:"#E5E5E5" }} />
+      <div style={{ height:"1px", background:"#374151" }} />
       <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:"4px" }}>
-        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"12px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#888" }}>You pay</span>
+        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"12px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B" }}>You pay</span>
         <div style={{ display:"flex", alignItems:"baseline", gap:"6px" }}>
-          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"2.5rem", color:"#0D0D0D", letterSpacing:"-0.05em" }}>₪{monthly.toLocaleString()}</span>
-          <span style={{ fontFamily:"Inter,sans-serif", fontSize:"13px", color:"#888" }}>/ month</span>
+          <span style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"2.5rem", color:"#FAFAFA", letterSpacing:"-0.05em" }}>₪{monthly.toLocaleString()}</span>
+          <span style={{ fontFamily:"Inter,sans-serif", fontSize:"13px", color:"#6B6B6B" }}>/ month</span>
         </div>
-        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"1.3rem", color:"#555", letterSpacing:"-0.02em" }}>₪{annual.toLocaleString()} / year</span>
+        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"1.3rem", color:"#B8B8B8", letterSpacing:"-0.04em" }}>₪{annual.toLocaleString()} / year</span>
       </div>
     </div>
   );
@@ -100,24 +100,24 @@ function MobileCard({ panel, index, salary, count, setSalary, setCount }) {
       whileInView={{ opacity:1, y:0 }}
       viewport={{ once:true, amount:0.12 }}
       transition={{ duration:0.5, ease:[0.22,1,0.36,1] }}
-      style={{ backgroundColor:"#FFFFFF", borderRadius:"16px", overflow:"hidden", marginBottom:"16px" }}
+      style={{ backgroundColor:"#1A1A1A", border:"1px solid #374151", borderRadius:"16px", overflow:"hidden", marginBottom:"16px" }}
     >
       {/* Card header */}
       <div style={{ padding:"18px 20px 0", display:"flex", alignItems:"center", gap:"10px" }}>
         {Icon
-          ? <Icon size={15} strokeWidth={1.8} color="#0D0D0D" />
-          : <span style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"15px", color:"#0D0D0D", lineHeight:1 }}>₪</span>
+          ? <Icon size={15} strokeWidth={1.8} color="#FAFAFA" />
+          : <span style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"15px", color:"#FAFAFA", lineHeight:1 }}>₪</span>
         }
-        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"13px", color:"#0D0D0D", letterSpacing:"-0.01em" }}>
+        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"13px", color:"#FAFAFA", letterSpacing:"-0.01em" }}>
           {panel.label}
         </span>
-        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"11px", color:"#B8B1A8", marginLeft:"auto" }}>
+        <span style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"11px", color:"#6B6B6B", marginLeft:"auto" }}>
           {panel.number} / 04
         </span>
       </div>
 
       {/* Visual area */}
-      <div style={{ backgroundColor:"#F4F1EE", margin:"16px 0 0", padding:"28px 20px 20px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"200px" }}>
+      <div style={{ backgroundColor:"#1E1E1E", margin:"16px 0 0", padding:"28px 20px 20px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"200px" }}>
 
         {index === 0 && (
           <motion.div
@@ -128,8 +128,8 @@ function MobileCard({ panel, index, salary, count, setSalary, setCount }) {
             }}
             viewport={{ once:true }}
           >
-            <div id="stat-revenue-m0" style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,7vw,2.6rem)", color:"#0D0D0D", lineHeight:1, letterSpacing:"-0.05em" }}>₪0</div>
-            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"11px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#888", marginTop:"8px" }}>in unrealized revenue per year</div>
+            <div id="stat-revenue-m0" style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,7vw,2.6rem)", color:"#FAFAFA", lineHeight:1, letterSpacing:"-0.05em" }}>₪0</div>
+            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"11px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B", marginTop:"8px" }}>in unrealized revenue per year</div>
             <div style={{ height:"130px", width:"100%", maxWidth:"300px", position:"relative", overflow:"hidden", marginTop:"16px" }}><NotifStack /></div>
           </motion.div>
         )}
@@ -148,17 +148,17 @@ function MobileCard({ panel, index, salary, count, setSalary, setCount }) {
             }}
             viewport={{ once:true }}
           >
-            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,7vw,2.6rem)", color:"#0D0D0D", lineHeight:1, letterSpacing:"-0.05em" }}>40%</div>
-            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"11px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#888", marginTop:"8px", marginBottom:"16px" }}>of appointment requests after hours</div>
+            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,7vw,2.6rem)", color:"#FAFAFA", lineHeight:1, letterSpacing:"-0.05em" }}>40%</div>
+            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"11px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B", marginTop:"8px", marginBottom:"16px" }}>of appointment requests after hours</div>
             <div style={{ width:"100%", height:"80px", display:"flex", alignItems:"flex-end", gap:"3px" }}>
-              {BUSINESS_BARS.map((h,i) => <div key={i} className="ps-mobile-bar" data-height={h} style={{ flex:1, borderRadius:"4px 4px 0 0", height:"0", background:"#0D0D0D" }} />)}
-              <div style={{ position:"relative", width:"1px", height:"100%", background:"#E5E5E5", flexShrink:0 }}>
-                <span style={{ position:"absolute", bottom:"-16px", left:"50%", transform:"translateX(-50%)", fontFamily:"Inter,sans-serif", fontSize:"8px", color:"#888", whiteSpace:"nowrap" }}>18:00</span>
+              {BUSINESS_BARS.map((h,i) => <div key={i} className="ps-mobile-bar" data-height={h} style={{ flex:1, borderRadius:"4px 4px 0 0", height:"0", background:"#FAFAFA" }} />)}
+              <div style={{ position:"relative", width:"1px", height:"100%", background:"#374151", flexShrink:0 }}>
+                <span style={{ position:"absolute", bottom:"-16px", left:"50%", transform:"translateX(-50%)", fontFamily:"Inter,sans-serif", fontSize:"8px", color:"#6B6B6B", whiteSpace:"nowrap" }}>18:00</span>
               </div>
-              {AFTER_HOURS_BARS.map((h,i) => <div key={i} className="ps-mobile-bar" data-height={h} style={{ flex:1, borderRadius:"4px 4px 0 0", height:"0", background:"#E5E5E5" }} />)}
+              {AFTER_HOURS_BARS.map((h,i) => <div key={i} className="ps-mobile-bar" data-height={h} style={{ flex:1, borderRadius:"4px 4px 0 0", height:"0", background:"#374151" }} />)}
             </div>
             <div style={{ display:"flex", justifyContent:"space-between", width:"100%", marginTop:"18px" }}>
-              <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", color:"#888" }}>Answered</span>
+              <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", color:"#6B6B6B" }}>Answered</span>
               <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", color:"#DC2626" }}>No answer</span>
             </div>
           </motion.div>
@@ -166,8 +166,8 @@ function MobileCard({ panel, index, salary, count, setSalary, setCount }) {
 
         {index === 2 && (
           <>
-            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,7vw,2.6rem)", color:"#0D0D0D", lineHeight:1, letterSpacing:"-0.05em" }}>30,000+</div>
-            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"11px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#888", marginTop:"8px", marginBottom:"16px" }}>French-speaking residents in Netanya</div>
+            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,7vw,2.6rem)", color:"#FAFAFA", lineHeight:1, letterSpacing:"-0.05em" }}>30,000+</div>
+            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"11px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B", marginTop:"8px", marginBottom:"16px" }}>French-speaking residents in Netanya</div>
             <LangCard />
           </>
         )}
@@ -177,7 +177,7 @@ function MobileCard({ panel, index, salary, count, setSalary, setCount }) {
 
       {/* Bottom label */}
       <div style={{ padding:"18px 20px" }}>
-        <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"16px", color:"#0D0D0D", letterSpacing:"-0.02em", marginBottom:"4px" }}>{panel.title}</div>
+        <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"16px", color:"#FAFAFA", letterSpacing:"-0.04em", marginBottom:"4px" }}>{panel.title}</div>
         <div style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"14px", color:"#777", lineHeight:1.5 }}>{panel.description}</div>
       </div>
     </motion.div>
@@ -233,34 +233,34 @@ export default function ProblemSection() {
 
   // Desktop card
   const desktopCard = (
-    <div style={{ backgroundColor:"#FFFFFF", borderRadius:"16px", overflow:"hidden", position:"relative" }}>
+    <div style={{ backgroundColor:"#1A1A1A", border:"1px solid #374151", borderRadius:"16px", overflow:"hidden", position:"relative" }}>
       <div style={{ position:"absolute", top:"16px", right:"16px", zIndex:2 }}>
         <ArrowUpRight size={18} strokeWidth={1.8} color="#999" />
       </div>
       <AnimatePresence mode="wait">
         <motion.div key={activeIndex} variants={panelVariants} initial="enter" animate="center" exit="exit" transition={{ duration:0.22, ease:[0.22,1,0.36,1] }}>
-          <div className="ps-gray-container" style={{ backgroundColor:"#F4F1EE", padding:"40px 40px 24px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"320px" }}>
+          <div className="ps-gray-container" style={{ backgroundColor:"#1E1E1E", padding:"40px 40px 24px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"320px" }}>
             {activeIndex === 0 && (
               <>
-                <div id="stat-revenue-desktop" style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(2.6rem,6vw,4.5rem)", color:"#0D0D0D", lineHeight:1, letterSpacing:"-0.05em" }}>₪0</div>
-                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"12px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#888", marginTop:"8px" }}>in unrealized revenue per year</div>
+                <div id="stat-revenue-desktop" style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(2.6rem,6vw,4.5rem)", color:"#FAFAFA", lineHeight:1, letterSpacing:"-0.05em" }}>₪0</div>
+                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"12px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B", marginTop:"8px" }}>in unrealized revenue per year</div>
                 <div className="ps-notif-stack" style={{ height:"180px", width:"100%", maxWidth:"340px", position:"relative", overflow:"hidden", marginTop:"20px" }}><NotifStack /></div>
               </>
             )}
             {activeIndex === 1 && (
               <>
-                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(2.6rem,6vw,4.5rem)", color:"#0D0D0D", lineHeight:1, letterSpacing:"-0.05em" }}>40%</div>
-                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"12px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#888", marginTop:"8px", marginBottom:"24px" }}>of appointment requests come after hours</div>
+                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(2.6rem,6vw,4.5rem)", color:"#FAFAFA", lineHeight:1, letterSpacing:"-0.05em" }}>40%</div>
+                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"12px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B", marginTop:"8px", marginBottom:"24px" }}>of appointment requests come after hours</div>
                 <div style={{ width:"min(560px,100%)" }}>
                   <div style={{ width:"100%", height:"clamp(80px,14vw,130px)", display:"flex", alignItems:"flex-end", gap:"3px" }}>
-                    {BUSINESS_BARS.map((h,i) => <div key={i} className="bar-item" data-height={h} style={{ background:"#0D0D0D" }} />)}
-                    <div style={{ position:"relative", width:"1px", height:"100%", background:"#E5E5E5", flexShrink:0 }}>
-                      <span style={{ position:"absolute", bottom:"-18px", left:"50%", transform:"translateX(-50%)", fontFamily:"Inter,sans-serif", fontSize:"9px", color:"#888", whiteSpace:"nowrap" }}>18:00</span>
+                    {BUSINESS_BARS.map((h,i) => <div key={i} className="bar-item" data-height={h} style={{ background:"#FAFAFA" }} />)}
+                    <div style={{ position:"relative", width:"1px", height:"100%", background:"#374151", flexShrink:0 }}>
+                      <span style={{ position:"absolute", bottom:"-18px", left:"50%", transform:"translateX(-50%)", fontFamily:"Inter,sans-serif", fontSize:"9px", color:"#6B6B6B", whiteSpace:"nowrap" }}>18:00</span>
                     </div>
-                    {AFTER_HOURS_BARS.map((h,i) => <div key={i} className="bar-item" data-height={h} style={{ background:"#E5E5E5" }} />)}
+                    {AFTER_HOURS_BARS.map((h,i) => <div key={i} className="bar-item" data-height={h} style={{ background:"#374151" }} />)}
                   </div>
                   <div style={{ display:"flex", justifyContent:"space-between", marginTop:"24px" }}>
-                    <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", color:"#888" }}>Answered</span>
+                    <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", color:"#6B6B6B" }}>Answered</span>
                     <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", color:"#DC2626" }}>No answer</span>
                   </div>
                 </div>
@@ -268,15 +268,15 @@ export default function ProblemSection() {
             )}
             {activeIndex === 2 && (
               <>
-                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(2.6rem,6vw,4.5rem)", color:"#0D0D0D", lineHeight:1, letterSpacing:"-0.05em" }}>30,000+</div>
-                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"12px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#888", marginTop:"8px", marginBottom:"20px" }}>French-speaking residents in Netanya</div>
+                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(2.6rem,6vw,4.5rem)", color:"#FAFAFA", lineHeight:1, letterSpacing:"-0.05em" }}>30,000+</div>
+                <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"12px", textTransform:"uppercase", letterSpacing:"0.1em", color:"#6B6B6B", marginTop:"8px", marginBottom:"20px" }}>French-speaking residents in Netanya</div>
                 <LangCard />
               </>
             )}
             {activeIndex === 3 && <SalaryCard salary={salary} count={count} setSalary={setSalary} setCount={setCount} />}
           </div>
           <div className="ps-bottom-label" style={{ padding:"20px 32px 28px" }}>
-            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"18px", color:"#0D0D0D", letterSpacing:"-0.02em", marginBottom:"4px" }}>{activePanel.title}</div>
+            <div style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"18px", color:"#FAFAFA", letterSpacing:"-0.04em", marginBottom:"4px" }}>{activePanel.title}</div>
             <div style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"14px", color:"#777", lineHeight:1.5 }}>{activePanel.description}</div>
           </div>
         </motion.div>
@@ -315,11 +315,11 @@ export default function ProblemSection() {
         }
       `}</style>
 
-      <section data-problem-section style={{ width:"100%", backgroundColor:"#FDFCFC", padding:"80px 0" }}>
+      <section data-problem-section style={{ width:"100%", backgroundColor:"#121212", padding:"80px 0" }}>
         <div style={{ maxWidth:"1200px", margin:"0 auto", padding:"0 48px" }}>
 
           <div className="ps-title-block" style={{ display:"flex", flexDirection:"column", gap:"10px", marginBottom:"48px" }}>
-            <h2 style={{ fontFamily:"Inter,sans-serif", fontWeight: 300, fontSize:"clamp(2rem,3.5vw,2.6rem)", color:"#0D0D0D", letterSpacing:"-0.02em", lineHeight:1.1, margin:0 }}>
+            <h2 style={{ fontFamily:"Inter,sans-serif", fontWeight: 300, fontSize:"clamp(2rem,3.5vw,2.6rem)", color:"#FAFAFA", letterSpacing:"-0.04em", lineHeight:1.1, margin:0 }}>
               Sound familiar?
             </h2>
             <p style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"14px", color:"#777", margin:0, lineHeight:1.5 }}>
@@ -345,9 +345,9 @@ export default function ProblemSection() {
                     onClick={() => setActiveIndex(i)}
                     style={{ display:"flex", alignItems:"center", gap:"14px", width:"100%", padding:"16px 0", background:"none", border:"none", borderTop:i>0?"1px solid rgba(0,0,0,0.08)":"none", cursor:"pointer", textAlign:"left", opacity:isActive?1:0.35, transition:"opacity 0.25s ease" }}
                   >
-                    {Icon ? <Icon size={18} strokeWidth={1.8} color={isActive?"#0D0D0D":"#999"} />
-                           : <span style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"18px", color:isActive?"#0D0D0D":"#999", lineHeight:1 }}>₪</span>}
-                    <span style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"15px", color:isActive?"#0D0D0D":"#999", letterSpacing:"-0.01em" }}>{panel.label}</span>
+                    {Icon ? <Icon size={18} strokeWidth={1.8} color={isActive?"#FAFAFA":"#999"} />
+                           : <span style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"18px", color:isActive?"#FAFAFA":"#999", lineHeight:1 }}>₪</span>}
+                    <span style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"15px", color:isActive?"#FAFAFA":"#999", letterSpacing:"-0.01em" }}>{panel.label}</span>
                   </button>
                 );
               })}

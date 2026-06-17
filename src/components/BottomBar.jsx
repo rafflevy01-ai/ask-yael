@@ -39,8 +39,8 @@ function AnimatedNumber({ final, suffix, isString, start }) {
         fontFamily: "Inter, sans-serif",
         fontWeight: 400,
         fontSize: "28px",
-        color: "#0D0D0D",
-        letterSpacing: "-0.02em",
+        color: "#FAFAFA",
+        letterSpacing: "-0.04em",
       }}>
       {isString ? final : display}{suffix}
     </span>
@@ -90,7 +90,7 @@ export default function BottomBar() {
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 500,
                 fontSize: "10px",
-                color: "#888888",
+                color: "#6B6B6B",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
               }}>
@@ -128,7 +128,7 @@ export default function BottomBar() {
             fontWeight: 400,
             fontStyle: "italic",
             fontSize: "13px",
-            color: "#888888",
+            color: "#6B6B6B",
             margin: 0,
           }}>
           Live at Les Experts Netanya · Handling calls since 2025
