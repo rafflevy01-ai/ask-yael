@@ -146,26 +146,46 @@ function SalaryCostCard() {
   );
 }
 
+// ── Replace this URL after uploading to Base44 media ──
+const SMS_PHOTO = "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/sms-photo.jpg";
+
 function ConfirmationCard() {
+  const [imgLoaded, setImgLoaded] = useState(false);
   return (
-    <div className="ps-card ps-card-dark">
-      <div className="ps-card-top">
-        <span className="ps-card-label" style={{ color:"rgba(255,255,255,0.5)" }}>Patient Confirmation</span>
-        <div className="ps-card-stat" style={{ color:"#FFFFFF", fontSize:"clamp(1.8rem,3.5vw,2.8rem)" }}>Instant.</div>
-        <p className="ps-card-copy" style={{ color:"rgba(255,255,255,0.72)" }}>
-          The moment Yael books, the patient gets an SMS confirmation — automatically, 24/7.
+    <div className="ps-card" style={{ background:"#111827", position:"relative" }}>
+      {/* Text — compact top section */}
+      <div style={{ padding:"24px 24px 16px", flexShrink:0 }}>
+        <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, letterSpacing:"0.08em", textTransform:"uppercase", color:"rgba(255,255,255,0.4)", display:"block", marginBottom:"10px" }}>
+          Patient Confirmation
+        </span>
+        <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.6rem,3vw,2.4rem)", color:"#FFFFFF", letterSpacing:"-0.04em", lineHeight:1, marginBottom:"10px" }}>
+          Instant.
+        </div>
+        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"13px", fontWeight:400, color:"rgba(255,255,255,0.6)", lineHeight:1.5, margin:0 }}>
+          The moment Yael books, the patient gets an SMS — automatically, 24/7.
         </p>
       </div>
-      <div className="ps-card-visual" style={{ padding:0, flex:1, minHeight:0, position:"relative", overflow:"hidden" }}>
-        {/* Upload your iPhone SMS photo to Base44 and replace this URL */}
+
+      {/* Photo — fills the remaining card height */}
+      <div style={{ flex:1, minHeight:0, position:"relative", overflow:"hidden", borderRadius:"0 0 20px 20px" }}>
+        {/* Always-visible dark bg */}
+        <div style={{ position:"absolute", inset:0, background:"linear-gradient(160deg,#111827 0%,#1e3a5f 100%)" }} />
+        {/* Actual photo */}
         <img
-          src="https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/sms-photo.jpg"
-          alt="Patient receiving Yael SMS"
-          style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"top center" }}
-          onError={e => { e.target.style.display="none"; }}
+          src={SMS_PHOTO}
+          alt="Patient receiving Yael SMS confirmation"
+          onLoad={() => setImgLoaded(true)}
+          style={{
+            position:"absolute", inset:0,
+            width:"100%", height:"100%",
+            objectFit:"cover",
+            objectPosition:"center 15%",
+            opacity: imgLoaded ? 1 : 0,
+            transition:"opacity 0.4s ease",
+          }}
         />
-        {/* Fallback gradient if image not found */}
-        <div style={{ position:"absolute", inset:0, background:"linear-gradient(160deg,#1a2744,#2d4a8a)", zIndex:-1 }} />
+        {/* Subtle top fade so it blends with the text above */}
+        <div style={{ position:"absolute", top:0, left:0, right:0, height:"60px", background:"linear-gradient(to bottom,#111827,transparent)", zIndex:1 }} />
       </div>
     </div>
   );
