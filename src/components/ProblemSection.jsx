@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import NotifStack from "@/components/NotifStack";
-import { PhoneMissed } from "lucide-react";
 
 const BUSINESS_BARS   = [65,95,85,60,40,50,70,65,55,45];
 const AFTER_HOURS_BARS = [6,5,4,3,2];
@@ -34,51 +33,9 @@ function MissedCallsCard({ isVisible }) {
         <p className="ps-card-subdesc">in unrealized revenue per year</p>
         <p className="ps-card-copy">Five missed calls a day at ₪900 each, 250 working days — gone.</p>
       </div>
-      <div className="ps-card-visual" style={{ display:"flex", alignItems:"center", justifyContent:"center" }}>
-        {/* Glassmorphism notification card — like the Finance reference */}
-        <div style={{
-          background: "rgba(255,255,255,0.82)",
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
-          borderRadius: "16px",
-          boxShadow: "0 8px 36px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04)",
-          padding: "20px 18px 16px",
-          width: "310px",
-          position: "relative",
-        }}>
-          {/* Badge */}
-          <div style={{
-            position:"absolute", top:"10px", right:"10px",
-            width:"22px", height:"22px", borderRadius:"50%",
-            background:"#E8E8E6", display:"flex",
-            alignItems:"center", justifyContent:"center",
-            fontFamily:"Inter,sans-serif", fontSize:"11px",
-            fontWeight:600, color:"#666",
-          }}>5</div>
-
-          {/* Icon + Title */}
-          <div style={{ display:"flex", alignItems:"center", gap:"10px", marginBottom:"6px" }}>
-            <div style={{
-              width:"32px", height:"32px", borderRadius:"50%",
-              background:"#FEE2E2", display:"flex",
-              alignItems:"center", justifyContent:"center",
-            }}>
-              <PhoneMissed size={14} strokeWidth={2} color="#DC2626" />
-            </div>
-            <span style={{ fontFamily:"Inter,sans-serif", fontWeight:600, fontSize:"15px", color:"#0D0D0D" }}>
-              Missed Call
-            </span>
-          </div>
-
-          {/* Detail line */}
-          <div style={{ fontFamily:"Inter,sans-serif", fontSize:"12px", color:"#999", marginBottom:"14px", paddingLeft:"42px" }}>
-            +972 50-123-4567 · Today, 10:05
-          </div>
-
-          {/* NotifStack animation */}
-          <div style={{ height:"120px", position:"relative", overflow:"hidden", borderRadius:"10px", background:"#F9F9F6" }}>
-            <NotifStack />
-          </div>
+      <div className="ps-card-visual">
+        <div style={{ height:"160px", position:"relative", overflow:"hidden" }}>
+          <NotifStack />
         </div>
       </div>
     </div>
