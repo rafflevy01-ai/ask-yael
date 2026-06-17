@@ -48,7 +48,7 @@ export default function HeroSection() {
           height: "100%",
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 56px 72px",
+          padding: "0 56px 130px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
@@ -62,23 +62,38 @@ export default function HeroSection() {
             gap: "8%",
           }}
         >
-          {/* LEFT — large title */}
+          {/* LEFT — brand name + tagline */}
           <div className="hero-left" style={{ flex: "0 0 52%", minWidth: 0 }}>
+            {/* Brand name — primary, large */}
             <h1
               style={{
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 300,
-                fontSize: "clamp(2.4rem, 4.5vw, 4rem)",
+                fontSize: "clamp(2.8rem, 5vw, 4.5rem)",
                 color: "#FFFFFF",
                 letterSpacing: "-0.03em",
-                lineHeight: 1.08,
+                lineHeight: 1.05,
+                margin: "0 0 14px 0",
+              }}
+            >
+              Meet Yael.
+            </h1>
+
+            {/* Tagline — secondary, clearly smaller */}
+            <p
+              className="hero-tagline"
+              style={{
+                fontFamily: "Inter, sans-serif",
+                fontWeight: 300,
+                fontSize: "clamp(1.1rem, 2vw, 1.5rem)",
+                color: "rgba(255,255,255,0.82)",
+                letterSpacing: "-0.015em",
+                lineHeight: 1.35,
                 margin: 0,
               }}
             >
-              Meet Yael.<br />
-              Your front desk<br />
-              on autopilot.
-            </h1>
+              Your front desk on autopilot.
+            </p>
           </div>
 
           {/* RIGHT — description + CTAs */}
@@ -166,7 +181,10 @@ export default function HeroSection() {
             width: 100% !important;
           }
           .hero-left h1 {
-            font-size: clamp(2rem, 8vw, 2.6rem) !important;
+            font-size: clamp(2.2rem, 8vw, 2.8rem) !important;
+          }
+          .hero-tagline {
+            font-size: 1rem !important;
           }
           .hero-cta-row {
             flex-direction: row !important;
