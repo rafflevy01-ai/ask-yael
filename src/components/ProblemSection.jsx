@@ -48,7 +48,6 @@ function InstantNotificationCard() {
   const [imgLoaded, setImgLoaded] = useState(false);
   return (
     <div className="ps-card" style={{ position:"relative", background:"#1a1a1a" }}>
-      {/* Image fills the entire card */}
       <img
         src={INSTANT_NOTIF_IMG}
         alt="Instant SMS notification on iPhone"
@@ -57,23 +56,22 @@ function InstantNotificationCard() {
           position:"absolute", inset:0,
           width:"100%", height:"100%",
           objectFit:"cover",
-          objectPosition:"center center",
+          objectPosition:"center 40%",
           opacity: imgLoaded ? 1 : 0,
           transition:"opacity 0.4s ease",
         }}
       />
-      {/* Text overlaid on top */}
-      <div style={{ position:"relative", zIndex:2, padding:"24px 28px 12px", background:"rgba(0,0,0,0.45)" }}>
-        <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, letterSpacing:"0.08em", textTransform:"uppercase", color:"rgba(255,255,255,0.8)", display:"block", marginBottom:"8px" }}>
+      <div style={{ position:"relative", zIndex:2, padding:"24px 28px 12px" }}>
+        <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, letterSpacing:"0.08em", textTransform:"uppercase", color:"rgba(255,255,255,0.85)", display:"block", marginBottom:"8px", textShadow:"0 1px 4px rgba(0,0,0,0.6)" }}>
           Instant Notification
         </span>
-        <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,4vw,2.6rem)", color:"#FFFFFF", letterSpacing:"-0.05em", lineHeight:1, marginBottom:"4px" }}>
+        <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,4vw,2.6rem)", color:"#FFFFFF", letterSpacing:"-0.05em", lineHeight:1, marginBottom:"4px", textShadow:"0 1px 4px rgba(0,0,0,0.6)" }}>
           Within seconds.
         </div>
-        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, textTransform:"uppercase", letterSpacing:"0.08em", color:"rgba(255,255,255,0.7)", margin:"0 0 8px" }}>
+        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, textTransform:"uppercase", letterSpacing:"0.08em", color:"rgba(255,255,255,0.75)", margin:"0 0 8px", textShadow:"0 1px 4px rgba(0,0,0,0.6)" }}>
           Confirmation SMS sent automatically
         </p>
-        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"13px", fontWeight:400, color:"rgba(255,255,255,0.95)", lineHeight:1.5, margin:0, textShadow:"0 1px 3px rgba(0,0,0,0.5)" }}>
+        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"13px", fontWeight:400, color:"rgba(255,255,255,0.95)", lineHeight:1.5, margin:0, textShadow:"0 1px 4px rgba(0,0,0,0.6)" }}>
           The second Yael confirms a booking, the patient receives a personalized SMS with all the details — date, time, doctor, and treatment.
         </p>
       </div>
