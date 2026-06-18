@@ -8,7 +8,7 @@ const NOTIF_DATA = [
   { number: "+972 50 111 2233", time: "22:18" },
 ];
 
-const MAX_CARDS = 4;
+const MAX_CARDS = 2;
 const PEEK = 18; // px each older card peeks below the one above it
 let uid = 0;
 
