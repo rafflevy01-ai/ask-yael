@@ -179,7 +179,8 @@ function ClinicNotificationCard() {
           padding:"6px 10px",
           border:"1px solid rgba(0,0,0,0.06)",
           boxShadow:"0 2px 10px rgba(0,0,0,0.05)",
-          display:"flex", gap:"6px", alignItems:"center",
+          display:"inline-flex", gap:"6px", alignItems:"center",
+          width:"fit-content",
         }}>
           {/* App icon */}
           <div style={{
