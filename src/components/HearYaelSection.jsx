@@ -309,23 +309,6 @@ export default function HearYaelSection() {
           </h2>
         </div>
 
-        {/* iPhone screenshot */}
-        <div style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "32px",
-        }}>
-          <img
-            src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/b73865a00_Extreme_close-up_photograph_of_Nano_Banana_2_03304.png"
-            alt="Yael iMessage confirmation"
-            style={{
-              width: "min(320px, 85%)",
-              borderRadius: "20px",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06)",
-            }}
-          />
-        </div>
-
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(2, 1fr)",
