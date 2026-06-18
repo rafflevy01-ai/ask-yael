@@ -272,7 +272,7 @@ export default function ProblemSection() {
 
         <div style={{ marginBottom:"48px" }}>
           <h2 style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(2rem,3.5vw,2.8rem)", color:"#0D0D0D", letterSpacing:"-0.04em", lineHeight:1.1, margin:"0 0 14px" }}>
-            Sound familiar?
+            Run Yael across your Clinic.
           </h2>
           <p style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"16px", color:"#6B6B6B", margin:0, lineHeight:1.6, maxWidth:"520px" }}>
             Calls go unanswered. Patients don't wait. Your front desk can't be everywhere at once.
