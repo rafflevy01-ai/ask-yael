@@ -160,8 +160,8 @@ function ClinicNotificationCard() {
       <div style={{
         position:"absolute",
         zIndex:2,
-        right:"8px",
-        bottom:"12px",
+        right:"40px",
+        bottom:"40px",
         left:"20px",
       }}>
         <span style={{
