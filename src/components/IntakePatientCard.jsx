@@ -32,13 +32,12 @@ export default function IntakePatientCard() {
       />
       <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.15)", zIndex: 1 }} />
 
-      {/* Registration form centered */}
+      {/* Registration form */}
       <div style={{
         position: "absolute",
         zIndex: 2,
-        left: "50%",
-        transform: "translateX(-50%)",
-        bottom: "32px",
+        left: "28px",
+        bottom: "80px",
       }}>
         <span style={{
           fontFamily: "Inter,sans-serif", fontWeight: 500, fontSize: "9px",
