@@ -255,7 +255,7 @@ function LiveCallCard() {
       {/* White gradient overlay in the middle of the card */}
       <div style={{
         position:"absolute", inset:0, zIndex:0, pointerEvents:"none",
-        background:"linear-gradient(180deg, rgba(123,164,174,0) 0%, rgba(123,164,174,0) 30%, rgba(255,255,255,0.9) 48%, rgba(255,255,255,0.95) 65%, rgba(123,164,174,0) 85%, rgba(123,164,174,0) 100%)",
+        background:"linear-gradient(180deg, rgba(123,164,174,0) 0%, rgba(123,164,174,0) 30%, rgba(255,255,255,0.9) 45%, rgba(255,255,255,0.95) 55%, rgba(255,255,255,0.95) 100%)",
       }} />
       <div className="ps-card-top" style={{ position:"relative", zIndex:1 }}>
         <span className="ps-card-label" style={{ color:"rgba(255,255,255,0.8)" }}>Live Call</span>
