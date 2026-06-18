@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Check } from "lucide-react";
+
+const INTAKE_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/cbbcd3f3c_Capturedecran2026-06-19a013646.png";
 
 const FIELDS = [
   { label: "Name", value: "David Cohen" },
@@ -10,61 +12,80 @@ const FIELDS = [
 ];
 
 export default function IntakePatientCard() {
-  return (
-    <div className="ps-card" style={{ background: "linear-gradient(180deg, #A8D8B9 0%, #C9E8D2 50%, #F0F7F2 100%)" }}>
-      <div className="ps-card-top">
-        <span className="ps-card-label" style={{ color: "rgba(255,255,255,0.75)" }}>Patient Intake</span>
-        <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "#FFFFFF", letterSpacing: "-0.05em", lineHeight: 1, marginBottom: "4px" }}>
-          Before they hang up.
-        </div>
-        <p className="ps-card-copy" style={{ color: "rgba(255,255,255,0.9)", fontSize: "15px", lineHeight: "1.6" }}>
-          Yael captures every detail from new patients in one call — name, ID, HMO, and appointment — so your front desk starts with everything ready.
-        </p>
-      </div>
+  const [imgLoaded, setImgLoaded] = useState(false);
 
-      <div className="ps-card-visual" style={{ justifyContent: "center", paddingBottom: "28px" }}>
+  return (
+    <div className="ps-card" style={{ position: "relative", background: "#1a1a1a" }}>
+      <img
+        src={INTAKE_IMG}
+        alt="Medical receptionist using Yael dashboard"
+        onLoad={() => setImgLoaded(true)}
+        style={{
+          position: "absolute", inset: 0,
+          width: "100%", height: "100%",
+          objectFit: "cover",
+          objectPosition: "center 45%",
+          opacity: imgLoaded ? 1 : 0,
+          transition: "opacity 0.4s ease",
+        }}
+      />
+      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.3)", zIndex: 1 }} />
+
+      {/* Registration form overlaid on right side */}
+      <div style={{
+        position: "absolute",
+        zIndex: 2,
+        right: "16px",
+        bottom: "32px",
+      }}>
+        <span style={{
+          fontFamily: "Inter,sans-serif", fontWeight: 500, fontSize: "9px",
+          textTransform: "uppercase", letterSpacing: "0.1em",
+          color: "rgba(255,255,255,0.7)", display: "block", marginBottom: "6px",
+        }}>
+          Patient registration
+        </span>
         <div style={{
-          background: "rgba(255,255,255,0.92)",
+          background: "rgba(255,255,255,0.94)",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
-          borderRadius: "16px",
-          padding: "18px 20px",
-          boxShadow: "0 2px 14px rgba(0,0,0,0.06)",
-          maxWidth: "300px",
+          borderRadius: "14px",
+          padding: "14px 16px",
+          boxShadow: "0 2px 14px rgba(0,0,0,0.1)",
+          display: "inline-block",
+          width: "fit-content",
         }}>
-          {/* Header */}
           <div style={{
             fontFamily: "Inter, sans-serif",
             fontWeight: 600,
-            fontSize: "12px",
+            fontSize: "11px",
             color: "#0D0D0D",
-            marginBottom: "14px",
+            marginBottom: "12px",
             letterSpacing: "-0.01em",
           }}>
             New patient registration
           </div>
 
-          {/* Fields */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
             {FIELDS.map((field, i) => (
               <div key={i} style={{
                 display: "flex", alignItems: "center", justifyContent: "space-between",
-                gap: "14px",
+                gap: "16px",
               }}>
                 <span style={{
                   fontFamily: "Inter, sans-serif",
                   fontWeight: 400,
-                  fontSize: "11px",
+                  fontSize: "10px",
                   color: "#777777",
                   whiteSpace: "nowrap",
                 }}>
                   {field.label}
                 </span>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "7px" }}>
                   <span style={{
                     fontFamily: "Inter, sans-serif",
                     fontWeight: 500,
-                    fontSize: "11px",
+                    fontSize: "10px",
                     color: "#0D0D0D",
                     whiteSpace: "nowrap",
                     textAlign: "right",
@@ -72,18 +93,31 @@ export default function IntakePatientCard() {
                     {field.value}
                   </span>
                   <div style={{
-                    width: "16px", height: "16px", borderRadius: "50%",
+                    width: "14px", height: "14px", borderRadius: "50%",
                     background: "#A8D8B9",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     flexShrink: 0,
                   }}>
-                    <Check size={9} strokeWidth={3} color="#FFFFFF" />
+                    <Check size={8} strokeWidth={3} color="#FFFFFF" />
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Top-left label */}
+      <div style={{ position: "relative", zIndex: 2, padding: "24px 28px 0" }}>
+        <span style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.85)", display: "block", marginBottom: "8px" }}>
+          Patient Intake
+        </span>
+        <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "#FFFFFF", letterSpacing: "-0.05em", lineHeight: 1, marginBottom: "4px" }}>
+          Before they hang up.
+        </div>
+        <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.08em", color: "rgba(255,255,255,0.75)", margin: 0, maxWidth: "240px" }}>
+          All patient details captured in one call
+        </p>
       </div>
     </div>
   );
