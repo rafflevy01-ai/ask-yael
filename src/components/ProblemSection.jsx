@@ -251,12 +251,12 @@ function LiveCallCard() {
   }, [visibleMessages]);
 
   return (
-    <div className="ps-card" style={{ background:"linear-gradient(180deg, #B0E0E6 0%, #D4EAEE 45%, #FFFFFF 100%)" }}>
+    <div className="ps-card" style={{ background:"linear-gradient(180deg, #7BA4AE 0%, #A3C4CD 35%, #D4E2E7 60%, #FFFFFF 100%)" }}>
       <div className="ps-card-top">
-        <span className="ps-card-label">Live Call</span>
-        <div className="ps-card-stat" style={{ fontSize:"clamp(1.6rem,3.5vw,2.4rem)" }}>{formatTime(elapsed)}</div>
-        <p className="ps-card-subdesc">Real conversations, real time</p>
-        <p className="ps-card-copy">Yael handles calls in three languages — booking, triaging, and confirming instantly.</p>
+        <span className="ps-card-label" style={{ color:"rgba(255,255,255,0.8)" }}>Live Call</span>
+        <div className="ps-card-stat" style={{ fontSize:"clamp(1.6rem,3.5vw,2.4rem)", color:"#FFFFFF" }}>{formatTime(elapsed)}</div>
+        <p className="ps-card-subdesc" style={{ color:"rgba(255,255,255,0.8)" }}>Real conversations, real time</p>
+        <p className="ps-card-copy" style={{ color:"rgba(255,255,255,0.9)" }}>Yael handles calls in three languages — booking, triaging, and confirming instantly.</p>
       </div>
       <div className="ps-card-visual" style={{ padding:"0 20px 20px" }}>
         {/* Header */}
