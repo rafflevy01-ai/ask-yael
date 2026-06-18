@@ -271,34 +271,6 @@ function AfterHoursCard({ isVisible }) {
   );
 }
 
-function LanguageGapCard() {
-  return (
-    <div className="ps-card" style={{ background:"linear-gradient(180deg, #7B8FA1 0%, #C5D0D9 50%, #E8EDF1 100%)" }}>
-      <div className="ps-card-top">
-        <span className="ps-card-label" style={{ color:"rgba(255,255,255,0.7)" }}>Language Gap</span>
-        <div className="ps-card-stat" style={{ color:"#FFFFFF" }}>Multi-lingual</div>
-        <p className="ps-card-subdesc" style={{ color:"rgba(255,255,255,0.7)" }}>30,000+ French-speaking residents in Netanya</p>
-        <p className="ps-card-copy" style={{ color:"rgba(255,255,255,0.8)" }}>Yael speaks Hebrew, French, and English — every patient feels at home.</p>
-      </div>
-      <div className="ps-card-visual" style={{ padding:"0 28px 28px", justifyContent:"center" }}>
-        <div style={{ background:"#FFFFFF", borderRadius:"12px", overflow:"hidden", boxShadow:"0 2px 12px rgba(0,0,0,0.06)", transform:"scale(0.85)" }}>
-          {[{ flag:"🇮🇱", lang:"Hebrew", ok:true },{ flag:"🇫🇷", lang:"Français", ok:true },{ flag:"🇬🇧", lang:"English", ok:true }].map((row,i) => (
-            <div key={row.lang} style={{ padding:"13px 16px", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:i<2?"1px solid #E5E5E5":"none" }}>
-              <div style={{ display:"flex", alignItems:"center", gap:"10px" }}>
-                <span style={{ fontSize:"16px" }}>{row.flag}</span>
-                <span style={{ fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"14px", color:"#0D0D0D" }}>{row.lang}</span>
-              </div>
-              <div style={{ width:"34px", height:"18px", borderRadius:"9999px", background:row.ok?"#7BA0BF":"#E5E5E5", position:"relative" }}>
-                <div style={{ width:"14px", height:"14px", background:"#FFFFFF", borderRadius:"9999px", position:"absolute", top:"2px", ...(row.ok?{right:"2px"}:{left:"2px"}), boxShadow:"0 1px 3px rgba(0,0,0,0.1)" }} />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function SalaryCostCard() {
   const [salary, setSalary] = useState(8500);
   const [count, setCount]   = useState(2);
@@ -381,7 +353,6 @@ export default function ProblemSection() {
             <ClinicNotificationCard />
             <div ref={card1Ref}><AfterHoursCard isVisible={vis1} /></div>
             <IntakePatientCard />
-            <LanguageGapCard />
             <SalaryCostCard />
           </div>
           <button className="ps-arrow ps-arrow-left"  onClick={() => scroll(-1)} aria-label="Previous">
