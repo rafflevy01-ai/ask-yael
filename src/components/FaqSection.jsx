@@ -53,7 +53,7 @@ export default function FaqSection() {
   const toggle = (i) => setOpenIndex(openIndex === i ? null : i);
 
   return (
-    <section data-faq style={{ padding: "80px 40px", backgroundColor: "#FFFFFF", borderTop: "1px solid #000000" }}>
+    <section data-faq style={{ padding: "80px 40px", backgroundColor: "#FFFFFF", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
       <div style={{ maxWidth: "760px", margin: "0 auto" }}>
 
         {/* Outer card */}
