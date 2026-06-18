@@ -181,13 +181,13 @@ function LanguageGapCard() {
     <div className="ps-card" style={{ background:"linear-gradient(180deg, #7B8FA1 0%, #C5D0D9 50%, #E8EDF1 100%)" }}>
       <div className="ps-card-top">
         <span className="ps-card-label" style={{ color:"rgba(255,255,255,0.7)" }}>Language Gap</span>
-        <div className="ps-card-stat" style={{ color:"#FFFFFF" }}>30,000+</div>
-        <p className="ps-card-subdesc" style={{ color:"rgba(255,255,255,0.7)" }}>French-speaking residents in Netanya</p>
-        <p className="ps-card-copy" style={{ color:"rgba(255,255,255,0.8)" }}>Your receptionist speaks one language. Your patients speak three.</p>
+        <div className="ps-card-stat" style={{ color:"#FFFFFF" }}>Multi-lingual</div>
+        <p className="ps-card-subdesc" style={{ color:"rgba(255,255,255,0.7)" }}>30,000+ French-speaking residents in Netanya</p>
+        <p className="ps-card-copy" style={{ color:"rgba(255,255,255,0.8)" }}>Yael speaks Hebrew, French, and English — every patient feels at home.</p>
       </div>
       <div className="ps-card-visual" style={{ padding:"0 28px 28px", justifyContent:"center" }}>
         <div style={{ background:"#FFFFFF", borderRadius:"12px", overflow:"hidden", boxShadow:"0 2px 12px rgba(0,0,0,0.06)", transform:"scale(0.85)" }}>
-          {[{ flag:"🇮🇱", lang:"Hebrew", ok:true },{ flag:"🇫🇷", lang:"Français", ok:false },{ flag:"🇬🇧", lang:"English", ok:false }].map((row,i) => (
+          {[{ flag:"🇮🇱", lang:"Hebrew", ok:true },{ flag:"🇫🇷", lang:"Français", ok:true },{ flag:"🇬🇧", lang:"English", ok:true }].map((row,i) => (
             <div key={row.lang} style={{ padding:"13px 16px", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:i<2?"1px solid #E5E5E5":"none" }}>
               <div style={{ display:"flex", alignItems:"center", gap:"10px" }}>
                 <span style={{ fontSize:"16px" }}>{row.flag}</span>
