@@ -42,7 +42,7 @@ function MissedCallsCard({ isVisible }) {
   );
 }
 
-const INSTANT_NOTIF_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/191371eb9_We_make_this_exact_picture_wit_Nano_Banana_2_78860.png";
+const INSTANT_NOTIF_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/b30bac8f9_ChatGPTImageJun19202612_12_13AM.png";
 
 function InstantNotificationCard() {
   const [imgLoaded, setImgLoaded] = useState(false);
@@ -185,51 +185,6 @@ function SalaryCostCard() {
   );
 }
 
-// ── Replace this URL after uploading to Base44 media ──
-const SMS_PHOTO = "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/sms-photo.jpg";
-
-function ConfirmationCard() {
-  const [imgLoaded, setImgLoaded] = useState(false);
-  return (
-    <div className="ps-card" style={{ background:"#111827", position:"relative" }}>
-      {/* Text — compact top section */}
-      <div style={{ padding:"24px 24px 16px", flexShrink:0 }}>
-        <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, letterSpacing:"0.08em", textTransform:"uppercase", color:"rgba(255,255,255,0.4)", display:"block", marginBottom:"10px" }}>
-          Patient Confirmation
-        </span>
-        <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.6rem,3vw,2.4rem)", color:"#FFFFFF", letterSpacing:"-0.04em", lineHeight:1, marginBottom:"10px" }}>
-          Instant.
-        </div>
-        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"13px", fontWeight:400, color:"rgba(255,255,255,0.6)", lineHeight:1.5, margin:0 }}>
-          The moment Yael books, the patient gets an SMS — automatically, 24/7.
-        </p>
-      </div>
-
-      {/* Photo — fills the remaining card height */}
-      <div style={{ flex:1, minHeight:0, position:"relative", overflow:"hidden", borderRadius:"0 0 20px 20px" }}>
-        {/* Always-visible dark bg */}
-        <div style={{ position:"absolute", inset:0, background:"linear-gradient(160deg,#111827 0%,#1e3a5f 100%)" }} />
-        {/* Actual photo */}
-        <img
-          src={SMS_PHOTO}
-          alt="Patient receiving Yael SMS confirmation"
-          onLoad={() => setImgLoaded(true)}
-          style={{
-            position:"absolute", inset:0,
-            width:"100%", height:"100%",
-            objectFit:"cover",
-            objectPosition:"center 15%",
-            opacity: imgLoaded ? 1 : 0,
-            transition:"opacity 0.4s ease",
-          }}
-        />
-        {/* Subtle top fade so it blends with the text above */}
-        <div style={{ position:"absolute", top:0, left:0, right:0, height:"60px", background:"linear-gradient(to bottom,#111827,transparent)", zIndex:1 }} />
-      </div>
-    </div>
-  );
-}
-
 export default function ProblemSection() {
   const trackRef  = useRef(null);
   const card0Ref  = useRef(null);
@@ -276,7 +231,6 @@ export default function ProblemSection() {
             <div ref={card1Ref}><AfterHoursCard isVisible={vis1} /></div>
             <LanguageGapCard />
             <SalaryCostCard />
-            <ConfirmationCard />
           </div>
           <button className="ps-arrow ps-arrow-left"  onClick={() => scroll(-1)} aria-label="Previous">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
