@@ -27,7 +27,7 @@ function MissedCallsCard({ isVisible }) {
     <div className="ps-card" style={{ background:"linear-gradient(180deg, #9DB4C0 0%, #C5D5DD 50%, #F2F5F7 100%)" }}>
       <div className="ps-card-top">
         <span className="ps-card-label" style={{ color:"rgba(255,255,255,0.7)" }}>No More Missed Calls</span>
-        <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.4rem,3vw,1.8rem)", color:"#FFFFFF", letterSpacing:"-0.03em", lineHeight:1.2, marginBottom:"14px" }}>
+        <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,4vw,2.6rem)", color:"#FFFFFF", letterSpacing:"-0.05em", lineHeight:1, marginBottom:"4px" }}>
           The Hidden Cost
         </div>
         <p className="ps-card-copy" style={{ color:"rgba(255,255,255,0.95)", fontSize:"15px", lineHeight:"1.6" }}>
