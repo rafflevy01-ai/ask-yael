@@ -33,8 +33,8 @@ function MissedCallsCard({ isVisible }) {
         <p className="ps-card-subdesc" style={{ color:"rgba(255,255,255,0.7)" }}>in unrealized revenue per year</p>
         <p className="ps-card-copy" style={{ color:"rgba(255,255,255,0.85)" }}>Five missed calls a day at ₪900 each, 250 working days — gone.</p>
       </div>
-      <div className="ps-card-visual">
-        <div style={{ height:"160px", position:"relative", overflow:"hidden" }}>
+      <div className="ps-card-visual" style={{ justifyContent:"center" }}>
+        <div style={{ height:"130px", position:"relative", overflow:"hidden", transform:"scale(0.85)" }}>
           <NotifStack />
         </div>
       </div>
