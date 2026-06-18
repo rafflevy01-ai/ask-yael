@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Check } from "lucide-react";
 
-const INTAKE_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/72ff23557_Capturedecran2026-06-19a021834.png";
+const INTAKE_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/8bd79c064_Make_it_more_natural_Remove_th_Nano_Banana_2_70021.png";
 
 const FIELDS = [
   { label: "Name", value: "David Cohen" },
@@ -24,8 +24,8 @@ export default function IntakePatientCard() {
           position: "absolute", inset: 0,
           width: "100%", height: "100%",
           objectFit: "cover",
-          objectPosition: "center 20%",
-          transform: "scale(1.25)",
+          objectPosition: "center 35%",
+          transform: "scale(1.35)",
           opacity: imgLoaded ? 1 : 0,
           transition: "opacity 0.4s ease",
         }}
