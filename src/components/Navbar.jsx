@@ -7,14 +7,20 @@ export default function Navbar() {
   const [overHero, setOverHero] = useState(true);
 
   useEffect(() => {
-    const hero = document.querySelector("[data-hero-section]");
-    if (!hero) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setOverHero(entry.isIntersecting),
-      { threshold: 0.15 }
-    );
-    obs.observe(hero);
-    return () => obs.disconnect();
+    const handleScroll = () => {
+      const hero = document.querySelector("[data-hero-section]");
+      if (!hero) return;
+      const heroBottom = hero.offsetTop + hero.offsetHeight;
+      setOverHero(window.scrollY < heroBottom - 64);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
 
   const textColor    = overHero ? "#FFFFFF"                  : "#0D0D0D";
