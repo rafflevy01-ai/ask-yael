@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Check } from "lucide-react";
 
-const INTAKE_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/cbbcd3f3c_Capturedecran2026-06-19a013646.png";
+const INTAKE_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/72ff23557_Capturedecran2026-06-19a021834.png";
 
 const FIELDS = [
   { label: "Name", value: "David Cohen" },
@@ -24,13 +24,12 @@ export default function IntakePatientCard() {
           position: "absolute", inset: 0,
           width: "100%", height: "100%",
           objectFit: "cover",
-          objectPosition: "center 50%",
-          transform: "scale(1.15)",
+          objectPosition: "center 20%",
           opacity: imgLoaded ? 1 : 0,
           transition: "opacity 0.4s ease",
         }}
       />
-      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.45)", zIndex: 1 }} />
+      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 1 }} />
 
       {/* Registration form on LEFT side */}
       <div style={{
