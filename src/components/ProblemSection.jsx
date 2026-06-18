@@ -47,23 +47,28 @@ const INSTANT_NOTIF_IMG = "https://media.base44.com/images/public/6a2ab0818c0d05
 function InstantNotificationCard() {
   const [imgLoaded, setImgLoaded] = useState(false);
   return (
-    <div className="ps-card" style={{ position:"relative", background:"#2c2c2c" }}>
+    <div className="ps-card" style={{ position:"relative", background:"#111111" }}>
+      {/* Image — scaled down to fit, anchored at bottom so phone stays below text */}
       <img
         src={INSTANT_NOTIF_IMG}
         alt="Instant SMS notification on iPhone"
         onLoad={() => setImgLoaded(true)}
         style={{
-          position:"absolute", inset:0,
-          width:"100%", height:"100%",
-          objectFit:"cover",
-          objectPosition:"center center",
+          position:"absolute",
+          left:"50%",
+          bottom:0,
+          width:"92%",
+          height:"72%",
+          transform:"translateX(-50%)",
+          objectFit:"contain",
+          objectPosition:"center bottom",
           opacity: imgLoaded ? 1 : 0,
           transition:"opacity 0.4s ease",
         }}
       />
-      {/* Dark overlay — solid dark band at top for text, then fades to let the image show clearly */}
-      <div style={{ position:"absolute", inset:0, background:"linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.45) 25%, rgba(0,0,0,0.1) 42%, transparent 50%)", zIndex:1 }} />
-      {/* Text — compact top section, image centered below */}
+      {/* Dark overlay — only at the top for text readability, does NOT cover the image area */}
+      <div style={{ position:"absolute", top:0, left:0, right:0, height:"45%", background:"linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.35) 60%, transparent 100%)", zIndex:1 }} />
+      {/* Text — compact top section, phone clearly visible below */}
       <div style={{ position:"relative", zIndex:2, padding:"24px 28px 12px" }}>
         <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, letterSpacing:"0.08em", textTransform:"uppercase", color:"rgba(255,255,255,0.7)", display:"block", marginBottom:"8px" }}>
           Instant Notification
