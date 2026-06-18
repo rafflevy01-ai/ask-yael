@@ -251,7 +251,7 @@ function LiveCallCard() {
   }, [visibleMessages]);
 
   return (
-    <div className="ps-card">
+    <div className="ps-card" style={{ background:"linear-gradient(180deg, #B0E0E6 0%, #D4EAEE 45%, #FFFFFF 100%)" }}>
       <div className="ps-card-top">
         <span className="ps-card-label">Live Call</span>
         <div className="ps-card-stat" style={{ fontSize:"clamp(1.6rem,3.5vw,2.4rem)" }}>{formatTime(elapsed)}</div>
