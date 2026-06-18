@@ -26,7 +26,7 @@ function MissedCallsCard({ isVisible }) {
     }
   }, [isVisible]);
   return (
-    <div className="ps-card" style={{ background:"#8FA3BF" }}>
+    <div className="ps-card" style={{ background:"linear-gradient(180deg, #6B8AAD 0%, #A3B8D1 50%, #E2EAF3 100%)" }}>
       <div className="ps-card-top">
         <span className="ps-card-label" style={{ color:"rgba(255,255,255,0.7)" }}>Missed Calls</span>
         <div ref={statRef} className="ps-card-stat" style={{ color:"#FFFFFF" }}>₪0</div>
