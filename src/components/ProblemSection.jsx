@@ -252,18 +252,13 @@ function LiveCallCard() {
 
   return (
     <div className="ps-card" style={{ background:"#7BA4AE", position:"relative" }}>
-      {/* White gradient overlay in the middle of the card */}
-      <div style={{
-        position:"absolute", inset:0, zIndex:0, pointerEvents:"none",
-        background:"linear-gradient(180deg, rgba(123,164,174,0) 0%, rgba(123,164,174,0) 30%, rgba(255,255,255,0.9) 45%, rgba(255,255,255,0.95) 55%, rgba(255,255,255,0.95) 100%)",
-      }} />
-      <div className="ps-card-top" style={{ position:"relative", zIndex:1 }}>
+      <div className="ps-card-top">
         <span className="ps-card-label" style={{ color:"rgba(255,255,255,0.8)" }}>Live Call</span>
         <div className="ps-card-stat" style={{ fontSize:"clamp(1.6rem,3.5vw,2.4rem)", color:"#FFFFFF" }}>{formatTime(elapsed)}</div>
         <p className="ps-card-subdesc" style={{ color:"rgba(255,255,255,0.8)" }}>Real conversations, real time</p>
         <p className="ps-card-copy" style={{ color:"rgba(255,255,255,0.9)" }}>Yael handles calls in three languages — booking, triaging, and confirming instantly.</p>
       </div>
-      <div className="ps-card-visual" style={{ padding:"0 20px 20px", position:"relative", zIndex:1 }}>
+      <div className="ps-card-visual" style={{ padding:"0 20px 20px" }}>
         {/* Header */}
         <div style={{
           display:"flex", alignItems:"center", justifyContent:"space-between",
