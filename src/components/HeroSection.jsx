@@ -125,10 +125,11 @@ export default function HeroSection() {
           <div className="hero-lang-row">
             {["EN", "FR", "עב"].map(l => (
               <span key={l} style={{
-                fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "11px",
-                color: "rgba(255,255,255,0.65)", letterSpacing: "0.06em",
-                border: "1px solid rgba(255,255,255,0.2)", borderRadius: "9999px",
-                padding: "3px 10px",
+                fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px",
+                color: "rgba(255,255,255,0.85)", letterSpacing: "0.06em",
+                background: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.25)", borderRadius: "9999px",
+                padding: "4px 12px",
               }}>{l}</span>
             ))}
           </div>
