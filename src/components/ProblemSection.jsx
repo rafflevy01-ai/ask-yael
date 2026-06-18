@@ -31,8 +31,8 @@ function MissedCallsCard({ isVisible }) {
         <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,4vw,2.6rem)", color:"#FFFFFF", letterSpacing:"-0.05em", lineHeight:1, marginBottom:"4px" }}>
           The Hidden Cost
         </div>
-        <p className="ps-card-copy" style={{ color:"rgba(255,255,255,0.95)", fontSize:"15px", lineHeight:"1.6" }}>
-          Five missed calls a day at ₪900 each, 250 working days — that's <span ref={statRef} style={{ fontWeight:600, color:"#FFFFFF" }}>₪0</span> in unrealized revenue per year. Gone.
+        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, textTransform:"uppercase", letterSpacing:"0.08em", color:"rgba(255,255,255,0.75)", margin:0 }}>
+          5 missed calls a day · ₪900 each · 250 working days = <span ref={statRef} style={{ fontWeight:600, color:"#FFFFFF" }}>₪0</span> lost per year
         </p>
       </div>
       <div className="ps-card-visual" style={{ justifyContent:"center", alignItems:"center", paddingBottom:"28px" }}>
