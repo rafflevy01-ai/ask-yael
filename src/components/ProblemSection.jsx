@@ -59,7 +59,14 @@ function MissedCallsCard({ isVisible }) {
   );
 }
 
-const INSTANT_NOTIF_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/b30bac8f9_ChatGPTImageJun19202612_12_13AM.png";
+const INSTANT_NOTIF_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/332dc40be_Your_task_is_to_recreate_a_lad_Nano_Banana_2_59670.png";
+
+const SMS_BUBBLE = `Hi Sarah, your appointment is confirmed.
+Date: Wednesday 18 Jun · 10:00
+Doctor: Dr. Cohen
+Treatment: Checkup
+Please let us know 24h in advance if you need to cancel.
+— Yael`;
 
 function InstantNotificationCard() {
   const [imgLoaded, setImgLoaded] = useState(false);
@@ -67,7 +74,7 @@ function InstantNotificationCard() {
     <div className="ps-card" style={{ position:"relative", background:"#1a1a1a" }}>
       <img
         src={INSTANT_NOTIF_IMG}
-        alt="Instant SMS notification on iPhone"
+        alt="Woman receiving SMS notification"
         onLoad={() => setImgLoaded(true)}
         style={{
           position:"absolute", inset:0,
@@ -78,19 +85,48 @@ function InstantNotificationCard() {
           transition:"opacity 0.4s ease",
         }}
       />
-      <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.2)", zIndex:1 }} />
-      <div style={{ position:"relative", zIndex:2, padding:"24px 28px 12px" }}>
+      <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.15)", zIndex:1 }} />
+      
+      {/* SMS bubble on right side */}
+      <div style={{
+        position:"absolute",
+        zIndex:2,
+        right:"12px",
+        top:"50%",
+        transform:"translateY(-50%)",
+        maxWidth:"175px",
+      }}>
+        <span style={{
+          fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"8px",
+          textTransform:"uppercase", letterSpacing:"0.1em",
+          color:"rgba(255,255,255,0.7)", display:"block", marginBottom:"8px",
+        }}>
+          SMS to patient
+        </span>
+        <div style={{
+          background:"#34C759",
+          borderRadius:"14px 14px 4px 14px",
+          padding:"12px 14px",
+        }}>
+          <div style={{
+            fontFamily:"Inter, sans-serif", fontWeight:400, fontSize:"11px",
+            color:"#FFFFFF", lineHeight:1.5, whiteSpace:"pre-line",
+          }}>
+            {SMS_BUBBLE}
+          </div>
+        </div>
+      </div>
+
+      {/* Top-left label */}
+      <div style={{ position:"relative", zIndex:2, padding:"24px 28px 0" }}>
         <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, letterSpacing:"0.08em", textTransform:"uppercase", color:"rgba(255,255,255,0.85)", display:"block", marginBottom:"8px" }}>
           Instant Notification
         </span>
         <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,4vw,2.6rem)", color:"#FFFFFF", letterSpacing:"-0.05em", lineHeight:1, marginBottom:"4px" }}>
           Within seconds.
         </div>
-        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, textTransform:"uppercase", letterSpacing:"0.08em", color:"rgba(255,255,255,0.75)", margin:"0 0 8px" }}>
+        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, textTransform:"uppercase", letterSpacing:"0.08em", color:"rgba(255,255,255,0.75)", margin:0 }}>
           Confirmation SMS sent automatically
-        </p>
-        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"13px", fontWeight:400, color:"rgba(255,255,255,0.95)", lineHeight:1.5, margin:0 }}>
-          The second Yael confirms a booking, the patient receives a personalized SMS with all the details — date, time, doctor, and treatment.
         </p>
       </div>
     </div>
