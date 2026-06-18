@@ -2,7 +2,7 @@ import React from "react";
 
 const VIDEO_URL = "https://media.base44.com/videos/public/6a2ab0818c0d050752d1521b/3f09837ab_Cinematic_background_video_12__Veo_31_59928.mp4";
 
-export default function HeroSection() {
+export default function HeroSection({ activeLang, onLangChange }) {
   return (
     <section
       data-hero-section
@@ -123,15 +123,31 @@ export default function HeroSection() {
         <div className="hero-mobile-block" style={{ display: "none" }}>
           {/* Language indicator — core differentiator, shows what Yael speaks */}
           <div className="hero-lang-row">
-            {["EN", "FR", "עב"].map(l => (
-              <span key={l} style={{
-                fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px",
-                color: "rgba(255,255,255,0.85)", letterSpacing: "0.06em",
-                background: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)",
-                border: "1px solid rgba(255,255,255,0.25)", borderRadius: "9999px",
-                padding: "4px 12px",
-              }}>{l}</span>
-            ))}
+            {[
+              { key: "en", label: "EN" },
+              { key: "fr", label: "FR" },
+              { key: "he", label: "עב" },
+            ].map(({ key, label }) => {
+              const isActive = activeLang === key;
+              return (
+                <button
+                  key={key}
+                  onClick={() => onLangChange(key)}
+                  style={{
+                    fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px",
+                    color: isActive ? "#000000" : "rgba(255,255,255,0.85)",
+                    letterSpacing: "0.06em",
+                    background: isActive ? "#FFFFFF" : "rgba(255,255,255,0.1)",
+                    backdropFilter: "blur(8px)",
+                    border: isActive ? "1px solid rgba(255,255,255,0.8)" : "1px solid rgba(255,255,255,0.25)",
+                    borderRadius: "9999px",
+                    padding: "4px 12px",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                  }}
+                >{label}</button>
+              );
+            })}
           </div>
 
           {/* Description */}

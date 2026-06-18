@@ -12,8 +12,10 @@ const HEBREW_AUDIO_URL = "https://media.base44.com/files/public/6a2ab0818c0d0507
 const FRENCH_AUDIO_URL = "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/4e7c757aa_2233.mp3";
 const ENGLISH_AUDIO_URL = "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/d266f3f71_ElevenLabs_2026-06-14T22_15_08_Christina-EnergeticCommercialAmericanFemaleVoice_pvc_sp109_s19_sb75_v3.mp3";
 
-export default function VoiceDemoSection() {
-  const [activeTab, setActiveTab] = useState("he");
+export default function VoiceDemoSection({ activeLang, onLangChange }) {
+  const [internalTab, setInternalTab] = useState("he");
+  const activeTab = activeLang ?? internalTab;
+  const setActiveTab = onLangChange ?? setInternalTab;
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const audioRef = useRef(null);
