@@ -30,7 +30,7 @@ export default function IntakePatientCard() {
           transition: "opacity 0.4s ease",
         }}
       />
-      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 1 }} />
+      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.15)", zIndex: 1 }} />
 
       {/* Registration form on LEFT side */}
       <div style={{
