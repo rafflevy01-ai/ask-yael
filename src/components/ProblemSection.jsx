@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import NotifStack from "@/components/NotifStack";
-
 const BUSINESS_BARS   = [65,95,85,60,40,50,70,65,55,45];
 const AFTER_HOURS_BARS = [6,5,4,3,2];
 
@@ -32,11 +30,6 @@ function MissedCallsCard({ isVisible }) {
         <div ref={statRef} className="ps-card-stat" style={{ color:"#FFFFFF" }}>₪0</div>
         <p className="ps-card-subdesc" style={{ color:"rgba(255,255,255,0.7)" }}>in unrealized revenue per year</p>
         <p className="ps-card-copy" style={{ color:"rgba(255,255,255,0.85)" }}>Five missed calls a day at ₪900 each, 250 working days — gone.</p>
-      </div>
-      <div className="ps-card-visual" style={{ justifyContent:"center" }}>
-        <div style={{ height:"130px", position:"relative", overflow:"hidden", transform:"scale(0.85)" }}>
-          <NotifStack />
-        </div>
       </div>
     </div>
   );
