@@ -26,16 +26,99 @@ function MissedCallsCard({ isVisible }) {
     }
   }, [isVisible]);
   return (
-    <div className="ps-card">
-      <div className="ps-card-top">
-        <span className="ps-card-label">Missed Calls</span>
-        <div ref={statRef} className="ps-card-stat">₪0</div>
-        <p className="ps-card-subdesc">in unrealized revenue per year</p>
-        <p className="ps-card-copy">Five missed calls a day at ₪900 each, 250 working days — gone.</p>
+    <div className="ps-card" style={{ background:"#E2E2E3" }}>
+      {/* Header + body text — matches Finance card layout */}
+      <div style={{ padding:"32px 28px 24px" }}>
+        <h3 style={{
+          fontFamily:"Inter, sans-serif",
+          fontWeight:600,
+          fontSize:"22px",
+          color:"#FFFFFF",
+          margin:"0 0 8px 0",
+          letterSpacing:"-0.02em",
+        }}>Missed Calls</h3>
+        <p style={{
+          fontFamily:"Inter, sans-serif",
+          fontWeight:400,
+          fontSize:"14px",
+          color:"rgba(255,255,255,0.65)",
+          lineHeight:1.5,
+          margin:0,
+          maxWidth:"320px",
+        }}>Five missed calls a day at ₪900 each, 250 working days — gone.</p>
       </div>
-      <div className="ps-card-visual">
-        <div style={{ height:"160px", position:"relative", overflow:"hidden" }}>
-          <NotifStack />
+
+      {/* Centered notification bubble — matches Finance card */}
+      <div style={{
+        display:"flex",
+        alignItems:"center",
+        justifyContent:"center",
+        flex:1,
+        padding:"0 28px 28px",
+      }}>
+        <div style={{
+          background:"#FFFFFF",
+          borderRadius:"14px",
+          boxShadow:"0 4px 24px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.04)",
+          padding:"16px 20px",
+          width:"100%",
+          maxWidth:"310px",
+          display:"flex",
+          alignItems:"center",
+          gap:"14px",
+          position:"relative",
+        }}>
+          {/* Blue circle icon */}
+          <div style={{
+            width:"36px",
+            height:"36px",
+            borderRadius:"50%",
+            background:"#007AFF",
+            display:"flex",
+            alignItems:"center",
+            justifyContent:"center",
+            flexShrink:0,
+          }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </div>
+
+          {/* Text content */}
+          <div style={{ flex:1, minWidth:0 }}>
+            <div style={{
+              fontFamily:"Inter, sans-serif",
+              fontWeight:600,
+              fontSize:"16px",
+              color:"#2D2D2D",
+              lineHeight:1.3,
+            }}>Missed Call</div>
+            <div style={{
+              fontFamily:"Inter, sans-serif",
+              fontWeight:400,
+              fontSize:"14px",
+              color:"#5A5A5A",
+              lineHeight:1.4,
+              marginTop:"2px",
+            }}>+972 50-123-4567</div>
+          </div>
+
+          {/* Badge */}
+          <div style={{
+            width:"24px",
+            height:"24px",
+            borderRadius:"50%",
+            background:"#F2F2F2",
+            display:"flex",
+            alignItems:"center",
+            justifyContent:"center",
+            fontFamily:"Inter, sans-serif",
+            fontWeight:600,
+            fontSize:"12px",
+            color:"#2D2D2D",
+            flexShrink:0,
+          }}>5</div>
         </div>
       </div>
     </div>
