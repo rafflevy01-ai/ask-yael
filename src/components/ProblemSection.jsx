@@ -63,6 +63,7 @@ function MissedCallsCard({ isVisible }) {
 }
 
 const INSTANT_NOTIF_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/332dc40be_Your_task_is_to_recreate_a_lad_Nano_Banana_2_59670.png";
+const CLINIC_NOTIF_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/f9a210da0_Create_a_picture_similar_to_th_Nano_Banana_2_18435copie.png";
 
 const SMS_BUBBLE = `Hi Sarah, your appointment is confirmed.
 Date: Wednesday 18 Jun · 10:00
@@ -130,6 +131,99 @@ function InstantNotificationCard() {
         </div>
         <p style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, textTransform:"uppercase", letterSpacing:"0.08em", color:"rgba(255,255,255,0.75)", margin:0 }}>
           Confirmation SMS sent automatically
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function ClinicNotificationCard() {
+  const [imgLoaded, setImgLoaded] = useState(false);
+  return (
+    <div className="ps-card" style={{ position:"relative", background:"#1a1a1a" }}>
+      <img
+        src={CLINIC_NOTIF_IMG}
+        alt="Receptionist receiving clinic notification"
+        onLoad={() => setImgLoaded(true)}
+        style={{
+          position:"absolute", inset:0,
+          width:"100%", height:"100%",
+          objectFit:"cover",
+          objectPosition:"center 30%",
+          opacity: imgLoaded ? 1 : 0,
+          transition:"opacity 0.4s ease",
+        }}
+      />
+      <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.2)", zIndex:1 }} />
+      
+      {/* Notification bubble on right side */}
+      <div style={{
+        position:"absolute",
+        zIndex:2,
+        right:"12px",
+        top:"50%",
+        transform:"translateY(-50%)",
+        maxWidth:"200px",
+      }}>
+        <span style={{
+          fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"8px",
+          textTransform:"uppercase", letterSpacing:"0.1em",
+          color:"rgba(255,255,255,0.7)", display:"block", marginBottom:"8px",
+        }}>
+          Notification to clinic
+        </span>
+        <div style={{
+          background:"rgba(255,255,255,0.9)",
+          backdropFilter:"blur(14px)",
+          WebkitBackdropFilter:"blur(14px)",
+          borderRadius:"14px",
+          padding:"12px 14px",
+          border:"1px solid rgba(0,0,0,0.06)",
+          boxShadow:"0 2px 10px rgba(0,0,0,0.05)",
+          display:"flex", gap:"10px", alignItems:"flex-start",
+        }}>
+          {/* App icon */}
+          <div style={{
+            width:"26px", height:"26px", borderRadius:"6px",
+            background:"#0D0D0D", flexShrink:0,
+            display:"flex", alignItems:"center", justifyContent:"center",
+          }}>
+            <span style={{ color:"#FFF", fontSize:"12px", fontWeight:700, lineHeight:1 }}>Y</span>
+          </div>
+          {/* Content */}
+          <div style={{ flex:1, minWidth:0 }}>
+            <div style={{
+              fontFamily:"Inter, sans-serif", fontWeight:600, fontSize:"10px",
+              color:"#0D0D0D", marginBottom:"3px",
+            }}>
+              AskYael · now
+            </div>
+            <div style={{
+              fontFamily:"Inter, sans-serif", fontWeight:500, fontSize:"11px",
+              color:"#0D0D0D", lineHeight:1.35, marginBottom:"2px",
+            }}>
+              New appointment booked
+            </div>
+            <div style={{
+              fontFamily:"Inter, sans-serif", fontWeight:400, fontSize:"10px",
+              color:"#555555", lineHeight:1.35,
+            }}>
+              Patient: Sarah Lévy · Wed 18 Jun · 10:00 · Dr. Cohen · Checkup
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Top-left label */}
+      <div style={{ position:"relative", zIndex:2, padding:"24px 28px 0" }}>
+        <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, letterSpacing:"0.08em", textTransform:"uppercase", color:"rgba(255,255,255,0.85)", display:"block", marginBottom:"8px" }}>
+          Instant Notification
+        </span>
+        <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,4vw,2.6rem)", color:"#FFFFFF", letterSpacing:"-0.05em", lineHeight:1, marginBottom:"4px" }}>
+          On the clinic side.
+        </div>
+        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, textTransform:"uppercase", letterSpacing:"0.08em", color:"rgba(255,255,255,0.75)", margin:0 }}>
+          Your team is notified instantly
         </p>
       </div>
     </div>
@@ -283,6 +377,7 @@ export default function ProblemSection() {
           <div ref={trackRef} className="ps-track">
             <div ref={card0Ref}><MissedCallsCard isVisible={vis0} /></div>
             <InstantNotificationCard />
+            <ClinicNotificationCard />
             <div ref={card1Ref}><AfterHoursCard isVisible={vis1} /></div>
             <LanguageGapCard />
             <SalaryCostCard />
