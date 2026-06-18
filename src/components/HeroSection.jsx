@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 const VIDEO_URL = "https://media.base44.com/videos/public/6a2ab0818c0d050752d1521b/3f09837ab_Cinematic_background_video_12__Veo_31_59928.mp4";
 
-export default function HeroSection({ activeLang, onLangChange }) {
+export default function HeroSection() {
+  const [activeLang, setActiveLang] = useState("he");
   return (
     <section
       data-hero-section
@@ -132,7 +133,7 @@ export default function HeroSection({ activeLang, onLangChange }) {
               return (
                 <button
                   key={key}
-                  onClick={() => onLangChange(key)}
+                  onClick={() => setActiveLang(key)}
                   style={{
                     fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px",
                     color: isActive ? "#000000" : "rgba(255,255,255,0.85)",
