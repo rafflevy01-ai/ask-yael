@@ -31,25 +31,25 @@ function MissedCallsCard({ isVisible }) {
         <p className="ps-card-subdesc" style={{ color:"rgba(255,255,255,0.7)" }}>in unrealized revenue per year</p>
         <p className="ps-card-copy" style={{ color:"rgba(255,255,255,0.85)" }}>Five missed calls a day at ₪900 each, 250 working days — gone.</p>
       </div>
-      <div className="ps-card-visual" style={{ justifyContent:"center", paddingBottom:"28px" }}>
+      <div className="ps-card-visual" style={{ justifyContent:"center", alignItems:"center", paddingBottom:"28px" }}>
         <div style={{
-          background:"#FFFFFF", borderRadius:"16px", padding:"12px 16px",
+          background:"#FFFFFF", borderRadius:"16px", padding:"14px 18px",
           boxShadow:"0 2px 14px rgba(0,0,0,0.08)", fontFamily:"-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif",
-          width:"220px",
+          width:"260px",
           border:"1px solid rgba(0,0,0,0.04)",
         }}>
           <div style={{ display:"flex", alignItems:"center", gap:"6px", marginBottom:"4px" }}>
-            <div style={{ width:"18px", height:"18px", background:"#34c759", borderRadius:"5px", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.73a16 16 0 006.72 6.72l1.06-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            <div style={{ width:"20px", height:"20px", background:"#34c759", borderRadius:"5px", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.73a16 16 0 006.72 6.72l1.06-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
             </div>
-            <span style={{ fontSize:"11px", fontWeight:600, color:"rgba(60,60,67,0.55)", flex:1, letterSpacing:"0.01em" }}>PHONE</span>
-            <span style={{ fontSize:"11px", fontWeight:400, color:"rgba(60,60,67,0.4)" }}>18:32</span>
+            <span style={{ fontSize:"12px", fontWeight:600, color:"rgba(60,60,67,0.55)", flex:1, letterSpacing:"0.01em" }}>PHONE</span>
+            <span style={{ fontSize:"12px", fontWeight:400, color:"rgba(60,60,67,0.4)" }}>18:32</span>
           </div>
-          <div style={{ fontSize:"13px", fontWeight:600, color:"#1a1a1a", lineHeight:1.35 }}>Missed Call</div>
-          <div style={{ fontSize:"13px", fontWeight:400, color:"rgba(60,60,67,0.75)", marginTop:"2px", lineHeight:1.35 }}>+972 54 321 4567</div>
-          <div style={{ display:"flex", gap:"7px", marginTop:"10px" }}>
-            <div style={{ flex:1, height:"28px", background:"rgba(0,122,255,0.08)", borderRadius:"8px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"12px", fontWeight:500, color:"#007aff" }}>Call Back</div>
-            <div style={{ flex:1, height:"28px", background:"rgba(118,118,128,0.08)", borderRadius:"8px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"12px", fontWeight:500, color:"#6B6B6B" }}>Message</div>
+          <div style={{ fontSize:"14px", fontWeight:600, color:"#1a1a1a", lineHeight:1.35 }}>Missed Call</div>
+          <div style={{ fontSize:"14px", fontWeight:400, color:"rgba(60,60,67,0.75)", marginTop:"3px", lineHeight:1.35 }}>+972 54 321 4567</div>
+          <div style={{ display:"flex", gap:"8px", marginTop:"12px" }}>
+            <div style={{ flex:1, height:"30px", background:"rgba(0,122,255,0.08)", borderRadius:"8px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"13px", fontWeight:500, color:"#007aff" }}>Call Back</div>
+            <div style={{ flex:1, height:"30px", background:"rgba(118,118,128,0.08)", borderRadius:"8px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"13px", fontWeight:500, color:"#6B6B6B" }}>Message</div>
           </div>
         </div>
       </div>
