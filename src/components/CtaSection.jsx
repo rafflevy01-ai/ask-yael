@@ -33,7 +33,7 @@ export default function CtaSection() {
   }, []);
 
   return (
-    <section data-cta style={{ backgroundColor: "#FFFFFF", padding: "80px 40px 40px", borderTop: "1px solid rgba(0,0,0,0.08)" }}>
+    <section data-cta style={{ backgroundColor: "#FFFFFF", padding: "80px 40px 40px", borderTop: "1px solid #000000" }}>
       <div style={{ maxWidth: "600px", margin: "0 auto", textAlign: "center" }}>
         <h2
           style={{

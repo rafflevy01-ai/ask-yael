@@ -334,7 +334,7 @@ export default function ProblemSection() {
   };
 
   return (
-    <section data-problem-section style={{ width:"100%", backgroundColor:"#FFFFFF", padding:"80px 0 64px", borderTop: "1px solid rgba(0,0,0,0.08)" }}>
+    <section data-problem-section style={{ width:"100%", backgroundColor:"#FFFFFF", padding:"80px 0 64px", borderTop: "1px solid #000000" }}>
       <div style={{ maxWidth:"1280px", margin:"0 auto", padding:"0 56px" }}>
 
         <div style={{ marginBottom:"48px" }}>

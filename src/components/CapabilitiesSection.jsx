@@ -24,7 +24,7 @@ export default function CapabilitiesSection() {
     return () => clearInterval(interval);
   }, []);
   return (
-    <section data-capabilities style={{ padding: "80px 40px", backgroundColor: "#FFFFFF", borderTop: "1px solid rgba(0,0,0,0.08)" }}>
+    <section data-capabilities style={{ padding: "80px 40px", backgroundColor: "#FFFFFF", borderTop: "1px solid #000000" }}>
       <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
 
         {/* Header */}
