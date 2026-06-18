@@ -31,6 +31,27 @@ function MissedCallsCard({ isVisible }) {
         <p className="ps-card-subdesc" style={{ color:"rgba(255,255,255,0.7)" }}>in unrealized revenue per year</p>
         <p className="ps-card-copy" style={{ color:"rgba(255,255,255,0.85)" }}>Five missed calls a day at ₪900 each, 250 working days — gone.</p>
       </div>
+      <div className="ps-card-visual" style={{ justifyContent:"center", paddingBottom:"28px" }}>
+        <div style={{
+          background:"rgba(250,250,252,0.94)", borderRadius:"16px", padding:"11px 14px",
+          boxShadow:"0 2px 12px rgba(0,0,0,0.08)", fontFamily:"-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif",
+          width:"220px",
+        }}>
+          <div style={{ display:"flex", alignItems:"center", gap:"6px", marginBottom:"3px" }}>
+            <div style={{ width:"16px", height:"16px", background:"#34c759", borderRadius:"4px", display:"flex", alignItems:"center", justifyContent:"center" }}>
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 015.11 8.79c-.87-1.07-1.6-2.22-2.14-3.45A2 2 0 015.11 2l3 .01a2 2 0 011.72 2.03c-.09.63-.27 1.26-.45 1.88"/></svg>
+            </div>
+            <span style={{ fontSize:"11px", fontWeight:600, color:"rgba(60,60,67,0.55)", flex:1 }}>PHONE</span>
+            <span style={{ fontSize:"11px", color:"rgba(60,60,67,0.4)" }}>18:32</span>
+          </div>
+          <div style={{ fontSize:"13px", fontWeight:600, color:"#000", lineHeight:1.35 }}>Missed Call</div>
+          <div style={{ fontSize:"13px", color:"rgba(60,60,67,0.75)", marginTop:"1px" }}>+972 54 321 4567</div>
+          <div style={{ display:"flex", gap:"7px", marginTop:"9px" }}>
+            <div style={{ flex:1, height:"26px", background:"rgba(118,118,128,0.12)", borderRadius:"8px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"12px", fontWeight:500, color:"#007aff" }}>Call Back</div>
+            <div style={{ flex:1, height:"26px", background:"rgba(118,118,128,0.12)", borderRadius:"8px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"12px", fontWeight:500, color:"#007aff" }}>Message</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
