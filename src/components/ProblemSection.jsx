@@ -61,17 +61,18 @@ function InstantNotificationCard() {
           transition:"opacity 0.4s ease",
         }}
       />
+      <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.2)", zIndex:1 }} />
       <div style={{ position:"relative", zIndex:2, padding:"24px 28px 12px" }}>
-        <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, letterSpacing:"0.08em", textTransform:"uppercase", color:"rgba(255,255,255,0.85)", display:"block", marginBottom:"8px", textShadow:"0 1px 4px rgba(0,0,0,0.6)" }}>
+        <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, letterSpacing:"0.08em", textTransform:"uppercase", color:"rgba(255,255,255,0.85)", display:"block", marginBottom:"8px" }}>
           Instant Notification
         </span>
-        <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,4vw,2.6rem)", color:"#FFFFFF", letterSpacing:"-0.05em", lineHeight:1, marginBottom:"4px", textShadow:"0 1px 4px rgba(0,0,0,0.6)" }}>
+        <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,4vw,2.6rem)", color:"#FFFFFF", letterSpacing:"-0.05em", lineHeight:1, marginBottom:"4px" }}>
           Within seconds.
         </div>
-        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, textTransform:"uppercase", letterSpacing:"0.08em", color:"rgba(255,255,255,0.75)", margin:"0 0 8px", textShadow:"0 1px 4px rgba(0,0,0,0.6)" }}>
+        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, textTransform:"uppercase", letterSpacing:"0.08em", color:"rgba(255,255,255,0.75)", margin:"0 0 8px" }}>
           Confirmation SMS sent automatically
         </p>
-        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"13px", fontWeight:400, color:"rgba(255,255,255,0.95)", lineHeight:1.5, margin:0, textShadow:"0 1px 4px rgba(0,0,0,0.6)" }}>
+        <p style={{ fontFamily:"Inter,sans-serif", fontSize:"13px", fontWeight:400, color:"rgba(255,255,255,0.95)", lineHeight:1.5, margin:0 }}>
           The second Yael confirms a booking, the patient receives a personalized SMS with all the details — date, time, doctor, and treatment.
         </p>
       </div>
