@@ -25,18 +25,19 @@ export default function IntakePatientCard() {
           width: "100%", height: "100%",
           objectFit: "cover",
           objectPosition: "center 35%",
-          transform: "scale(1.35)",
+          transform: "scale(1.5)",
           opacity: imgLoaded ? 1 : 0,
           transition: "opacity 0.4s ease",
         }}
       />
       <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.15)", zIndex: 1 }} />
 
-      {/* Registration form on LEFT side */}
+      {/* Registration form centered */}
       <div style={{
         position: "absolute",
         zIndex: 2,
-        left: "16px",
+        left: "50%",
+        transform: "translateX(-50%)",
         bottom: "32px",
       }}>
         <span style={{
