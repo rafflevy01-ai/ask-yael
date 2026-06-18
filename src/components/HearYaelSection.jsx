@@ -282,7 +282,7 @@ export default function HearYaelSection() {
     <section data-hear-yael style={{
       padding: "100px 48px",
       maxWidth: "100%",
-      backgroundColor: "#F8FCFC",
+      borderTop: "1px solid rgba(0,0,0,0.08)",
     }}>
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         <div style={{ marginBottom: "48px", textAlign: "center" }}>
