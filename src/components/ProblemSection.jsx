@@ -47,29 +47,9 @@ const INSTANT_NOTIF_IMG = "https://media.base44.com/images/public/6a2ab0818c0d05
 function InstantNotificationCard() {
   const [imgLoaded, setImgLoaded] = useState(false);
   return (
-    <div className="ps-card" style={{ position:"relative", background:"#111111" }}>
-      {/* Image — scaled down to fit, anchored at bottom so phone stays below text */}
-      <img
-        src={INSTANT_NOTIF_IMG}
-        alt="Instant SMS notification on iPhone"
-        onLoad={() => setImgLoaded(true)}
-        style={{
-          position:"absolute",
-          left:"50%",
-          bottom:0,
-          width:"92%",
-          height:"72%",
-          transform:"translateX(-50%)",
-          objectFit:"contain",
-          objectPosition:"center bottom",
-          opacity: imgLoaded ? 1 : 0,
-          transition:"opacity 0.4s ease",
-        }}
-      />
-      {/* Dark overlay — only at the top for text readability, does NOT cover the image area */}
-      <div style={{ position:"absolute", top:0, left:0, right:0, height:"45%", background:"linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.35) 60%, transparent 100%)", zIndex:1 }} />
-      {/* Text — compact top section, phone clearly visible below */}
-      <div style={{ position:"relative", zIndex:2, padding:"24px 28px 12px" }}>
+    <div className="ps-card" style={{ position:"relative", background:"#1a1a1a" }}>
+      {/* Text — sits at top with solid dark bg for readability */}
+      <div style={{ position:"relative", zIndex:2, padding:"24px 28px 12px", background:"#1a1a1a" }}>
         <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, letterSpacing:"0.08em", textTransform:"uppercase", color:"rgba(255,255,255,0.7)", display:"block", marginBottom:"8px" }}>
           Instant Notification
         </span>
@@ -82,6 +62,25 @@ function InstantNotificationCard() {
         <p style={{ fontFamily:"Inter,sans-serif", fontSize:"13px", fontWeight:400, color:"rgba(255,255,255,0.9)", lineHeight:1.5, margin:0 }}>
           The second Yael confirms a booking, the patient receives a personalized SMS with all the details — date, time, doctor, and treatment.
         </p>
+      </div>
+
+      {/* Image — fills the remaining card space below the text */}
+      <div style={{ flex:1, minHeight:0, position:"relative", overflow:"hidden" }}>
+        <img
+          src={INSTANT_NOTIF_IMG}
+          alt="Instant SMS notification on iPhone"
+          onLoad={() => setImgLoaded(true)}
+          style={{
+            position:"absolute", inset:0,
+            width:"100%", height:"100%",
+            objectFit:"cover",
+            objectPosition:"center 30%",
+            opacity: imgLoaded ? 1 : 0,
+            transition:"opacity 0.4s ease",
+          }}
+        />
+        {/* Soft gradient at top of image area to blend into the text section */}
+        <div style={{ position:"absolute", top:0, left:0, right:0, height:"30px", background:"linear-gradient(to bottom, #1a1a1a, transparent)", zIndex:1 }} />
       </div>
     </div>
   );
