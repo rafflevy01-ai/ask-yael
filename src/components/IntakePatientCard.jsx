@@ -29,7 +29,7 @@ export default function IntakePatientCard() {
           transition: "opacity 0.4s ease",
         }}
       />
-      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.3)", zIndex: 1 }} />
+
 
       {/* Registration form overlaid on right side */}
       <div style={{
@@ -106,6 +106,9 @@ export default function IntakePatientCard() {
           </div>
         </div>
       </div>
+
+      {/* Subtle top gradient for text readability */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "140px", background: "linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 100%)", zIndex: 1 }} />
 
       {/* Top-left label */}
       <div style={{ position: "relative", zIndex: 2, padding: "24px 28px 0" }}>
