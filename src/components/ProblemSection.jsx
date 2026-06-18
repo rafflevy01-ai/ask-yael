@@ -124,7 +124,7 @@ function AfterHoursCard({ isVisible }) {
 
 function LanguageGapCard() {
   return (
-    <div className="ps-card" style={{ background:"linear-gradient(180deg, #B8C5D3 0%, #8E9EAF 100%)" }}>
+    <div className="ps-card" style={{ background:"linear-gradient(180deg, #7B8FA1 0%, #C5D0D9 50%, #E8EDF1 100%)" }}>
       <div className="ps-card-top">
         <span className="ps-card-label" style={{ color:"rgba(255,255,255,0.7)" }}>Language Gap</span>
         <div className="ps-card-stat" style={{ color:"#FFFFFF" }}>30,000+</div>
