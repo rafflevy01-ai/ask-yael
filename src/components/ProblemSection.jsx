@@ -167,7 +167,7 @@ function ClinicNotificationCard() {
         <span style={{
           fontFamily:"Inter,sans-serif", fontWeight:500, fontSize:"9px",
           textTransform:"uppercase", letterSpacing:"0.1em",
-          color:"rgba(255,255,255,0.7)", display:"block", marginBottom:"8px",
+          color:"rgba(255,255,255,0.7)", display:"block", marginBottom:"6px",
         }}>
           Notification to clinic
         </span>
@@ -175,36 +175,36 @@ function ClinicNotificationCard() {
           background:"rgba(255,255,255,0.9)",
           backdropFilter:"blur(14px)",
           WebkitBackdropFilter:"blur(14px)",
-          borderRadius:"12px",
-          padding:"8px 12px",
+          borderRadius:"10px",
+          padding:"6px 10px",
           border:"1px solid rgba(0,0,0,0.06)",
           boxShadow:"0 2px 10px rgba(0,0,0,0.05)",
-          display:"flex", gap:"8px", alignItems:"center",
+          display:"flex", gap:"6px", alignItems:"center",
         }}>
           {/* App icon */}
           <div style={{
-            width:"24px", height:"24px", borderRadius:"5px",
+            width:"20px", height:"20px", borderRadius:"4px",
             background:"#0D0D0D", flexShrink:0,
             display:"flex", alignItems:"center", justifyContent:"center",
           }}>
-            <span style={{ color:"#FFF", fontSize:"11px", fontWeight:700, lineHeight:1 }}>Y</span>
+            <span style={{ color:"#FFF", fontSize:"10px", fontWeight:700, lineHeight:1 }}>Y</span>
           </div>
           {/* Content — all on one line */}
-          <div style={{ display:"flex", alignItems:"baseline", gap:"6px", flexWrap:"wrap", rowGap:"2px", minWidth:0 }}>
+          <div style={{ display:"flex", alignItems:"baseline", gap:"5px", flexWrap:"wrap", rowGap:"1px", minWidth:0 }}>
             <span style={{
-              fontFamily:"Inter, sans-serif", fontWeight:600, fontSize:"11px",
+              fontFamily:"Inter, sans-serif", fontWeight:600, fontSize:"10px",
               color:"#0D0D0D",
             }}>
               AskYael · now
             </span>
             <span style={{
-              fontFamily:"Inter, sans-serif", fontWeight:500, fontSize:"11px",
+              fontFamily:"Inter, sans-serif", fontWeight:500, fontSize:"10px",
               color:"#0D0D0D",
             }}>
               New appointment booked
             </span>
             <span style={{
-              fontFamily:"Inter, sans-serif", fontWeight:400, fontSize:"10px",
+              fontFamily:"Inter, sans-serif", fontWeight:400, fontSize:"9px",
               color:"#555555",
             }}>
               Sarah Lévy · Wed 18 Jun · 10:00
