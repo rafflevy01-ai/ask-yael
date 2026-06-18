@@ -24,18 +24,19 @@ export default function IntakePatientCard() {
           position: "absolute", inset: 0,
           width: "100%", height: "100%",
           objectFit: "cover",
-          objectPosition: "center 45%",
+          objectPosition: "center 50%",
+          transform: "scale(1.15)",
           opacity: imgLoaded ? 1 : 0,
           transition: "opacity 0.4s ease",
         }}
       />
+      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.45)", zIndex: 1 }} />
 
-
-      {/* Registration form overlaid on right side */}
+      {/* Registration form on LEFT side */}
       <div style={{
         position: "absolute",
         zIndex: 2,
-        right: "16px",
+        left: "16px",
         bottom: "32px",
       }}>
         <span style={{
@@ -51,7 +52,7 @@ export default function IntakePatientCard() {
           WebkitBackdropFilter: "blur(20px)",
           borderRadius: "14px",
           padding: "14px 16px",
-          boxShadow: "0 2px 14px rgba(0,0,0,0.1)",
+          boxShadow: "0 2px 14px rgba(0,0,0,0.15)",
           display: "inline-block",
           width: "fit-content",
         }}>
@@ -106,9 +107,6 @@ export default function IntakePatientCard() {
           </div>
         </div>
       </div>
-
-      {/* Subtle top gradient for text readability */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "140px", background: "linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 100%)", zIndex: 1 }} />
 
       {/* Top-left label */}
       <div style={{ position: "relative", zIndex: 2, padding: "24px 28px 0" }}>
