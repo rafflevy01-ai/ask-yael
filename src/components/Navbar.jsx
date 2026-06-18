@@ -21,8 +21,10 @@ export default function Navbar() {
   const subColor     = overHero ? "rgba(255,255,255,0.5)"    : "#6B6B6B";
   const divColor     = overHero ? "rgba(255,255,255,0.18)"   : "#E5E5E5";
   const navBg        = overHero ? "transparent"              : "rgba(255,255,255,0.92)";
-  const btnBg        = overHero ? "rgba(255,255,255,0.14)"   : "#000000";
+  const btnBg        = overHero ? "rgba(255,255,255,0.14)"   : "#0D0D0D";
+  const btnColor     = overHero ? "#FFFFFF"                  : "#FFFFFF";
   const btnBorder    = overHero ? "rgba(255,255,255,0.22)"   : "transparent";
+  const shadow       = overHero ? "none"                     : "0 1px 3px rgba(0,0,0,0.06)";
 
   return (
     <nav
@@ -42,7 +44,8 @@ export default function Navbar() {
         backdropFilter: overHero ? "none" : "blur(16px)",
         WebkitBackdropFilter: overHero ? "none" : "blur(16px)",
         borderBottom: overHero ? "none" : "1px solid rgba(0,0,0,0.06)",
-        transition: "background-color 0.3s ease, border-color 0.3s ease",
+        boxShadow: shadow,
+        transition: "background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease",
         pointerEvents: "auto",
       }}
     >
@@ -96,7 +99,7 @@ export default function Navbar() {
           fontFamily: "Inter, sans-serif",
           fontWeight: 500,
           fontSize: "13px",
-          color: "#FFFFFF",
+          color: btnColor,
           backgroundColor: btnBg,
           border: `1px solid ${btnBorder}`,
           borderRadius: "9999px",
