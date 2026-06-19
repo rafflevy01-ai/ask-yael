@@ -272,42 +272,6 @@ function AfterHoursCard({ isVisible }) {
   );
 }
 
-function SalaryCostCard() {
-  const [salary, setSalary] = useState(8500);
-  const [count, setCount]   = useState(2);
-  const monthly = salary * count;
-  const annual  = monthly * 12;
-  return (
-    <div className="ps-card">
-      <div className="ps-card-top">
-        <span className="ps-card-label">Salary Cost</span>
-        <div className="ps-card-stat" style={{ fontSize:"clamp(1.6rem,3.5vw,2.4rem)" }}>₪{monthly.toLocaleString()}</div>
-        <p className="ps-card-subdesc">per month in receptionist salaries</p>
-        <p className="ps-card-copy">You're paying a full salary just to answer the phone.</p>
-      </div>
-      <div className="ps-card-visual" style={{ padding:"0 28px 28px", display:"flex", flexDirection:"column", gap:"14px", justifyContent:"flex-end" }}>
-        {[
-          { label:"Salary / receptionist", value:"₪"+salary.toLocaleString()+" / mo", min:6000, max:12000, step:500, val:salary, set:setSalary, pct:((salary-6000)/6000)*100 },
-          { label:"Receptionists", value:String(count), min:1, max:5, step:1, val:count, set:setCount, pct:((count-1)/4)*100 },
-        ].map(({ label, value, min, max, step, val, set, pct }) => (
-          <div key={label}>
-            <div style={{ display:"flex", justifyContent:"space-between", fontFamily:"Inter,sans-serif", fontSize:"12px", color:"#555", marginBottom:"6px" }}>
-              <span>{label}</span><span style={{ fontWeight:500, color:"#0D0D0D" }}>{value}</span>
-            </div>
-            <input type="range" min={min} max={max} step={step} value={val}
-              onChange={e => set(parseInt(e.target.value))}
-              style={{ width:"100%", height:"3px", borderRadius:"9999px", outline:"none", appearance:"none", WebkitAppearance:"none",
-                background:"linear-gradient(to right,#0D0D0D "+pct+"%,#E5E5E5 "+pct+"%)", cursor:"pointer" }} />
-          </div>
-        ))}
-        <div style={{ borderTop:"1px solid #E5E5E5", paddingTop:"10px", fontFamily:"Inter,sans-serif", fontSize:"12px", color:"#888", textAlign:"center" }}>
-          ₪{annual.toLocaleString()} / year
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function ProblemSection() {
   const trackRef  = useRef(null);
   const card0Ref  = useRef(null);
@@ -354,7 +318,6 @@ export default function ProblemSection() {
             <ClinicNotificationCard />
             <AutoScheduleCard />
             <IntakePatientCard />
-            <SalaryCostCard />
           </div>
           <button className="ps-arrow ps-arrow-left"  onClick={() => scroll(-1)} aria-label="Previous">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>

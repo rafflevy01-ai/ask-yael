@@ -1,6 +1,7 @@
 import React from "react";
 import HeroSection from "@/components/HeroSection";
 import ProblemSection from "@/components/ProblemSection";
+import SalaryCostSection from "@/components/SalaryCostSection";
 import HearYaelSection from "@/components/HearYaelSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import CapabilitiesSection from "@/components/CapabilitiesSection";
@@ -13,6 +14,7 @@ export default function Home() {
     <main>
       <HeroSection />
       <ProblemSection />
+      <SalaryCostSection />
       <HearYaelSection />
       <HowItWorksSection />
       <CapabilitiesSection />
