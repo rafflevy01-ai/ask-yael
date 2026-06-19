@@ -7,8 +7,8 @@ export default function SalaryCostSection() {
   const annual  = monthly * 12;
 
   const rows = [
-    { label: "Salary / receptionist", value: "₪" + salary.toLocaleString() + " / mo", min: 6000, max: 12000, step: 500, val: salary, set: setSalary, pct: ((salary - 6000) / 6000) * 100 },
-    { label: "Receptionists", value: String(count), min: 1, max: 5, step: 1, val: count, set: setCount, pct: ((count - 1) / 4) * 100 },
+    { label: "Salary / receptionist", value: "₪" + salary.toLocaleString() + " / mo", min: 6000, max: 12000, step: 500, val: salary, set: setSalary, minLabel: "₪6,000", maxLabel: "₪12,000", pct: ((salary - 6000) / 6000) * 100 },
+    { label: "Receptionists", value: String(count), min: 1, max: 5, step: 1, val: count, set: setCount, minLabel: "1", maxLabel: "5", pct: ((count - 1) / 4) * 100 },
   ];
 
   return (
@@ -29,32 +29,54 @@ export default function SalaryCostSection() {
             </p>
           </div>
 
-          {/* Right — calculator card */}
-          <div style={{ background: "#F5F5F3", borderRadius: "20px", padding: "32px" }}>
-            <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(2rem,4vw,3rem)", color: "#0D0D0D", letterSpacing: "-0.05em", lineHeight: 1, marginBottom: "6px" }}>
-              ₪{monthly.toLocaleString()}
-            </div>
-            <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.08em", color: "#888", margin: "0 0 28px" }}>
-              per month in receptionist salaries
-            </p>
+          {/* Right — white calculator card */}
+          <div style={{ background: "#FFFFFF", borderRadius: "20px", padding: "28px", boxShadow: "0 10px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)" }}>
+            <div className="sal-card-grid" style={{ display: "grid", gridTemplateColumns: "1fr 0.85fr", gap: "24px", alignItems: "stretch" }}>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-              {rows.map(({ label, value, min, max, step, val, set, pct }) => (
-                <div key={label}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "Inter,sans-serif", fontSize: "13px", color: "#555", marginBottom: "8px" }}>
-                    <span>{label}</span><span style={{ fontWeight: 500, color: "#0D0D0D" }}>{value}</span>
+              {/* Inputs column */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "26px", paddingTop: "4px" }}>
+                {rows.map(({ label, value, min, max, step, val, set, minLabel, maxLabel, pct }) => (
+                  <div key={label}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+                      <span style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 600, color: "#0D0D0D" }}>{label}</span>
+                      <span style={{ fontFamily: "Inter,sans-serif", fontSize: "12px", fontWeight: 500, color: "#0D0D0D", background: "#F5F5F3", borderRadius: "8px", padding: "5px 10px", border: "1px solid #ECECEC" }}>{value}</span>
+                    </div>
+                    <input type="range" min={min} max={max} step={step} value={val}
+                      onChange={e => set(parseInt(e.target.value))}
+                      style={{ width: "100%", height: "4px", borderRadius: "9999px", outline: "none", appearance: "none", WebkitAppearance: "none",
+                        background: "linear-gradient(to right,#2563EB " + pct + "%,#E5E7EB " + pct + "%)", cursor: "pointer" }} />
+                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: "6px", fontFamily: "Inter,sans-serif", fontSize: "10px", color: "#9CA3AF" }}>
+                      <span>{minLabel}</span><span>{maxLabel}</span>
+                    </div>
                   </div>
-                  <input type="range" min={min} max={max} step={step} value={val}
-                    onChange={e => set(parseInt(e.target.value))}
-                    style={{ width: "100%", height: "3px", borderRadius: "9999px", outline: "none", appearance: "none", WebkitAppearance: "none",
-                      background: "linear-gradient(to right,#0D0D0D " + pct + "%,#E5E5E5 " + pct + "%)", cursor: "pointer" }} />
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
 
-            <div style={{ borderTop: "1px solid #E5E5E5", marginTop: "24px", paddingTop: "16px", display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <span style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", color: "#888" }}>Total per year</span>
-              <span style={{ fontFamily: "Inter,sans-serif", fontWeight: 500, fontSize: "18px", color: "#0D0D0D", letterSpacing: "-0.02em" }}>₪{annual.toLocaleString()}</span>
+              {/* Blue results panel */}
+              <div style={{ background: "#EEF4FF", borderRadius: "14px", padding: "22px" }}>
+                <div style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 600, color: "#0D0D0D", marginBottom: "4px" }}>Monthly Cost</div>
+                <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.7rem,3vw,2.2rem)", color: "#0D0D0D", letterSpacing: "-0.04em", lineHeight: 1, marginBottom: "8px" }}>
+                  ₪{monthly.toLocaleString()}
+                </div>
+                <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "#6B7280", margin: 0, lineHeight: 1.5 }}>
+                  What you pay every month just to answer the phone.
+                </p>
+
+                <div style={{ borderTop: "1px solid rgba(37,99,235,0.15)", margin: "18px 0", paddingTop: "16px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "4px" }}>
+                    <span style={{ fontFamily: "Inter,sans-serif", fontSize: "12px", fontWeight: 600, color: "#0D0D0D" }}>Total per year</span>
+                    <span style={{ fontFamily: "Inter,sans-serif", fontSize: "15px", fontWeight: 600, color: "#0D0D0D", letterSpacing: "-0.02em" }}>₪{annual.toLocaleString()}</span>
+                  </div>
+                  <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "#6B7280", margin: 0, lineHeight: 1.5 }}>
+                    Your yearly receptionist salary spend.
+                  </p>
+                </div>
+
+                <a href="#book-demo" style={{ display: "block", textAlign: "center", fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 500, color: "#FFFFFF", background: "#2563EB", borderRadius: "9999px", padding: "11px 0", textDecoration: "none" }}>
+                  Replace it with Yael
+                </a>
+              </div>
+
             </div>
           </div>
         </div>
@@ -62,8 +84,8 @@ export default function SalaryCostSection() {
 
       <style>{`
         [data-salary-section] input[type="range"] { -webkit-appearance:none; appearance:none; }
-        [data-salary-section] input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:9999px; background:#0D0D0D; cursor:pointer; }
-        [data-salary-section] input[type="range"]::-moz-range-thumb { width:16px; height:16px; border-radius:9999px; background:#0D0D0D; border:none; cursor:pointer; }
+        [data-salary-section] input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:9999px; background:#2563EB; border:2px solid #FFFFFF; box-shadow:0 1px 4px rgba(0,0,0,0.2); cursor:pointer; }
+        [data-salary-section] input[type="range"]::-moz-range-thumb { width:16px; height:16px; border-radius:9999px; background:#2563EB; border:2px solid #FFFFFF; box-shadow:0 1px 4px rgba(0,0,0,0.2); cursor:pointer; }
 
         @media (max-width:1024px) {
           [data-salary-section] > div { padding:0 32px !important; }
@@ -72,6 +94,7 @@ export default function SalaryCostSection() {
           [data-salary-section] { padding:48px 0 56px !important; }
           [data-salary-section] > div { padding:0 20px !important; }
           [data-salary-section] .sal-grid { grid-template-columns:1fr !important; gap:32px !important; }
+          [data-salary-section] .sal-card-grid { grid-template-columns:1fr !important; gap:20px !important; }
           [data-salary-section] h2 { font-size:1.6rem !important; }
         }
       `}</style>
