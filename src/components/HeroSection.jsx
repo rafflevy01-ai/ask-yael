@@ -10,23 +10,35 @@ export default function HeroSection() {
     const video = videoRef.current;
     if (!video) return;
 
-    const play = () => { video.play().catch(() => {}); };
+    // Ensure iOS Safari treats this as an inline, muted, autoplayable video
+    video.muted = true;
+    video.defaultMuted = true;
+    video.setAttribute("muted", "");
+    video.playsInline = true;
 
-    // Try once metadata/data is ready (more reliable on iOS Safari)
+    const play = () => { const p = video.play(); if (p) p.catch(() => {}); };
+
     video.addEventListener("loadeddata", play);
     video.addEventListener("canplay", play);
     play();
 
-    // Retry a few times for stubborn mobile browsers
-    const timers = [300, 800, 1500].map((ms) => setTimeout(play, ms));
+    // Retry for stubborn mobile browsers
+    const timers = [200, 600, 1200, 2500].map((ms) => setTimeout(play, ms));
 
-    // Resume when the app/tab becomes visible again
+    // Kick playback off the first user interaction (covers iOS Low Power Mode)
+    const onInteract = () => { play(); };
+    document.addEventListener("touchstart", onInteract, { once: true, passive: true });
+    document.addEventListener("click", onInteract, { once: true });
+
+    // Resume when the tab becomes visible again
     const onVisible = () => { if (!document.hidden) play(); };
     document.addEventListener("visibilitychange", onVisible);
 
     return () => {
       video.removeEventListener("loadeddata", play);
       video.removeEventListener("canplay", play);
+      document.removeEventListener("touchstart", onInteract);
+      document.removeEventListener("click", onInteract);
       document.removeEventListener("visibilitychange", onVisible);
       timers.forEach(clearTimeout);
     };
@@ -49,7 +61,11 @@ export default function HeroSection() {
         ref={videoRef}
         src={VIDEO_URL}
         muted loop playsInline autoPlay
+        controls={false}
+        disablePictureInPicture
+        disableRemotePlayback
         preload="auto"
+        x-webkit-airplay="deny"
         style={{
           position: "absolute",
           inset: 0,
