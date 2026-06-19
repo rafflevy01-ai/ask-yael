@@ -20,6 +20,9 @@ export default function HeroSection() {
 
     video.addEventListener("loadeddata", play);
     video.addEventListener("canplay", play);
+
+    // Force the browser to start fetching the video immediately
+    try { video.load(); } catch (e) { /* noop */ }
     play();
 
     // Retry for stubborn mobile browsers
