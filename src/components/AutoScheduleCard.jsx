@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const CALENDAR_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/f64dc697f_Booking_calendar_with_names_li_Nano_Banana_2_49359.png";
+const CALENDAR_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/670cd3c0b_Booking_calendar_with_names_li_Nano_Banana_2_49359-removebg-preview.png";
 
 export default function AutoScheduleCard() {
   const [imgLoaded, setImgLoaded] = useState(false);
