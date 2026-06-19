@@ -44,7 +44,7 @@ export default function SalaryCostSection() {
                     <input type="range" min={min} max={max} step={step} value={val}
                       onChange={e => set(parseInt(e.target.value))}
                       style={{ width: "100%", height: "4px", borderRadius: "9999px", outline: "none", appearance: "none", WebkitAppearance: "none",
-                        background: "linear-gradient(to right,#2563EB " + pct + "%,#E5E7EB " + pct + "%)", cursor: "pointer" }} />
+                        background: "linear-gradient(to right,#54ADCC " + pct + "%,#E5E7EB " + pct + "%)", cursor: "pointer" }} />
                     <div style={{ display: "flex", justifyContent: "space-between", marginTop: "6px", fontFamily: "Inter,sans-serif", fontSize: "10px", color: "#9CA3AF" }}>
                       <span>{minLabel}</span><span>{maxLabel}</span>
                     </div>
