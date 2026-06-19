@@ -10,10 +10,14 @@ export default function HeroSection() {
     const video = videoRef.current;
     if (!video) return;
 
-    // Ensure iOS Safari treats this as an inline, muted, autoplayable video
+    // Ensure iOS Safari treats this as an inline, muted, autoplayable video.
+    // These MUST be set (as properties + attributes) BEFORE the source is
+    // attached, otherwise iOS shows the native play button and refuses autoplay.
     video.muted = true;
     video.defaultMuted = true;
     video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
     video.playsInline = true;
 
     const play = () => { const p = video.play(); if (p) p.catch(() => {}); };
@@ -21,7 +25,9 @@ export default function HeroSection() {
     video.addEventListener("loadeddata", play);
     video.addEventListener("canplay", play);
 
-    // Force the browser to start fetching the video immediately
+    // Attach the source only now that muted/inline are guaranteed set, then
+    // force the browser to start fetching immediately.
+    if (!video.src) video.src = VIDEO_URL;
     try { video.load(); } catch (e) { /* noop */ }
     play();
 
@@ -62,7 +68,6 @@ export default function HeroSection() {
       {/* ── Video ── */}
       <video
         ref={videoRef}
-        src={VIDEO_URL}
         muted loop playsInline autoPlay
         controls={false}
         disablePictureInPicture
