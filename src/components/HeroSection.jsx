@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
 const VIDEO_URL = "https://media.base44.com/videos/public/6a2ab0818c0d050752d1521b/3f09837ab_Cinematic_background_video_12__Veo_31_59928.mp4";
-const POSTER_URL = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/4b654e486_generated_image.png";
 
 export default function HeroSection() {
   const [activeLang, setActiveLang] = useState("he");
@@ -49,7 +48,6 @@ export default function HeroSection() {
       <video
         ref={videoRef}
         src={VIDEO_URL}
-        poster={POSTER_URL}
         muted loop playsInline autoPlay
         preload="auto"
         style={{
