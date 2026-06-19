@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const VIDEO_URL = "https://media.base44.com/videos/public/6a2ab0818c0d050752d1521b/3f09837ab_Cinematic_background_video_12__Veo_31_59928.mp4";
+const VIDEO_URL = "https://media.base44.com/videos/public/6a2ab0818c0d050752d1521b/103b38c79_1114568_Woman_Home_3840x2160.mp4";
 
 export default function HeroSection() {
   const [activeLang, setActiveLang] = useState("he");
