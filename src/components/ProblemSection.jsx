@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import IntakePatientCard from "@/components/IntakePatientCard";
+import AutoScheduleCard from "@/components/AutoScheduleCard";
 const BUSINESS_BARS   = [65,95,85,60,40,50,70,65,55,45];
 const AFTER_HOURS_BARS = [6,5,4,3,2];
 
@@ -351,6 +352,7 @@ export default function ProblemSection() {
             <div ref={card0Ref}><MissedCallsCard isVisible={vis0} /></div>
             <InstantNotificationCard />
             <ClinicNotificationCard />
+            <AutoScheduleCard />
             <div ref={card1Ref}><AfterHoursCard isVisible={vis1} /></div>
             <IntakePatientCard />
             <SalaryCostCard />
