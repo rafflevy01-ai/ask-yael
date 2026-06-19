@@ -12,8 +12,8 @@ export default function AutoScheduleCard() {
         <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "#FFFFFF", letterSpacing: "-0.05em", lineHeight: 1, marginBottom: "8px" }}>
           Written down for you.
         </div>
-        <p style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 400, color: "rgba(255,255,255,0.9)", lineHeight: 1.55, margin: 0 }}>
-          Yael logs every appointment with the treatment and patient details automatically — so nothing is forgotten and nothing is written down wrong.
+        <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.08em", color: "rgba(255,255,255,0.75)", margin: 0 }}>
+          Every appointment logged automatically
         </p>
       </div>
 
