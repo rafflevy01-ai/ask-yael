@@ -72,7 +72,7 @@ export default function SalaryCostSection() {
                   </p>
                 </div>
 
-                <a href="#book-demo" style={{ display: "block", textAlign: "center", fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 500, color: "#FFFFFF", background: "#2563EB", borderRadius: "9999px", padding: "11px 0", textDecoration: "none" }}>
+                <a href="#book-demo" style={{ display: "block", textAlign: "center", fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 500, color: "#FFFFFF", background: "#0D0D0D", borderRadius: "9999px", padding: "11px 0", textDecoration: "none" }}>
                   Replace it with Yael
                 </a>
               </div>
@@ -84,8 +84,8 @@ export default function SalaryCostSection() {
 
       <style>{`
         [data-salary-section] input[type="range"] { -webkit-appearance:none; appearance:none; }
-        [data-salary-section] input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:9999px; background:#2563EB; border:2px solid #FFFFFF; box-shadow:0 1px 4px rgba(0,0,0,0.2); cursor:pointer; }
-        [data-salary-section] input[type="range"]::-moz-range-thumb { width:16px; height:16px; border-radius:9999px; background:#2563EB; border:2px solid #FFFFFF; box-shadow:0 1px 4px rgba(0,0,0,0.2); cursor:pointer; }
+        [data-salary-section] input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:9999px; background:#FFFFFF; border:1px solid rgba(0,0,0,0.15); box-shadow:0 1px 4px rgba(0,0,0,0.25); cursor:pointer; }
+        [data-salary-section] input[type="range"]::-moz-range-thumb { width:16px; height:16px; border-radius:9999px; background:#FFFFFF; border:1px solid rgba(0,0,0,0.15); box-shadow:0 1px 4px rgba(0,0,0,0.25); cursor:pointer; }
 
         @media (max-width:1024px) {
           [data-salary-section] > div { padding:0 32px !important; }
