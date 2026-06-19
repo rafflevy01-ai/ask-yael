@@ -8,11 +8,11 @@ export default function AutoScheduleCard() {
   return (
     <div className="ps-card" style={{ background: "linear-gradient(180deg, #95C7C9 0%, #BCDDDE 50%, #FFFFFF 100%)" }}>
       <div className="ps-card-top">
-        <span className="ps-card-label">Always On The Calendar</span>
-        <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "#0D0D0D", letterSpacing: "-0.05em", lineHeight: 1, marginBottom: "8px" }}>
+        <span className="ps-card-label" style={{ color: "rgba(255,255,255,0.7)" }}>Always On The Calendar</span>
+        <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "#FFFFFF", letterSpacing: "-0.05em", lineHeight: 1, marginBottom: "8px" }}>
           Written down for you.
         </div>
-        <p style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 400, color: "#555", lineHeight: 1.55, margin: 0 }}>
+        <p style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 400, color: "rgba(255,255,255,0.9)", lineHeight: 1.55, margin: 0 }}>
           Yael logs every appointment with the treatment and patient details automatically — so nothing is forgotten and nothing is written down wrong.
         </p>
       </div>
