@@ -53,21 +53,21 @@ export default function SalaryCostSection() {
               </div>
 
               {/* Blue results panel */}
-              <div style={{ background: "#EEF4FF", borderRadius: "14px", padding: "22px" }}>
-                <div style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 600, color: "#0D0D0D", marginBottom: "4px" }}>Monthly Cost</div>
-                <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.7rem,3vw,2.2rem)", color: "#0D0D0D", letterSpacing: "-0.04em", lineHeight: 1, marginBottom: "8px" }}>
+              <div style={{ background: "#54ADCC", borderRadius: "14px", padding: "22px" }}>
+                <div style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 600, color: "#FFFFFF", marginBottom: "4px" }}>Monthly Cost</div>
+                <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.7rem,3vw,2.2rem)", color: "#FFFFFF", letterSpacing: "-0.04em", lineHeight: 1, marginBottom: "8px" }}>
                   ₪{monthly.toLocaleString()}
                 </div>
-                <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "#6B7280", margin: 0, lineHeight: 1.5 }}>
+                <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.5 }}>
                   What you pay every month just to answer the phone.
                 </p>
 
-                <div style={{ borderTop: "1px solid rgba(37,99,235,0.15)", margin: "18px 0", paddingTop: "16px" }}>
+                <div style={{ borderTop: "1px solid rgba(255,255,255,0.25)", margin: "18px 0", paddingTop: "16px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "4px" }}>
-                    <span style={{ fontFamily: "Inter,sans-serif", fontSize: "12px", fontWeight: 600, color: "#0D0D0D" }}>Total per year</span>
-                    <span style={{ fontFamily: "Inter,sans-serif", fontSize: "15px", fontWeight: 600, color: "#0D0D0D", letterSpacing: "-0.02em" }}>₪{annual.toLocaleString()}</span>
+                    <span style={{ fontFamily: "Inter,sans-serif", fontSize: "12px", fontWeight: 600, color: "#FFFFFF" }}>Total per year</span>
+                    <span style={{ fontFamily: "Inter,sans-serif", fontSize: "15px", fontWeight: 600, color: "#FFFFFF", letterSpacing: "-0.02em" }}>₪{annual.toLocaleString()}</span>
                   </div>
-                  <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "#6B7280", margin: 0, lineHeight: 1.5 }}>
+                  <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.5 }}>
                     Your yearly receptionist salary spend.
                   </p>
                 </div>
