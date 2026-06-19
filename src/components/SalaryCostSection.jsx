@@ -25,7 +25,7 @@ export default function SalaryCostSection() {
               See what your front desk really costs.
             </h2>
             <p style={{ fontFamily: "Inter,sans-serif", fontWeight: 400, fontSize: "16px", color: "#6B6B6B", margin: 0, lineHeight: 1.6, maxWidth: "440px" }}>
-              Drag the sliders to match your clinic — then see how much you spend every year just to answer the phone.
+              Drag the sliders to match your clinic — then see how much you spend every year just to answer the phone, book appointments, and enter data into CRMs.
             </p>
           </div>
 
