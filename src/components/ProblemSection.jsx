@@ -353,7 +353,6 @@ export default function ProblemSection() {
             <InstantNotificationCard />
             <ClinicNotificationCard />
             <AutoScheduleCard />
-            <div ref={card1Ref}><AfterHoursCard isVisible={vis1} /></div>
             <IntakePatientCard />
             <SalaryCostCard />
           </div>
