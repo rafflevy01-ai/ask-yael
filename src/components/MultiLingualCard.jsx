@@ -8,7 +8,7 @@ const LANGS = {
 
 export default function MultiLingualCard() {
   return (
-    <div className="ps-card" style={{ background: "radial-gradient(circle at 70% 15%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 45%), linear-gradient(180deg, #6FC2DC 0%, #54ADCC 55%, #3E97B8 100%)" }}>
+    <div className="ps-card" style={{ background: "radial-gradient(circle at 65% 20%, rgba(213,240,248,0.7) 0%, rgba(213,240,248,0) 70%), linear-gradient(180deg, #8AD0E5 0%, #6BC0DA 55%, #54ADCC 100%)" }}>
       <div className="ps-card-top">
         <span className="ps-card-label" style={{ color: "rgba(255,255,255,0.8)" }}>Multi Lingual</span>
         <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "#FFFFFF", letterSpacing: "-0.05em", lineHeight: 1, marginBottom: "6px" }}>
