@@ -109,6 +109,24 @@ const NOTIF_STEPS = [
     buttons: null,
     isSms: true,
   },
+  {
+    step: 5,
+    type: "imessage",
+    appIcon: (
+      <div style={{
+        width: "20px", height: "20px", background: "#34c759", borderRadius: "5px",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="none">
+          <path d="M12 2C6.48 2 2 5.94 2 10.8c0 2.77 1.46 5.24 3.75 6.86-.13 1.2-.6 2.3-1.32 3.2-.18.22-.02.55.26.52 1.7-.2 3.2-.86 4.4-1.86.9.22 1.86.34 2.91.34 5.52 0 10-3.94 10-8.8S17.52 2 12 2z" />
+        </svg>
+      </div>
+    ),
+    appName: "Messages",
+    timestamp: "now",
+    title: "Yael",
+    smsText: "Hi David, your appointment is confirmed for Thursday 15 July at 10:00 with Dr. Cohen. Reply to reschedule. — Yael",
+  },
 ];
 
 export { NOTIF_STEPS };
@@ -212,6 +230,20 @@ export default function IosNotifCard({ stepIndex, visible = true, cardStyle }) {
           </div>
           <div style={{ fontSize: "13px", fontWeight: 400, color: "rgba(60,60,67,0.65)", lineHeight: 1.25 }}>
             {data.subtitle}
+          </div>
+        </div>
+      )}
+
+      {data.type === "imessage" && (
+        <div style={{ marginTop: "4px", flex: 1, display: "flex" }}>
+          <div style={{
+            background: "#34c759", color: "#FFFFFF",
+            borderRadius: "16px 16px 16px 4px",
+            padding: "9px 12px", maxWidth: "85%",
+            fontSize: "13px", fontWeight: 400, lineHeight: 1.4,
+            alignSelf: "flex-end",
+          }}>
+            {data.smsText}
           </div>
         </div>
       )}
