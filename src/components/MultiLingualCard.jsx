@@ -8,47 +8,52 @@ const LANGS = {
 
 export default function MultiLingualCard() {
   return (
-    <div className="ps-card" style={{ background: "linear-gradient(180deg, #2E6BFF 0%, #1E54E8 45%, #0F3FCB 100%)" }}>
+    <div className="ps-card" style={{ background: "linear-gradient(180deg, #DCE9FF 0%, #C5D9FF 50%, #AFC9FF 100%)" }}>
       <div className="ps-card-top">
-        <span className="ps-card-label" style={{ color: "rgba(255,255,255,0.7)" }}>Multi Lingual</span>
-        <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "#FFFFFF", letterSpacing: "-0.05em", lineHeight: 1, marginBottom: "8px" }}>
+        <span className="ps-card-label" style={{ color: "#3A5BA0" }}>Multi Lingual</span>
+        <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "#102B6B", letterSpacing: "-0.05em", lineHeight: 1, marginBottom: "6px" }}>
           Three languages.
         </div>
-        <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.08em", color: "rgba(255,255,255,0.75)", margin: 0 }}>
+        <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.08em", color: "#5A74B0", margin: 0 }}>
           Hebrew, English &amp; French — detected automatically
         </p>
       </div>
 
-      <div className="ps-card-visual" style={{ padding: "0 28px 28px", justifyContent: "flex-end" }}>
-        {/* Selected language */}
-        <div style={{
-          background: "#FFFFFF", borderRadius: "14px", padding: "14px 16px",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          boxShadow: "0 4px 18px rgba(0,0,0,0.18)", marginBottom: "10px",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <span style={{ fontSize: "20px", lineHeight: 1 }}>{LANGS.he.flag}</span>
-            <span style={{ fontFamily: "Inter,sans-serif", fontSize: "16px", fontWeight: 500, color: "#0D0D0D" }}>{LANGS.he.label}</span>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D0D0D" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="18 15 12 9 6 15" />
-          </svg>
-        </div>
-
-        {/* Dropdown */}
-        <div style={{
-          background: "rgba(255,255,255,0.95)", borderRadius: "14px", padding: "6px",
-          boxShadow: "0 8px 26px rgba(0,0,0,0.2)",
-        }}>
-          {["en", "fr"].map((key) => (
-            <div key={key} style={{
-              display: "flex", alignItems: "center", gap: "10px",
-              padding: "12px 14px", borderRadius: "10px",
-            }}>
-              <span style={{ fontSize: "20px", lineHeight: 1 }}>{LANGS[key].flag}</span>
-              <span style={{ fontFamily: "Inter,sans-serif", fontSize: "16px", fontWeight: 500, color: "#0D0D0D" }}>{LANGS[key].label}</span>
+      {/* Centered iOS-style picker */}
+      <div className="ps-card-visual" style={{ padding: "0 28px 28px", justifyContent: "center", alignItems: "center" }}>
+        <div style={{ width: "100%", maxWidth: "220px" }}>
+          {/* Selected language */}
+          <div style={{
+            background: "rgba(255,255,255,0.96)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+            borderRadius: "12px", padding: "11px 13px",
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+            boxShadow: "0 2px 12px rgba(16,43,107,0.12), 0 0 0 0.5px rgba(16,43,107,0.06)", marginBottom: "8px",
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+              <span style={{ fontSize: "16px", lineHeight: 1 }}>{LANGS.he.flag}</span>
+              <span style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 500, color: "#0D0D0D" }}>{LANGS.he.label}</span>
             </div>
-          ))}
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0D0D0D" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="18 15 12 9 6 15" />
+            </svg>
+          </div>
+
+          {/* Dropdown */}
+          <div style={{
+            background: "rgba(255,255,255,0.92)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+            borderRadius: "12px", padding: "4px",
+            boxShadow: "0 4px 18px rgba(16,43,107,0.14), 0 0 0 0.5px rgba(16,43,107,0.05)",
+          }}>
+            {["en", "fr"].map((key) => (
+              <div key={key} style={{
+                display: "flex", alignItems: "center", gap: "9px",
+                padding: "9px 11px", borderRadius: "9px",
+              }}>
+                <span style={{ fontSize: "16px", lineHeight: 1 }}>{LANGS[key].flag}</span>
+                <span style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 500, color: "#0D0D0D" }}>{LANGS[key].label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
