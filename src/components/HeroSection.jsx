@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
 const VIDEO_URL = "https://media.base44.com/videos/public/6a2ab0818c0d050752d1521b/3f09837ab_Cinematic_background_video_12__Veo_31_59928.mp4";
+const POSTER_URL = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/4b654e486_generated_image.png";
 
 export default function HeroSection() {
   const [activeLang, setActiveLang] = useState("he");
@@ -11,11 +12,25 @@ export default function HeroSection() {
     if (!video) return;
 
     const play = () => { video.play().catch(() => {}); };
+
+    // Try once metadata/data is ready (more reliable on iOS Safari)
+    video.addEventListener("loadeddata", play);
+    video.addEventListener("canplay", play);
     play();
 
-    // Some mobile browsers need a second attempt after a short delay
-    const timer = setTimeout(play, 300);
-    return () => clearTimeout(timer);
+    // Retry a few times for stubborn mobile browsers
+    const timers = [300, 800, 1500].map((ms) => setTimeout(play, ms));
+
+    // Resume when the app/tab becomes visible again
+    const onVisible = () => { if (!document.hidden) play(); };
+    document.addEventListener("visibilitychange", onVisible);
+
+    return () => {
+      video.removeEventListener("loadeddata", play);
+      video.removeEventListener("canplay", play);
+      document.removeEventListener("visibilitychange", onVisible);
+      timers.forEach(clearTimeout);
+    };
   }, []);
 
   return (
@@ -26,6 +41,7 @@ export default function HeroSection() {
         position: "relative",
         width: "100%",
         overflow: "hidden",
+        backgroundColor: "#0D0D0D",
         /* height set in CSS so we can use dvh with vh fallback */
       }}
     >
@@ -33,7 +49,8 @@ export default function HeroSection() {
       <video
         ref={videoRef}
         src={VIDEO_URL}
-        muted loop playsInline
+        poster={POSTER_URL}
+        muted loop playsInline autoPlay
         preload="auto"
         style={{
           position: "absolute",
