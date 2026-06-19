@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import IntakePatientCard from "@/components/IntakePatientCard";
 import AutoScheduleCard from "@/components/AutoScheduleCard";
+import MultiLingualCard from "@/components/MultiLingualCard";
 const BUSINESS_BARS   = [65,95,85,60,40,50,70,65,55,45];
 const AFTER_HOURS_BARS = [6,5,4,3,2];
 
@@ -318,6 +319,7 @@ export default function ProblemSection() {
             <ClinicNotificationCard />
             <AutoScheduleCard />
             <IntakePatientCard />
+            <MultiLingualCard />
           </div>
           <button className="ps-arrow ps-arrow-left"  onClick={() => scroll(-1)} aria-label="Previous">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
