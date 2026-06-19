@@ -13,7 +13,7 @@ const STEPS = [
   { number: "05", title: "Team Notified",
     description: "Your staff gets an SMS for every action Yael takes. If she can't handle it, she transfers the call with a full summary." },
   { number: "06", title: "Patient Confirmed",
-    description: "The patient instantly receives a confirmation SMS with their appointment details — no waiting, no follow-up calls." },
+    description: "The patient instantly receives a confirmation SMS with their appointment details — no waiting." },
 ];
 
 const STEP_COUNT = STEPS.length;
