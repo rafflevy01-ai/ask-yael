@@ -6,7 +6,7 @@ export default function AutoScheduleCard() {
   const [imgLoaded, setImgLoaded] = useState(false);
 
   return (
-    <div className="ps-card" style={{ background: "linear-gradient(180deg, #EDFCFC 0%, #F6FDFD 55%, #FFFFFF 100%)" }}>
+    <div className="ps-card" style={{ background: "linear-gradient(180deg, #95C7C9 0%, #BCDDDE 50%, #FFFFFF 100%)" }}>
       <div className="ps-card-top">
         <span className="ps-card-label">Always On The Calendar</span>
         <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "#0D0D0D", letterSpacing: "-0.05em", lineHeight: 1, marginBottom: "8px" }}>
