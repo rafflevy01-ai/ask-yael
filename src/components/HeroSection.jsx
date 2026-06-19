@@ -1,9 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const VIDEO_URL = "https://media.base44.com/videos/public/6a2ab0818c0d050752d1521b/3f09837ab_Cinematic_background_video_12__Veo_31_59928.mp4";
 
 export default function HeroSection() {
   const [activeLang, setActiveLang] = useState("he");
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const play = () => { video.play().catch(() => {}); };
+    play();
+
+    // Some mobile browsers need a second attempt after a short delay
+    const timer = setTimeout(play, 300);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section
       data-hero-section
@@ -17,7 +31,10 @@ export default function HeroSection() {
     >
       {/* ── Video ── */}
       <video
-        autoPlay muted loop playsInline
+        ref={videoRef}
+        src={VIDEO_URL}
+        muted loop playsInline
+        preload="auto"
         style={{
           position: "absolute",
           inset: 0,
@@ -28,9 +45,7 @@ export default function HeroSection() {
           zIndex: 0,
           pointerEvents: "none",
         }}
-      >
-        <source src={VIDEO_URL} type="video/mp4" />
-      </video>
+      />
 
       {/* ── Gradient overlay ── */}
       <div style={{
