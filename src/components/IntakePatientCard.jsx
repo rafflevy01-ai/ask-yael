@@ -8,12 +8,13 @@ export default function IntakePatientCard() {
   const { t, isRtl } = useLanguage();
   const tp = t.problem;
   const f = tp.intakeFields;
+  const v = tp.intakeValues;
   const FIELDS = [
-    { label: f.name, value: "David Cohen" },
-    { label: f.teudat, value: "031-456789" },
-    { label: f.dob, value: "15/03/1985" },
-    { label: f.hmo, value: "Clalit" },
-    { label: f.appointment, value: "Wed 18 Jun · 10:00" },
+    { label: f.name, value: v.name, ltr: false },
+    { label: f.teudat, value: v.teudat, ltr: true },
+    { label: f.dob, value: v.dob, ltr: true },
+    { label: f.hmo, value: v.hmo, ltr: false },
+    { label: f.appointment, value: v.appointment, ltr: false },
   ];
   const [imgLoaded, setImgLoaded] = useState(false);
 
@@ -86,7 +87,7 @@ export default function IntakePatientCard() {
                   {field.label}
                 </span>
                 <div style={{ display: "flex", alignItems: "center", gap: "7px" }}>
-                  <span dir="ltr" style={{
+                  <span dir={field.ltr ? "ltr" : (isRtl ? "rtl" : "ltr")} style={{
                     fontFamily: "Inter, sans-serif",
                     fontWeight: 500,
                     fontSize: "10px",
@@ -114,13 +115,13 @@ export default function IntakePatientCard() {
       {/* Top-left label */}
       <div style={{ position: "relative", zIndex: 2, padding: "24px 28px 0" }}>
         <span style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.85)", display: "block", marginBottom: "8px" }}>
-          Patient Intake
+          {tp.intakeTopLabel}
         </span>
         <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "#FFFFFF", letterSpacing: "-0.05em", lineHeight: 1, marginBottom: "4px" }}>
-          Before they hang up.
+          {tp.intakeTopTitle}
         </div>
         <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.08em", color: "rgba(255,255,255,0.75)", margin: 0, whiteSpace: "nowrap" }}>
-          All patient details captured in one call
+          {tp.intakeTopSub}
         </p>
       </div>
     </div>

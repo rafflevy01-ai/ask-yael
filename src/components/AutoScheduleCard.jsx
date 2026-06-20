@@ -1,19 +1,22 @@
 import React, { useState } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const CALENDAR_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/670cd3c0b_Booking_calendar_with_names_li_Nano_Banana_2_49359-removebg-preview.png";
 
 export default function AutoScheduleCard() {
+  const { t } = useLanguage();
+  const tp = t.problem;
   const [imgLoaded, setImgLoaded] = useState(false);
 
   return (
     <div className="ps-card" style={{ background: "linear-gradient(180deg, #95C7C9 0%, #BCDDDE 50%, #FFFFFF 100%)" }}>
       <div className="ps-card-top">
-        <span className="ps-card-label" style={{ color: "rgba(255,255,255,0.7)" }}>Always On The Calendar</span>
+        <span className="ps-card-label" style={{ color: "rgba(255,255,255,0.7)" }}>{tp.scheduleLabel}</span>
         <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "#FFFFFF", letterSpacing: "-0.05em", lineHeight: 1, marginBottom: "8px" }}>
-          Logged for you.
+          {tp.scheduleTitle}
         </div>
         <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.08em", color: "rgba(255,255,255,0.75)", margin: 0 }}>
-          Every appointment logged automatically
+          {tp.scheduleSub}
         </p>
       </div>
 
