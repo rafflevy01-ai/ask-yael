@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import IntakePatientCard from "@/components/IntakePatientCard";
+import FollowUpCallCard from "@/components/FollowUpCallCard";
 import AutoScheduleCard from "@/components/AutoScheduleCard";
 import MultiLingualCard from "@/components/MultiLingualCard";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -314,6 +315,7 @@ export default function ProblemSection() {
             <div ref={card0Ref}><MissedCallsCard isVisible={vis0} tp={tp} /></div>
             <InstantNotificationCard tp={tp} isRtl={isRtl} />
             <ClinicNotificationCard tp={tp} isRtl={isRtl} />
+            <FollowUpCallCard />
             <AutoScheduleCard />
             <IntakePatientCard />
             <MultiLingualCard />
