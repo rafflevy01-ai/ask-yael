@@ -207,7 +207,7 @@ Please let us know 24h in advance if you need to cancel.
       missedTitle: "Le coût caché",
       missedSub: "5 appels manqués par jour · 900 ₪ chacun · 250 jours ouvrés = 1 125 000 ₪ perdus par an",
       instantLabel: "Notification instantanée",
-      instantTitle: "En quelques secondes.",
+      instantTitle: "En un instant.",
       instantSub: "SMS de confirmation envoyé automatiquement",
       smsToPatient: "SMS au patient",
       smsBubble: `Bonjour Sarah, votre rendez-vous est confirmé.
@@ -225,7 +225,7 @@ Merci de nous prévenir 24h à l'avance en cas d'annulation.
       intakeLabel: "Inscription du patient",
       intakeTitle: "Inscription nouveau patient",
       intakeTopLabel: "Inscription patient",
-      intakeTopTitle: "Avant qu'ils ne raccrochent.",
+      intakeTopTitle: "Avant de raccrocher.",
       intakeTopSub: "Tous les détails du patient saisis en un seul appel",
       intakeFields: {
         name: "Nom",
