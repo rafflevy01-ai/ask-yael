@@ -51,14 +51,14 @@ function MissedCallsCard({ isVisible, tp }) {
             <div style={{ width:"16px", height:"16px", background:"#34c759", borderRadius:"4px", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
               <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.73a16 16 0 006.72 6.72l1.06-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
             </div>
-            <span style={{ fontSize:"11px", fontWeight:600, color:"rgba(60,60,67,0.55)", flex:1, letterSpacing:"0.01em" }}>PHONE</span>
+            <span style={{ fontSize:"11px", fontWeight:600, color:"rgba(60,60,67,0.55)", flex:1, letterSpacing:"0.01em" }}>{tp.missedPhone}</span>
             <span style={{ fontSize:"11px", fontWeight:400, color:"rgba(60,60,67,0.4)" }}>18:32</span>
           </div>
-          <div style={{ fontSize:"13px", fontWeight:600, color:"#000", lineHeight:1.35 }}>Missed Call</div>
+          <div style={{ fontSize:"13px", fontWeight:600, color:"#000", lineHeight:1.35 }}>{tp.missedCall}</div>
           <div style={{ fontSize:"13px", fontWeight:400, color:"rgba(60,60,67,0.75)", marginTop:"1px", lineHeight:1.35 }}>+972 54 321 4567</div>
           <div style={{ display:"flex", gap:"7px", marginTop:"9px" }}>
-            <div style={{ flex:1, height:"26px", background:"rgba(118,118,128,0.12)", borderRadius:"8px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"12px", fontWeight:500, color:"#007aff" }}>Call Back</div>
-            <div style={{ flex:1, height:"26px", background:"rgba(118,118,128,0.12)", borderRadius:"8px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"12px", fontWeight:500, color:"#007aff" }}>Message</div>
+            <div style={{ flex:1, height:"26px", background:"rgba(118,118,128,0.12)", borderRadius:"8px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"12px", fontWeight:500, color:"#007aff" }}>{tp.missedCallBack}</div>
+            <div style={{ flex:1, height:"26px", background:"rgba(118,118,128,0.12)", borderRadius:"8px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"12px", fontWeight:500, color:"#007aff" }}>{tp.missedMessage}</div>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const CONVERSATIONS = [
   {
@@ -37,6 +38,7 @@ const LANGS = [
 ];
 
 export default function AnimatedTranscript() {
+  const { t } = useLanguage();
   const [convIndex, setConvIndex] = useState(0);
   const [msgIndex, setMsgIndex] = useState(0);
   const [visibleMessages, setVisibleMessages] = useState([]);
@@ -102,7 +104,7 @@ export default function AnimatedTranscript() {
             display: "inline-block", animation: "pulse-dot 1.5s ease-in-out infinite",
           }} />
           <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "12px", color: "#0D0D0D" }}>
-            Live call
+            {t.caps.liveCallLabel}
           </span>
           <WaveformBars />
         </div>
