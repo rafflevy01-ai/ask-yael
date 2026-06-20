@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import IntakePatientCard from "@/components/IntakePatientCard";
 import AutoScheduleCard from "@/components/AutoScheduleCard";
 import MultiLingualCard from "@/components/MultiLingualCard";
+import { useLanguage } from "@/lib/LanguageContext";
 const BUSINESS_BARS   = [65,95,85,60,40,50,70,65,55,45];
 const AFTER_HOURS_BARS = [6,5,4,3,2];
 
@@ -17,7 +18,7 @@ function countUp(el, target, duration) {
   requestAnimationFrame(step);
 }
 
-function MissedCallsCard({ isVisible }) {
+function MissedCallsCard({ isVisible, tp }) {
   const statRef = useRef(null);
   const counted = useRef(false);
   useEffect(() => {
@@ -29,12 +30,12 @@ function MissedCallsCard({ isVisible }) {
   return (
     <div className="ps-card" style={{ background:"linear-gradient(180deg, #9DB4C0 0%, #C5D5DD 50%, #F2F5F7 100%)" }}>
       <div className="ps-card-top">
-        <span className="ps-card-label" style={{ color:"rgba(255,255,255,0.7)" }}>No More Missed Calls</span>
+        <span className="ps-card-label" style={{ color:"rgba(255,255,255,0.7)" }}>{tp.missedLabel}</span>
         <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,4vw,2.6rem)", color:"#FFFFFF", letterSpacing:"-0.05em", lineHeight:1, marginBottom:"4px" }}>
-          The Hidden Cost
+          {tp.missedTitle}
         </div>
         <p style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, textTransform:"uppercase", letterSpacing:"0.08em", color:"rgba(255,255,255,0.75)", margin:0 }}>
-          5 missed calls a day · ₪900 each · 250 working days = <span ref={statRef} style={{ fontWeight:600, color:"#FFFFFF" }}>₪0</span> lost per year
+          {tp.missedSub}
         </p>
       </div>
       <div className="ps-card-visual" style={{ justifyContent:"center", alignItems:"center", paddingBottom:"28px" }}>
@@ -75,7 +76,7 @@ Treatment: Checkup
 Please let us know 24h in advance if you need to cancel.
 — Yael`;
 
-function InstantNotificationCard() {
+function InstantNotificationCard({ tp }) {
   const [imgLoaded, setImgLoaded] = useState(false);
   return (
     <div className="ps-card" style={{ position:"relative", background:"#1a1a1a" }}>
@@ -108,7 +109,7 @@ function InstantNotificationCard() {
           textTransform:"uppercase", letterSpacing:"0.1em",
           color:"rgba(255,255,255,0.7)", display:"block", marginBottom:"8px",
         }}>
-          SMS to patient
+          {tp.smsToPatient}
         </span>
         <div style={{
           background:"#34C759",
@@ -127,20 +128,20 @@ function InstantNotificationCard() {
       {/* Top-left label */}
       <div style={{ position:"relative", zIndex:2, padding:"24px 28px 0" }}>
         <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, letterSpacing:"0.08em", textTransform:"uppercase", color:"rgba(255,255,255,0.85)", display:"block", marginBottom:"8px" }}>
-          Instant Notification
+          {tp.instantLabel}
         </span>
         <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,4vw,2.6rem)", color:"#FFFFFF", letterSpacing:"-0.05em", lineHeight:1, marginBottom:"4px" }}>
-          Within seconds.
+          {tp.instantTitle}
         </div>
         <p style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, textTransform:"uppercase", letterSpacing:"0.08em", color:"rgba(255,255,255,0.75)", margin:0 }}>
-          Confirmation SMS sent automatically
+          {tp.instantSub}
         </p>
       </div>
     </div>
   );
 }
 
-function ClinicNotificationCard() {
+function ClinicNotificationCard({ tp }) {
   const [imgLoaded, setImgLoaded] = useState(false);
   return (
     <div className="ps-card" style={{ position:"relative", background:"#1a1a1a" }}>
@@ -172,7 +173,7 @@ function ClinicNotificationCard() {
           textTransform:"uppercase", letterSpacing:"0.1em",
           color:"rgba(255,255,255,0.7)", display:"block", marginBottom:"6px",
         }}>
-          Notification to clinic
+          {tp.notifToClinic}
         </span>
         <div style={{
           background:"rgba(255,255,255,0.9)",
@@ -220,20 +221,20 @@ function ClinicNotificationCard() {
       {/* Top-left label */}
       <div style={{ position:"relative", zIndex:2, padding:"24px 28px 0" }}>
         <span style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, letterSpacing:"0.08em", textTransform:"uppercase", color:"rgba(255,255,255,0.85)", display:"block", marginBottom:"8px" }}>
-          Instant Notification
+          {tp.instantLabel}
         </span>
         <div style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(1.8rem,4vw,2.6rem)", color:"#FFFFFF", letterSpacing:"-0.05em", lineHeight:1, marginBottom:"4px" }}>
-          On the clinic side.
+          {tp.clinicTitle}
         </div>
         <p style={{ fontFamily:"Inter,sans-serif", fontSize:"11px", fontWeight:500, textTransform:"uppercase", letterSpacing:"0.08em", color:"rgba(255,255,255,0.75)", margin:0 }}>
-          Your team is notified instantly
+          {tp.clinicSub}
         </p>
       </div>
     </div>
   );
 }
 
-function AfterHoursCard({ isVisible }) {
+function AfterHoursCard({ isVisible, tp }) {
   const barsRef = useRef(null);
   const animated = useRef(false);
   useEffect(() => {
@@ -251,10 +252,10 @@ function AfterHoursCard({ isVisible }) {
   return (
     <div className="ps-card">
       <div className="ps-card-top">
-        <span className="ps-card-label">After Hours</span>
+        <span className="ps-card-label">{tp.afterHoursLabel}</span>
         <div className="ps-card-stat">40%</div>
-        <p className="ps-card-subdesc">of appointment requests after hours</p>
-        <p className="ps-card-copy">Your receptionist leaves at 18:00. Patients don't.</p>
+        <p className="ps-card-subdesc">{tp.afterHoursSub}</p>
+        <p className="ps-card-copy">{tp.afterHoursCopy}</p>
       </div>
       <div className="ps-card-visual" style={{ padding:"0 28px 28px" }}>
         <div ref={barsRef} style={{ display:"flex", alignItems:"flex-end", gap:"3px", height:"90px" }}>
@@ -265,8 +266,8 @@ function AfterHoursCard({ isVisible }) {
           {AFTER_HOURS_BARS.map((h,i) => <div key={i} className="ps-ah-bar" data-h={h} style={{ flex:1, borderRadius:"3px 3px 0 0", height:"0", background:"#D1D5DB" }} />)}
         </div>
         <div style={{ display:"flex", justifyContent:"space-between", marginTop:"20px", fontFamily:"Inter,sans-serif", fontSize:"11px" }}>
-          <span style={{ color:"#888" }}>Answered</span>
-          <span style={{ color:"#DC2626" }}>No answer</span>
+          <span style={{ color:"#888" }}>{tp.answered}</span>
+          <span style={{ color:"#DC2626" }}>{tp.noAnswer}</span>
         </div>
       </div>
     </div>
@@ -274,6 +275,8 @@ function AfterHoursCard({ isVisible }) {
 }
 
 export default function ProblemSection() {
+  const { t } = useLanguage();
+  const tp = t.problem;
   const trackRef  = useRef(null);
   const card0Ref  = useRef(null);
   const card1Ref  = useRef(null);
@@ -305,18 +308,18 @@ export default function ProblemSection() {
 
         <div style={{ marginBottom:"48px" }}>
           <h2 style={{ fontFamily:"Inter,sans-serif", fontWeight:300, fontSize:"clamp(2rem,3.5vw,2.8rem)", color:"#0D0D0D", letterSpacing:"-0.04em", lineHeight:1.1, margin:"0 0 14px" }}>
-            Run Yael across your Clinic.
+            {tp.title}
           </h2>
           <p style={{ fontFamily:"Inter,sans-serif", fontWeight:400, fontSize:"16px", color:"#6B6B6B", margin:0, lineHeight:1.6, maxWidth:"520px" }}>
-            Calls go unanswered. Patients don't wait. Your front desk can't be everywhere at once.
+            {tp.subtitle}
           </p>
         </div>
 
         <div style={{ position:"relative" }}>
           <div ref={trackRef} className="ps-track">
-            <div ref={card0Ref}><MissedCallsCard isVisible={vis0} /></div>
-            <InstantNotificationCard />
-            <ClinicNotificationCard />
+            <div ref={card0Ref}><MissedCallsCard isVisible={vis0} tp={tp} /></div>
+            <InstantNotificationCard tp={tp} />
+            <ClinicNotificationCard tp={tp} />
             <AutoScheduleCard />
             <IntakePatientCard />
             <MultiLingualCard />

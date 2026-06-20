@@ -126,8 +126,8 @@ export default function HeroSection() {
               lineHeight: 1.22,
               margin: 0,
             }}>
-              {t.hero.title1}<br />
-              {t.hero.title2}
+              Meet Yael.<br />
+              Your front desk on autopilot.
             </h1>
           </div>
 
