@@ -37,7 +37,8 @@ export default function CapabilitiesSection() {
         <h2 style={{
           fontFamily: "Inter, sans-serif", fontWeight: 300, fontSize: "clamp(2rem, 3.5vw, 2.25rem)",
           color: "#0D0D0D", letterSpacing: "-0.04em", lineHeight: 1.2,
-          margin: "0 0 40px 0", textAlign: "left", maxWidth: "560px",
+          margin: "0 0 40px 0", textAlign: isRtl ? "right" : "left", maxWidth: "600px",
+          marginInlineStart: 0,
         }}>
           {t.caps.title}
         </h2>
