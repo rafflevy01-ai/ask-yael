@@ -1,17 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { Search } from "lucide-react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const ACCENT = "#000000";
-
-const FAQS = [
-  { q: "How long does it take to go live?", a: "Setup takes 48–72 hours. We handle all configuration and testing before handoff — no technical work needed from your side.", tags: ["Setup"] },
-  { q: "Does Yael work with my existing booking system?", a: "Yes. Yael integrates with most dental practice management systems used in Israel, France, and North America.", tags: ["Integrations"] },
-  { q: "What if Yael makes a mistake?", a: "Every call is logged and reviewable. Critical cases always escalate to your team. You can listen, correct, and retrain in minutes.", tags: ["Setup", "Your team"] },
-  { q: "Is my patient data secure?", a: "All data is encrypted end-to-end. We never store patient PII beyond the call session, and nothing is ever shared or sold.", tags: ["Security"] },
-  { q: "What happens to my receptionist?", a: "Yael handles routine calls so your team focuses on patients in the chair. Most clinics redeploy staff to higher-value work.", tags: ["Your team"] },
-  { q: "What languages does Yael speak?", a: "Yael is fully multilingual — Hebrew, French, and English — with native-level fluency in each, including gender agreement in Hebrew.", tags: ["Setup", "Integrations"] },
-  { q: "Is there a contract or commitment?", a: "No long-term contracts. You start with a pilot period, and if Yael isn't performing to your standard, you can cancel anytime.", tags: ["Setup"] },
-];
 
 const CATEGORIES = ["All", "Setup", "Security", "Integrations", "Your team"];
 
@@ -29,6 +20,9 @@ function highlightMatch(text, query) {
 }
 
 export default function FaqSection() {
+  const { t, isRtl } = useLanguage();
+  const tf = t.faq;
+  const FAQS = tf.items;
   const [openIndex, setOpenIndex] = useState(null);
   const [search, setSearch] = useState("");
   const [activeTag, setActiveTag] = useState("All");
@@ -44,7 +38,7 @@ export default function FaqSection() {
       if (!match) return acc;
       return { ...acc, items: [...acc.items, { ...faq, origIdx: idx }] };
     }, { items: [] });
-  }, [search, activeTag]);
+  }, [search, activeTag, FAQS]);
 
   useEffect(() => {
     setOpenIndex(null);
@@ -53,7 +47,7 @@ export default function FaqSection() {
   const toggle = (i) => setOpenIndex(openIndex === i ? null : i);
 
   return (
-    <section data-faq style={{ padding: "80px 40px", backgroundColor: "#FFFFFF", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+    <section data-faq dir={isRtl ? "rtl" : "ltr"} style={{ padding: "80px 40px", backgroundColor: "#FFFFFF", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
       <div style={{ maxWidth: "760px", margin: "0 auto" }}>
 
         {/* Outer card */}
@@ -83,7 +77,7 @@ export default function FaqSection() {
               display: "block",
               marginBottom: "10px",
             }}>
-              Questions
+              {tf.label}
             </span>
 
             {/* Heading */}
@@ -96,7 +90,7 @@ export default function FaqSection() {
               lineHeight: 1.2,
               margin: "0 0 24px 0",
             }}>
-              Everything you need to know about Yael
+              {tf.title}
             </h2>
 
             {/* Search bar */}
@@ -114,7 +108,7 @@ export default function FaqSection() {
               <Search size={16} strokeWidth={1.8} color={searchFocused ? ACCENT : "#6B6B6B"} style={{ flexShrink: 0, transition: "color 0.2s ease" }} />
               <input
                 type="text"
-                placeholder="Search questions..."
+                placeholder={tf.searchPlaceholder}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 onFocus={() => setSearchFocused(true)}
@@ -151,7 +145,7 @@ export default function FaqSection() {
                     transition: "all 0.15s ease",
                   }}
                 >
-                  {cat}
+                  {tf.categories?.[cat] || cat}
                 </button>
               ))}
             </div>
@@ -168,7 +162,7 @@ export default function FaqSection() {
                   color: "#6B6B6B",
                   margin: 0,
                 }}>
-                  No results found
+                  {tf.noResults}
                 </p>
               </div>
             ) : (
