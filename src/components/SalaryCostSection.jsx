@@ -1,14 +1,18 @@
 import React, { useState } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function SalaryCostSection() {
+  const { t, isRtl } = useLanguage();
+  const ts = t.salary;
   const [salary, setSalary] = useState(8500);
   const [count, setCount]   = useState(2);
   const monthly = salary * count;
   const annual  = monthly * 12;
 
+  const perMo = isRtl ? " / לחודש" : " / mo";
   const rows = [
-    { label: "Salary / receptionist", value: "₪" + salary.toLocaleString() + " / mo", min: 6000, max: 12000, step: 500, val: salary, set: setSalary, minLabel: "₪6,000", maxLabel: "₪12,000", pct: ((salary - 6000) / 6000) * 100 },
-    { label: "Receptionists", value: String(count), min: 1, max: 5, step: 1, val: count, set: setCount, minLabel: "1", maxLabel: "5", pct: ((count - 1) / 4) * 100 },
+    { label: ts.salaryPer, value: "₪" + salary.toLocaleString() + perMo, min: 6000, max: 12000, step: 500, val: salary, set: setSalary, minLabel: "₪6,000", maxLabel: "₪12,000", pct: ((salary - 6000) / 6000) * 100 },
+    { label: ts.receptionists, value: String(count), min: 1, max: 5, step: 1, val: count, set: setCount, minLabel: "1", maxLabel: "5", pct: ((count - 1) / 4) * 100 },
   ];
 
   return (
@@ -19,13 +23,13 @@ export default function SalaryCostSection() {
           {/* Left — copy */}
           <div>
             <span style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", color: "#888", display: "block", marginBottom: "14px" }}>
-              The Cost of Answering Phones
+              {ts.label}
             </span>
             <h2 style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(2rem,3.5vw,2.8rem)", color: "#0D0D0D", letterSpacing: "-0.04em", lineHeight: 1.1, margin: "0 0 14px" }}>
-              See what your front desk really costs.
+              {ts.title}
             </h2>
             <p style={{ fontFamily: "Inter,sans-serif", fontWeight: 400, fontSize: "16px", color: "#6B6B6B", margin: 0, lineHeight: 1.6, maxWidth: "440px" }}>
-              Drag the sliders to match your clinic — then see how much you spend every year just to answer the phone, book appointments, and enter data into CRMs.
+              {ts.desc}
             </p>
           </div>
 
@@ -42,6 +46,7 @@ export default function SalaryCostSection() {
                       <span style={{ fontFamily: "Inter,sans-serif", fontSize: "12px", fontWeight: 500, color: "#0D0D0D", background: "#F5F5F3", borderRadius: "8px", padding: "5px 10px", border: "1px solid #ECECEC" }}>{value}</span>
                     </div>
                     <input type="range" min={min} max={max} step={step} value={val}
+                      dir="ltr"
                       onChange={e => set(parseInt(e.target.value))}
                       style={{ width: "100%", height: "4px", borderRadius: "9999px", outline: "none", appearance: "none", WebkitAppearance: "none",
                         background: "linear-gradient(to right,#54ADCC " + pct + "%,#E5E7EB " + pct + "%)", cursor: "pointer" }} />
@@ -54,26 +59,26 @@ export default function SalaryCostSection() {
 
               {/* Blue results panel */}
               <div style={{ background: "#54ADCC", borderRadius: "14px", padding: "22px" }}>
-                <div style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 600, color: "#FFFFFF", marginBottom: "4px" }}>Monthly Cost</div>
-                <div style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.7rem,3vw,2.2rem)", color: "#FFFFFF", letterSpacing: "-0.04em", lineHeight: 1, marginBottom: "8px" }}>
+                <div style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 600, color: "#FFFFFF", marginBottom: "4px" }}>{ts.monthlyCost}</div>
+                <div dir="ltr" style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.7rem,3vw,2.2rem)", color: "#FFFFFF", letterSpacing: "-0.04em", lineHeight: 1, marginBottom: "8px", textAlign: isRtl ? "right" : "left" }}>
                   ₪{monthly.toLocaleString()}
                 </div>
                 <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.5 }}>
-                  What you pay every month just to answer the phone.
+                  {ts.monthlyDesc}
                 </p>
 
                 <div style={{ borderTop: "1px solid rgba(255,255,255,0.25)", margin: "18px 0", paddingTop: "16px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "4px" }}>
-                    <span style={{ fontFamily: "Inter,sans-serif", fontSize: "12px", fontWeight: 600, color: "#FFFFFF" }}>Total per year</span>
-                    <span style={{ fontFamily: "Inter,sans-serif", fontSize: "15px", fontWeight: 600, color: "#FFFFFF", letterSpacing: "-0.02em" }}>₪{annual.toLocaleString()}</span>
+                    <span style={{ fontFamily: "Inter,sans-serif", fontSize: "12px", fontWeight: 600, color: "#FFFFFF" }}>{ts.totalYear}</span>
+                    <span dir="ltr" style={{ fontFamily: "Inter,sans-serif", fontSize: "15px", fontWeight: 600, color: "#FFFFFF", letterSpacing: "-0.02em" }}>₪{annual.toLocaleString()}</span>
                   </div>
                   <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.5 }}>
-                    Your yearly receptionist salary spend.
+                    {ts.totalDesc}
                   </p>
                 </div>
 
                 <a href="#book-demo" style={{ display: "block", textAlign: "center", fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 500, color: "#FFFFFF", background: "#0D0D0D", borderRadius: "9999px", padding: "11px 0", textDecoration: "none" }}>
-                  Replace it with Yael
+                  {ts.replaceCta}
                 </a>
               </div>
 
