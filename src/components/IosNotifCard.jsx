@@ -1,4 +1,5 @@
 import React from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const NOTIF_STEPS = [
   {
@@ -169,8 +170,23 @@ function AcceptIcon() {
 }
 
 export default function IosNotifCard({ stepIndex, visible = true, cardStyle }) {
+  const { t, isRtl } = useLanguage();
   if (stepIndex < 0 || stepIndex >= NOTIF_STEPS.length) return null;
-  const data = NOTIF_STEPS[stepIndex];
+  const base = NOTIF_STEPS[stepIndex];
+  const tr = t.how.notifs[String(stepIndex)] || {};
+  const data = {
+    ...base,
+    appName: tr.appName ?? base.appName,
+    title: tr.title ?? base.title,
+    subtitle: tr.subtitle ?? base.subtitle,
+    smsText: tr.smsText ?? base.smsText,
+    buttons: base.buttons
+      ? [
+          { ...base.buttons[0], label: tr.decline ?? base.buttons[0].label },
+          { ...base.buttons[1], label: tr.accept ?? base.buttons[1].label },
+        ]
+      : base.buttons,
+  };
 
   return (
     <div
@@ -186,10 +202,10 @@ export default function IosNotifCard({ stepIndex, visible = true, cardStyle }) {
 
       {data.type === "incoming-call" && (
         <>
-          <div style={{ fontSize: "15px", fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: "2px" }}>
+          <div dir={isRtl ? "rtl" : "ltr"} style={{ fontSize: "15px", fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: "2px", textAlign: isRtl ? "right" : "left" }}>
             {data.title}
           </div>
-          <div style={{ fontSize: "13px", fontWeight: 400, color: "rgba(60,60,67,0.65)", lineHeight: 1.25, marginBottom: "6px", flex: 1 }}>
+          <div dir={isRtl ? "rtl" : "ltr"} style={{ fontSize: "13px", fontWeight: 400, color: "rgba(60,60,67,0.65)", lineHeight: 1.25, marginBottom: "6px", flex: 1, textAlign: isRtl ? "right" : "left" }}>
             {data.subtitle}
           </div>
           <div style={{ display: "flex", gap: "10px" }}>
@@ -222,8 +238,9 @@ export default function IosNotifCard({ stepIndex, visible = true, cardStyle }) {
       )}
 
       {data.type === "sms-banner" && (
-        <div style={{
+        <div dir={isRtl ? "rtl" : "ltr"} style={{
           background: "rgba(118,118,128,0.08)", borderRadius: "10px", padding: "10px 12px", marginTop: "2px", flex: 1,
+          textAlign: isRtl ? "right" : "left",
         }}>
           <div style={{ fontSize: "15px", fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: "2px" }}>
             {data.title}
@@ -236,12 +253,13 @@ export default function IosNotifCard({ stepIndex, visible = true, cardStyle }) {
 
       {data.type === "imessage" && (
         <div style={{ marginTop: "4px", flex: 1, display: "flex" }}>
-          <div style={{
+          <div dir={isRtl ? "rtl" : "ltr"} style={{
             background: "#34c759", color: "#FFFFFF",
             borderRadius: "16px 16px 16px 4px",
             padding: "9px 12px", maxWidth: "85%",
             fontSize: "13px", fontWeight: 400, lineHeight: 1.4,
             alignSelf: "flex-end",
+            textAlign: isRtl ? "right" : "left",
           }}>
             {data.smsText}
           </div>

@@ -99,6 +99,14 @@ Please let us know 24h in advance if you need to cancel.
       stepLabel: "Step",
       calloutBold: "2–4 weeks",
       calloutRest: " — Live. We handle everything.",
+      notifs: {
+        "0": { appName: "Phone", title: "David Cohen", subtitle: "Yael answering in Hebrew...", decline: "Decline", accept: "Accept" },
+        "1": { appName: "Yael", title: "Patient Found", subtitle: "David Cohen — returning patient. Last visit: March 2026" },
+        "2": { appName: "Yael", title: "Appointment Confirmed", subtitle: "Thursday 15 July at 10:00 — SMS sent to patient" },
+        "3": { appName: "Yael", title: "CRM Synced", subtitle: "Appointment logged in clinic system — no double entry needed" },
+        "4": { appName: "Messages", title: "Clinic Staff Notified", subtitle: "Booking logged. Full summary sent to your team." },
+        "5": { appName: "Messages", title: "Yael", smsText: "Hi David, your appointment is confirmed for Thursday 15 July at 10:00 with Dr. Cohen. Reply to reschedule. — Yael" },
+      },
       steps: {
         "01": { title: "Call Received", description: "Yael answers instantly in the caller's language. No menu, no hold music, no voicemail." },
         "02": { title: "Patient Identified", description: "Returning patients are recognized by phone number before they speak. New patients are registered on the spot." },
@@ -279,6 +287,14 @@ Merci de nous prévenir 24h à l'avance en cas d'annulation.
       stepLabel: "Étape",
       calloutBold: "2 à 4 semaines",
       calloutRest: " — En ligne. Nous nous occupons de tout.",
+      notifs: {
+        "0": { appName: "Téléphone", title: "David Cohen", subtitle: "Yael répond en hébreu...", decline: "Refuser", accept: "Accepter" },
+        "1": { appName: "Yael", title: "Patient trouvé", subtitle: "David Cohen — patient existant. Dernière visite : mars 2026" },
+        "2": { appName: "Yael", title: "Rendez-vous confirmé", subtitle: "Jeudi 15 juillet à 10:00 — SMS envoyé au patient" },
+        "3": { appName: "Yael", title: "CRM synchronisé", subtitle: "Rendez-vous enregistré dans le système — aucune double saisie" },
+        "4": { appName: "Messages", title: "Personnel notifié", subtitle: "Réservation enregistrée. Résumé complet envoyé à votre équipe." },
+        "5": { appName: "Messages", title: "Yael", smsText: "Bonjour David, votre rendez-vous est confirmé pour le jeudi 15 juillet à 10:00 avec le Dr Cohen. Répondez pour le modifier. — Yael" },
+      },
       steps: {
         "01": { title: "Appel reçu", description: "Yael répond instantanément dans la langue de l'appelant. Pas de menu, pas de musique d'attente, pas de messagerie." },
         "02": { title: "Patient identifié", description: "Les patients connus sont reconnus par leur numéro avant même de parler. Les nouveaux patients sont inscrits sur-le-champ." },
@@ -459,6 +475,14 @@ Merci de nous prévenir 24h à l'avance en cas d'annulation.
       stepLabel: "שלב",
       calloutBold: "2–4 שבועות",
       calloutRest: " — ועולים לאוויר. אנחנו מטפלים בהכול.",
+      notifs: {
+        "0": { appName: "טלפון", title: "דוד כהן", subtitle: "יעל עונה בעברית...", decline: "דחה", accept: "ענה" },
+        "1": { appName: "יעל", title: "המטופל זוהה", subtitle: "דוד כהן — מטופל חוזר. ביקור אחרון: מרץ 2026" },
+        "2": { appName: "יעל", title: "התור אושר", subtitle: "יום חמישי 15 ביולי בשעה 10:00 — SMS נשלח למטופל" },
+        "3": { appName: "יעל", title: "ה-CRM סונכרן", subtitle: "התור נרשם במערכת המרפאה — בלי הזנה כפולה" },
+        "4": { appName: "הודעות", title: "הצוות עודכן", subtitle: "התור נרשם. סיכום מלא נשלח לצוות שלכם." },
+        "5": { appName: "הודעות", title: "יעל", smsText: "שלום דוד, התור שלך אושר ליום חמישי 15 ביולי בשעה 10:00 עם ד\"ר כהן. השב לשינוי. — יעל" },
+      },
       steps: {
         "01": { title: "שיחה התקבלה", description: "יעל עונה מיד בשפת המתקשר. בלי תפריט, בלי מוזיקת המתנה, בלי תא קולי." },
         "02": { title: "המטופל זוהה", description: "מטופלים חוזרים מזוהים לפי מספר הטלפון עוד לפני שדיברו. מטופלים חדשים נרשמים במקום." },
