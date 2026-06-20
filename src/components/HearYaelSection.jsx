@@ -13,6 +13,7 @@ const CARDS = [
     title: "Patient Recognition",
     description: "A returning patient is identified before they finish saying hello.",
     featured: true,
+    audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/b4c684b4f_recording2.wav",
   },
   {
     id: 3,
