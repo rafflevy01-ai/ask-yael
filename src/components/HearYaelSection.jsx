@@ -1,32 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 
-const CARDS = [
-  {
-    id: 1,
-    title: "Language Detection",
-    description: "Yael opens in Hebrew and switches to French mid-call.",
-    featured: false,
-    audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/5600dd582_recording1.wav",
-  },
-  {
-    id: 2,
-    title: "Patient Recognition",
-    description: "A returning patient is identified before they finish saying hello.",
-    featured: true,
-    audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/b4c684b4f_recording2.wav",
-  },
-  {
-    id: 3,
-    title: "Full Booking",
-    description: "Slot offered, confirmed, and written to the booking system in one call.",
-    featured: false,
-  },
-  {
-    id: 4,
-    title: "New Patient Intake",
-    description: "Name, date of birth, health fund, and reason registered during the call.",
-    featured: false,
-  },
+const CARD_META = [
+  { id: 1, featured: false, audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/5600dd582_recording1.wav" },
+  { id: 2, featured: true, audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/b4c684b4f_recording2.wav" },
+  { id: 3, featured: false },
+  { id: 4, featured: false },
 ];
 
 // ── Waveform ──────────────────────────────────────────────────────────────────
@@ -81,7 +60,7 @@ function WaveformPlaceholder({ featured, playing }) {
   );
 }
 
-function AudioCard({ card }) {
+function AudioCard({ card, featuredLabel }) {
   const [playing, setPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -159,7 +138,7 @@ function AudioCard({ card }) {
           padding: "3px 10px",
           borderRadius: "9999px",
         }}>
-          Featured
+          {featuredLabel}
         </div>
       )}
 
@@ -279,8 +258,15 @@ function AudioCard({ card }) {
 }
 
 export default function HearYaelSection() {
+  const { t, isRtl } = useLanguage();
+  const cards = CARD_META.map((meta) => ({
+    ...meta,
+    title: t.hear.cards[meta.id].title,
+    description: t.hear.cards[meta.id].description,
+  }));
+
   return (
-    <section data-hear-yael style={{
+    <section data-hear-yael dir={isRtl ? "rtl" : "ltr"} style={{
       padding: "100px 48px",
       maxWidth: "100%",
       backgroundColor: "#FFFFFF",
@@ -297,7 +283,7 @@ export default function HearYaelSection() {
             display: "block",
             marginBottom: "16px",
           }}>
-            Real Calls
+            {t.hear.label}
           </span>
           <h2 style={{
             fontFamily: "Inter, sans-serif",
@@ -308,7 +294,7 @@ export default function HearYaelSection() {
             lineHeight: 1.2,
             margin: 0,
           }}>
-            Hear Yael on a real call.
+            {t.hear.title}
           </h2>
         </div>
 
@@ -319,8 +305,8 @@ export default function HearYaelSection() {
         }}
           className="hear-yael-grid"
         >
-          {CARDS.map((card) => (
-            <AudioCard key={card.id} card={card} />
+          {cards.map((card) => (
+            <AudioCard key={card.id} card={card} featuredLabel={t.hear.featured} />
           ))}
         </div>
 
@@ -334,10 +320,11 @@ export default function HearYaelSection() {
           marginTop: "32px",
           lineHeight: 1.6,
         }}>
-          Recordings coming soon. To hear Yael live, call{" "}
+          {t.hear.footnote1}
           <a
             href="tel:+97293762131"
-            style={{ color: "#000000", textDecoration: "none", fontStyle: "normal", fontWeight: 500 }}
+            dir="ltr"
+            style={{ color: "#000000", textDecoration: "none", fontStyle: "normal", fontWeight: 500, display: "inline-block" }}
           >
             +972 93 762 131
           </a>.
