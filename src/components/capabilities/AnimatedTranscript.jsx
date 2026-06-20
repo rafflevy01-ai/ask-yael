@@ -122,9 +122,10 @@ export default function AnimatedTranscript() {
               display: "flex", justifyContent: msg.role === "patient" ? "flex-start" : "flex-end",
               animation: "fadeInUp 0.35s ease-out",
             }}>
-              <div style={{
+              <div dir={conv.lang === "HE" ? "rtl" : "ltr"} style={{
                 maxWidth: "78%", padding: "8px 12px", borderRadius: "12px",
                 fontFamily: "Inter, sans-serif", fontSize: "12px", lineHeight: 1.5,
+                textAlign: conv.lang === "HE" ? "right" : "left",
                 background: msg.role === "patient" ? "#F5F5F3" : "#DBEAFE",
                 color: "#0D0D0D",
                 borderTopLeftRadius: msg.role === "patient" ? "2px" : "12px",
