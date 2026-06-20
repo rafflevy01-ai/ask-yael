@@ -1,24 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import IosNotifCard from "@/components/IosNotifCard";
+import { useLanguage } from "@/lib/LanguageContext";
 
-const STEPS = [
-  { number: "01", title: "Call Received",
-    description: "Yael answers instantly in the caller's language. No menu, no hold music, no voicemail." },
-  { number: "02", title: "Patient Identified",
-    description: "Returning patients are recognized by phone number before they speak. New patients are registered on the spot." },
-  { number: "03", title: "Request Handled",
-    description: "Booking, triage, intake, modification, or cancellation — resolved in one call. Every action writes directly to the booking system." },
-  { number: "04", title: "CRM Updated",
-    description: "Every booking and patient change is synced directly to your clinic management system. No manual data entry." },
-  { number: "05", title: "Team Notified",
-    description: "Your staff gets an SMS for every action Yael takes. If she can't handle it, she transfers the call with a full summary." },
-  { number: "06", title: "Patient Confirmed",
-    description: "The patient instantly receives a confirmation SMS with their appointment details — no waiting." },
-];
-
-const STEP_COUNT = STEPS.length;
+const STEP_NUMBERS = ["01", "02", "03", "04", "05", "06"];
+const STEP_COUNT = STEP_NUMBERS.length;
 
 export default function HowItWorksSection() {
+  const { t } = useLanguage();
+  const STEPS = STEP_NUMBERS.map((number) => ({
+    number,
+    title: t.how.steps[number].title,
+    description: t.how.steps[number].description,
+  }));
   const sectionRef = useRef(null);
   const cardsPanelRef = useRef(null);
   const stepRefs = useRef([]);
@@ -83,12 +76,12 @@ export default function HowItWorksSection() {
           <span style={{
             fontFamily: "Inter, sans-serif", fontSize: "11px", textTransform: "uppercase",
             letterSpacing: "0.12em", color: "#6B6B6B", display: "block", marginBottom: "12px",
-          }}>How it works</span>
+          }}>{t.how.label}</span>
           <h2 style={{
             fontFamily: "Inter, sans-serif", fontWeight: 300,
                       fontSize: "clamp(2rem, 3.5vw, 2.25rem)", color: "#0D0D0D",
                       letterSpacing: "-0.04em", lineHeight: 1.2, margin: 0,
-                    }}>How Yael works.</h2>
+                    }}>{t.how.title}</h2>
         </div>
 
         {/* ── DESKTOP ── */}
@@ -187,7 +180,7 @@ export default function HowItWorksSection() {
                       fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px",
                       textTransform: "uppercase", letterSpacing: "0.1em",
                       color: "#6B6B6B", display: "block", marginBottom: "12px",
-                    }}>Step {step.number}</span>
+                    }}>{t.how.stepLabel} {step.number}</span>
                     <h3 style={{
                       fontFamily: "Inter, sans-serif", fontWeight: 400,
                       fontSize: "1.4rem", color: "#0D0D0D", letterSpacing: "-0.04em",
@@ -218,8 +211,8 @@ export default function HowItWorksSection() {
         padding: "20px 40px", textAlign: "center",
       }}>
         <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "15px", color: "#0D0D0D", margin: 0 }}>
-          <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 400 }}>2–4 weeks</span>
-          {" "}— Live. We handle everything.
+          <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 400 }}>{t.how.calloutBold}</span>
+          {t.how.calloutRest}
         </p>
       </div>
 

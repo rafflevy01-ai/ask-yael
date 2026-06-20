@@ -7,14 +7,13 @@ import RegistrationTypewriter from "@/components/capabilities/RegistrationTypewr
 import MiniLanguageOrb from "@/components/capabilities/MiniLanguageOrb";
 import DeescalationTransfer from "@/components/capabilities/DeescalationTransfer";
 import OnlineStatusBadge from "@/components/capabilities/OnlineStatusBadge";
+import { useLanguage } from "@/lib/LanguageContext";
 
-const LANGS = [
-  { key: "he", label: "Hebrew" },
-  { key: "fr", label: "Français" },
-  { key: "en", label: "English" },
-];
+const LANG_KEYS = ["he", "fr", "en"];
 
 export default function CapabilitiesSection() {
+  const { t } = useLanguage();
+  const LANGS = LANG_KEYS.map((key) => ({ key, label: t.caps.langLabels[key] }));
   const [activeLangIndex, setActiveLangIndex] = useState(0);
 
   useEffect(() => {
@@ -33,14 +32,14 @@ export default function CapabilitiesSection() {
           textTransform: "uppercase", letterSpacing: "0.12em", color: "#6B6B6B",
           display: "block", marginBottom: "14px",
         }}>
-          Capabilities
+          {t.caps.label}
         </span>
         <h2 style={{
           fontFamily: "Inter, sans-serif", fontWeight: 300, fontSize: "clamp(2rem, 3.5vw, 2.25rem)",
           color: "#0D0D0D", letterSpacing: "-0.04em", lineHeight: 1.2,
           margin: "0 0 40px 0", textAlign: "left", maxWidth: "560px",
         }}>
-          Everything your front desk handles. Automated.
+          {t.caps.title}
         </h2>
 
         {/* Bento Grid */}
@@ -52,8 +51,8 @@ export default function CapabilitiesSection() {
             {/* Left: Live Call Handling (2 cols) */}
             <div className="caps-bento-card caps-card-col2">
               <div className="caps-card-inner">
-                <h3 className="caps-card-title">Live Call Handling</h3>
-                <p className="caps-card-desc">Real conversations handled in real time — all three languages, all day.</p>
+                <h3 className="caps-card-title">{t.caps.liveTitle}</h3>
+                <p className="caps-card-desc">{t.caps.liveDesc}</p>
                 <div className="caps-card-visual-tall">
                   <AnimatedTranscript />
                 </div>
@@ -63,8 +62,8 @@ export default function CapabilitiesSection() {
             {/* Right: Real-time SMS to Staff and Patient (2 cols) */}
             <div className="caps-bento-card caps-card-col2">
               <div className="caps-card-inner">
-                <h3 className="caps-card-title">Real-time SMS to Staff and Patient</h3>
-                <p className="caps-card-desc">Your team and your patients get notified instantly.</p>
+                <h3 className="caps-card-title">{t.caps.smsTitle}</h3>
+                <p className="caps-card-desc">{t.caps.smsDesc}</p>
                 <div className="caps-card-visual-tall">
                   <SmsStaffPatient />
                 </div>
@@ -78,8 +77,8 @@ export default function CapabilitiesSection() {
             {/* Card: Automatic Language Detection */}
           <div className="caps-bento-card">
             <div className="caps-card-inner">
-              <h3 className="caps-card-title">Automatic language detection</h3>
-              <p className="caps-card-desc">Yael switches languages the moment she hears the first word.</p>
+              <h3 className="caps-card-title">{t.caps.langTitle}</h3>
+              <p className="caps-card-desc">{t.caps.langDesc}</p>
               <div className="caps-card-visual" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "28px" }}>
                 {LANGS.map((lang, i) => {
                   const isActive = i === activeLangIndex;

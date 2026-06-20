@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 
-const LANGUAGES = ["EN", "FR", "עב"];
+const LANGUAGES = [
+  { code: "en", label: "EN" },
+  { code: "fr", label: "FR" },
+  { code: "he", label: "עב" },
+];
 
 export default function Navbar() {
-  const [activeLang, setActiveLang] = useState("עב");
+  const { lang, setLang, t } = useLanguage();
   const [overHero, setOverHero] = useState(true);
 
   useEffect(() => {
@@ -67,16 +72,16 @@ export default function Navbar() {
 
       {/* Center — language switcher */}
       <div className="nav-lang-switcher" style={{ display: "flex", alignItems: "center" }}>
-        {LANGUAGES.map((lang, i) => (
-          <span key={lang} style={{ display: "flex", alignItems: "center" }}>
+        {LANGUAGES.map(({ code, label }, i) => (
+          <span key={code} style={{ display: "flex", alignItems: "center" }}>
             <button
-              onClick={() => setActiveLang(lang)}
-              dir={lang === "עב" ? "rtl" : "ltr"}
+              onClick={() => setLang(code)}
+              dir={code === "he" ? "rtl" : "ltr"}
               style={{
                 fontFamily: "Inter, sans-serif",
-                fontWeight: activeLang === lang ? 500 : 400,
+                fontWeight: lang === code ? 500 : 400,
                 fontSize: "13px",
-                color: activeLang === lang ? textColor : subColor,
+                color: lang === code ? textColor : subColor,
                 background: "none",
                 border: "none",
                 cursor: "pointer",
@@ -85,7 +90,7 @@ export default function Navbar() {
                 transition: "color 0.3s ease",
               }}
             >
-              {lang}
+              {label}
             </button>
             {i < LANGUAGES.length - 1 && (
               <span style={{ color: divColor, margin: "0 2px", fontSize: "12px", transition: "color 0.3s ease" }}>|</span>
@@ -121,7 +126,7 @@ export default function Navbar() {
         onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
         onMouseLeave={e => e.currentTarget.style.opacity = "1"}
       >
-        Book a Free Demo
+        {t.nav.cta}
       </a>
 
       <style>{`

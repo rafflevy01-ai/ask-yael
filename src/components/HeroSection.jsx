@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const VIDEO_URL = "https://media.base44.com/videos/public/6a2ab0818c0d050752d1521b/3f09837ab_Cinematic_background_video_12__Veo_31_59928.mp4";
 
 export default function HeroSection() {
-  const [activeLang, setActiveLang] = useState("he");
+  const { lang, setLang, t } = useLanguage();
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -125,8 +126,8 @@ export default function HeroSection() {
               lineHeight: 1.22,
               margin: 0,
             }}>
-              Meet Yael.<br />
-              Your front desk on autopilot.
+              {t.hero.title1}<br />
+              {t.hero.title2}
             </h1>
           </div>
 
@@ -140,9 +141,7 @@ export default function HeroSection() {
               lineHeight: 1.65,
               margin: "0 0 28px 0",
             }}>
-              Yael answers every call in Hebrew, French, or English —
-              booking appointments, registering new patients, and handling
-              emergencies, 24/7, so your team never has to.
+              {t.hero.desc}
             </p>
 
             <div className="hero-cta-row" style={{ display: "flex", gap: "12px" }}>
@@ -156,7 +155,7 @@ export default function HeroSection() {
                 }}
                 onMouseEnter={e => e.currentTarget.style.opacity="0.85"}
                 onMouseLeave={e => e.currentTarget.style.opacity="1"}
-              >Book a Free Demo</a>
+              >{t.hero.ctaPrimary}</a>
 
               <a href="#how-it-works" className="hero-btn-secondary"
                 style={{
@@ -169,7 +168,7 @@ export default function HeroSection() {
                 }}
                 onMouseEnter={e => e.currentTarget.style.opacity="0.7"}
                 onMouseLeave={e => e.currentTarget.style.opacity="1"}
-              >See How It Works</a>
+              >{t.hero.ctaSecondary}</a>
             </div>
           </div>
         </div>
@@ -183,11 +182,11 @@ export default function HeroSection() {
               { key: "fr", label: "FR" },
               { key: "he", label: "עב" },
             ].map(({ key, label }) => {
-              const isActive = activeLang === key;
+              const isActive = lang === key;
               return (
                 <button
                   key={key}
-                  onClick={() => setActiveLang(key)}
+                  onClick={() => setLang(key)}
                   style={{
                     fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "11px",
                     color: isActive ? "#000000" : "rgba(255,255,255,0.85)",
@@ -207,8 +206,7 @@ export default function HeroSection() {
 
           {/* Description */}
           <p className="hero-desc-mobile">
-            Yael answers every call in Hebrew, French, or English —
-            booking appointments and handling emergencies, 24/7.
+            {t.hero.descMobile}
           </p>
 
           {/* CTAs */}
@@ -221,7 +219,7 @@ export default function HeroSection() {
               justifyContent: "center", textDecoration: "none", cursor: "pointer",
               flex: 1,
             }}
-          >Book a Free Demo</a>
+          >{t.hero.ctaPrimary}</a>
           <a href="#how-it-works"
             style={{
               fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "14px",
@@ -231,7 +229,7 @@ export default function HeroSection() {
               textDecoration: "none", border: "1px solid rgba(255,255,255,0.35)",
               cursor: "pointer", flex: 1,
             }}
-          >See How It Works</a>
+          >{t.hero.ctaSecondary}</a>
           </div>{/* end hero-cta-mobile-row */}
         </div>{/* end hero-mobile-block */}
 

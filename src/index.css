@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -104,4 +104,13 @@
   body {
     @apply bg-background text-foreground font-body;
   }
+}
+
+/* ── Hebrew RTL: force Noto Sans Hebrew across the whole site ── */
+html[lang="he"] body,
+html[lang="he"] body * {
+  font-family: 'Noto Sans Hebrew', sans-serif !important;
+}
+html[dir="rtl"] {
+  direction: rtl;
 }
