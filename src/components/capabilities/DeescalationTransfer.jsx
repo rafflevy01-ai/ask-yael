@@ -35,7 +35,7 @@ export default function DeescalationTransfer() {
   }, [phase]);
 
   return (
-    <div style={{
+    <div dir="ltr" style={{
       display: "flex", alignItems: "center", justifyContent: "center",
       gap: "0px", padding: "16px 0", width: "100%",
     }}>
@@ -45,7 +45,7 @@ export default function DeescalationTransfer() {
         const isLast = i === STEPS.length - 1;
 
         return (
-          <div key={i} style={{ display: "flex", alignItems: "center" }}>
+          <div key={i} style={{ display: "flex", alignItems: "flex-start" }}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}>
               <div style={{
                 width: 36, height: 36, borderRadius: "50%",
@@ -72,7 +72,7 @@ export default function DeescalationTransfer() {
                 width: 28, height: 3, borderRadius: "2px",
                 background: i < activeStep ? step.border : "#E5E5E5",
                 transition: "background 0.3s ease",
-                marginBottom: "20px",
+                marginTop: "16.5px",
               }} />
             )}
           </div>
