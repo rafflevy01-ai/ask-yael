@@ -220,7 +220,7 @@ export default function CapabilitiesSection() {
           font-family: "Inter", sans-serif;
           font-weight: 500;
           font-size: 14px;
-          color: #FAFAFA;
+          color: #0D0D0D;
           margin: 0 0 4px;
           letter-spacing: -0.01em;
         }

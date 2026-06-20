@@ -69,12 +69,12 @@ export default function DeescalationTransfer() {
 
             {!isLast && (
               <div style={{
-                width: 32, height: 3, borderRadius: "2px",
+                width: 30, height: 3, borderRadius: "2px",
                 background: i < activeStep ? step.border : "#E5E5E5",
                 transition: "background 0.3s ease",
                 marginTop: "16.5px",
-                marginLeft: "-2px",
-                marginRight: "-2px",
+                marginLeft: "-4px",
+                marginRight: "-4px",
               }} />
             )}
           </div>
