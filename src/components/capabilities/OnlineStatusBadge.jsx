@@ -1,14 +1,9 @@
 import { useState, useEffect } from "react";
-
-const MESSAGES = [
-  "Available now",
-  "Answering in Hebrew",
-  "Answering in French",
-  "Answering in English",
-  "No missed calls \u00b7 ever",
-];
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function OnlineStatusBadge() {
+  const { t } = useLanguage();
+  const MESSAGES = t.caps.onlineMessages;
   const [msgIndex, setMsgIndex] = useState(0);
   const [visible, setVisible] = useState(true);
 
@@ -44,7 +39,7 @@ export default function OnlineStatusBadge() {
           fontFamily: "Inter, sans-serif", fontWeight: 600,
           fontSize: "12px", color: "#000000",
         }}>
-          Yael is online
+          {t.caps.onlineStatus}
         </span>
       </div>
 

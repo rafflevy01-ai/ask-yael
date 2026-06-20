@@ -124,6 +124,27 @@ Please let us know 24h in advance if you need to cancel.
       deescTitle: "De-escalation",
       deescDesc: "If a patient isn't satisfied, Yael transfers them instantly to a team member.",
       langLabels: { he: "Hebrew", fr: "Français", en: "English" },
+      smsLabel: "SMS to patient",
+      notifLabel: "Notification to clinic",
+      smsBody: `Hi Sarah, your appointment is confirmed.
+Date: Wednesday 18 Jun · 10:00
+Doctor: Dr. Cohen
+Treatment: Checkup
+Please let us know 24h in advance if you need to cancel.
+— Yael`,
+      notifTitle: "AskYael · now",
+      notifSubtitle: "New appointment booked",
+      notifBody: "Patient: Sarah Lévy · Wed 18 Jun · 10:00 · Dr. Cohen · Checkup",
+      regFields: [
+        { label: "Name", value: "David Cohen" },
+        { label: "Teudat Zehut", value: "031-456789" },
+        { label: "Date of birth", value: "15/03/1985" },
+        { label: "HMO", value: "Clalit" },
+        { label: "Appointment", value: "Wed 18 Jun 10:00" },
+      ],
+      onlineStatus: "Yael is online",
+      onlineMessages: ["Available now", "Answering in Hebrew", "Answering in French", "Answering in English", "No missed calls · ever"],
+      deescSteps: ["Patient calling", "Yael detects", "Transferring", "Resolved"],
     },
     faq: {
       label: "Questions",
@@ -278,6 +299,27 @@ Merci de nous prévenir 24h à l'avance en cas d'annulation.
       deescTitle: "Désescalade",
       deescDesc: "Si un patient n'est pas satisfait, Yael le transfère instantanément à un membre de l'équipe.",
       langLabels: { he: "Hébreu", fr: "Français", en: "Anglais" },
+      smsLabel: "SMS au patient",
+      notifLabel: "Notification à la clinique",
+      smsBody: `Bonjour Sarah, votre rendez-vous est confirmé.
+Date : mercredi 18 juin · 10:00
+Médecin : Dr Cohen
+Soin : Contrôle
+Merci de nous prévenir 24h à l'avance en cas d'annulation.
+— Yael`,
+      notifTitle: "AskYael · maintenant",
+      notifSubtitle: "Nouveau rendez-vous réservé",
+      notifBody: "Patient : Sarah Lévy · mer. 18 juin · 10:00 · Dr Cohen · Contrôle",
+      regFields: [
+        { label: "Nom", value: "David Cohen" },
+        { label: "Teudat Zehut", value: "031-456789" },
+        { label: "Date de naissance", value: "15/03/1985" },
+        { label: "Caisse de santé", value: "Clalit" },
+        { label: "Rendez-vous", value: "mer. 18 juin 10:00" },
+      ],
+      onlineStatus: "Yael est en ligne",
+      onlineMessages: ["Disponible maintenant", "Répond en hébreu", "Répond en français", "Répond en anglais", "Aucun appel manqué · jamais"],
+      deescSteps: ["Patient appelle", "Yael détecte", "Transfert", "Résolu"],
     },
     faq: {
       label: "Questions",
@@ -432,6 +474,27 @@ Merci de nous prévenir 24h à l'avance en cas d'annulation.
       deescTitle: "הרגעת מצב",
       deescDesc: "אם מטופל לא מרוצה, יעל מעבירה אותו מיד לאיש צוות.",
       langLabels: { he: "עברית", fr: "צרפתית", en: "אנגלית" },
+      smsLabel: "SMS למטופל",
+      notifLabel: "התראה למרפאה",
+      smsBody: `שלום שרה, התור שלך אושר.
+תאריך: יום רביעי 18 ביוני · 10:00
+רופא: ד"ר כהן
+טיפול: בדיקה
+נא להודיע לנו 24 שעות מראש אם יש צורך לבטל.
+— יעל`,
+      notifTitle: "AskYael · עכשיו",
+      notifSubtitle: "נקבע תור חדש",
+      notifBody: "מטופלת: שרה לוי · רביעי 18 ביוני · 10:00 · ד\"ר כהן · בדיקה",
+      regFields: [
+        { label: "שם", value: "דוד כהן" },
+        { label: "תעודת זהות", value: "031-456789" },
+        { label: "תאריך לידה", value: "15/03/1985" },
+        { label: "קופת חולים", value: "כללית" },
+        { label: "תור", value: "רביעי 18 ביוני 10:00" },
+      ],
+      onlineStatus: "יעל מחוברת",
+      onlineMessages: ["זמינה עכשיו", "עונה בעברית", "עונה בצרפתית", "עונה באנגלית", "אין שיחות שלא נענו · אף פעם"],
+      deescSteps: ["מטופל מתקשר", "יעל מזהה", "מעבירה", "נפתר"],
     },
     faq: {
       label: "שאלות",

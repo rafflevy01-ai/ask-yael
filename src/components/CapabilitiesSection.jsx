@@ -12,7 +12,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 const LANG_KEYS = ["he", "fr", "en"];
 
 export default function CapabilitiesSection() {
-  const { t } = useLanguage();
+  const { t, isRtl } = useLanguage();
   const LANGS = LANG_KEYS.map((key) => ({ key, label: t.caps.langLabels[key] }));
   const [activeLangIndex, setActiveLangIndex] = useState(0);
 
@@ -23,7 +23,7 @@ export default function CapabilitiesSection() {
     return () => clearInterval(interval);
   }, []);
   return (
-    <section data-capabilities style={{ padding: "80px 40px", backgroundColor: "#FFFFFF", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+    <section data-capabilities dir={isRtl ? "rtl" : "ltr"} style={{ padding: "80px 40px", backgroundColor: "#FFFFFF", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
       <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
 
         {/* Header */}
@@ -104,8 +104,8 @@ export default function CapabilitiesSection() {
           {/* Card: New Patient Registration */}
           <div className="caps-bento-card">
             <div className="caps-card-inner">
-              <h3 className="caps-card-title">New patient registration</h3>
-              <p className="caps-card-desc">All details captured before the patient hangs up.</p>
+              <h3 className="caps-card-title">{t.caps.regTitle}</h3>
+              <p className="caps-card-desc">{t.caps.regDesc}</p>
               <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                 <RegistrationTypewriter />
               </div>
@@ -120,13 +120,13 @@ export default function CapabilitiesSection() {
                 fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
                 color: "#0D0D0D", margin: "0 0 6px",
               }}>
-                HMO and insurance
+                {t.caps.hmoTitle}
               </h4>
               <p style={{
                 fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
                 color: "#6B6B6B", lineHeight: 1.5, margin: 0,
               }}>
-                Price and treatment inquiries answered instantly
+                {t.caps.hmoDesc}
               </p>
             </div>
           </div>
@@ -134,8 +134,8 @@ export default function CapabilitiesSection() {
             {/* Card 4: 24/7 Availability */}
             <div className="caps-bento-card">
               <div className="caps-card-inner">
-                <h3 className="caps-card-title">24/7 Availability</h3>
-                <p className="caps-card-desc">No voicemail, no missed calls — Yael answers every time.</p>
+                <h3 className="caps-card-title">{t.caps.availTitle}</h3>
+                <p className="caps-card-desc">{t.caps.availDesc}</p>
                 <div className="caps-card-visual">
                   <OnlineStatusBadge />
                 </div>
@@ -154,13 +154,13 @@ export default function CapabilitiesSection() {
                   fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
                   color: "#0D0D0D", margin: "14px 0 6px",
                 }}>
-                  Emergency triage
+                  {t.caps.emergencyTitle}
                 </h4>
                 <p style={{
                   fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
                   color: "#6B6B6B", lineHeight: 1.5, margin: 0,
                 }}>
-                  Same-day appointments with fee disclosure
+                  {t.caps.emergencyDesc}
                 </p>
               </div>
             </div>
@@ -168,8 +168,8 @@ export default function CapabilitiesSection() {
             {/* Right: De-escalation (2 cols) */}
             <div className="caps-bento-card caps-card-col2">
               <div className="caps-card-inner">
-                <h3 className="caps-card-title">De-escalation</h3>
-                <p className="caps-card-desc">If a patient isn't satisfied, Yael transfers them instantly to a team member.</p>
+                <h3 className="caps-card-title">{t.caps.deescTitle}</h3>
+                <p className="caps-card-desc">{t.caps.deescDesc}</p>
                 <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                   <DeescalationTransfer />
                 </div>

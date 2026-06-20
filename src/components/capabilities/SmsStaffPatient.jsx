@@ -1,18 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const SMS_BODY = `Hi Sarah, your appointment is confirmed.
-Date: Wednesday 18 Jun · 10:00
-Doctor: Dr. Cohen
-Treatment: Checkup
-Please let us know 24h in advance if you need to cancel.
-— Yael`;
-
-const NOTIF = {
-  title: "AskYael · now",
-  subtitle: "New appointment booked",
-  body: "Patient: Sarah Lévy · Wed 18 Jun · 10:00 · Dr. Cohen · Checkup",
-};
+import { useLanguage } from "@/lib/LanguageContext";
 
 const fadeVariants = {
   enter: { opacity: 0, y: 10, scale: 0.97 },
@@ -21,6 +9,9 @@ const fadeVariants = {
 };
 
 export default function SmsStaffPatient() {
+  const { t, isRtl } = useLanguage();
+  const SMS_BODY = t.caps.smsBody;
+  const NOTIF = { title: t.caps.notifTitle, subtitle: t.caps.notifSubtitle, body: t.caps.notifBody };
   const [view, setView] = useState(0); // 0 = SMS, 1 = Notification
 
   useEffect(() => {
@@ -30,7 +21,7 @@ export default function SmsStaffPatient() {
     return () => clearInterval(interval);
   }, []);
 
-  const label = view === 0 ? "SMS to patient" : "Notification to clinic";
+  const label = view === 0 ? t.caps.smsLabel : t.caps.notifLabel;
 
   return (
     <div style={{
@@ -77,9 +68,10 @@ export default function SmsStaffPatient() {
                 maxWidth: "260px",
                 width: "100%",
               }}>
-                <div style={{
+                <div dir={isRtl ? "rtl" : "ltr"} style={{
                   fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "12px",
                   color: "#FFFFFF", lineHeight: 1.55, whiteSpace: "pre-line",
+                  textAlign: isRtl ? "right" : "left",
                 }}>
                   {SMS_BODY}
                 </div>

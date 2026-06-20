@@ -1,20 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check } from "lucide-react";
-
-const FIELDS = [
-  { label: "Name", value: "David Cohen" },
-  { label: "Teudat Zehut", value: "031-456789" },
-  { label: "Date of birth", value: "15/03/1985" },
-  { label: "HMO", value: "Clalit" },
-  { label: "Appointment", value: "Wed 18 Jun 10:00" },
-];
+import { useLanguage } from "@/lib/LanguageContext";
 
 const CHAR_DELAY = 55;
 const FIELD_PAUSE = 400;
 const CYCLE_PAUSE = 2000;
 
 export default function RegistrationTypewriter() {
+  const { t, isRtl } = useLanguage();
+  const FIELDS = t.caps.regFields;
   const [visibleFields, setVisibleFields] = useState([]);
   const cycleRef = useRef(null);
 
@@ -67,7 +62,7 @@ export default function RegistrationTypewriter() {
 
     run();
     return () => timers.forEach(clearTimeout);
-  }, []);
+  }, [FIELDS]);
 
   return (
     <div style={{
@@ -101,7 +96,7 @@ export default function RegistrationTypewriter() {
               color: "#0D0D0D",
               letterSpacing: "-0.01em",
               whiteSpace: "nowrap",
-              textAlign: "right",
+              textAlign: isRtl ? "left" : "right",
             }}>
               {field.typedValue}
               {!field.done && (
