@@ -39,6 +39,7 @@ export default function Navbar() {
   return (
     <nav
       className="askyael-navbar"
+      dir="ltr"
       style={{
         position: "fixed",
         top: 0,
