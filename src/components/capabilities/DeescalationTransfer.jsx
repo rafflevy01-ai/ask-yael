@@ -37,7 +37,7 @@ export default function DeescalationTransfer() {
   return (
     <div dir="ltr" style={{
       display: "flex", alignItems: "center", justifyContent: "center",
-      gap: "0px", padding: "16px 0", width: "100%",
+      padding: "16px 0", width: "100%",
     }}>
       {STEPS.map((step, i) => {
         const isActive = i < activeStep;
@@ -45,10 +45,14 @@ export default function DeescalationTransfer() {
         const isLast = i === STEPS.length - 1;
 
         return (
-          <div key={i} style={{ display: "flex", alignItems: "flex-start" }}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}>
+          <div key={i} style={{
+            display: "flex", flexDirection: "column", alignItems: "flex-start",
+            flex: isLast ? "0 0 auto" : "1 1 0", minWidth: 0,
+          }}>
+            {/* Icon row: circle + connector, vertically centered together */}
+            <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
               <div style={{
-                width: 36, height: 36, borderRadius: "50%",
+                width: 36, height: 36, flexShrink: 0, borderRadius: "50%",
                 background: isActive ? step.bg : "#F1F5F9",
                 border: "2px solid",
                 borderColor: isActive ? step.border : "#E2E8F0",
@@ -58,25 +62,26 @@ export default function DeescalationTransfer() {
               }}>
                 <Icon size={14} strokeWidth={2.2} color={isActive ? step.iconColor : "#CBD5E1"} style={{ transition: "color 0.3s ease" }} />
               </div>
+              {!isLast && (
+                <div style={{
+                  flex: 1, height: 3, borderRadius: "2px",
+                  background: i < activeStep ? step.border : "#E5E5E5",
+                  transition: "background 0.3s ease",
+                }} />
+              )}
+            </div>
+
+            {/* Label centered under the circle (36px wide block aligned to circle) */}
+            <div style={{ width: 36, display: "flex", justifyContent: "center", marginTop: "6px" }}>
               <span style={{
                 fontFamily: "Inter, sans-serif", fontWeight: isActive ? 600 : 400,
                 fontSize: "9px", color: isActive ? "#0D0D0D" : "#CBD5E1",
-                textAlign: "center", lineHeight: 1.3, transition: "all 0.3s ease",
+                textAlign: "center", lineHeight: 1.3,
+                transition: "all 0.3s ease", whiteSpace: "nowrap",
               }}>
                 {step.label}
               </span>
             </div>
-
-            {!isLast && (
-              <div style={{
-                width: 30, height: 3, borderRadius: "2px",
-                background: i < activeStep ? step.border : "#E5E5E5",
-                transition: "background 0.3s ease",
-                marginTop: "16.5px",
-                marginLeft: "-4px",
-                marginRight: "-4px",
-              }} />
-            )}
           </div>
         );
       })}
