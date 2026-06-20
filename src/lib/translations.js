@@ -242,7 +242,7 @@ Merci de nous prévenir 24h à l'avance en cas d'annulation.
         appointment: "mer. 18 juin · 10:00",
       },
       scheduleLabel: "Toujours sur l'agenda",
-      scheduleTitle: "Enregistré pour vous.",
+      scheduleTitle: "Tout est noté.",
       scheduleSub: "Chaque rendez-vous enregistré automatiquement",
       multiLabel: "Multilingue",
       multiTitle: "Trois langues.",
