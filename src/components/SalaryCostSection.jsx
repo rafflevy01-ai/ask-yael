@@ -45,7 +45,7 @@ export default function SalaryCostSection() {
                     onChange={e => set(parseInt(e.target.value))}
                     style={{ width: "100%", height: "4px", borderRadius: "9999px", outline: "none", appearance: "none", WebkitAppearance: "none",
                       background: "linear-gradient(to right,#54ADCC " + pct + "%,#E5E7EB " + pct + "%)", cursor: "pointer" }} />
-                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: "6px", fontFamily: "Inter,sans-serif", fontSize: "10px", color: "#9CA3AF" }}>
+                  <div dir="ltr" style={{ display: "flex", justifyContent: "space-between", marginTop: "6px", fontFamily: "Inter,sans-serif", fontSize: "10px", color: "#9CA3AF" }}>
                     <span>{minLabel}</span><span>{maxLabel}</span>
                   </div>
                 </div>
