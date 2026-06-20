@@ -39,7 +39,7 @@ function MissedCallsCard({ isVisible, tp }) {
         </p>
       </div>
       <div className="ps-card-visual" style={{ justifyContent:"center", alignItems:"center", paddingBottom:"28px" }}>
-        <div style={{
+        <div dir="ltr" style={{
           background:"rgba(250,250,252,0.94)", backdropFilter:"blur(40px) saturate(200%)",
           WebkitBackdropFilter:"blur(40px) saturate(200%)",
           borderRadius:"16px", padding:"11px 14px",
@@ -69,14 +69,7 @@ function MissedCallsCard({ isVisible, tp }) {
 const INSTANT_NOTIF_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/332dc40be_Your_task_is_to_recreate_a_lad_Nano_Banana_2_59670.png";
 const CLINIC_NOTIF_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/f9a210da0_Create_a_picture_similar_to_th_Nano_Banana_2_18435copie.png";
 
-const SMS_BUBBLE = `Hi Sarah, your appointment is confirmed.
-Date: Wednesday 18 Jun · 10:00
-Doctor: Dr. Cohen
-Treatment: Checkup
-Please let us know 24h in advance if you need to cancel.
-— Yael`;
-
-function InstantNotificationCard({ tp }) {
+function InstantNotificationCard({ tp, isRtl }) {
   const [imgLoaded, setImgLoaded] = useState(false);
   return (
     <div className="ps-card" style={{ position:"relative", background:"#1a1a1a" }}>
@@ -116,11 +109,12 @@ function InstantNotificationCard({ tp }) {
           borderRadius:"14px 14px 4px 14px",
           padding:"12px 14px",
         }}>
-          <div style={{
+          <div dir={isRtl ? "rtl" : "ltr"} style={{
             fontFamily:"Inter, sans-serif", fontWeight:400, fontSize:"11px",
             color:"#FFFFFF", lineHeight:1.5, whiteSpace:"pre-line",
+            textAlign: isRtl ? "right" : "left",
           }}>
-            {SMS_BUBBLE}
+            {tp.smsBubble}
           </div>
         </div>
       </div>
@@ -141,7 +135,7 @@ function InstantNotificationCard({ tp }) {
   );
 }
 
-function ClinicNotificationCard({ tp }) {
+function ClinicNotificationCard({ tp, isRtl }) {
   const [imgLoaded, setImgLoaded] = useState(false);
   return (
     <div className="ps-card" style={{ position:"relative", background:"#1a1a1a" }}>
@@ -195,24 +189,24 @@ function ClinicNotificationCard({ tp }) {
             <span style={{ color:"#FFF", fontSize:"10px", fontWeight:700, lineHeight:1 }}>Y</span>
           </div>
           {/* Content — all on one line */}
-          <div style={{ display:"flex", alignItems:"baseline", gap:"5px", flexWrap:"wrap", rowGap:"1px", minWidth:0 }}>
+          <div dir={isRtl ? "rtl" : "ltr"} style={{ display:"flex", alignItems:"baseline", gap:"5px", flexWrap:"wrap", rowGap:"1px", minWidth:0 }}>
             <span style={{
               fontFamily:"Inter, sans-serif", fontWeight:600, fontSize:"10px",
               color:"#0D0D0D",
             }}>
-              AskYael · now
+              {tp.notifAppName}
             </span>
             <span style={{
               fontFamily:"Inter, sans-serif", fontWeight:500, fontSize:"10px",
               color:"#0D0D0D",
             }}>
-              New appointment booked
+              {tp.notifText}
             </span>
             <span style={{
               fontFamily:"Inter, sans-serif", fontWeight:400, fontSize:"9px",
               color:"#555555",
             }}>
-              Sarah Lévy · Wed 18 Jun · 10:00
+              {tp.notifDetail}
             </span>
           </div>
         </div>
@@ -275,7 +269,7 @@ function AfterHoursCard({ isVisible, tp }) {
 }
 
 export default function ProblemSection() {
-  const { t } = useLanguage();
+  const { t, isRtl } = useLanguage();
   const tp = t.problem;
   const trackRef  = useRef(null);
   const card0Ref  = useRef(null);
@@ -318,8 +312,8 @@ export default function ProblemSection() {
         <div style={{ position:"relative" }}>
           <div ref={trackRef} className="ps-track">
             <div ref={card0Ref}><MissedCallsCard isVisible={vis0} tp={tp} /></div>
-            <InstantNotificationCard tp={tp} />
-            <ClinicNotificationCard tp={tp} />
+            <InstantNotificationCard tp={tp} isRtl={isRtl} />
+            <ClinicNotificationCard tp={tp} isRtl={isRtl} />
             <AutoScheduleCard />
             <IntakePatientCard />
             <MultiLingualCard />

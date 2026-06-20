@@ -22,9 +22,27 @@ export const translations = {
       instantTitle: "Within seconds.",
       instantSub: "Confirmation SMS sent automatically",
       smsToPatient: "SMS to patient",
+      smsBubble: `Hi Sarah, your appointment is confirmed.
+Date: Wednesday 18 Jun · 10:00
+Doctor: Dr. Cohen
+Treatment: Checkup
+Please let us know 24h in advance if you need to cancel.
+— Yael`,
       clinicTitle: "On the clinic side.",
       clinicSub: "Your team is notified instantly",
       notifToClinic: "Notification to clinic",
+      notifAppName: "AskYael · now",
+      notifText: "New appointment booked",
+      notifDetail: "Sarah Lévy · Wed 18 Jun · 10:00",
+      intakeLabel: "Patient registration",
+      intakeTitle: "New patient registration",
+      intakeFields: {
+        name: "Name",
+        teudat: "Teudat Zehut",
+        dob: "Date of birth",
+        hmo: "HMO",
+        appointment: "Appointment",
+      },
       afterHoursLabel: "After Hours",
       afterHoursSub: "of appointment requests after hours",
       afterHoursCopy: "Your receptionist leaves at 18:00. Patients don't.",
@@ -142,9 +160,27 @@ export const translations = {
       instantTitle: "En quelques secondes.",
       instantSub: "SMS de confirmation envoyé automatiquement",
       smsToPatient: "SMS au patient",
+      smsBubble: `Bonjour Sarah, votre rendez-vous est confirmé.
+Date : mercredi 18 juin · 10:00
+Médecin : Dr Cohen
+Soin : Contrôle
+Merci de nous prévenir 24h à l'avance en cas d'annulation.
+— Yael`,
       clinicTitle: "Côté clinique.",
       clinicSub: "Votre équipe est notifiée instantanément",
       notifToClinic: "Notification à la clinique",
+      notifAppName: "AskYael · maintenant",
+      notifText: "Nouveau rendez-vous réservé",
+      notifDetail: "Sarah Lévy · mer. 18 juin · 10:00",
+      intakeLabel: "Inscription du patient",
+      intakeTitle: "Inscription d'un nouveau patient",
+      intakeFields: {
+        name: "Nom",
+        teudat: "Teudat Zehut",
+        dob: "Date de naissance",
+        hmo: "Caisse de santé",
+        appointment: "Rendez-vous",
+      },
       afterHoursLabel: "En dehors des heures",
       afterHoursSub: "des demandes de rendez-vous hors des heures d'ouverture",
       afterHoursCopy: "Votre réceptionniste part à 18h00. Pas les patients.",
@@ -262,9 +298,27 @@ export const translations = {
       instantTitle: "תוך שניות.",
       instantSub: "SMS אישור נשלח אוטומטית",
       smsToPatient: "SMS למטופל",
+      smsBubble: `שלום שרה, התור שלך אושר.
+תאריך: יום רביעי 18 ביוני · 10:00
+רופא: ד"ר כהן
+טיפול: בדיקה
+נא להודיע לנו 24 שעות מראש אם יש צורך לבטל.
+— יעל`,
       clinicTitle: "בצד של המרפאה.",
       clinicSub: "הצוות שלכם מקבל התראה מיידית",
       notifToClinic: "התראה למרפאה",
+      notifAppName: "AskYael · עכשיו",
+      notifText: "נקבע תור חדש",
+      notifDetail: "שרה לוי · רביעי 18 ביוני · 10:00",
+      intakeLabel: "רישום מטופל",
+      intakeTitle: "רישום מטופל חדש",
+      intakeFields: {
+        name: "שם",
+        teudat: "תעודת זהות",
+        dob: "תאריך לידה",
+        hmo: "קופת חולים",
+        appointment: "תור",
+      },
       afterHoursLabel: "אחרי שעות הפעילות",
       afterHoursSub: "מבקשות התורים מגיעות אחרי שעות הפעילות",
       afterHoursCopy: "פקיד הקבלה שלכם עוזב ב-18:00. המטופלים לא.",

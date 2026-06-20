@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { Check } from "lucide-react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const INTAKE_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/8bd79c064_Make_it_more_natural_Remove_th_Nano_Banana_2_70021.png";
 
-const FIELDS = [
-  { label: "Name", value: "David Cohen" },
-  { label: "Teudat Zehut", value: "031-456789" },
-  { label: "Date of birth", value: "15/03/1985" },
-  { label: "HMO", value: "Clalit" },
-  { label: "Appointment", value: "Wed 18 Jun · 10:00" },
-];
-
 export default function IntakePatientCard() {
+  const { t, isRtl } = useLanguage();
+  const tp = t.problem;
+  const f = tp.intakeFields;
+  const FIELDS = [
+    { label: f.name, value: "David Cohen" },
+    { label: f.teudat, value: "031-456789" },
+    { label: f.dob, value: "15/03/1985" },
+    { label: f.hmo, value: "Clalit" },
+    { label: f.appointment, value: "Wed 18 Jun · 10:00" },
+  ];
   const [imgLoaded, setImgLoaded] = useState(false);
 
   return (
@@ -44,9 +47,9 @@ export default function IntakePatientCard() {
           textTransform: "uppercase", letterSpacing: "0.1em",
           color: "rgba(255,255,255,0.7)", display: "block", marginBottom: "6px",
         }}>
-          Patient registration
+          {tp.intakeLabel}
         </span>
-        <div style={{
+        <div dir={isRtl ? "rtl" : "ltr"} style={{
           background: "rgba(255,255,255,0.94)",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
@@ -64,7 +67,7 @@ export default function IntakePatientCard() {
             marginBottom: "12px",
             letterSpacing: "-0.01em",
           }}>
-            New patient registration
+            {tp.intakeTitle}
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
@@ -83,13 +86,13 @@ export default function IntakePatientCard() {
                   {field.label}
                 </span>
                 <div style={{ display: "flex", alignItems: "center", gap: "7px" }}>
-                  <span style={{
+                  <span dir="ltr" style={{
                     fontFamily: "Inter, sans-serif",
                     fontWeight: 500,
                     fontSize: "10px",
                     color: "#0D0D0D",
                     whiteSpace: "nowrap",
-                    textAlign: "right",
+                    textAlign: isRtl ? "left" : "right",
                   }}>
                     {field.value}
                   </span>
