@@ -114,11 +114,11 @@ export default function HowItWorksSection() {
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ position: "relative" }}>
                 <div style={{
-                  position: "absolute", left: "0", top: 0, bottom: 0,
+                  position: "absolute", insetInlineStart: "0", top: 0, bottom: 0,
                   width: "1px", background: "rgba(0,0,0,0.06)", borderRadius: "9999px", zIndex: 0,
                 }} />
                 <div style={{
-                  position: "absolute", left: "0", top: 0, width: "1px",
+                  position: "absolute", insetInlineStart: "0", top: 0, width: "1px",
                   height: `${progress * 100}%`, maxHeight: "100%",
                   background: "#000000", borderRadius: "9999px", zIndex: 1,
                   transition: "height 0.08s linear",
@@ -126,7 +126,8 @@ export default function HowItWorksSection() {
                 {STEPS.map((step, i) => (
                   <div key={step.number} ref={(el) => (stepRefs.current[i] = el)}
                     style={{
-                      padding: i === 0 ? "24px 0 56px 48px" : "56px 0 56px 48px",
+                      padding: i === 0 ? "24px 0 56px" : "56px 0 56px",
+                      paddingInlineStart: "48px",
                       opacity: progress >= i / STEP_COUNT ? 1 : 0.15,
                       transition: "opacity 0.7s ease",
                       position: "relative", zIndex: 2,
