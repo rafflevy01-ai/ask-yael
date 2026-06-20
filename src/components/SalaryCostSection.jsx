@@ -55,21 +55,21 @@ export default function SalaryCostSection() {
 
           {/* Right — white card wrapping blue results panel */}
           <div style={{ background: "#FFFFFF", borderRadius: "20px", padding: "28px", boxShadow: "0 10px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)" }}>
-            <div style={{ background: "#54ADCC", borderRadius: "14px", padding: "22px" }}>
-              <div style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 600, color: "#FFFFFF", marginBottom: "4px" }}>{ts.monthlyCost}</div>
-              <div dir="ltr" style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.7rem,3vw,2.2rem)", color: "#FFFFFF", letterSpacing: "-0.04em", lineHeight: 1, marginBottom: "8px", textAlign: isRtl ? "right" : "left" }}>
+            <div style={{ background: "#FFFFFF", borderRadius: "14px", padding: "22px" }}>
+              <div style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 600, color: "#0D0D0D", marginBottom: "4px" }}>{ts.monthlyCost}</div>
+              <div dir="ltr" style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.7rem,3vw,2.2rem)", color: "#0D0D0D", letterSpacing: "-0.04em", lineHeight: 1, marginBottom: "8px", textAlign: isRtl ? "right" : "left" }}>
                 ₪{monthly.toLocaleString()}
               </div>
-              <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.5 }}>
+              <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "#6B6B6B", margin: 0, lineHeight: 1.5 }}>
                 {ts.monthlyDesc}
               </p>
 
-              <div style={{ borderTop: "1px solid rgba(255,255,255,0.25)", margin: "18px 0", paddingTop: "16px" }}>
+              <div style={{ borderTop: "1px solid rgba(0,0,0,0.1)", margin: "18px 0", paddingTop: "16px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "4px" }}>
-                  <span style={{ fontFamily: "Inter,sans-serif", fontSize: "12px", fontWeight: 600, color: "#FFFFFF" }}>{ts.totalYear}</span>
-                  <span dir="ltr" style={{ fontFamily: "Inter,sans-serif", fontSize: "15px", fontWeight: 600, color: "#FFFFFF", letterSpacing: "-0.02em" }}>₪{annual.toLocaleString()}</span>
+                  <span style={{ fontFamily: "Inter,sans-serif", fontSize: "12px", fontWeight: 600, color: "#0D0D0D" }}>{ts.totalYear}</span>
+                  <span dir="ltr" style={{ fontFamily: "Inter,sans-serif", fontSize: "15px", fontWeight: 600, color: "#0D0D0D", letterSpacing: "-0.02em" }}>₪{annual.toLocaleString()}</span>
                 </div>
-                <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.5 }}>
+                <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "#6B6B6B", margin: 0, lineHeight: 1.5 }}>
                   {ts.totalDesc}
                 </p>
               </div>
