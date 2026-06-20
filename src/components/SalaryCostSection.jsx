@@ -20,7 +20,7 @@ export default function SalaryCostSection() {
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 56px" }}>
         <div className="sal-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "56px", alignItems: "center" }}>
 
-          {/* Left — copy */}
+          {/* Left — copy + sliders */}
           <div>
             <span style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", color: "#888", display: "block", marginBottom: "14px" }}>
               {ts.label}
@@ -28,62 +28,56 @@ export default function SalaryCostSection() {
             <h2 style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(2rem,3.5vw,2.8rem)", color: "#0D0D0D", letterSpacing: "-0.04em", lineHeight: 1.1, margin: "0 0 14px" }}>
               {ts.title}
             </h2>
-            <p style={{ fontFamily: "Inter,sans-serif", fontWeight: 400, fontSize: "16px", color: "#6B6B6B", margin: 0, lineHeight: 1.6, maxWidth: "440px" }}>
+            <p style={{ fontFamily: "Inter,sans-serif", fontWeight: 400, fontSize: "16px", color: "#6B6B6B", margin: "0 0 28px", lineHeight: 1.6, maxWidth: "440px" }}>
               {ts.desc}
             </p>
-          </div>
 
-          {/* Right — white calculator card */}
-          <div style={{ background: "#FFFFFF", borderRadius: "20px", padding: "28px", boxShadow: "0 10px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)" }}>
-            <div className="sal-card-grid" style={{ display: "grid", gridTemplateColumns: "1fr 0.85fr", gap: "24px", alignItems: "stretch" }}>
-
-              {/* Inputs column */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "26px", paddingTop: "4px" }}>
-                {rows.map(({ label, value, min, max, step, val, set, minLabel, maxLabel, pct }) => (
-                  <div key={label}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                      <span style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 600, color: "#0D0D0D" }}>{label}</span>
-                      <span style={{ fontFamily: "Inter,sans-serif", fontSize: "12px", fontWeight: 500, color: "#0D0D0D", background: "#F5F5F3", borderRadius: "8px", padding: "5px 10px", border: "1px solid #ECECEC" }}>{value}</span>
-                    </div>
-                    <input type="range" min={min} max={max} step={step} value={val}
-                      dir="ltr"
-                      onChange={e => set(parseInt(e.target.value))}
-                      style={{ width: "100%", height: "4px", borderRadius: "9999px", outline: "none", appearance: "none", WebkitAppearance: "none",
-                        background: "linear-gradient(to right,#54ADCC " + pct + "%,#E5E7EB " + pct + "%)", cursor: "pointer" }} />
-                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: "6px", fontFamily: "Inter,sans-serif", fontSize: "10px", color: "#9CA3AF" }}>
-                      <span>{minLabel}</span><span>{maxLabel}</span>
-                    </div>
+            {/* Inputs */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "26px", maxWidth: "440px" }}>
+              {rows.map(({ label, value, min, max, step, val, set, minLabel, maxLabel, pct }) => (
+                <div key={label}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+                    <span style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 600, color: "#0D0D0D" }}>{label}</span>
+                    <span style={{ fontFamily: "Inter,sans-serif", fontSize: "12px", fontWeight: 500, color: "#0D0D0D", background: "#F5F5F3", borderRadius: "8px", padding: "5px 10px", border: "1px solid #ECECEC" }}>{value}</span>
                   </div>
-                ))}
-              </div>
-
-              {/* Blue results panel */}
-              <div style={{ background: "#54ADCC", borderRadius: "14px", padding: "22px" }}>
-                <div style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 600, color: "#FFFFFF", marginBottom: "4px" }}>{ts.monthlyCost}</div>
-                <div dir="ltr" style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.7rem,3vw,2.2rem)", color: "#FFFFFF", letterSpacing: "-0.04em", lineHeight: 1, marginBottom: "8px", textAlign: isRtl ? "right" : "left" }}>
-                  ₪{monthly.toLocaleString()}
-                </div>
-                <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.5 }}>
-                  {ts.monthlyDesc}
-                </p>
-
-                <div style={{ borderTop: "1px solid rgba(255,255,255,0.25)", margin: "18px 0", paddingTop: "16px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "4px" }}>
-                    <span style={{ fontFamily: "Inter,sans-serif", fontSize: "12px", fontWeight: 600, color: "#FFFFFF" }}>{ts.totalYear}</span>
-                    <span dir="ltr" style={{ fontFamily: "Inter,sans-serif", fontSize: "15px", fontWeight: 600, color: "#FFFFFF", letterSpacing: "-0.02em" }}>₪{annual.toLocaleString()}</span>
+                  <input type="range" min={min} max={max} step={step} value={val}
+                    dir="ltr"
+                    onChange={e => set(parseInt(e.target.value))}
+                    style={{ width: "100%", height: "4px", borderRadius: "9999px", outline: "none", appearance: "none", WebkitAppearance: "none",
+                      background: "linear-gradient(to right,#54ADCC " + pct + "%,#E5E7EB " + pct + "%)", cursor: "pointer" }} />
+                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: "6px", fontFamily: "Inter,sans-serif", fontSize: "10px", color: "#9CA3AF" }}>
+                    <span>{minLabel}</span><span>{maxLabel}</span>
                   </div>
-                  <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.5 }}>
-                    {ts.totalDesc}
-                  </p>
                 </div>
-
-                <a href="#book-demo" style={{ display: "block", textAlign: "center", fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 500, color: "#FFFFFF", background: "#0D0D0D", borderRadius: "9999px", padding: "11px 0", textDecoration: "none" }}>
-                  {ts.replaceCta}
-                </a>
-              </div>
-
+              ))}
             </div>
           </div>
+
+          {/* Right — blue results panel */}
+          <div style={{ background: "#54ADCC", borderRadius: "20px", padding: "28px" }}>
+            <div style={{ fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 600, color: "#FFFFFF", marginBottom: "4px" }}>{ts.monthlyCost}</div>
+            <div dir="ltr" style={{ fontFamily: "Inter,sans-serif", fontWeight: 300, fontSize: "clamp(1.7rem,3vw,2.2rem)", color: "#FFFFFF", letterSpacing: "-0.04em", lineHeight: 1, marginBottom: "8px", textAlign: isRtl ? "right" : "left" }}>
+              ₪{monthly.toLocaleString()}
+            </div>
+            <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.5 }}>
+              {ts.monthlyDesc}
+            </p>
+
+            <div style={{ borderTop: "1px solid rgba(255,255,255,0.25)", margin: "18px 0", paddingTop: "16px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "4px" }}>
+                <span style={{ fontFamily: "Inter,sans-serif", fontSize: "12px", fontWeight: 600, color: "#FFFFFF" }}>{ts.totalYear}</span>
+                <span dir="ltr" style={{ fontFamily: "Inter,sans-serif", fontSize: "15px", fontWeight: 600, color: "#FFFFFF", letterSpacing: "-0.02em" }}>₪{annual.toLocaleString()}</span>
+              </div>
+              <p style={{ fontFamily: "Inter,sans-serif", fontSize: "11px", fontWeight: 400, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.5 }}>
+                {ts.totalDesc}
+              </p>
+            </div>
+
+            <a href="#book-demo" style={{ display: "block", textAlign: "center", fontFamily: "Inter,sans-serif", fontSize: "13px", fontWeight: 500, color: "#FFFFFF", background: "#0D0D0D", borderRadius: "9999px", padding: "11px 0", textDecoration: "none" }}>
+              {ts.replaceCta}
+            </a>
+          </div>
+
         </div>
       </div>
 
@@ -99,7 +93,6 @@ export default function SalaryCostSection() {
           [data-salary-section] { padding:48px 0 56px !important; }
           [data-salary-section] > div { padding:0 20px !important; }
           [data-salary-section] .sal-grid { grid-template-columns:1fr !important; gap:32px !important; }
-          [data-salary-section] .sal-card-grid { grid-template-columns:1fr !important; gap:20px !important; }
           [data-salary-section] h2 { font-size:1.6rem !important; }
         }
       `}</style>
