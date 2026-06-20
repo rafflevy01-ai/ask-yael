@@ -117,7 +117,7 @@ export default function HeroSection() {
 
           {/* LEFT — title */}
           <div className="hero-left" style={{ flex: "0 0 52%", minWidth: 0 }}>
-            <h1 className="hero-h1" style={{
+            <h1 dir="ltr" className="hero-h1" style={{
               fontFamily: "Inter, sans-serif",
               fontWeight: 300,
               fontSize: "clamp(2rem, 2.8vw, 3.2rem)",
@@ -125,6 +125,7 @@ export default function HeroSection() {
               letterSpacing: "-0.04em",
               lineHeight: 1.22,
               margin: 0,
+              textAlign: "left",
             }}>
               Meet Yael.<br />
               Your front desk on autopilot.
