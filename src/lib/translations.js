@@ -456,7 +456,7 @@ Merci de nous prévenir 24h à l'avance en cas d'annulation.
     },
     caps: {
       label: "יכולות",
-      title: "כל מה שהקבלה שלכם מטפלת בו. אוטומטי.",
+      title: "כל מה שהקבלה שלכם מטפלת בו — אוטומטי.",
       liveTitle: "טיפול בשיחות חי",
       liveDesc: "שיחות אמיתיות מטופלות בזמן אמת — בכל שלוש השפות, כל היום.",
       smsTitle: "SMS בזמן אמת לצוות ולמטופל",
