@@ -309,26 +309,6 @@ export default function HearYaelSection() {
             <AudioCard key={card.id} card={card} featuredLabel={t.hear.featured} />
           ))}
         </div>
-
-        <p style={{
-          fontFamily: "Inter, sans-serif",
-          fontWeight: 400,
-          fontStyle: "italic",
-          fontSize: "13px",
-          color: "#a59f97",
-          textAlign: "center",
-          marginTop: "32px",
-          lineHeight: 1.6,
-        }}>
-          {t.hear.footnote1}
-          <a
-            href="tel:+97293762131"
-            dir="ltr"
-            style={{ color: "#000000", textDecoration: "none", fontStyle: "normal", fontWeight: 500, display: "inline-block" }}
-          >
-            +972 93 762 131
-          </a>.
-        </p>
       </div>
 
       <style>{`
