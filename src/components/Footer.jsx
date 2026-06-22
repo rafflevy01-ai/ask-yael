@@ -52,14 +52,14 @@ export default function Footer() {
           }}>
             +972 53-338-2900
           </a>
-          <a href="mailto:AskYael@gmail.com" style={{
+          <a href="mailto:contact.askyael@gmail.com" style={{
             fontFamily: "Inter, sans-serif",
             fontWeight: 400,
             fontSize: "13px",
             color: "#555555",
             textDecoration: "none",
           }}>
-            AskYael@gmail.com
+            contact.askyael@gmail.com
           </a>
         </div>
 
