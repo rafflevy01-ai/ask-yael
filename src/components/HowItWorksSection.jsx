@@ -68,7 +68,7 @@ export default function HowItWorksSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} data-how-works style={{ padding: "80px 40px", backgroundColor: "#FFFFFF", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+    <section ref={sectionRef} id="how-it-works" data-how-works style={{ padding: "80px 40px", backgroundColor: "#FFFFFF", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
 
         {/* Header */}

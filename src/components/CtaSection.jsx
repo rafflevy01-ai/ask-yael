@@ -71,7 +71,9 @@ export default function CtaSection() {
           }}
         >
           <a
-            href="#book-demo"
+            href="https://calendly.com/rafflevy01/30min"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               fontFamily: "Inter, sans-serif",
               fontWeight: 500,

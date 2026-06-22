@@ -146,7 +146,7 @@ export default function HeroSection() {
             </p>
 
             <div className="hero-cta-row" style={{ display: "flex", gap: "12px" }}>
-              <a href="#book-demo" className="hero-btn-primary"
+              <a href="https://calendly.com/rafflevy01/30min" target="_blank" rel="noopener noreferrer" className="hero-btn-primary"
                 style={{
                   fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
                   color: "#000000", backgroundColor: "#FFFFFF", borderRadius: "999px",
@@ -212,7 +212,7 @@ export default function HeroSection() {
 
           {/* CTAs */}
           <div className="hero-cta-mobile-row">
-          <a href="#book-demo"
+          <a href="https://calendly.com/rafflevy01/30min" target="_blank" rel="noopener noreferrer"
             style={{
               fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px",
               color: "#000000", backgroundColor: "#FFFFFF", borderRadius: "999px",
