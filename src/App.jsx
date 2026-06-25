@@ -8,6 +8,7 @@ import { LanguageProvider } from '@/lib/LanguageContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
 import Navbar from '@/components/Navbar';
+import CallbackWidget from '@/components/CallbackWidget';
 import HeroSection from '@/components/HeroSection';
 import Home from '@/pages/Home';
 // Add page imports here
@@ -56,6 +57,7 @@ function App() {
             <ScrollToTop />
             <Navbar />
             <AuthenticatedApp />
+            <CallbackWidget />
           </Router>
           <Toaster />
         </QueryClientProvider>
