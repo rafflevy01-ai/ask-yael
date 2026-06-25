@@ -7,6 +7,22 @@ export default function CallbackWidget() {
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState(null); // null | "loading" | "success" | "error"
 
+  const resetForm = () => {
+    setName("");
+    setPhone("");
+    setStatus(null);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    resetForm();
+  };
+
+  const handleOpen = () => {
+    resetForm();
+    setOpen(true);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("loading");
@@ -28,7 +44,7 @@ export default function CallbackWidget() {
       {/* Trigger tab — fixed on the right edge, vertical */}
       {!open && (
         <button
-          onClick={() => setOpen(true)}
+          onClick={handleOpen}
           aria-label="Recevoir un appel de Yael"
           style={{
             position: "fixed",
@@ -78,7 +94,7 @@ export default function CallbackWidget() {
           }}
         >
           <button
-            onClick={() => setOpen(false)}
+            onClick={handleClose}
             aria-label="Fermer"
             style={{
               position: "absolute",
