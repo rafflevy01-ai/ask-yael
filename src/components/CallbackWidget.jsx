@@ -105,11 +105,11 @@ export default function CallbackWidget() {
                 color: "#FFFFFF",
                 border: "none",
                 borderRadius: "999px",
-                padding: "13px 28px",
+                padding: "9px 18px",
                 cursor: "pointer",
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 500,
-                fontSize: "14px",
+                fontSize: "13px",
                 whiteSpace: "nowrap",
                 transition: "opacity 0.15s ease",
               }}
