@@ -1,12 +1,42 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
-import LangDetectIOS from "@/components/capabilities/LangDetectIOS";
+import CallTopVisual from "@/components/capabilities/CallTopVisual";
 
 const CARD_META = [
-  { id: 1, featured: false, showLangDetect: true, audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/5600dd582_recording1.wav" },
-  { id: 2, featured: false, audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/b4c684b4f_recording2.wav" },
-  { id: 3, featured: false, audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/de02ab751_recording2copie.wav" },
-  { id: 4, featured: false },
+  {
+    id: 1,
+    featured: false,
+    audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/5600dd582_recording1.wav",
+    visual: {
+      frames: [
+        { label: "Language detected", title: "עברית", icon: "🇮🇱" },
+        { label: "Language detected", title: "Français", icon: "🇫🇷" },
+      ],
+    },
+  },
+  {
+    id: 2,
+    featured: false,
+    audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/b4c684b4f_recording2.wav",
+    visual: {
+      frames: [{ label: "Patient recognized", title: "David Cohen", icon: "👤" }],
+    },
+  },
+  {
+    id: 3,
+    featured: false,
+    audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/de02ab751_recording2copie.wav",
+    visual: {
+      frames: [{ label: "Appointment booked", title: "Thu · 9:00 AM", icon: "📅" }],
+    },
+  },
+  {
+    id: 4,
+    featured: false,
+    visual: {
+      frames: [{ label: "New patient registered", title: "Intake complete", icon: "📝" }],
+    },
+  },
 ];
 
 // ── Waveform ──────────────────────────────────────────────────────────────────
@@ -143,7 +173,7 @@ function AudioCard({ card, featuredLabel }) {
         </div>
       )}
 
-      {card.showLangDetect && <LangDetectIOS />}
+      {card.visual && <CallTopVisual {...card.visual} />}
 
       <div>
         <div style={{
