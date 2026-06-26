@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
+import HelloWords from "@/components/capabilities/HelloWords";
 
 const CARD_META = [
   {
@@ -161,6 +162,13 @@ function AudioCard({ card, featuredLabel }) {
           borderRadius: "9999px",
         }}>
           {featuredLabel}
+        </div>
+      )}
+
+      {/* Left visual */}
+      {card.id === 1 && (
+        <div className="hear-card-visual" style={{ flexShrink: 0 }}>
+          <HelloWords />
         </div>
       )}
 
