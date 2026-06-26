@@ -167,7 +167,7 @@ function AudioCard({ card, featuredLabel }) {
       <div>
         <div style={{
           fontFamily: "Inter, sans-serif",
-          fontWeight: 600,
+          fontWeight: 400,
           fontSize: "15px",
           color: "#000000",
           marginBottom: "4px",
