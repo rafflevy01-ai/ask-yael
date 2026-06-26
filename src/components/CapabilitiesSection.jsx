@@ -8,6 +8,7 @@ import MiniLanguageOrb from "@/components/capabilities/MiniLanguageOrb";
 import DeescalationTransfer from "@/components/capabilities/DeescalationTransfer";
 import OnlineStatusBadge from "@/components/capabilities/OnlineStatusBadge";
 import CardTopImage from "@/components/capabilities/CardTopImage";
+import LangDetectIOS from "@/components/capabilities/LangDetectIOS";
 import { useLanguage } from "@/lib/LanguageContext";
 
 const CARD_IMAGES = {
@@ -87,7 +88,7 @@ export default function CapabilitiesSection() {
             {/* Card: Automatic Language Detection */}
           <div className="caps-bento-card">
             <div className="caps-card-inner">
-              <CardTopImage src={CARD_IMAGES.language} alt={t.caps.langTitle} />
+              <LangDetectIOS />
               <h3 className="caps-card-title">{t.caps.langTitle}</h3>
               <p className="caps-card-desc">{t.caps.langDesc}</p>
               <div className="caps-card-visual" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "28px" }}>
