@@ -1,29 +1,79 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-// Apple-style vertical "Hello" word preloader. Greetings scroll up smoothly;
-// the word in the center is fully highlighted, the others fade out toward the
-// top and bottom — mimicking the iOS welcome / Words Preloader effect.
+// Apple-style vertical "Hello" word preloader. The whole strip glides upward
+// continuously; the word crossing the center is highlighted, the rest fade and
+// shrink toward the top and bottom — mimicking the iOS Words Preloader effect.
 
 const GREETINGS = [
   "Hola", "Olá", "Ciao", "Bonjour", "Hello",
   "Selam", "Привет", "Hej", "你好", "Hallo",
-  ":)Halo", "Merhaba", "Hujambo", "Xin chào", "नमस्ते",
+  "Halo", "Merhaba", "Hujambo", "Xin chào", "नमस्ते",
 ];
 
 const ROW_HEIGHT = 56; // px per word
-const VISIBLE = 5; // odd number — center row is highlighted
+const VISIBLE = 5; // odd — center row is highlighted
+const STEP_MS = 1600; // time to advance one word
 
 export default function HelloWords() {
-  const [index, setIndex] = useState(0);
+  const [progress, setProgress] = useState(0); // continuous, in "rows"
+  const rafRef = useRef();
+  const startRef = useRef();
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % GREETINGS.length);
-    }, 1400);
-    return () => clearInterval(interval);
+    const tick = (now) => {
+      if (startRef.current == null) startRef.current = now;
+      const elapsed = now - startRef.current;
+      setProgress(elapsed / STEP_MS);
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
   const half = Math.floor(VISIBLE / 2);
+  const base = Math.floor(progress);
+  const frac = progress - base; // 0..1 within current step
+
+  // Render a couple extra rows above/below so words enter/exit smoothly.
+  const rows = [];
+  for (let row = -1; row <= VISIBLE; row++) {
+    const offset = row - half; // logical slot relative to center
+    const wordIndex = (base + offset + GREETINGS.length * 4) % GREETINGS.length;
+
+    // Continuous distance from the center line (accounts for sub-row progress).
+    const dist = Math.abs(offset - frac + 0); // shifts as strip glides
+    const centerDist = Math.abs(offset - frac);
+
+    const opacity = Math.max(0, 1 - centerDist * 0.42);
+    const scale = Math.max(0.55, 1 - centerDist * 0.16);
+    const isCenter = centerDist < 0.5;
+
+    rows.push(
+      <div
+        key={`${row}-${wordIndex}`}
+        style={{
+          position: "absolute",
+          top: `${(row - frac) * ROW_HEIGHT}px`,
+          left: 0,
+          right: 0,
+          height: `${ROW_HEIGHT}px`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif",
+          fontWeight: isCenter ? 600 : 500,
+          fontSize: "30px",
+          letterSpacing: "-0.02em",
+          color: "#0D0D0D",
+          opacity,
+          transform: `scale(${scale})`,
+          willChange: "top, opacity, transform",
+        }}
+      >
+        {GREETINGS[wordIndex]}
+      </div>
+    );
+  }
 
   return (
     <div style={{
@@ -39,42 +89,7 @@ export default function HelloWords() {
       justifyContent: "center",
     }}>
       <div style={{ position: "relative", width: "100%", height: `${ROW_HEIGHT * VISIBLE}px` }}>
-        {Array.from({ length: VISIBLE }).map((_, row) => {
-          const offset = row - half; // -2 .. 0 .. +2
-          const wordIndex = (index + offset + GREETINGS.length * 2) % GREETINGS.length;
-          const distance = Math.abs(offset);
-          const isCenter = offset === 0;
-
-          // Fade + shrink the further a row is from center.
-          const opacity = isCenter ? 1 : distance === 1 ? 0.45 : 0.18;
-          const scale = isCenter ? 1 : distance === 1 ? 0.78 : 0.62;
-
-          return (
-            <div
-              key={`${row}-${wordIndex}`}
-              style={{
-                position: "absolute",
-                top: `${row * ROW_HEIGHT}px`,
-                left: 0,
-                right: 0,
-                height: `${ROW_HEIGHT}px`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif",
-                fontWeight: isCenter ? 600 : 500,
-                fontSize: "30px",
-                letterSpacing: "-0.02em",
-                color: isCenter ? "#0D0D0D" : "#1d1d1f",
-                opacity,
-                transform: `scale(${scale})`,
-                transition: "opacity 0.5s ease, transform 0.5s ease, color 0.5s ease",
-              }}
-            >
-              {GREETINGS[wordIndex].replace(":)", "")}
-            </div>
-          );
-        })}
+        {rows}
       </div>
 
       {/* Top & bottom fade masks for the iOS depth look */}
