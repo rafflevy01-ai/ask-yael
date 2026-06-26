@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
+import LangDetectIOS from "@/components/capabilities/LangDetectIOS";
 
 const CARD_META = [
-  { id: 1, featured: false, audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/5600dd582_recording1.wav" },
+  { id: 1, featured: false, showLangDetect: true, audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/5600dd582_recording1.wav" },
   { id: 2, featured: false, audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/b4c684b4f_recording2.wav" },
   { id: 3, featured: false, audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/de02ab751_recording2copie.wav" },
   { id: 4, featured: false },
@@ -141,6 +142,8 @@ function AudioCard({ card, featuredLabel }) {
           {featuredLabel}
         </div>
       )}
+
+      {card.showLangDetect && <LangDetectIOS />}
 
       <div>
         <div style={{
