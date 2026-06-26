@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
+import HelloCloud from "@/components/capabilities/HelloCloud";
 
 const CARD_META = [
   {
@@ -134,14 +135,17 @@ function AudioCard({ card, featuredLabel }) {
       borderRadius: "16px",
       padding: "24px",
       display: "flex",
-      flexDirection: "column",
-      gap: "14px",
+      flexDirection: "row",
+      alignItems: "stretch",
+      gap: "24px",
       boxShadow: card.featured
         ? "0 4px 24px rgba(0,0,0,0.08), 0 0 0 1px #000000"
         : "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.05) 0px 4px 12px 0px",
       border: card.featured ? "1px solid #000000" : "none",
       position: "relative",
-    }}>
+    }}
+      className="hear-card"
+    >
       {card.featured && (
         <div style={{
           position: "absolute",
@@ -161,6 +165,13 @@ function AudioCard({ card, featuredLabel }) {
         </div>
       )}
 
+      {/* Left visual */}
+      <div className="hear-card-visual" style={{ flexShrink: 0 }}>
+        <HelloCloud />
+      </div>
+
+      {/* Right content */}
+      <div className="hear-card-body" style={{ flex: 1, display: "flex", flexDirection: "column", gap: "14px", minWidth: 0 }}>
       <div>
         <div style={{
           fontFamily: "Inter, sans-serif",
@@ -272,6 +283,7 @@ function AudioCard({ card, featuredLabel }) {
           </div>
         </div>
       </div>
+      </div>
     </div>
   );
 }
@@ -318,8 +330,8 @@ export default function HearYaelSection() {
         </div>
 
         <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
+          display: "flex",
+          flexDirection: "column",
           gap: "16px",
         }}
           className="hear-yael-grid"
@@ -331,9 +343,16 @@ export default function HearYaelSection() {
       </div>
 
       <style>{`
+        .hear-card-visual {
+          width: 220px;
+        }
         @media (max-width: 640px) {
-          .hear-yael-grid {
-            grid-template-columns: 1fr !important;
+          .hear-card {
+            flex-direction: column !important;
+            gap: 16px !important;
+          }
+          .hear-card-visual {
+            width: 100% !important;
           }
         }
         @media (max-width: 768px) {
