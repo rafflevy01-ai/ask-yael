@@ -166,9 +166,11 @@ function AudioCard({ card, featuredLabel }) {
       )}
 
       {/* Left visual */}
-      <div className="hear-card-visual" style={{ flexShrink: 0 }}>
-        <HelloCloud />
-      </div>
+      {card.id === 1 && (
+        <div className="hear-card-visual" style={{ flexShrink: 0 }}>
+          <HelloCloud />
+        </div>
+      )}
 
       {/* Right content */}
       <div className="hear-card-body" style={{ flex: 1, display: "flex", flexDirection: "column", gap: "14px", minWidth: 0 }}>
