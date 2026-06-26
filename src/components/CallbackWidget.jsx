@@ -1,11 +1,28 @@
-import React, { useState } from "react";
-import { Phone, X } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
+import { Phone, X, MessageSquare, ChevronDown } from "lucide-react";
+
+const LANGUAGES = [
+  { code: "fr", label: "Français", flag: "🇫🇷" },
+  { code: "he", label: "עברית", flag: "🇮🇱" },
+  { code: "en", label: "English", flag: "🇬🇧" },
+];
 
 export default function CallbackWidget() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState(null); // null | "loading" | "success" | "error"
+  const [lang, setLang] = useState("fr");
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef(null);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (langRef.current && !langRef.current.contains(e.target)) setLangOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   const resetForm = () => {
     setName("");
@@ -30,7 +47,7 @@ export default function CallbackWidget() {
       const res = await fetch("https://flow.automationraff.com/webhook/demo-callback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone }),
+        body: JSON.stringify({ name, phone, language: lang }),
       });
       if (!res.ok) throw new Error("Request failed");
       setStatus("success");
@@ -38,6 +55,8 @@ export default function CallbackWidget() {
       setStatus("error");
     }
   };
+
+  const activeLang = LANGUAGES.find((l) => l.code === lang) || LANGUAGES[0];
 
   return (
     <>
@@ -51,15 +70,15 @@ export default function CallbackWidget() {
             right: "20px",
             zIndex: 9998,
             background: "#FFFFFF",
-            borderRadius: "20px",
-            padding: "18px 20px",
+            borderRadius: "22px",
+            padding: "20px",
             boxShadow: "0 12px 40px rgba(0,0,0,0.16)",
             border: "1px solid rgba(0,0,0,0.05)",
             fontFamily: "Inter, sans-serif",
             maxWidth: "calc(100vw - 40px)",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
             <span style={{ position: "relative", display: "flex", width: "10px", height: "10px" }}>
               <span style={{
                 position: "absolute", inset: 0, borderRadius: "50%",
@@ -67,36 +86,108 @@ export default function CallbackWidget() {
               }} />
               <span style={{ position: "relative", width: "10px", height: "10px", borderRadius: "50%", background: "#22c55e" }} />
             </span>
-            <span style={{ fontWeight: 500, fontSize: "16px", color: "#0D0D0D" }}>
+            <span style={{ fontWeight: 500, fontSize: "17px", color: "#0D0D0D" }}>
               Listen to Yael live
             </span>
           </div>
 
-          <button
-            onClick={handleOpen}
-            aria-label="Listen to Yael live"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "10px",
-              width: "100%",
-              background: "#0D0D0D",
-              color: "#FFFFFF",
-              border: "none",
-              borderRadius: "9999px",
-              padding: "13px 22px",
-              cursor: "pointer",
-              fontFamily: "Inter, sans-serif",
-              fontWeight: 500,
-              fontSize: "15px",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-          >
-            <Phone size={17} />
-            Ask anything
-          </button>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            {/* Ask anything — main call button */}
+            <button
+              onClick={handleOpen}
+              aria-label="Listen to Yael live"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "10px",
+                flex: 1,
+                background: "#3a3a3a",
+                color: "#FFFFFF",
+                border: "none",
+                borderRadius: "12px",
+                padding: "14px 22px",
+                cursor: "pointer",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: 500,
+                fontSize: "16px",
+                whiteSpace: "nowrap",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#0D0D0D")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#3a3a3a")}
+            >
+              <Phone size={18} />
+              Ask anything
+            </button>
+
+            {/* Chat icon */}
+            <button
+              onClick={handleOpen}
+              aria-label="Chat"
+              style={iconBtnStyle}
+              onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#0D0D0D")}
+              onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#E5E5E5")}
+            >
+              <MessageSquare size={18} fill="#0D0D0D" stroke="#0D0D0D" />
+            </button>
+
+            {/* Language selector */}
+            <div ref={langRef} style={{ position: "relative" }}>
+              <button
+                onClick={() => setLangOpen((o) => !o)}
+                aria-label="Choose language"
+                style={{ ...iconBtnStyle, width: "auto", padding: "0 12px", gap: "6px" }}
+                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#0D0D0D")}
+                onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#E5E5E5")}
+              >
+                <span style={{ fontSize: "22px", lineHeight: 1 }}>{activeLang.flag}</span>
+                <ChevronDown size={15} color="#0D0D0D" style={{
+                  transform: langOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s ease",
+                }} />
+              </button>
+
+              {langOpen && (
+                <div style={{
+                  position: "absolute",
+                  bottom: "calc(100% + 8px)",
+                  right: 0,
+                  background: "#FFFFFF",
+                  borderRadius: "12px",
+                  boxShadow: "0 8px 28px rgba(0,0,0,0.16)",
+                  border: "1px solid rgba(0,0,0,0.06)",
+                  padding: "6px",
+                  minWidth: "150px",
+                }}>
+                  {LANGUAGES.map((l) => (
+                    <button
+                      key={l.code}
+                      onClick={() => { setLang(l.code); setLangOpen(false); }}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                        width: "100%",
+                        background: l.code === lang ? "#F5F5F5" : "transparent",
+                        border: "none",
+                        borderRadius: "8px",
+                        padding: "9px 12px",
+                        cursor: "pointer",
+                        fontFamily: "Inter, sans-serif",
+                        fontSize: "14px",
+                        color: "#0D0D0D",
+                        textAlign: "left",
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = "#F5F5F5")}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = l.code === lang ? "#F5F5F5" : "transparent")}
+                    >
+                      <span style={{ fontSize: "20px", lineHeight: 1 }}>{l.flag}</span>
+                      {l.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
 
           <style>{`
             @keyframes cb-ping { 75%, 100% { transform: scale(2.2); opacity: 0; } }
@@ -224,6 +315,20 @@ export default function CallbackWidget() {
     </>
   );
 }
+
+const iconBtnStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "48px",
+  height: "48px",
+  flexShrink: 0,
+  background: "#FFFFFF",
+  border: "1px solid #E5E5E5",
+  borderRadius: "12px",
+  cursor: "pointer",
+  transition: "border-color 0.15s ease",
+};
 
 const inputStyle = {
   width: "100%",
