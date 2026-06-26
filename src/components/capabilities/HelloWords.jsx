@@ -10,7 +10,7 @@ const GREETINGS = [
   "Halo", "Merhaba", "Hujambo", "Xin chào", "नमस्ते",
 ];
 
-const ROW_HEIGHT = 56; // px per word
+const ROW_HEIGHT = 38; // px per word
 const VISIBLE = 5; // odd — center row is highlighted
 const STEP_MS = 1600; // time to advance one word
 
@@ -62,7 +62,7 @@ export default function HelloWords() {
           justifyContent: "center",
           fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif",
           fontWeight: isCenter ? 600 : 500,
-          fontSize: "30px",
+          fontSize: "20px",
           letterSpacing: "-0.02em",
           color: "#0D0D0D",
           opacity,

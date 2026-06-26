@@ -346,7 +346,7 @@ export default function HearYaelSection() {
 
       <style>{`
         .hear-card-visual {
-          width: 220px;
+          width: 150px;
         }
         @media (max-width: 640px) {
           .hear-card {
