@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import HelloWords from "@/components/capabilities/HelloWords";
+import PatientRecognized from "@/components/capabilities/PatientRecognized";
 
 const CARD_META = [
   {
@@ -169,6 +170,11 @@ function AudioCard({ card, featuredLabel }) {
       {card.id === 1 && (
         <div className="hear-card-visual" style={{ flexShrink: 0 }}>
           <HelloWords />
+        </div>
+      )}
+      {card.id === 2 && (
+        <div className="hear-card-visual" style={{ flexShrink: 0 }}>
+          <PatientRecognized />
         </div>
       )}
 
