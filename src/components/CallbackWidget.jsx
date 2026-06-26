@@ -41,36 +41,67 @@ export default function CallbackWidget() {
 
   return (
     <>
-      {/* Trigger tab — fixed on the right edge, vertical */}
+      {/* Persistent ElevenLabs-style widget — fixed bottom-right, always visible */}
       {!open && (
-        <button
-          onClick={handleOpen}
-          aria-label="Recevoir un appel de Yael"
+        <div
+          dir="ltr"
           style={{
             position: "fixed",
-            top: "50%",
-            right: 0,
-            transform: "translateY(-50%)",
+            bottom: "20px",
+            right: "20px",
             zIndex: 9998,
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            background: "#0D0D0D",
-            color: "#FFFFFF",
-            border: "none",
-            borderRadius: "12px 0 0 12px",
-            padding: "16px 12px",
-            cursor: "pointer",
+            background: "#FFFFFF",
+            borderRadius: "20px",
+            padding: "18px 20px",
+            boxShadow: "0 12px 40px rgba(0,0,0,0.16)",
+            border: "1px solid rgba(0,0,0,0.05)",
             fontFamily: "Inter, sans-serif",
-            fontWeight: 500,
-            fontSize: "13px",
-            writingMode: "vertical-rl",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.18)",
+            maxWidth: "calc(100vw - 40px)",
           }}
         >
-          <Phone size={16} style={{ transform: "rotate(90deg)" }} />
-          Recevoir un appel
-        </button>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" }}>
+            <span style={{ position: "relative", display: "flex", width: "10px", height: "10px" }}>
+              <span style={{
+                position: "absolute", inset: 0, borderRadius: "50%",
+                background: "#22c55e", animation: "cb-ping 1.6s cubic-bezier(0,0,0.2,1) infinite",
+              }} />
+              <span style={{ position: "relative", width: "10px", height: "10px", borderRadius: "50%", background: "#22c55e" }} />
+            </span>
+            <span style={{ fontWeight: 500, fontSize: "16px", color: "#0D0D0D" }}>
+              Listen to Yael live
+            </span>
+          </div>
+
+          <button
+            onClick={handleOpen}
+            aria-label="Listen to Yael live"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "10px",
+              width: "100%",
+              background: "#0D0D0D",
+              color: "#FFFFFF",
+              border: "none",
+              borderRadius: "9999px",
+              padding: "13px 22px",
+              cursor: "pointer",
+              fontFamily: "Inter, sans-serif",
+              fontWeight: 500,
+              fontSize: "15px",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+          >
+            <Phone size={17} />
+            Ask anything
+          </button>
+
+          <style>{`
+            @keyframes cb-ping { 75%, 100% { transform: scale(2.2); opacity: 0; } }
+          `}</style>
+        </div>
       )}
 
       {/* Panel */}
@@ -79,9 +110,8 @@ export default function CallbackWidget() {
           dir="ltr"
           style={{
             position: "fixed",
-            top: "50%",
+            bottom: "20px",
             right: "20px",
-            transform: "translateY(-50%)",
             zIndex: 9999,
             width: "300px",
             maxWidth: "calc(100vw - 40px)",
