@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Phone, X, MessageSquare, ChevronDown } from "lucide-react";
+import { Phone, X, ChevronDown } from "lucide-react";
 
 const LANGUAGES = [
-  { code: "fr", label: "Français", flag: "🇫🇷" },
   { code: "he", label: "עברית", flag: "🇮🇱" },
   { code: "en", label: "English", flag: "🇬🇧" },
 ];
@@ -12,7 +11,7 @@ export default function CallbackWidget() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState(null); // null | "loading" | "success" | "error"
-  const [lang, setLang] = useState("fr");
+  const [lang, setLang] = useState("he");
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef(null);
 
@@ -70,28 +69,28 @@ export default function CallbackWidget() {
             right: "20px",
             zIndex: 9998,
             background: "#FFFFFF",
-            borderRadius: "22px",
-            padding: "20px",
+            borderRadius: "18px",
+            padding: "16px",
             boxShadow: "0 12px 40px rgba(0,0,0,0.16)",
             border: "1px solid rgba(0,0,0,0.05)",
             fontFamily: "Inter, sans-serif",
             maxWidth: "calc(100vw - 40px)",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
-            <span style={{ position: "relative", display: "flex", width: "10px", height: "10px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
+            <span style={{ position: "relative", display: "flex", width: "8px", height: "8px" }}>
               <span style={{
                 position: "absolute", inset: 0, borderRadius: "50%",
                 background: "#22c55e", animation: "cb-ping 1.6s cubic-bezier(0,0,0.2,1) infinite",
               }} />
-              <span style={{ position: "relative", width: "10px", height: "10px", borderRadius: "50%", background: "#22c55e" }} />
+              <span style={{ position: "relative", width: "8px", height: "8px", borderRadius: "50%", background: "#22c55e" }} />
             </span>
-            <span style={{ fontWeight: 500, fontSize: "17px", color: "#0D0D0D" }}>
+            <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px", color: "#0D0D0D", letterSpacing: "-0.01em" }}>
               Listen to Yael live
             </span>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             {/* Ask anything — main call button */}
             <button
               onClick={handleOpen}
@@ -100,35 +99,26 @@ export default function CallbackWidget() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: "10px",
+                gap: "8px",
                 flex: 1,
-                background: "#3a3a3a",
+                background: "#0D0D0D",
                 color: "#FFFFFF",
                 border: "none",
-                borderRadius: "12px",
-                padding: "14px 22px",
+                borderRadius: "10px",
+                padding: "10px 18px",
                 cursor: "pointer",
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 500,
-                fontSize: "16px",
+                fontSize: "13px",
+                letterSpacing: "-0.01em",
                 whiteSpace: "nowrap",
+                transition: "opacity 0.15s ease",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#0D0D0D")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#3a3a3a")}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
             >
-              <Phone size={18} />
+              <Phone size={15} />
               Ask anything
-            </button>
-
-            {/* Chat icon */}
-            <button
-              onClick={handleOpen}
-              aria-label="Chat"
-              style={iconBtnStyle}
-              onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#0D0D0D")}
-              onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#E5E5E5")}
-            >
-              <MessageSquare size={18} fill="#0D0D0D" stroke="#0D0D0D" />
             </button>
 
             {/* Language selector */}
@@ -136,12 +126,12 @@ export default function CallbackWidget() {
               <button
                 onClick={() => setLangOpen((o) => !o)}
                 aria-label="Choose language"
-                style={{ ...iconBtnStyle, width: "auto", padding: "0 12px", gap: "6px" }}
+                style={{ ...iconBtnStyle, width: "auto", padding: "0 10px", gap: "5px" }}
                 onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#0D0D0D")}
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#E5E5E5")}
               >
-                <span style={{ fontSize: "22px", lineHeight: 1 }}>{activeLang.flag}</span>
-                <ChevronDown size={15} color="#0D0D0D" style={{
+                <span style={{ fontSize: "18px", lineHeight: 1 }}>{activeLang.flag}</span>
+                <ChevronDown size={13} color="#0D0D0D" style={{
                   transform: langOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s ease",
                 }} />
               </button>
@@ -155,8 +145,8 @@ export default function CallbackWidget() {
                   borderRadius: "12px",
                   boxShadow: "0 8px 28px rgba(0,0,0,0.16)",
                   border: "1px solid rgba(0,0,0,0.06)",
-                  padding: "6px",
-                  minWidth: "150px",
+                  padding: "5px",
+                  minWidth: "138px",
                 }}>
                   {LANGUAGES.map((l) => (
                     <button
@@ -165,22 +155,22 @@ export default function CallbackWidget() {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        gap: "10px",
+                        gap: "9px",
                         width: "100%",
                         background: l.code === lang ? "#F5F5F5" : "transparent",
                         border: "none",
-                        borderRadius: "8px",
-                        padding: "9px 12px",
+                        borderRadius: "7px",
+                        padding: "8px 10px",
                         cursor: "pointer",
                         fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
+                        fontSize: "13px",
                         color: "#0D0D0D",
                         textAlign: "left",
                       }}
                       onMouseEnter={(e) => (e.currentTarget.style.background = "#F5F5F5")}
                       onMouseLeave={(e) => (e.currentTarget.style.background = l.code === lang ? "#F5F5F5" : "transparent")}
                     >
-                      <span style={{ fontSize: "20px", lineHeight: 1 }}>{l.flag}</span>
+                      <span style={{ fontSize: "17px", lineHeight: 1 }}>{l.flag}</span>
                       {l.label}
                     </button>
                   ))}
@@ -320,12 +310,12 @@ const iconBtnStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  width: "48px",
-  height: "48px",
+  width: "38px",
+  height: "38px",
   flexShrink: 0,
   background: "#FFFFFF",
   border: "1px solid #E5E5E5",
-  borderRadius: "12px",
+  borderRadius: "10px",
   cursor: "pointer",
   transition: "border-color 0.15s ease",
 };
