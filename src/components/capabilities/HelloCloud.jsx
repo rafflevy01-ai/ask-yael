@@ -1,39 +1,28 @@
 import React, { useState, useEffect } from "react";
 
-// Multilingual "Hello" word-cloud. The center word cycles through every
-// greeting — each language takes the spotlight in turn, while the others
-// float in the surrounding positions.
+// Multilingual "Hello" cloud. Every greeting orbits gently around the center.
+// The "spotlight" travels from word to word: the highlighted greeting eases
+// toward the middle and grows, while the previous one eases back into orbit —
+// so the motion is continuous and connected, not a hard swap.
 
 const GREETINGS = [
   "Hello", "你好", "Bonjour", "Xin chào", "Hola",
-  "Hujambo", "Olá", "Ciao", "Merhaba", "Hallo", "Halo",
+  "Hujambo", "Olá", "Ciao", "Merhaba", "Hallo",
 ];
 
-const POSITIONS = [
-  { top: "14%", left: "30%", size: 15 },
-  { top: "20%", left: "62%", size: 17 },
-  { top: "32%", left: "74%", size: 14 },
-  { top: "34%", left: "42%", size: 14 },
-  { top: "44%", left: "16%", size: 14 },
-  { top: "58%", left: "76%", size: 14 },
-  { top: "68%", left: "40%", size: 15 },
-  { top: "76%", left: "64%", size: 14 },
-  { top: "80%", left: "20%", size: 14 },
-  { top: "86%", left: "46%", size: 14 },
-];
+// Evenly distribute the words on an ellipse around the center.
+const RADIUS_X = 38; // percent
+const RADIUS_Y = 34; // percent
 
 export default function HelloCloud() {
-  const [centerIndex, setCenterIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCenterIndex((prev) => (prev + 1) % GREETINGS.length);
-    }, 2000);
+      setActiveIndex((prev) => (prev + 1) % GREETINGS.length);
+    }, 1800);
     return () => clearInterval(interval);
   }, []);
-
-  // Words other than the current center one, mapped onto scatter positions.
-  const others = GREETINGS.filter((_, i) => i !== centerIndex);
 
   return (
     <div style={{
@@ -45,53 +34,56 @@ export default function HelloCloud() {
       borderRadius: "14px",
       overflow: "hidden",
     }}>
-      {others.map((word, i) => {
-        const pos = POSITIONS[i % POSITIONS.length];
-        return (
-          <span key={word} style={{
-            position: "absolute",
-            top: pos.top,
-            left: pos.left,
-            transform: "translate(-50%, -50%)",
-            fontFamily: "Inter, sans-serif",
-            fontWeight: 400,
-            fontSize: `${pos.size}px`,
-            color: "#C8C4BD",
-            whiteSpace: "nowrap",
-            animation: `hc-float ${3 + (i % 3)}s ease-in-out ${i * 0.2}s infinite`,
-            transition: "all 0.6s ease",
-          }}>
-            {word}
-          </span>
-        );
-      })}
-      <span
-        key={GREETINGS[centerIndex]}
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          fontFamily: "Inter, sans-serif",
-          fontWeight: 600,
-          fontSize: "clamp(28px, 6vw, 40px)",
-          color: "#0D0D0D",
-          letterSpacing: "-0.03em",
-          whiteSpace: "nowrap",
-          animation: "hc-pop 0.5s ease",
-        }}
-      >
-        {GREETINGS[centerIndex]}
-      </span>
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        animation: "hc-orbit 32s linear infinite",
+      }}>
+        {GREETINGS.map((word, i) => {
+          const isActive = i === activeIndex;
+          const angle = (i / GREETINGS.length) * Math.PI * 2;
+          // Orbit position (kept for non-active words).
+          const x = 50 + Math.cos(angle) * RADIUS_X;
+          const y = 50 + Math.sin(angle) * RADIUS_Y;
+          const left = isActive ? 50 : x;
+          const top = isActive ? 50 : y;
+
+          return (
+            <span
+              key={word}
+              style={{
+                position: "absolute",
+                top: `${top}%`,
+                left: `${left}%`,
+                transform: isActive
+                  ? "translate(-50%, -50%) scale(1)"
+                  : "translate(-50%, -50%) scale(1)",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: isActive ? 600 : 400,
+                fontSize: isActive ? "clamp(26px, 6vw, 38px)" : "15px",
+                color: isActive ? "#0D0D0D" : "#C8C4BD",
+                letterSpacing: isActive ? "-0.03em" : "0",
+                whiteSpace: "nowrap",
+                // Counter-rotate so the words stay upright while the orbit spins.
+                animation: isActive ? "none" : "hc-counter 32s linear infinite",
+                transition: "top 0.9s cubic-bezier(0.4,0,0.2,1), left 0.9s cubic-bezier(0.4,0,0.2,1), font-size 0.9s ease, color 0.9s ease, font-weight 0.9s ease",
+                zIndex: isActive ? 2 : 1,
+              }}
+            >
+              {word}
+            </span>
+          );
+        })}
+      </div>
 
       <style>{`
-        @keyframes hc-pop {
-          0% { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
-          100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        @keyframes hc-orbit {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
         }
-        @keyframes hc-float {
-          0%, 100% { transform: translate(-50%, -50%); }
-          50% { transform: translate(-50%, -58%); }
+        @keyframes hc-counter {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to   { transform: translate(-50%, -50%) rotate(-360deg); }
         }
       `}</style>
     </div>
