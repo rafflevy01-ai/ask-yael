@@ -96,21 +96,20 @@ export default function CallbackWidget() {
               onClick={handleOpen}
               aria-label="Listen to Yael live"
               style={{
-                display: "flex",
+                display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
                 gap: "8px",
                 flex: 1,
-                background: "#0D0D0D",
-                color: "#FFFFFF",
+                background: "#FFFFFF",
+                color: "#000000",
                 border: "none",
-                borderRadius: "10px",
-                padding: "10px 18px",
+                borderRadius: "999px",
+                padding: "13px 28px",
                 cursor: "pointer",
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 500,
-                fontSize: "13px",
-                letterSpacing: "-0.01em",
+                fontSize: "14px",
                 whiteSpace: "nowrap",
                 transition: "opacity 0.15s ease",
               }}
