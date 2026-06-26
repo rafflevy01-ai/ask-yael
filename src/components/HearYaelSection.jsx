@@ -7,35 +7,24 @@ const CARD_META = [
     id: 1,
     featured: false,
     audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/5600dd582_recording1.wav",
-    visual: {
-      frames: [
-        { label: "Language detected", title: "עברית", icon: "🇮🇱" },
-        { label: "Language detected", title: "Français", icon: "🇫🇷" },
-      ],
-    },
+    visual: { variant: "language" },
   },
   {
     id: 2,
     featured: false,
     audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/b4c684b4f_recording2.wav",
-    visual: {
-      frames: [{ label: "Patient recognized", title: "David Cohen", icon: "👤" }],
-    },
+    visual: { variant: "recognition" },
   },
   {
     id: 3,
     featured: false,
     audioUrl: "https://media.base44.com/files/public/6a2ab0818c0d050752d1521b/de02ab751_recording2copie.wav",
-    visual: {
-      frames: [{ label: "Appointment booked", title: "Thu · 9:00 AM", icon: "📅" }],
-    },
+    visual: { variant: "booking" },
   },
   {
     id: 4,
     featured: false,
-    visual: {
-      frames: [{ label: "New patient registered", title: "Intake complete", icon: "📝" }],
-    },
+    visual: { variant: "intake" },
   },
 ];
 
