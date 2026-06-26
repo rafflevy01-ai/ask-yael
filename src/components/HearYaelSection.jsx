@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
-import CallTopVisual from "@/components/capabilities/CallTopVisual";
 
 const CARD_META = [
   {
@@ -161,8 +160,6 @@ function AudioCard({ card, featuredLabel }) {
           {featuredLabel}
         </div>
       )}
-
-      {card.visual && <CallTopVisual {...card.visual} />}
 
       <div>
         <div style={{
