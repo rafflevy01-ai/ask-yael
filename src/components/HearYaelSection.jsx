@@ -1,41 +1,230 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 
+
 const CARD_META = [
-  { id: 1 },
-  { id: 2 },
-  { id: 3 },
-  { id: 4 },
+  { id: 1, featured: false },
+  { id: 2, featured: false },
+  { id: 3, featured: false },
+  { id: 4, featured: false },
 ];
 
-function FeatureCard({ card }) {
+// ── Waveform ──────────────────────────────────────────────────────────────────
+
+function WaveformPlaceholder({ featured, playing }) {
+  const bars = [
+    { height: 18, duration: "0.7s", delay: "0s" },
+    { height: 32, duration: "0.9s", delay: "0.15s" },
+    { height: 24, duration: "0.6s", delay: "0.05s" },
+    { height: 40, duration: "1.0s", delay: "0.25s" },
+    { height: 28, duration: "0.75s", delay: "0.1s" },
+    { height: 20, duration: "0.85s", delay: "0.2s" },
+    { height: 36, duration: "0.65s", delay: "0.3s" },
+    { height: 22, duration: "0.95s", delay: "0.08s" },
+    { height: 30, duration: "0.8s", delay: "0.18s" },
+    { height: 16, duration: "0.7s", delay: "0.35s" },
+    { height: 38, duration: "0.9s", delay: "0.12s" },
+    { height: 26, duration: "0.6s", delay: "0.28s" },
+  ];
+
+  return (
+    <div style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "3px",
+      height: "52px",
+      background: featured ? "#f9f9f9" : "#f5f5f5",
+      borderRadius: "10px",
+      padding: "0 16px",
+    }}>
+      {bars.map((bar, i) => (
+        <div
+          key={i}
+          style={{
+            width: "3px",
+            height: playing ? `${bar.height}px` : "6px",
+            borderRadius: "9999px",
+            background: playing ? "#000000" : (featured ? "#c0c0c0" : "#e0e0e0"),
+            animation: playing ? `waveform-pulse ${bar.duration} ${bar.delay} ease-in-out infinite alternate` : "none",
+            transition: "height 0.3s ease, background 0.3s ease",
+          }}
+        />
+      ))}
+      <style>{`
+        @keyframes waveform-pulse {
+          from { transform: scaleY(0.3); opacity: 0.5; }
+          to   { transform: scaleY(1);   opacity: 1; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function AudioCard({ card, featuredLabel }) {
+  const [playing, setPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration] = useState(0);
+
+  const handlePlayPause = () => {
+    setPlaying((p) => !p);
+  };
+
+  const formatTime = (s) => {
+    if (!s || isNaN(s)) return "0:00";
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec.toString().padStart(2, "0")}`;
+  };
+
+  const progress = duration ? currentTime / duration : 0;
+
   return (
     <div style={{
       background: "#ffffff",
       borderRadius: "16px",
-      padding: "28px",
+      padding: "24px",
       display: "flex",
       flexDirection: "column",
-      gap: "10px",
-      boxShadow: "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.05) 0px 4px 12px 0px",
-    }}>
-      <div style={{
-        fontFamily: "Inter, sans-serif",
-        fontWeight: 500,
-        fontSize: "16px",
-        color: "#000000",
-        letterSpacing: "-0.01em",
-      }}>
-        {card.title}
+      alignItems: "stretch",
+      gap: "20px",
+      boxShadow: card.featured
+        ? "0 4px 24px rgba(0,0,0,0.08), 0 0 0 1px #000000"
+        : "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.05) 0px 4px 12px 0px",
+      border: card.featured ? "1px solid #000000" : "none",
+      position: "relative",
+    }}
+      className="hear-card"
+    >
+      {card.featured && (
+        <div style={{
+          position: "absolute",
+          top: "-10px",
+          left: "20px",
+          background: "#000000",
+          color: "#ffffff",
+          fontFamily: "Inter, sans-serif",
+          fontWeight: 500,
+          fontSize: "10px",
+          textTransform: "uppercase",
+          letterSpacing: "0.1em",
+          padding: "3px 10px",
+          borderRadius: "9999px",
+        }}>
+          {featuredLabel}
+        </div>
+      )}
+
+      {/* Content */}
+      <div className="hear-card-body" style={{ flex: 1, display: "flex", flexDirection: "column", gap: "14px", minWidth: 0 }}>
+      <div>
+        <div style={{
+          fontFamily: "Inter, sans-serif",
+          fontWeight: 400,
+          fontSize: "15px",
+          color: "#000000",
+          marginBottom: "4px",
+        }}>
+          {card.title}
+        </div>
+        <div style={{
+          fontFamily: "Inter, sans-serif",
+          fontStyle: "italic",
+          fontWeight: 400,
+          fontSize: "13px",
+          color: "#a59f97",
+          lineHeight: 1.5,
+        }}>
+          {card.description}
+        </div>
       </div>
-      <div style={{
-        fontFamily: "Inter, sans-serif",
-        fontWeight: 400,
-        fontSize: "14px",
-        color: "#777169",
-        lineHeight: 1.6,
-      }}>
-        {card.description}
+
+      {/* Player row */}
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <button
+          onClick={handlePlayPause}
+          style={{
+            width: "36px",
+            height: "36px",
+            borderRadius: "9999px",
+            background: "#000000",
+            border: "none",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+            transition: "opacity 0.15s ease",
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
+          onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+        >
+          {playing ? (
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="white">
+              <rect x="1.5" y="1" width="3.5" height="10" rx="1" />
+              <rect x="7" y="1" width="3.5" height="10" rx="1" />
+            </svg>
+          ) : (
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="white" style={{ marginLeft: "2px" }}>
+              <polygon points="2,1 11,6 2,11" />
+            </svg>
+          )}
+        </button>
+
+        <div style={{ flex: 1 }}>
+          <WaveformPlaceholder featured={card.featured} playing={playing} />
+        </div>
+      </div>
+
+      {/* Seek bar + controls */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+        <div
+          style={{
+            height: "3px",
+            background: "#e5e5e5",
+            borderRadius: "9999px",
+            cursor: "default",
+            position: "relative",
+          }}
+        >
+          <div style={{
+            width: `${progress * 100}%`,
+            height: "100%",
+            background: "#000000",
+            borderRadius: "9999px",
+            transition: "width 0.1s linear",
+          }} />
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "11px", color: "#a59f97" }}>
+            {formatTime(currentTime)}{duration ? ` / ${formatTime(duration)}` : ""}
+          </span>
+          <div style={{ display: "flex", gap: "8px" }}>
+            <button
+              style={{ background: "none", border: "none", cursor: "pointer", padding: "2px", display: "flex", alignItems: "center", opacity: 0.3 }}
+              title="Back 10s"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#777169" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="1 4 1 10 7 10" />
+                <path d="M3.51 15a9 9 0 1 0 .49-4" />
+                <text x="7" y="15" fontSize="7" fill="#777169" stroke="none" fontFamily="Inter" fontWeight="500">10</text>
+              </svg>
+            </button>
+            <button
+              style={{ background: "none", border: "none", cursor: "pointer", padding: "2px", display: "flex", alignItems: "center", opacity: 0.3 }}
+              title="Forward 10s"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#777169" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="23 4 23 10 17 10" />
+                <path d="M20.49 15a9 9 0 1 1-.49-4" />
+                <text x="7" y="15" fontSize="7" fill="#777169" stroke="none" fontFamily="Inter" fontWeight="500">10</text>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   );
@@ -90,7 +279,7 @@ export default function HearYaelSection() {
           className="hear-yael-grid"
         >
           {cards.map((card) => (
-            <FeatureCard key={card.id} card={card} />
+            <AudioCard key={card.id} card={card} featuredLabel={t.hear.featured} />
           ))}
         </div>
       </div>
