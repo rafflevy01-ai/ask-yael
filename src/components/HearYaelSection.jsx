@@ -187,8 +187,17 @@ function AudioCard({ card, featuredLabel }) {
       {card.id === 3 && (
         <div className="hear-card-visual" style={{ flexShrink: 0, borderRadius: "12px", overflow: "hidden", background: "#eceef0", aspectRatio: "16 / 9" }}>
           <img
-            src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/4861c1a2c_generated_image.png"
+            src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/1b87cd24b_generated_image.png"
             alt="Confirmed booking slot in calendar"
+            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
+          />
+        </div>
+      )}
+      {card.id === 4 && (
+        <div className="hear-card-visual" style={{ flexShrink: 0, borderRadius: "12px", overflow: "hidden", background: "#eceef0", aspectRatio: "16 / 9" }}>
+          <img
+            src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/e10a88587_generated_image.png"
+            alt="New patient intake form"
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
           />
         </div>
