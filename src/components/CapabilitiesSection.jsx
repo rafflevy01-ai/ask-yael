@@ -7,16 +7,7 @@ import RegistrationTypewriter from "@/components/capabilities/RegistrationTypewr
 import MiniLanguageOrb from "@/components/capabilities/MiniLanguageOrb";
 import DeescalationTransfer from "@/components/capabilities/DeescalationTransfer";
 import OnlineStatusBadge from "@/components/capabilities/OnlineStatusBadge";
-import CardTopImage from "@/components/capabilities/CardTopImage";
-import LangDetectIOS from "@/components/capabilities/LangDetectIOS";
 import { useLanguage } from "@/lib/LanguageContext";
-
-const CARD_IMAGES = {
-  language: "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/259622c4f_generated_image.png",
-  recognition: "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/06a0181e3_generated_image.png",
-  booking: "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/554e81b0f_generated_image.png",
-  intake: "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/fa61db4db_generated_image.png",
-};
 
 const LANG_KEYS = ["he", "fr", "en"];
 
@@ -72,7 +63,6 @@ export default function CapabilitiesSection() {
             {/* Right: Real-time SMS to Staff and Patient (2 cols) */}
             <div className="caps-bento-card caps-card-col2">
               <div className="caps-card-inner">
-                <CardTopImage src={CARD_IMAGES.recognition} alt={t.caps.smsTitle} />
                 <h3 className="caps-card-title">{t.caps.smsTitle}</h3>
                 <p className="caps-card-desc">{t.caps.smsDesc}</p>
                 <div className="caps-card-visual-tall">
@@ -88,7 +78,6 @@ export default function CapabilitiesSection() {
             {/* Card: Automatic Language Detection */}
           <div className="caps-bento-card">
             <div className="caps-card-inner">
-              <LangDetectIOS />
               <h3 className="caps-card-title">{t.caps.langTitle}</h3>
               <p className="caps-card-desc">{t.caps.langDesc}</p>
               <div className="caps-card-visual" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "28px" }}>
@@ -116,7 +105,6 @@ export default function CapabilitiesSection() {
           {/* Card: New Patient Registration */}
           <div className="caps-bento-card">
             <div className="caps-card-inner">
-              <CardTopImage src={CARD_IMAGES.intake} alt={t.caps.regTitle} />
               <h3 className="caps-card-title">{t.caps.regTitle}</h3>
               <p className="caps-card-desc">{t.caps.regDesc}</p>
               <div className="caps-card-visual" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
@@ -147,7 +135,6 @@ export default function CapabilitiesSection() {
             {/* Card 4: 24/7 Availability */}
             <div className="caps-bento-card">
               <div className="caps-card-inner">
-                <CardTopImage src={CARD_IMAGES.booking} alt={t.caps.availTitle} />
                 <h3 className="caps-card-title">{t.caps.availTitle}</h3>
                 <p className="caps-card-desc">{t.caps.availDesc}</p>
                 <div className="caps-card-visual">
