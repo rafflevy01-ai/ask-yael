@@ -166,6 +166,15 @@ function AudioCard({ card, featuredLabel }) {
       )}
 
       {/* Top visual */}
+      {card.id === 1 && (
+        <div className="hear-card-visual" style={{ flexShrink: 0, borderRadius: "12px", overflow: "hidden", background: "#eceef0" }}>
+          <img
+            src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/3de896289_The_goal_is_to_have_a_conversa_Nano_Banana_2_17519.png"
+            alt="Language detection transcript"
+            style={{ width: "150%", maxWidth: "150%", marginLeft: "-25%", display: "block" }}
+          />
+        </div>
+      )}
       {card.id === 2 && (
         <div className="hear-card-visual" style={{ flexShrink: 0, borderRadius: "12px", overflow: "hidden", background: "#eceef0" }}>
           <img
