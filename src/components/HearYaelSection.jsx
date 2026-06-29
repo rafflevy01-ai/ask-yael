@@ -135,9 +135,9 @@ function AudioCard({ card, featuredLabel }) {
       borderRadius: "16px",
       padding: "24px",
       display: "flex",
-      flexDirection: "row",
+      flexDirection: "column",
       alignItems: "stretch",
-      gap: "24px",
+      gap: "20px",
       boxShadow: card.featured
         ? "0 4px 24px rgba(0,0,0,0.08), 0 0 0 1px #000000"
         : "rgba(0,0,0,0.4) 0px 0px 1px 0px, rgba(0,0,0,0.05) 0px 4px 12px 0px",
@@ -165,18 +165,18 @@ function AudioCard({ card, featuredLabel }) {
         </div>
       )}
 
-      {/* Left visual */}
+      {/* Top visual */}
       {card.id === 2 && (
-        <div className="hear-card-visual" style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
+        <div className="hear-card-visual" style={{ flexShrink: 0 }}>
           <img
-            src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/842d12b27_generated_image.png"
+            src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/57216ab58_Reverse_both_of_the_texts_Yael_Nano_Banana_2_44316.png"
             alt="Patient recognition transcript"
             style={{ width: "100%", borderRadius: "12px", display: "block" }}
           />
         </div>
       )}
 
-      {/* Right content */}
+      {/* Content */}
       <div className="hear-card-body" style={{ flex: 1, display: "flex", flexDirection: "column", gap: "14px", minWidth: 0 }}>
       <div>
         <div style={{
@@ -309,7 +309,7 @@ export default function HearYaelSection() {
       backgroundColor: "#FFFFFF",
       borderTop: "1px solid rgba(0,0,0,0.06)",
     }}>
-      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "920px", margin: "0 auto" }}>
         <div style={{ marginBottom: "48px", textAlign: "center" }}>
           <span style={{
             fontFamily: "'Geist Mono', monospace",
@@ -336,8 +336,8 @@ export default function HearYaelSection() {
         </div>
 
         <div style={{
-          display: "flex",
-          flexDirection: "column",
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 1fr)",
           gap: "16px",
         }}
           className="hear-yael-grid"
@@ -350,15 +350,11 @@ export default function HearYaelSection() {
 
       <style>{`
         .hear-card-visual {
-          width: 150px;
+          width: 100%;
         }
         @media (max-width: 640px) {
-          .hear-card {
-            flex-direction: column !important;
-            gap: 16px !important;
-          }
-          .hear-card-visual {
-            width: 100% !important;
+          .hear-yael-grid {
+            grid-template-columns: 1fr !important;
           }
         }
         @media (max-width: 768px) {
