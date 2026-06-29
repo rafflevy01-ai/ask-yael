@@ -167,11 +167,11 @@ function AudioCard({ card, featuredLabel }) {
 
       {/* Top visual */}
       {card.id === 2 && (
-        <div className="hear-card-visual" style={{ flexShrink: 0 }}>
+        <div className="hear-card-visual" style={{ flexShrink: 0, borderRadius: "12px", overflow: "hidden", background: "#eceef0" }}>
           <img
             src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/57216ab58_Reverse_both_of_the_texts_Yael_Nano_Banana_2_44316.png"
             alt="Patient recognition transcript"
-            style={{ width: "100%", borderRadius: "12px", display: "block" }}
+            style={{ width: "150%", maxWidth: "150%", marginLeft: "-25%", display: "block" }}
           />
         </div>
       )}
