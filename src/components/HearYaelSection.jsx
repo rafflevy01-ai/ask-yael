@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
-import HelloWords from "@/components/capabilities/HelloWords";
-import PatientScan from "@/components/capabilities/PatientScan";
+
 
 const CARD_META = [
   {
@@ -165,20 +164,6 @@ function AudioCard({ card, featuredLabel }) {
           {featuredLabel}
         </div>
       )}
-
-      {/* Left visual */}
-      {card.id === 1 && (
-        <div className="hear-card-visual" style={{ flexShrink: 0 }}>
-          <HelloWords />
-        </div>
-      )}
-
-      {card.id === 2 && (
-        <div className="hear-card-visual" style={{ flexShrink: 0 }}>
-          <PatientScan />
-        </div>
-      )}
-
 
       {/* Right content */}
       <div className="hear-card-body" style={{ flex: 1, display: "flex", flexDirection: "column", gap: "14px", minWidth: 0 }}>
