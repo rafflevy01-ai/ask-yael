@@ -165,6 +165,17 @@ function AudioCard({ card, featuredLabel }) {
         </div>
       )}
 
+      {/* Left visual */}
+      {card.id === 2 && (
+        <div className="hear-card-visual" style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
+          <img
+            src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/842d12b27_generated_image.png"
+            alt="Patient recognition transcript"
+            style={{ width: "100%", borderRadius: "12px", display: "block" }}
+          />
+        </div>
+      )}
+
       {/* Right content */}
       <div className="hear-card-body" style={{ flex: 1, display: "flex", flexDirection: "column", gap: "14px", minWidth: 0 }}>
       <div>
