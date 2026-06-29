@@ -4,6 +4,7 @@ import { Phone, X, ChevronDown } from "lucide-react";
 const LANGUAGES = [
   { code: "he", label: "עברית", flag: "🇮🇱" },
   { code: "en", label: "English", flag: "🇬🇧" },
+  { code: "fr", label: "Français", flag: "🇫🇷" },
 ];
 
 export default function CallbackWidget() {
