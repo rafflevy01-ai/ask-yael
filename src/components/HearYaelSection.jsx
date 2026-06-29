@@ -185,11 +185,11 @@ function AudioCard({ card, featuredLabel }) {
         </div>
       )}
       {card.id === 3 && (
-        <div className="hear-card-visual" style={{ flexShrink: 0, borderRadius: "12px", overflow: "hidden", background: "#eceef0" }}>
+        <div className="hear-card-visual" style={{ flexShrink: 0, borderRadius: "12px", overflow: "hidden", background: "#eceef0", aspectRatio: "16 / 9" }}>
           <img
             src="https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/4861c1a2c_generated_image.png"
             alt="Confirmed booking slot in calendar"
-            style={{ width: "150%", maxWidth: "150%", marginLeft: "-25%", display: "block" }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
           />
         </div>
       )}
