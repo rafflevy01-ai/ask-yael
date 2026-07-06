@@ -4,6 +4,12 @@
 
 View and Edit  your app on [Base44.com](http://Base44.com) 
 
+Yael is an automated multilingual receptionist (Hebrew / French / English / any
+language). The product spec and phased development path (dental → physical
+therapy → profession platform) live in [`docs/SPEC.md`](./docs/SPEC.md). The
+Phase-0 pure, test-driven conversation engine lives in
+[`src/engine`](./src/engine) — run it with `npm test`.
+
 This project contains everything you need to run your app locally.
 
 **Edit the code in your local development environment**

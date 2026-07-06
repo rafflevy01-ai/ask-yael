@@ -1,0 +1,160 @@
+// The pure conversation core: reduce :: (State, Event, Config) -> { state, effects }
+//
+// This is the functional-idioms backbone of the whole system. It performs NO
+// I/O. Given the current immutable state and an incoming event, it returns the
+// next immutable state plus a list of effects (data) for the edge to run.
+// Because it is pure and deterministic, the entire dialog can be exercised in
+// unit tests without telephony, ASR, or TTS.
+
+import { EVENTS } from "../domain/events.js";
+import { DEFAULT_LOCALE, isSupportedLocale, emergencyNumber } from "../domain/locales.js";
+import { INTENTS, detectIntent } from "../domain/intents.js";
+import { PHASES, initialState, patch, appendTranscript } from "../domain/state.js";
+import * as Fx from "../domain/effects.js";
+import { phrase } from "./phrases.js";
+import { isEmergency, emergencyScript } from "../skills/triage.js";
+
+// Spoken hints used to recognise a language choice from free text, e.g. the
+// caller answering the menu with "English please" or "עברית".
+const LANGUAGE_HINTS = Object.freeze({
+  he: ["hebrew", "hébreu", "hebreu", "עברית"],
+  fr: ["french", "français", "francais", "צרפתית"],
+  en: ["english", "anglais", "אנגלית"],
+});
+
+// resolveLocale :: (string, detectedLocale) -> locale | null
+// Prefer a trustworthy ASR detection, otherwise parse a spoken choice.
+function resolveLocale(text, detectedLocale) {
+  if (isSupportedLocale(detectedLocale)) return detectedLocale;
+  const haystack = (text || "").toLowerCase();
+  const match = Object.keys(LANGUAGE_HINTS).find((code) =>
+    LANGUAGE_HINTS[code].some((hint) => haystack.includes(hint.toLowerCase())),
+  );
+  return match || null;
+}
+
+// A tiny accumulator so a handler can emit a "say" and mirror it into the
+// transcript in one call, keeping every reply auditable.
+function reply(state, effects, locale, key, vars) {
+  const text = phrase(locale, key, vars);
+  return {
+    state: appendTranscript(state, "yael", text),
+    effects: [...effects, Fx.say(locale, text)],
+  };
+}
+
+// --- individual event handlers (all pure) ---------------------------------
+
+function onCallStarted(state, event) {
+  const locale = DEFAULT_LOCALE; // language not yet known
+  let next = patch(state, {
+    callId: event.callId,
+    phase: PHASES.LANGUAGE_SELECTION,
+  });
+  const effects = [Fx.log({ kind: "call_started", callId: event.callId })];
+
+  let acc = reply(next, effects, locale, "greeting");
+  acc = reply(acc.state, acc.effects, locale, "languageMenu");
+  return { state: acc.state, effects: acc.effects };
+}
+
+function onEmergency(state, locale) {
+  const script = emergencyScript(locale);
+  const next = appendTranscript(
+    patch(state, { intent: INTENTS.EMERGENCY, phase: PHASES.ROUTING }),
+    "yael",
+    script,
+  );
+  return {
+    state: next,
+    effects: [
+      Fx.log({ kind: "emergency_detected", locale, number: emergencyNumber(locale) }),
+      Fx.escalateEmergency(locale, script),
+      Fx.say(locale, script),
+    ],
+  };
+}
+
+function onLanguageSelection(state, event, locale) {
+  const resolved = resolveLocale(event.text, event.detectedLocale);
+  if (!resolved) {
+    // Couldn't tell — offer the menu again in the fallback language.
+    return reply(state, [], locale, "languageMenu");
+  }
+  const next = patch(state, { locale: resolved, phase: PHASES.ROUTING });
+  const acc = reply(next, [Fx.setLanguage(resolved)], resolved, "howCanIHelp");
+  return { state: acc.state, effects: acc.effects };
+}
+
+// Map a routed intent to its reply key and any accompanying side-effect.
+const INTENT_ROUTES = Object.freeze({
+  [INTENTS.BOOK]: { key: "booking" },
+  [INTENTS.RESCHEDULE]: { key: "reschedule" },
+  [INTENTS.CANCEL]: { key: "cancel" },
+  [INTENTS.ASK]: { key: "faq" },
+  [INTENTS.MESSAGE]: { key: "takeMessage", effect: (locale) => Fx.takeMessage(locale) },
+  [INTENTS.HANDOFF]: { key: "handoff", effect: () => Fx.transferToHuman("caller_requested") },
+  [INTENTS.UNKNOWN]: { key: "fallback" },
+});
+
+function onRouting(state, event, locale) {
+  const intent = detectIntent(event.text, locale);
+  const route = INTENT_ROUTES[intent] || INTENT_ROUTES[INTENTS.UNKNOWN];
+  const withIntent = patch(state, { intent });
+  const sideEffects = route.effect ? [route.effect(locale)] : [];
+  return reply(withIntent, sideEffects, locale, route.key);
+}
+
+function onCallerUtterance(state, event, config) {
+  const locale = state.locale || (isSupportedLocale(event.detectedLocale) ? event.detectedLocale : DEFAULT_LOCALE);
+  const heard = appendTranscript(state, "caller", event.text);
+
+  // Safety first: emergencies short-circuit every phase.
+  if (isEmergency(event.text, locale, config.emergencyTriggers)) {
+    return onEmergency(heard, locale);
+  }
+
+  if (heard.phase === PHASES.LANGUAGE_SELECTION && !heard.locale) {
+    return onLanguageSelection(heard, event, locale);
+  }
+
+  return onRouting(heard, event, locale);
+}
+
+function onCallEnded(state) {
+  const locale = state.locale || DEFAULT_LOCALE;
+  const ended = patch(state, { phase: PHASES.ENDED });
+  const acc = reply(ended, [Fx.log({ kind: "call_ended", callId: state.callId })], locale, "goodbye");
+  return { state: acc.state, effects: [...acc.effects, Fx.endCall()] };
+}
+
+// reduce :: (State, Event, Config) -> { state, effects }
+export function reduce(state, event, config = {}) {
+  switch (event.type) {
+    case EVENTS.CALL_STARTED:
+      return onCallStarted(state, event);
+    case EVENTS.CALLER_UTTERANCE:
+      return onCallerUtterance(state, event, config);
+    case EVENTS.LANGUAGE_SELECTED:
+      return onLanguageSelection(
+        appendTranscript(state, "caller", event.locale),
+        { text: "", detectedLocale: event.locale },
+        state.locale || DEFAULT_LOCALE,
+      );
+    case EVENTS.CALL_ENDED:
+      return onCallEnded(state);
+    default:
+      // Unknown events leave state untouched (defensive, still pure).
+      return { state, effects: [] };
+  }
+}
+
+// createEngine :: (Config) -> { initialState, reduce }
+// Binds a vertical config pack (dental, PT, …) to the reducer so the same core
+// serves every profession — the config is data, not code.
+export function createEngine(config = {}) {
+  return {
+    initialState,
+    reduce: (state, event) => reduce(state, event, config),
+  };
+}
