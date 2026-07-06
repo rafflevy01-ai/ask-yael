@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Phone, X, ChevronDown } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const LANGUAGES = [
   { code: "he", label: "עברית", flag: "🇮🇱" },
@@ -15,6 +16,7 @@ export default function CallbackWidget() {
   const [lang, setLang] = useState("he");
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handler = (e) => {
@@ -58,10 +60,125 @@ export default function CallbackWidget() {
 
   const activeLang = LANGUAGES.find((l) => l.code === lang) || LANGUAGES[0];
 
+  // Shared language selector (flag button + pop-up), reused by the desktop
+  // card and the compact mobile pill.
+  const langSelector = (
+    <div ref={langRef} style={{ position: "relative" }}>
+      <button
+        onClick={() => setLangOpen((o) => !o)}
+        aria-label="Choose language"
+        style={{ ...iconBtnStyle, width: "auto", padding: "0 10px", gap: "5px" }}
+        onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#0D0D0D")}
+        onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#E5E5E5")}
+      >
+        <span style={{ fontSize: "18px", lineHeight: 1 }}>{activeLang.flag}</span>
+        <ChevronDown size={13} color="#0D0D0D" style={{
+          transform: langOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s ease",
+        }} />
+      </button>
+
+      {langOpen && (
+        <div style={{
+          position: "absolute",
+          bottom: "calc(100% + 8px)",
+          right: 0,
+          background: "#FFFFFF",
+          borderRadius: "12px",
+          boxShadow: "0 8px 28px rgba(0,0,0,0.16)",
+          border: "1px solid rgba(0,0,0,0.06)",
+          padding: "5px",
+          minWidth: "138px",
+        }}>
+          {LANGUAGES.map((l) => (
+            <button
+              key={l.code}
+              onClick={() => { setLang(l.code); setLangOpen(false); }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "9px",
+                width: "100%",
+                background: l.code === lang ? "#F5F5F5" : "transparent",
+                border: "none",
+                borderRadius: "7px",
+                padding: "8px 10px",
+                cursor: "pointer",
+                fontFamily: "Inter, sans-serif",
+                fontSize: "13px",
+                color: "#0D0D0D",
+                textAlign: "left",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#F5F5F5")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = l.code === lang ? "#F5F5F5" : "transparent")}
+            >
+              <span style={{ fontSize: "17px", lineHeight: 1 }}>{l.flag}</span>
+              {l.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
+  // Compact, unobtrusive floating pill for phones: keeps the "live" signal and
+  // language choice without covering the hero CTA or page content.
+  const mobileCollapsed = (
+    <div
+      dir="ltr"
+      style={{
+        position: "fixed",
+        bottom: "calc(env(safe-area-inset-bottom, 0px) + 16px)",
+        right: "16px",
+        zIndex: 9998,
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
+        fontFamily: "Inter, sans-serif",
+      }}
+    >
+      <button
+        onClick={handleOpen}
+        aria-label="Listen to Yael live"
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "8px",
+          background: "#0D0D0D",
+          color: "#FFFFFF",
+          border: "none",
+          borderRadius: "999px",
+          padding: "11px 16px",
+          cursor: "pointer",
+          fontFamily: "Inter, sans-serif",
+          fontWeight: 500,
+          fontSize: "13px",
+          whiteSpace: "nowrap",
+          boxShadow: "0 8px 28px rgba(0,0,0,0.22)",
+        }}
+      >
+        <span style={{ position: "relative", display: "flex", width: "8px", height: "8px" }}>
+          <span style={{
+            position: "absolute", inset: 0, borderRadius: "50%",
+            background: "#22c55e", animation: "cb-ping 1.6s cubic-bezier(0,0,0.2,1) infinite",
+          }} />
+          <span style={{ position: "relative", width: "8px", height: "8px", borderRadius: "50%", background: "#22c55e" }} />
+        </span>
+        Ask Yael
+      </button>
+      {langSelector}
+      <style>{`
+        @keyframes cb-ping { 75%, 100% { transform: scale(2.2); opacity: 0; } }
+      `}</style>
+    </div>
+  );
+
   return (
     <>
+      {/* Collapsed state: compact pill on phones, full card on larger screens */}
+      {!open && isMobile && mobileCollapsed}
+
       {/* Persistent ElevenLabs-style widget — fixed bottom-right, always visible */}
-      {!open && (
+      {!open && !isMobile && (
         <div
           dir="ltr"
           style={{
@@ -122,61 +239,7 @@ export default function CallbackWidget() {
             </button>
 
             {/* Language selector */}
-            <div ref={langRef} style={{ position: "relative" }}>
-              <button
-                onClick={() => setLangOpen((o) => !o)}
-                aria-label="Choose language"
-                style={{ ...iconBtnStyle, width: "auto", padding: "0 10px", gap: "5px" }}
-                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#0D0D0D")}
-                onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#E5E5E5")}
-              >
-                <span style={{ fontSize: "18px", lineHeight: 1 }}>{activeLang.flag}</span>
-                <ChevronDown size={13} color="#0D0D0D" style={{
-                  transform: langOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s ease",
-                }} />
-              </button>
-
-              {langOpen && (
-                <div style={{
-                  position: "absolute",
-                  bottom: "calc(100% + 8px)",
-                  right: 0,
-                  background: "#FFFFFF",
-                  borderRadius: "12px",
-                  boxShadow: "0 8px 28px rgba(0,0,0,0.16)",
-                  border: "1px solid rgba(0,0,0,0.06)",
-                  padding: "5px",
-                  minWidth: "138px",
-                }}>
-                  {LANGUAGES.map((l) => (
-                    <button
-                      key={l.code}
-                      onClick={() => { setLang(l.code); setLangOpen(false); }}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "9px",
-                        width: "100%",
-                        background: l.code === lang ? "#F5F5F5" : "transparent",
-                        border: "none",
-                        borderRadius: "7px",
-                        padding: "8px 10px",
-                        cursor: "pointer",
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "13px",
-                        color: "#0D0D0D",
-                        textAlign: "left",
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.background = "#F5F5F5")}
-                      onMouseLeave={(e) => (e.currentTarget.style.background = l.code === lang ? "#F5F5F5" : "transparent")}
-                    >
-                      <span style={{ fontSize: "17px", lineHeight: 1 }}>{l.flag}</span>
-                      {l.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            {langSelector}
           </div>
 
           <style>{`

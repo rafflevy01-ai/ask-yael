@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useLanguage } from "@/lib/LanguageContext";
 
 const LANGUAGES = [
@@ -10,11 +11,17 @@ const LANGUAGES = [
 export default function Navbar() {
   const { lang, setLang, t } = useLanguage();
   const [overHero, setOverHero] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
       const hero = document.querySelector("[data-hero-section]");
-      if (!hero) return;
+      if (!hero) {
+        // Pages without a dark hero (e.g. /admin) use the solid navbar so it
+        // stays legible on light backgrounds.
+        setOverHero(false);
+        return;
+      }
       const heroBottom = hero.offsetTop + hero.offsetHeight;
       setOverHero(window.scrollY < heroBottom - 64);
     };
@@ -26,7 +33,7 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
     };
-  }, []);
+  }, [location.pathname]);
 
   const textColor    = overHero ? "#FFFFFF"                  : "#0D0D0D";
   const subColor     = overHero ? "rgba(255,255,255,0.5)"    : "#6B6B6B";
