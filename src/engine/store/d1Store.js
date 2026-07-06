@@ -101,7 +101,7 @@ export function deserializeCallRow(row = {}) {
     phase: row.phase || null,
     outcome: row.outcome || null,
     contained: !!row.contained,
-    smsSent: Number.isFinite(row.sms_sent) ? row.sms_sent : Number(row.sms_sent) || 0,
+    smsSent: Number(row.sms_sent) || 0,
     escalated: !!row.escalated,
     transferred: !!row.transferred,
     callback: !!row.callback,

@@ -3,20 +3,39 @@
 // /functions become endpoints).
 
 export const CORS_HEADERS = Object.freeze({
-  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, x-seed-token",
   "Access-Control-Max-Age": "86400",
 });
 
+// corsHeaders :: (env, request) -> object
+// Secure by default: no wildcard. The dashboard is served from the SAME origin
+// as the API (both on the Pages project), so no `Access-Control-Allow-Origin`
+// header is needed for it. Cross-origin access is opt-in via the
+// `CORS_ALLOW_ORIGIN` var — a comma-separated allowlist, or the literal "*" to
+// allow any origin. The request's Origin is echoed back only when allowlisted.
+export function corsHeaders(env, request) {
+  const raw = (env && env.CORS_ALLOW_ORIGIN) || "";
+  const allow = raw.split(",").map((s) => s.trim()).filter(Boolean);
+  if (allow.includes("*")) {
+    return { ...CORS_HEADERS, "Access-Control-Allow-Origin": "*" };
+  }
+  const origin = request && request.headers.get("Origin");
+  if (origin && allow.includes(origin)) {
+    return { ...CORS_HEADERS, "Access-Control-Allow-Origin": origin, Vary: "Origin" };
+  }
+  // Same-origin (or disallowed cross-origin): emit no ACAO header.
+  return { ...CORS_HEADERS };
+}
+
 // json :: (data, status?, extraHeaders?) -> Response
+// CORS is applied centrally by the middleware, not here.
 export function json(data, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "Cache-Control": "no-store",
-      ...CORS_HEADERS,
       ...extraHeaders,
     },
   });

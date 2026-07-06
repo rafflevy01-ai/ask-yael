@@ -35,3 +35,7 @@ id = "REPLACE_WITH_KV_NAMESPACE_ID"
 [vars]
 APP_NAME = "ask-yael"
 TELEPHONY_CARRIER = ""
+# Cross-origin API access is off by default (dashboard is same-origin). Set to a
+# comma-separated allowlist of origins, or "*" to allow any, if a separate front
+# end needs to call the API.
+CORS_ALLOW_ORIGIN = ""
