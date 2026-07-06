@@ -255,7 +255,9 @@ src/engine/
   core/        reduce · phrases · runCall                      (pure dialog core + edge runner)
   skills/      triage · scheduling · amendment · faq           (emergency · booking · reschedule/cancel · knowledge base)
   adapters/    mockTelephony · mockCalendar                    (in-memory telephony/ASR + Calendar/PMS)
-  config/      dental                                          (vertical config pack — data)
+               elevenLabsTelephony · googleCalendar · dentalPms (live voice + calendar/PMS adapters)
+  config/      dental · voiceProfile · knowledgeBase           (vertical config pack · voice selection · FAQ generator)
+  e2e/         livePipeline                                    (end-to-end verification across the live pipeline)
   index.js     public API
 ```
 
