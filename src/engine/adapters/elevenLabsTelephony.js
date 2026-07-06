@@ -189,6 +189,9 @@ export function createElevenLabsAsr(options = {}) {
   } = options;
 
   return {
+    // listen :: (audio) -> Promise<Event>
+    // `audio` is the caller's recorded speech as a Blob/File (browser) or
+    // Buffer/Blob (Node) — whatever the host's FormData accepts as an upload.
     async listen(audio) {
       const { text, languageCode } = await transcribe({
         audio,
