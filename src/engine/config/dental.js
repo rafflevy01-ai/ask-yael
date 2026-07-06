@@ -6,6 +6,73 @@
 // intake schema. Physical-therapy and future professions ship as sibling packs
 // (see docs/SPEC.md, Phases 2–3) without changing the core.
 
+import { buildKnowledgeBase } from "./knowledgeBase.js";
+
+// The clinic profile is the single source of truth for the FAQ knowledge base.
+// Every clinic fact (hours, address, prices, accepted health funds, required
+// documents) lives here once; `buildKnowledgeBase` renders the localised FAQ
+// entries from it, so editing a fact — a new health fund, a price change, a new
+// address — updates every language's answer with no prose to keep in sync.
+export const dentalClinicProfile = Object.freeze({
+  hours: Object.freeze({
+    openDay: Object.freeze({ en: "Sunday", fr: "dimanche", he: "ראשון" }),
+    closeDay: Object.freeze({ en: "Thursday", fr: "jeudi", he: "חמישי" }),
+    openTime: Object.freeze({ en: "8am", fr: "8h", he: "8:00" }),
+    closeTime: Object.freeze({ en: "6pm", fr: "18h", he: "18:00" }),
+    closedDays: Object.freeze({
+      en: "Friday and Saturday",
+      fr: "vendredi et le samedi",
+      he: "בשישי ושבת",
+    }),
+  }),
+  address: Object.freeze({
+    street: Object.freeze({ en: "12 Herzl Street", fr: "12 rue Herzl", he: "רחוב הרצל 12" }),
+    city: Object.freeze({ en: "Tel Aviv", fr: "Tel Aviv", he: "תל אביב" }),
+    floor: Object.freeze({ en: "second floor", fr: "deuxième étage", he: "קומה השנייה" }),
+  }),
+  parking: Object.freeze({
+    en: "There's a paid parking garage next door, and free street parking after 7pm.",
+    fr: "Il y a un parking payant à côté, et un stationnement gratuit dans la rue après 19h.",
+    he: "יש חניון בתשלום ליד, וחניה חופשית ברחוב אחרי 19:00.",
+  }),
+  pricing: Object.freeze({
+    basePrice: 250,
+    currency: Object.freeze({ en: "shekels", fr: "shekels", he: "שקלים" }),
+    service: Object.freeze({
+      en: "A check-up and cleaning",
+      fr: "Un contrôle avec détartrage",
+      he: "בדיקה וניקוי אבנית",
+    }),
+  }),
+  // The health funds the clinic works with — the source of truth for the
+  // insurance FAQ answer in every language.
+  healthFunds: Object.freeze([
+    Object.freeze({ en: "Clalit", fr: "Clalit", he: "כללית" }),
+    Object.freeze({ en: "Maccabi", fr: "Maccabi", he: "מכבי" }),
+    Object.freeze({ en: "Meuhedet", fr: "Meuhedet", he: "מאוחדת" }),
+    Object.freeze({ en: "Leumit", fr: "Leumit", he: "לאומית" }),
+  ]),
+  // What a caller should bring to their visit — the source of truth for the
+  // "what to bring" FAQ answer in every language.
+  documents: Object.freeze([
+    Object.freeze({
+      en: "a photo ID",
+      fr: "une pièce d'identité",
+      he: "תעודה מזהה",
+    }),
+    Object.freeze({
+      en: "your health-fund card",
+      fr: "votre carte de caisse maladie",
+      he: "כרטיס קופת חולים",
+    }),
+    Object.freeze({
+      en: "a list of any medications you take",
+      fr: "la liste de vos médicaments",
+      he: "רשימה של תרופות שאתם נוטלים",
+    }),
+  ]),
+});
+
 export const dentalConfig = Object.freeze({
   id: "dental",
   displayName: "Dental clinic",
@@ -96,87 +163,10 @@ export const dentalConfig = Object.freeze({
     Object.freeze({ field: "healthFund", required: false }), // Clalit/Maccabi/…
   ]),
 
-  // Per-clinic knowledge base for the FAQ skill (see skills/faq.js). Each entry
-  // carries per-locale `keywords` (to recognise the question from free speech)
-  // and a localised `answer`. Adding an FAQ or a language is a data change here.
-  knowledgeBase: Object.freeze([
-    Object.freeze({
-      id: "hours",
-      keywords: Object.freeze({
-        en: Object.freeze(["hours", "open", "opening", "close", "closing"]),
-        fr: Object.freeze(["horaires", "ouvert", "ouverture", "fermé", "fermeture"]),
-        he: Object.freeze(["שעות", "פתוח", "פתיחה", "סגור", "סגירה"]),
-      }),
-      answer: Object.freeze({
-        en: "We're open Sunday to Thursday, 8am to 6pm, and closed on Friday and Saturday.",
-        fr: "Nous sommes ouverts du dimanche au jeudi, de 8h à 18h, et fermés le vendredi et le samedi.",
-        he: "אנחנו פתוחים ראשון עד חמישי, מ-8:00 עד 18:00, וסגורים בשישי ושבת.",
-      }),
-    }),
-    Object.freeze({
-      id: "address",
-      keywords: Object.freeze({
-        en: Object.freeze(["where", "address", "located", "location", "directions"]),
-        fr: Object.freeze(["où", "adresse", "situé", "emplacement", "itinéraire"]),
-        he: Object.freeze(["איפה", "כתובת", "ממוקם", "מיקום", "הגעה"]),
-      }),
-      answer: Object.freeze({
-        en: "We're at 12 Herzl Street, Tel Aviv, on the second floor.",
-        fr: "Nous sommes au 12 rue Herzl, Tel Aviv, au deuxième étage.",
-        he: "אנחנו ברחוב הרצל 12, תל אביב, בקומה השנייה.",
-      }),
-    }),
-    Object.freeze({
-      id: "parking",
-      keywords: Object.freeze({
-        en: Object.freeze(["parking", "park", "garage"]),
-        fr: Object.freeze(["parking", "stationnement", "garer"]),
-        he: Object.freeze(["חניה", "חנייה", "לחנות"]),
-      }),
-      answer: Object.freeze({
-        en: "There's a paid parking garage next door, and free street parking after 7pm.",
-        fr: "Il y a un parking payant à côté, et un stationnement gratuit dans la rue après 19h.",
-        he: "יש חניון בתשלום ליד, וחניה חופשית ברחוב אחרי 19:00.",
-      }),
-    }),
-    Object.freeze({
-      id: "pricing",
-      keywords: Object.freeze({
-        en: Object.freeze(["how much", "price", "cost", "fee", "pay"]),
-        fr: Object.freeze(["combien", "prix", "coût", "tarif", "payer"]),
-        he: Object.freeze(["כמה עולה", "מחיר", "עלות", "תעריף", "לשלם"]),
-      }),
-      answer: Object.freeze({
-        en: "A check-up and cleaning starts at 250 shekels; other treatments are quoted after the exam.",
-        fr: "Un contrôle avec détartrage commence à 250 shekels ; les autres soins sont chiffrés après l'examen.",
-        he: "בדיקה וניקוי אבנית מתחילים ב-250 שקלים; טיפולים אחרים מתומחרים לאחר הבדיקה.",
-      }),
-    }),
-    Object.freeze({
-      id: "insurance",
-      keywords: Object.freeze({
-        en: Object.freeze(["insurance", "health fund", "kupah", "clalit", "maccabi", "coverage"]),
-        fr: Object.freeze(["assurance", "mutuelle", "caisse", "couverture"]),
-        he: Object.freeze(["ביטוח", "קופת חולים", "כללית", "מכבי", "כיסוי"]),
-      }),
-      answer: Object.freeze({
-        en: "We work with Clalit, Maccabi, Meuhedet and Leumit; bring your health-fund card to your visit.",
-        fr: "Nous travaillons avec Clalit, Maccabi, Meuhedet et Leumit ; apportez votre carte de caisse maladie.",
-        he: "אנחנו עובדים עם כללית, מכבי, מאוחדת ולאומית; הביאו את כרטיס קופת החולים לביקור.",
-      }),
-    }),
-    Object.freeze({
-      id: "what_to_bring",
-      keywords: Object.freeze({
-        en: Object.freeze(["what to bring", "bring", "documents", "id", "prepare"]),
-        fr: Object.freeze(["quoi apporter", "apporter", "documents", "pièce", "préparer"]),
-        he: Object.freeze(["מה להביא", "להביא", "מסמכים", "תעודה", "להתכונן"]),
-      }),
-      answer: Object.freeze({
-        en: "Please bring a photo ID, your health-fund card, and a list of any medications you take.",
-        fr: "Merci d'apporter une pièce d'identité, votre carte de caisse maladie et la liste de vos médicaments.",
-        he: "אנא הביאו תעודה מזהה, כרטיס קופת חולים, ורשימה של תרופות שאתם נוטלים.",
-      }),
-    }),
-  ]),
+  // Per-clinic knowledge base for the FAQ skill (see skills/faq.js). Generated
+  // from `dentalClinicProfile` above (the single source of truth) by
+  // `buildKnowledgeBase`, so adding an FAQ fact or a language is a data change
+  // in the profile, not hand-edited prose. Each entry carries per-locale
+  // `keywords` (to recognise the question) and a localised `answer`.
+  knowledgeBase: buildKnowledgeBase(dentalClinicProfile),
 });

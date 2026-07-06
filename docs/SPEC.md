@@ -183,7 +183,9 @@ KnowledgeBaseEntry.
   rules, intake schema, and a per-clinic knowledge base *(seed in
   [`src/engine/config/dental.js`](../src/engine/config/dental.js); appointment
   types carry per-locale keywords for speech recognition, and the knowledge base
-  carries per-locale FAQ keywords + answers)*.
+  is generated from a single-source-of-truth clinic profile by
+  [`buildKnowledgeBase`](../src/engine/config/knowledgeBase.js) so a fact change
+  updates every language's FAQ answer)*.
 - Skills: **Scheduling — booking (done: multi-turn type+day slot-filling →
   `BOOK_APPOINTMENT` + SMS confirmation, see
   [`src/engine/skills/scheduling.js`](../src/engine/skills/scheduling.js))**;
@@ -295,4 +297,9 @@ decision unit-testable.
    ([`src/engine/adapters/googleCalendar.js`](../src/engine/adapters/googleCalendar.js))
    and the local mock remain available for offline/dev use behind the same
    interface.
-3. **Knowledge base** — per-clinic FAQ source and update workflow.
+3. **Knowledge base** — **resolved: generated from a single source of truth.**
+   The FAQ knowledge base is rendered from a structured per-clinic profile
+   ([`dentalClinicProfile`](../src/engine/config/dental.js)) by
+   [`buildKnowledgeBase`](../src/engine/config/knowledgeBase.js); editing a fact
+   (hours, address, price, accepted health funds, required documents) updates
+   every language's answer, with no prose to keep in sync by hand.

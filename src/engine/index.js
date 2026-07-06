@@ -56,7 +56,8 @@ export {
   createDentalPms,
   createDentalPmsClient,
 } from "./adapters/dentalPms.js";
-export { dentalConfig } from "./config/dental.js";
+export { dentalConfig, dentalClinicProfile } from "./config/dental.js";
+export { buildKnowledgeBase, FAQ_TOPIC_IDS } from "./config/knowledgeBase.js";
 
 export {
   buildCallRecord,
