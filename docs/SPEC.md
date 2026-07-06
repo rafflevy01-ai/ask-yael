@@ -196,12 +196,14 @@ KnowledgeBaseEntry.
   captures the message → `REQUEST_CALLBACK`)**, human handoff (done).
 - Calendar/PMS integration behind an adapter interface — *the core emits
   `BOOK_APPOINTMENT` / `RESCHEDULE_APPOINTMENT` / `CANCEL_APPOINTMENT` as data;
-  a mock adapter
+  the pilot books against a **dedicated dental PMS** via the live adapter
+  ([`src/engine/adapters/dentalPms.js`](../src/engine/adapters/dentalPms.js))
+  behind an injectable client. A mock adapter
   ([`src/engine/adapters/mockCalendar.js`](../src/engine/adapters/mockCalendar.js))
-  is the local option, and a live **Google Calendar** adapter
+  is the local option, and a **Google Calendar** adapter
   ([`src/engine/adapters/googleCalendar.js`](../src/engine/adapters/googleCalendar.js))
-  maps the same effects onto the Google Calendar Events API behind an injectable
-  client. Both wire through `runCall` (open decision §5.2).*
+  maps the same effects onto the Google Calendar Events API. All wire through
+  `runCall` (decision §5.2 resolved: dental PMS).*
 - Live telephony/voice provider behind the same telephony interface — an
   **ElevenLabs** adapter
   ([`src/engine/adapters/elevenLabsTelephony.js`](../src/engine/adapters/elevenLabsTelephony.js))
@@ -285,8 +287,12 @@ decision unit-testable.
    for TTS + speech-to-text (adapter implemented in
    [`src/engine/adapters/elevenLabsTelephony.js`](../src/engine/adapters/elevenLabsTelephony.js)).
    Final voice/model choice after the Hebrew quality + cost spike.
-2. **Calendar/PMS** — specific dental PMS vs. **Google Calendar** for the pilot
-   (Google Calendar adapter implemented in
-   [`src/engine/adapters/googleCalendar.js`](../src/engine/adapters/googleCalendar.js);
-   the local mock remains for offline/dev use).
+2. **Calendar/PMS** — **resolved: a dedicated dental PMS** is the pilot booking
+   backend (adapter implemented in
+   [`src/engine/adapters/dentalPms.js`](../src/engine/adapters/dentalPms.js);
+   the core emits the same `BOOK_APPOINTMENT` / `RESCHEDULE_APPOINTMENT` /
+   `CANCEL_APPOINTMENT` effects). The Google Calendar adapter
+   ([`src/engine/adapters/googleCalendar.js`](../src/engine/adapters/googleCalendar.js))
+   and the local mock remain available for offline/dev use behind the same
+   interface.
 3. **Knowledge base** — per-clinic FAQ source and update workflow.

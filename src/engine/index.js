@@ -52,6 +52,10 @@ export {
   createGoogleCalendarClient,
   GOOGLE_CALENDAR_API_BASE,
 } from "./adapters/googleCalendar.js";
+export {
+  createDentalPms,
+  createDentalPmsClient,
+} from "./adapters/dentalPms.js";
 export { dentalConfig } from "./config/dental.js";
 
 export {
