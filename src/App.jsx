@@ -8,6 +8,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Navbar from '@/components/Navbar';
 import CallbackWidget from '@/components/CallbackWidget';
 import Home from '@/pages/Home';
+import Admin from '@/pages/Admin';
 // Add page imports here
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/admin" element={<Admin />} />
             {/* Add your page Route elements here */}
             <Route path="*" element={<PageNotFound />} />
           </Routes>

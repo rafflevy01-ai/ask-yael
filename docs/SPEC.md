@@ -12,10 +12,12 @@ profession platform**.
 > emergency **Triage**, **message-taking + callback**, and human handoff — each
 > emitting effects-as-data (`BOOK_APPOINTMENT`, `RESCHEDULE_APPOINTMENT`,
 > `CANCEL_APPOINTMENT`, `SEND_SMS`, `REQUEST_CALLBACK`, …) that edge adapters
-> (mock telephony + a mock Calendar/PMS) execute. Full HE/FR/EN throughout. The
-> remaining Phase-1 work is at the edges (real telephony/ASR-TTS + PMS providers)
-> and the admin dashboard MVP in the marketing app; the React/Vite site
-> is otherwise unchanged.
+> execute. The edges now include **live providers**: an **ElevenLabs**
+> telephony/voice adapter (TTS + speech-to-text) and a **Google Calendar**
+> adapter, alongside the local mock calendar. An **admin dashboard MVP**
+> (`/admin`) in the marketing app visualises call logs, transcripts, the booked
+> calendar, analytics, and the vertical config. Full HE/FR/EN throughout. The
+> React/Vite site is otherwise unchanged.
 
 ---
 
@@ -196,10 +198,21 @@ KnowledgeBaseEntry.
   `BOOK_APPOINTMENT` / `RESCHEDULE_APPOINTMENT` / `CANCEL_APPOINTMENT` as data;
   a mock adapter
   ([`src/engine/adapters/mockCalendar.js`](../src/engine/adapters/mockCalendar.js))
-  applies them and is wired through `runCall`. A live PMS/Google-Calendar
-  provider implements the same tiny interface (open decision §5.2).*
-- Admin dashboard MVP in this app: call logs + transcripts, calendar view,
-  config editor. *(Next — consumes the engine's `LOG` / booking effects.)*
+  is the local option, and a live **Google Calendar** adapter
+  ([`src/engine/adapters/googleCalendar.js`](../src/engine/adapters/googleCalendar.js))
+  maps the same effects onto the Google Calendar Events API behind an injectable
+  client. Both wire through `runCall` (open decision §5.2).*
+- Live telephony/voice provider behind the same telephony interface — an
+  **ElevenLabs** adapter
+  ([`src/engine/adapters/elevenLabsTelephony.js`](../src/engine/adapters/elevenLabsTelephony.js))
+  turns each `SAY` effect into speech via ElevenLabs Text-to-Speech and
+  transcribes caller audio via ElevenLabs Speech-to-Text; I/O is deferred
+  (async `flush()`) and injectable so the core stays pure (open decision §5.1).
+- Admin dashboard MVP in this app (**done**, at `/admin`): call logs +
+  transcripts, calendar view, analytics, and a config view. *It consumes the
+  engine's aggregation helpers
+  ([`src/engine/admin/callLog.js`](../src/engine/admin/callLog.js)) fed by the
+  engine's `LOG` / booking effects.*
 - Multilingual HE/FR/EN fully working.
 - **Exit criteria:** pilot in one dental clinic; measured no-show reduction &
   containment rate.
@@ -268,7 +281,12 @@ decision unit-testable.
 
 ## 5. Open decisions
 
-1. **Telephony/voice providers** — Twilio/Vonage for telephony; ElevenLabs /
-   Azure / Google for TTS. Chosen after the Hebrew quality + cost spike.
-2. **Calendar/PMS** — specific dental PMS vs. Google Calendar for the pilot.
+1. **Telephony/voice providers** — Twilio/Vonage for telephony; **ElevenLabs**
+   for TTS + speech-to-text (adapter implemented in
+   [`src/engine/adapters/elevenLabsTelephony.js`](../src/engine/adapters/elevenLabsTelephony.js)).
+   Final voice/model choice after the Hebrew quality + cost spike.
+2. **Calendar/PMS** — specific dental PMS vs. **Google Calendar** for the pilot
+   (Google Calendar adapter implemented in
+   [`src/engine/adapters/googleCalendar.js`](../src/engine/adapters/googleCalendar.js);
+   the local mock remains for offline/dev use).
 3. **Knowledge base** — per-clinic FAQ source and update workflow.

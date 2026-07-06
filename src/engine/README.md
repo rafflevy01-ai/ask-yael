@@ -30,7 +30,9 @@ reduce(State, Event, Config) -> { State, [Effect] }
 domain/    locales · events · effects · intents · state   (data + pure helpers)
 core/      reduce · phrases · runCall                      (pure dialog core + edge runner)
 skills/    triage · scheduling · amendment · faq           (emergency · booking · reschedule/cancel · knowledge base)
-adapters/  mockTelephony · mockCalendar                    (in-memory telephony/ASR + Calendar/PMS)
+adapters/  mockTelephony · mockCalendar                    (in-memory telephony/ASR + Calendar/PMS — local/dev)
+           elevenLabsTelephony · googleCalendar            (live providers: ElevenLabs voice + Google Calendar)
+admin/     callLog · demoCalls                             (dashboard aggregation: call records + analytics)
 config/    dental                                          (vertical config pack — data)
 index.js   public API
 ```

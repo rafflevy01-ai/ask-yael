@@ -100,37 +100,55 @@ export default function Navbar() {
         ))}
       </div>
 
-      {/* Right — CTA */}
-      <a
-        href="https://calendly.com/rafflevy01/30min"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          fontFamily: "Inter, sans-serif",
-          fontWeight: 500,
-          fontSize: "13px",
-          color: btnColor,
-          backgroundColor: btnBg,
-          border: `1px solid ${btnBorder}`,
-          borderRadius: "9999px",
-          height: "36px",
-          padding: "0 20px",
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          textDecoration: "none",
-          whiteSpace: "nowrap",
-          flexShrink: 0,
-          backdropFilter: overHero ? "blur(8px)" : "none",
-          WebkitBackdropFilter: overHero ? "blur(8px)" : "none",
-          transition: "background-color 0.3s ease, border-color 0.3s ease",
-          cursor: "pointer",
-        }}
-        onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-        onMouseLeave={e => e.currentTarget.style.opacity = "1"}
-      >
-        {t.nav.cta}
-      </a>
+      {/* Right — Dashboard + CTA */}
+      <div style={{ display: "flex", alignItems: "center", gap: "16px", flexShrink: 0 }}>
+        <a
+          href="/admin"
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 500,
+            fontSize: "13px",
+            color: subColor,
+            textDecoration: "none",
+            whiteSpace: "nowrap",
+            transition: "color 0.3s ease",
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = textColor}
+          onMouseLeave={e => e.currentTarget.style.color = subColor}
+        >
+          Dashboard
+        </a>
+        <a
+          href="https://calendly.com/rafflevy01/30min"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 500,
+            fontSize: "13px",
+            color: btnColor,
+            backgroundColor: btnBg,
+            border: `1px solid ${btnBorder}`,
+            borderRadius: "9999px",
+            height: "36px",
+            padding: "0 20px",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            textDecoration: "none",
+            whiteSpace: "nowrap",
+            flexShrink: 0,
+            backdropFilter: overHero ? "blur(8px)" : "none",
+            WebkitBackdropFilter: overHero ? "blur(8px)" : "none",
+            transition: "background-color 0.3s ease, border-color 0.3s ease",
+            cursor: "pointer",
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
+          onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+        >
+          {t.nav.cta}
+        </a>
+      </div>
 
       <style>{`
         @media (max-width: 767px) {
