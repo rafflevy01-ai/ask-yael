@@ -48,6 +48,14 @@ export {
   DEFAULT_STT_MODEL,
 } from "./adapters/elevenLabsTelephony.js";
 export {
+  createVoiceProfile,
+  missingVoiceRequirements,
+  isVoiceProfileReady,
+  assertVoiceProfileReady,
+  REQUIRED_VOICE_LOCALES,
+  VOICE_FINALIZATION_CHECKLIST,
+} from "./config/voiceProfile.js";
+export {
   createGoogleCalendar,
   createGoogleCalendarClient,
   GOOGLE_CALENDAR_API_BASE,

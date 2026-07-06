@@ -288,7 +288,12 @@ decision unit-testable.
 1. **Telephony/voice providers** — Twilio/Vonage for telephony; **ElevenLabs**
    for TTS + speech-to-text (adapter implemented in
    [`src/engine/adapters/elevenLabsTelephony.js`](../src/engine/adapters/elevenLabsTelephony.js)).
-   Final voice/model choice after the Hebrew quality + cost spike.
+   The voice configuration is centralized in a
+   [`voiceProfile`](../src/engine/config/voiceProfile.js) that also reports
+   **what is still needed** to finalize voice (`missingVoiceRequirements` /
+   `assertVoiceProfileReady`, plus the human `VOICE_FINALIZATION_CHECKLIST`):
+   an API key, a chosen voice id per locale (he/fr/en), model confirmation, and
+   sign-off on the Hebrew quality + cost spike.
 2. **Calendar/PMS** — **resolved: a dedicated dental PMS** is the pilot booking
    backend (adapter implemented in
    [`src/engine/adapters/dentalPms.js`](../src/engine/adapters/dentalPms.js);

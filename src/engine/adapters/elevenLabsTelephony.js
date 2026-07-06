@@ -53,6 +53,9 @@ async function defaultSynthesize({
 
 // createElevenLabsTelephony :: (Options) -> Telephony
 // Options:
+//   - voiceProfile: a finalized voice profile (see config/voiceProfile.js) that
+//                   supplies apiKey / voices / fallback / model in one object.
+//                   Explicit options below override the profile when both given.
 //   - apiKey:     ElevenLabs API key (required for real calls; never hard-coded).
 //   - voiceId:    fallback voice used when no per-locale voice is configured.
 //   - voices:     { [locale]: voiceId } — pick a native-sounding voice per language.
@@ -60,11 +63,18 @@ async function defaultSynthesize({
 //   - synthesize: injectable async TTS fn (defaults to the real ElevenLabs call).
 //   - fetchImpl:  injectable fetch (defaults to global fetch).
 export function createElevenLabsTelephony(options = {}) {
+  const { voiceProfile = null } = options;
+  const apiKey = options.apiKey != null ? options.apiKey : voiceProfile && voiceProfile.apiKey;
+  const voiceId =
+    options.voiceId != null
+      ? options.voiceId
+      : (voiceProfile && voiceProfile.fallbackVoiceId) || null;
+  const voices = options.voices != null ? options.voices : (voiceProfile && voiceProfile.voices) || {};
+  const modelId =
+    options.modelId != null
+      ? options.modelId
+      : (voiceProfile && voiceProfile.ttsModel) || DEFAULT_TTS_MODEL;
   const {
-    apiKey,
-    voiceId = null,
-    voices = {},
-    modelId = DEFAULT_TTS_MODEL,
     synthesize = defaultSynthesize,
     fetchImpl = fetch,
     apiBase = ELEVENLABS_API_BASE,
@@ -180,9 +190,13 @@ async function defaultTranscribe({
 // audio through ElevenLabs and produces the CALLER_UTTERANCE event the core
 // consumes, carrying the detected locale when it is one we support.
 export function createElevenLabsAsr(options = {}) {
+  const { voiceProfile = null } = options;
+  const apiKey = options.apiKey != null ? options.apiKey : voiceProfile && voiceProfile.apiKey;
+  const modelId =
+    options.modelId != null
+      ? options.modelId
+      : (voiceProfile && voiceProfile.sttModel) || DEFAULT_STT_MODEL;
   const {
-    apiKey,
-    modelId = DEFAULT_STT_MODEL,
     transcribe = defaultTranscribe,
     fetchImpl = fetch,
     apiBase = ELEVENLABS_API_BASE,
