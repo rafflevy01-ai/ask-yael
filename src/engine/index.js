@@ -40,4 +40,24 @@ export { findFaqAnswer, matchFaqEntry } from "./skills/faq.js";
 
 export { createMockTelephony, createMockAsr } from "./adapters/mockTelephony.js";
 export { createMockCalendar } from "./adapters/mockCalendar.js";
+export {
+  createElevenLabsTelephony,
+  createElevenLabsAsr,
+  ELEVENLABS_API_BASE,
+  DEFAULT_TTS_MODEL,
+  DEFAULT_STT_MODEL,
+} from "./adapters/elevenLabsTelephony.js";
+export {
+  createGoogleCalendar,
+  createGoogleCalendarClient,
+  GOOGLE_CALENDAR_API_BASE,
+} from "./adapters/googleCalendar.js";
 export { dentalConfig } from "./config/dental.js";
+
+export {
+  buildCallRecord,
+  summarize,
+  upcomingAppointments,
+  CALL_OUTCOMES,
+} from "./admin/callLog.js";
+export { demoCallRecords } from "./admin/demoCalls.js";
