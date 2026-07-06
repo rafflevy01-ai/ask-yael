@@ -1,4 +1,4 @@
-// Public API for the Ask-Yael conversation engine (Phase 0 skeleton).
+// Public API for the Ask-Yael conversation engine.
 //
 // Import surface for the rest of the app (admin dashboard, future telephony
 // worker) and for tests. The core is pure and framework-agnostic; UI code can
