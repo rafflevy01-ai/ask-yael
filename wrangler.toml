@@ -1,0 +1,41 @@
+# Cloudflare configuration for Ask-Yael.
+#
+# The site deploys to Cloudflare Pages (static SPA built to ./dist) with a
+# Pages Functions API under /functions and a D1 (SQLite) database as the call
+# store. `scripts/deploy-cloudflare.sh` fills in `database_id` / KV `id` the
+# first time it provisions them (or set them via the Cloudflare dashboard).
+
+name = "ask-yael"
+compatibility_date = "2024-11-06"
+pages_build_output_dir = "dist"
+
+# ---------------------------------------------------------------------------
+# D1 database — the persistent call store the dashboard reads and the telephony
+# worker writes (schema in ./migrations). `database_id` is filled on first
+# `wrangler d1 create ask-yael-db`.
+# ---------------------------------------------------------------------------
+[[d1_databases]]
+binding = "DB"
+database_name = "ask-yael-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+# ---------------------------------------------------------------------------
+# KV namespace — edge cache for computed analytics / hot reads (optional).
+# `id` is filled on first `wrangler kv namespace create CACHE`.
+# ---------------------------------------------------------------------------
+[[kv_namespaces]]
+binding = "CACHE"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# ---------------------------------------------------------------------------
+# Non-secret vars. Secrets (ELEVENLABS_API_KEY, DENTAL_PMS_API_KEY, SEED_TOKEN,
+# …) are NOT stored here — set them with `wrangler pages secret put NAME`.
+# ---------------------------------------------------------------------------
+[vars]
+APP_NAME = "ask-yael"
+TELEPHONY_CARRIER = ""
+# Cross-origin API access is off by default (dashboard is same-origin). Set to a
+# comma-separated allowlist of origins, or "*" to allow any, if a separate front
+# end needs to call the API.
+CORS_ALLOW_ORIGIN = ""

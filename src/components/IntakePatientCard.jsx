@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Check } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
-
-const INTAKE_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/8bd79c064_Make_it_more_natural_Remove_th_Nano_Banana_2_70021.png";
 
 export default function IntakePatientCard() {
   const { t, isRtl } = useLanguage();
@@ -16,25 +14,10 @@ export default function IntakePatientCard() {
     { label: f.hmo, value: v.hmo, ltr: false },
     { label: f.appointment, value: v.appointment, ltr: false },
   ];
-  const [imgLoaded, setImgLoaded] = useState(false);
 
   return (
-    <div className="ps-card" style={{ position: "relative", background: "#1a1a1a" }}>
-      <img
-        src={INTAKE_IMG}
-        alt="Medical receptionist using Yael dashboard"
-        onLoad={() => setImgLoaded(true)}
-        style={{
-          position: "absolute", inset: 0,
-          width: "100%", height: "100%",
-          objectFit: "cover",
-          objectPosition: "center 35%",
-          transform: "scale(1.5)",
-          opacity: imgLoaded ? 1 : 0,
-          transition: "opacity 0.4s ease",
-        }}
-      />
-      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.15)", zIndex: 1 }} />
+    <div className="ps-card" style={{ position: "relative", background: "linear-gradient(150deg, #2B3A55 0%, #3E5C76 45%, #7796B0 100%)" }}>
+      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(80% 60% at 70% 20%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 60%)", zIndex: 1 }} />
 
       {/* Registration form */}
       <div style={{

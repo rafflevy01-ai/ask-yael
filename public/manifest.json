@@ -1,0 +1,16 @@
+{
+  "name": "Ask Yael",
+  "short_name": "Yael",
+  "description": "Yael — an automated multilingual receptionist for clinics.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0D0D0D",
+  "theme_color": "#0D0D0D",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

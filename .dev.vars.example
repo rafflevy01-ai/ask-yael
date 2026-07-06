@@ -1,0 +1,24 @@
+# Local development secrets for `wrangler pages dev` (loaded as env vars in
+# Pages Functions). Copy to `.dev.vars` and fill in — `.dev.vars` is gitignored.
+#
+# In production these are set as encrypted secrets with:
+#   wrangler pages secret put NAME --project-name ask-yael
+
+# ElevenLabs voice (see src/engine/config/voiceProfile.js)
+ELEVENLABS_API_KEY=""
+ELEVENLABS_VOICE_HE=""
+ELEVENLABS_VOICE_FR=""
+ELEVENLABS_VOICE_EN=""
+
+# Dental PMS booking backend (see src/engine/adapters/dentalPms.js)
+DENTAL_PMS_BASE_URL=""
+DENTAL_PMS_API_KEY=""
+DENTAL_PMS_PROVIDER_ID=""
+DENTAL_PMS_OPERATORY_ID=""
+
+# Telephony carrier (pilot)
+TELEPHONY_CARRIER=""
+TELEPHONY_PHONE_NUMBER=""
+
+# Guards the /api/seed endpoint on a populated store
+SEED_TOKEN=""

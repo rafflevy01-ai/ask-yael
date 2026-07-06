@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useLanguage } from "@/lib/LanguageContext";
 
 const LANGUAGES = [
@@ -10,11 +11,17 @@ const LANGUAGES = [
 export default function Navbar() {
   const { lang, setLang, t } = useLanguage();
   const [overHero, setOverHero] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
       const hero = document.querySelector("[data-hero-section]");
-      if (!hero) return;
+      if (!hero) {
+        // Pages without a dark hero (e.g. /admin) use the solid navbar so it
+        // stays legible on light backgrounds.
+        setOverHero(false);
+        return;
+      }
       const heroBottom = hero.offsetTop + hero.offsetHeight;
       setOverHero(window.scrollY < heroBottom - 64);
     };
@@ -26,7 +33,7 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
     };
-  }, []);
+  }, [location.pathname]);
 
   const textColor    = overHero ? "#FFFFFF"                  : "#0D0D0D";
   const subColor     = overHero ? "rgba(255,255,255,0.5)"    : "#6B6B6B";
@@ -100,37 +107,55 @@ export default function Navbar() {
         ))}
       </div>
 
-      {/* Right — CTA */}
-      <a
-        href="https://calendly.com/rafflevy01/30min"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          fontFamily: "Inter, sans-serif",
-          fontWeight: 500,
-          fontSize: "13px",
-          color: btnColor,
-          backgroundColor: btnBg,
-          border: `1px solid ${btnBorder}`,
-          borderRadius: "9999px",
-          height: "36px",
-          padding: "0 20px",
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          textDecoration: "none",
-          whiteSpace: "nowrap",
-          flexShrink: 0,
-          backdropFilter: overHero ? "blur(8px)" : "none",
-          WebkitBackdropFilter: overHero ? "blur(8px)" : "none",
-          transition: "background-color 0.3s ease, border-color 0.3s ease",
-          cursor: "pointer",
-        }}
-        onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-        onMouseLeave={e => e.currentTarget.style.opacity = "1"}
-      >
-        {t.nav.cta}
-      </a>
+      {/* Right — Dashboard + CTA */}
+      <div style={{ display: "flex", alignItems: "center", gap: "16px", flexShrink: 0 }}>
+        <a
+          href="/admin"
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 500,
+            fontSize: "13px",
+            color: subColor,
+            textDecoration: "none",
+            whiteSpace: "nowrap",
+            transition: "color 0.3s ease",
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = textColor}
+          onMouseLeave={e => e.currentTarget.style.color = subColor}
+        >
+          Dashboard
+        </a>
+        <a
+          href="https://calendly.com/rafflevy01/30min"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 500,
+            fontSize: "13px",
+            color: btnColor,
+            backgroundColor: btnBg,
+            border: `1px solid ${btnBorder}`,
+            borderRadius: "9999px",
+            height: "36px",
+            padding: "0 20px",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            textDecoration: "none",
+            whiteSpace: "nowrap",
+            flexShrink: 0,
+            backdropFilter: overHero ? "blur(8px)" : "none",
+            WebkitBackdropFilter: overHero ? "blur(8px)" : "none",
+            transition: "background-color 0.3s ease, border-color 0.3s ease",
+            cursor: "pointer",
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
+          onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+        >
+          {t.nav.cta}
+        </a>
+      </div>
 
       <style>{`
         @media (max-width: 767px) {

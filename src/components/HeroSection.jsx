@@ -1,58 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import { useLanguage } from "@/lib/LanguageContext";
-
-const VIDEO_URL = "https://media.base44.com/videos/public/6a2ab0818c0d050752d1521b/3f09837ab_Cinematic_background_video_12__Veo_31_59928.mp4";
 
 export default function HeroSection() {
   const { lang, setLang, t } = useLanguage();
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    // Ensure iOS Safari treats this as an inline, muted, autoplayable video.
-    // These MUST be set (as properties + attributes) BEFORE the source is
-    // attached, otherwise iOS shows the native play button and refuses autoplay.
-    video.muted = true;
-    video.defaultMuted = true;
-    video.setAttribute("muted", "");
-    video.setAttribute("playsinline", "");
-    video.setAttribute("webkit-playsinline", "");
-    video.playsInline = true;
-
-    const play = () => { const p = video.play(); if (p) p.catch(() => {}); };
-
-    video.addEventListener("loadeddata", play);
-    video.addEventListener("canplay", play);
-
-    // Attach the source only now that muted/inline are guaranteed set, then
-    // force the browser to start fetching immediately.
-    if (!video.src) video.src = VIDEO_URL;
-    try { video.load(); } catch (e) { /* noop */ }
-    play();
-
-    // Retry for stubborn mobile browsers
-    const timers = [200, 600, 1200, 2500].map((ms) => setTimeout(play, ms));
-
-    // Kick playback off the first user interaction (covers iOS Low Power Mode)
-    const onInteract = () => { play(); };
-    document.addEventListener("touchstart", onInteract, { once: true, passive: true });
-    document.addEventListener("click", onInteract, { once: true });
-
-    // Resume when the tab becomes visible again
-    const onVisible = () => { if (!document.hidden) play(); };
-    document.addEventListener("visibilitychange", onVisible);
-
-    return () => {
-      video.removeEventListener("loadeddata", play);
-      video.removeEventListener("canplay", play);
-      document.removeEventListener("touchstart", onInteract);
-      document.removeEventListener("click", onInteract);
-      document.removeEventListener("visibilitychange", onVisible);
-      timers.forEach(clearTimeout);
-    };
-  }, []);
 
   return (
     <section
@@ -66,32 +16,19 @@ export default function HeroSection() {
         /* height set in CSS so we can use dvh with vh fallback */
       }}
     >
-      {/* ── Video ── */}
-      <video
-        ref={videoRef}
-        muted loop playsInline autoPlay
-        controls={false}
-        disablePictureInPicture
-        disableRemotePlayback
-        preload="auto"
-        x-webkit-airplay="deny"
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          objectPosition: "center top",
-          zIndex: 0,
-          pointerEvents: "none",
-        }}
-      />
+      {/* ── Animated ambient background (self-hosted, no external assets) ── */}
+      <div className="hero-bg" aria-hidden="true" style={{
+        position: "absolute",
+        inset: 0,
+        zIndex: 0,
+        pointerEvents: "none",
+      }} />
 
       {/* ── Gradient overlay ── */}
       <div style={{
         position: "absolute",
         inset: 0,
-        background: "linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.85) 100%)",
+        background: "linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.9) 100%)",
         zIndex: 1,
         pointerEvents: "none",
       }} />
@@ -242,6 +179,27 @@ export default function HeroSection() {
           height: 100vh;
           height: 100dvh;
           min-height: 580px;
+        }
+
+        /* ── Animated ambient background (pure CSS, self-hosted) ── */
+        .hero-bg {
+          background:
+            radial-gradient(60% 55% at 18% 22%, rgba(0,122,255,0.45) 0%, rgba(0,122,255,0) 60%),
+            radial-gradient(55% 50% at 82% 18%, rgba(175,82,222,0.40) 0%, rgba(175,82,222,0) 62%),
+            radial-gradient(65% 60% at 72% 82%, rgba(50,173,230,0.38) 0%, rgba(50,173,230,0) 60%),
+            radial-gradient(50% 50% at 30% 88%, rgba(52,199,89,0.28) 0%, rgba(52,199,89,0) 60%),
+            #0D0D0D;
+          background-size: 200% 200%, 200% 200%, 200% 200%, 200% 200%, 100% 100%;
+          animation: hero-bg-drift 24s ease-in-out infinite alternate;
+          filter: saturate(115%);
+        }
+        @keyframes hero-bg-drift {
+          0%   { background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0 0; }
+          50%  { background-position: 40% 30%, 60% 20%, 55% 70%, 35% 65%, 0 0; }
+          100% { background-position: 100% 100%, 0% 100%, 0% 0%, 100% 0%, 0 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero-bg { animation: none; }
         }
 
         /* ── Desktop inner padding scales with viewport ── */
