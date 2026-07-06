@@ -13,13 +13,64 @@ export const dentalConfig = Object.freeze({
   // Bookable resource type — a dental chair / operatory.
   resource: Object.freeze({ type: "chair", label: "Operatory" }),
 
-  // Appointment catalogue: durations drive scheduling rules.
+  // Appointment catalogue: durations drive scheduling rules. Per-locale
+  // `keywords` let the Scheduling skill recognise a requested type from free
+  // speech ("I need a cleaning" / "un détartrage" / "ניקוי אבנית") — vertical
+  // vocabulary lives in the config (data), not in the core.
   appointmentTypes: Object.freeze([
-    Object.freeze({ code: "checkup", label: "Check-up", minutes: 30, recallMonths: 6 }),
-    Object.freeze({ code: "cleaning", label: "Cleaning", minutes: 45, recallMonths: 6 }),
-    Object.freeze({ code: "filling", label: "Filling", minutes: 45 }),
-    Object.freeze({ code: "root_canal", label: "Root canal", minutes: 90 }),
-    Object.freeze({ code: "emergency", label: "Emergency toothache", minutes: 30, urgent: true }),
+    Object.freeze({
+      code: "checkup",
+      label: "Check-up",
+      minutes: 30,
+      recallMonths: 6,
+      keywords: Object.freeze({
+        en: Object.freeze(["check-up", "checkup", "check up", "exam"]),
+        fr: Object.freeze(["contrôle", "controle", "examen", "bilan"]),
+        he: Object.freeze(["בדיקה", "בדיקת שיניים"]),
+      }),
+    }),
+    Object.freeze({
+      code: "cleaning",
+      label: "Cleaning",
+      minutes: 45,
+      recallMonths: 6,
+      keywords: Object.freeze({
+        en: Object.freeze(["cleaning", "clean", "hygiene", "scale"]),
+        fr: Object.freeze(["nettoyage", "détartrage", "detartrage", "hygiène"]),
+        he: Object.freeze(["ניקוי", "ניקוי אבנית", "היגיינה"]),
+      }),
+    }),
+    Object.freeze({
+      code: "filling",
+      label: "Filling",
+      minutes: 45,
+      keywords: Object.freeze({
+        en: Object.freeze(["filling", "cavity"]),
+        fr: Object.freeze(["plombage", "carie", "obturation"]),
+        he: Object.freeze(["סתימה", "סתימות"]),
+      }),
+    }),
+    Object.freeze({
+      code: "root_canal",
+      label: "Root canal",
+      minutes: 90,
+      keywords: Object.freeze({
+        en: Object.freeze(["root canal", "root-canal"]),
+        fr: Object.freeze(["traitement de canal", "canal radiculaire", "dévitalisation"]),
+        he: Object.freeze(["טיפול שורש", "שורש"]),
+      }),
+    }),
+    Object.freeze({
+      code: "emergency",
+      label: "Emergency toothache",
+      minutes: 30,
+      urgent: true,
+      keywords: Object.freeze({
+        en: Object.freeze(["toothache", "tooth ache", "emergency"]),
+        fr: Object.freeze(["mal de dent", "rage de dent", "urgence"]),
+        he: Object.freeze(["כאב שיניים", "כאב שן"]),
+      }),
+    }),
   ]),
 
   // Extra emergency triggers merged into the baseline triage set. Dental red

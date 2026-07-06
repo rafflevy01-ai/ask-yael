@@ -112,6 +112,65 @@ describe("reduce — emergency short-circuit", () => {
   });
 });
 
+describe("reduce — booking flow (Scheduling skill)", () => {
+  const engine = () => createEngine(dentalConfig);
+  const started = (eng) => {
+    let s = eng.initialState();
+    s = eng.reduce(s, callStarted("call-book")).state;
+    s = eng.reduce(s, callerUtterance("English please")).state;
+    return s;
+  };
+
+  it("asks for the appointment type when a booking starts without one", () => {
+    const eng = engine();
+    const res = eng.reduce(started(eng), callerUtterance("I'd like to book an appointment"));
+    expect(res.state.intent).toBe(INTENTS.BOOK);
+    expect(res.state.phase).toBe(PHASES.BOOKING);
+    expect(res.state.booking.awaiting).toBe("type");
+    expect(firstOf(res.effects, EFFECTS.SAY)).toBeDefined();
+  });
+
+  it("collects type then day across turns and books with an SMS confirmation", () => {
+    const eng = engine();
+    let res = eng.reduce(started(eng), callerUtterance("I'd like to book an appointment"));
+    expect(res.state.phase).toBe(PHASES.BOOKING);
+    expect(res.state.booking.awaiting).toBe("type");
+
+    res = eng.reduce(res.state, callerUtterance("a cleaning"));
+    expect(res.state.phase).toBe(PHASES.BOOKING);
+    expect(res.state.booking.appointmentType).toBe("cleaning");
+
+    res = eng.reduce(res.state, callerUtterance("tuesday works"));
+    expect(res.state.phase).toBe(PHASES.ROUTING);
+    expect(res.state.booking).toBeNull();
+
+    const booked = firstOf(res.effects, EFFECTS.BOOK_APPOINTMENT);
+    expect(booked).toBeDefined();
+    expect(booked.details.appointmentType).toBe("cleaning");
+    expect(booked.details.day).toBe("tuesday");
+
+    const sms = firstOf(res.effects, EFFECTS.SEND_SMS);
+    expect(sms).toBeDefined();
+    expect(sms.locale).toBe("en");
+  });
+
+  it("books immediately when type and day arrive together", () => {
+    const eng = engine();
+    const res = eng.reduce(started(eng), callerUtterance("book a filling for friday"));
+    expect(res.state.phase).toBe(PHASES.ROUTING);
+    expect(firstOf(res.effects, EFFECTS.BOOK_APPOINTMENT).details.appointmentType).toBe("filling");
+  });
+
+  it("still short-circuits to emergency mid-booking", () => {
+    const eng = engine();
+    let res = eng.reduce(started(eng), callerUtterance("I want to book"));
+    expect(res.state.phase).toBe(PHASES.BOOKING);
+    res = eng.reduce(res.state, callerUtterance("actually my tooth got knocked out"));
+    expect(res.state.intent).toBe(INTENTS.EMERGENCY);
+    expect(firstOf(res.effects, EFFECTS.ESCALATE_EMERGENCY)).toBeDefined();
+  });
+});
+
 describe("reduce — purity", () => {
   it("does not mutate the input state", () => {
     const start = initialState();

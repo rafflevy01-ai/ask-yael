@@ -12,6 +12,8 @@ export const EFFECTS = Object.freeze({
   ESCALATE_EMERGENCY: "ESCALATE_EMERGENCY",
   TRANSFER_TO_HUMAN: "TRANSFER_TO_HUMAN",
   TAKE_MESSAGE: "TAKE_MESSAGE",
+  BOOK_APPOINTMENT: "BOOK_APPOINTMENT",
+  SEND_SMS: "SEND_SMS",
   LOG: "LOG",
   END_CALL: "END_CALL",
 });
@@ -37,6 +39,17 @@ export const transferToHuman = (reason) => ({
 
 // Capture a message for callback.
 export const takeMessage = (locale) => ({ type: EFFECTS.TAKE_MESSAGE, locale });
+
+// Book a confirmed appointment against the calendar/PMS (executed at the edge).
+// `details` carries the collected slots, e.g. { appointmentType, day }.
+export const bookAppointment = (callId, details) => ({
+  type: EFFECTS.BOOK_APPOINTMENT,
+  callId,
+  details,
+});
+
+// Send an SMS/WhatsApp confirmation or reminder (executed at the edge).
+export const sendSms = (locale, text) => ({ type: EFFECTS.SEND_SMS, locale, text });
 
 // Structured audit log entry.
 export const log = (entry) => ({ type: EFFECTS.LOG, entry });

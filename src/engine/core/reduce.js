@@ -13,6 +13,12 @@ import { PHASES, initialState, patch, appendTranscript } from "../domain/state.j
 import * as Fx from "../domain/effects.js";
 import { phrase } from "./phrases.js";
 import { isEmergency, emergencyScript } from "../skills/triage.js";
+import {
+  advanceBooking,
+  emptyBooking,
+  appointmentLabel,
+  BOOKING_STATUS,
+} from "../skills/scheduling.js";
 
 // Spoken hints used to recognise a language choice from free text, e.g. the
 // caller answering the menu with "English please" or "עברית".
@@ -87,8 +93,8 @@ function onLanguageSelection(state, event, locale) {
 }
 
 // Map a routed intent to its reply key and any accompanying side-effect.
+// BOOK is handled separately by the multi-turn Scheduling skill (onBooking).
 const INTENT_ROUTES = Object.freeze({
-  [INTENTS.BOOK]: { key: "booking" },
   [INTENTS.RESCHEDULE]: { key: "reschedule" },
   [INTENTS.CANCEL]: { key: "cancel" },
   [INTENTS.ASK]: { key: "faq" },
@@ -97,8 +103,42 @@ const INTENT_ROUTES = Object.freeze({
   [INTENTS.UNKNOWN]: { key: "fallback" },
 });
 
-function onRouting(state, event, locale) {
+// onBooking drives the Scheduling skill's slot-filling machine. It folds the
+// caller's utterance into the booking, then either asks for the next missing
+// slot (type/day) or, once complete, emits the BOOK_APPOINTMENT + SMS
+// confirmation effects and returns to general routing.
+function onBooking(state, prevBooking, config, locale, text) {
+  const { booking, status } = advanceBooking(prevBooking, config, locale, text);
+
+  if (status === BOOKING_STATUS.ASK_TYPE) {
+    const next = patch(state, { intent: INTENTS.BOOK, phase: PHASES.BOOKING, booking });
+    return reply(next, [], locale, "askAppointmentType");
+  }
+  if (status === BOOKING_STATUS.ASK_DAY) {
+    const next = patch(state, { intent: INTENTS.BOOK, phase: PHASES.BOOKING, booking });
+    return reply(next, [], locale, "askDay");
+  }
+
+  // COMPLETE — confirm, book against the calendar, and text the confirmation.
+  const vars = { type: appointmentLabel(booking.appointmentType, config), day: booking.day };
+  const next = patch(state, { intent: INTENTS.BOOK, phase: PHASES.ROUTING, booking: null });
+  const effects = [
+    Fx.log({ kind: "appointment_booked", callId: state.callId, details: booking }),
+    Fx.bookAppointment(state.callId, {
+      appointmentType: booking.appointmentType,
+      day: booking.day,
+      locale,
+    }),
+    Fx.sendSms(locale, phrase(locale, "smsConfirmation", vars)),
+  ];
+  return reply(next, effects, locale, "bookingConfirmed", vars);
+}
+
+function onRouting(state, event, locale, config) {
   const intent = detectIntent(event.text, locale);
+  if (intent === INTENTS.BOOK) {
+    return onBooking(state, emptyBooking(), config, locale, event.text);
+  }
   const route = INTENT_ROUTES[intent] || INTENT_ROUTES[INTENTS.UNKNOWN];
   const withIntent = patch(state, { intent });
   const sideEffects = route.effect ? [route.effect(locale)] : [];
@@ -127,7 +167,12 @@ function onCallerUtterance(state, event, config) {
     return onLanguageSelection(heard, event, locale);
   }
 
-  return onRouting(heard, event, locale);
+  // Continue an in-progress booking conversation before general routing.
+  if (heard.phase === PHASES.BOOKING && heard.booking) {
+    return onBooking(heard, heard.booking, config, locale, event.text);
+  }
+
+  return onRouting(heard, event, locale, config);
 }
 
 function onCallEnded(state) {

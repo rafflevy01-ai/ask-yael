@@ -16,6 +16,8 @@ describe("runCall — end-to-end dental call simulation", () => {
         callStarted("call-42"),
         callerUtterance("שלום", "he"), // language detected as Hebrew
         callerUtterance("אני רוצה לקבוע תור"), // "I want to book an appointment"
+        callerUtterance("ניקוי אבנית"), // "cleaning" — the appointment type
+        callerUtterance("יום שלישי"), // "Tuesday" — the preferred day
         callEnded(),
       ],
     });
@@ -26,6 +28,12 @@ describe("runCall — end-to-end dental call simulation", () => {
     const afterLang = transcript.slice(2); // skip the two pre-language greeting lines
     expect(afterLang.length).toBeGreaterThan(0);
     expect(afterLang.every((line) => line.locale === "he")).toBe(true);
+    // The booking flow produced a real appointment + SMS confirmation.
+    const booking = telephony.bookings()[0];
+    expect(booking).toBeDefined();
+    expect(booking.details.appointmentType).toBe("cleaning");
+    expect(booking.details.day).toBe("יום שלישי");
+    expect(telephony.messages()[0].locale).toBe("he");
     // The call must be properly terminated.
     expect(effects.map((e) => e.type)).toContain(EFFECTS.END_CALL);
   });

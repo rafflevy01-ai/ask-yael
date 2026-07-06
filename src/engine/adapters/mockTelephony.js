@@ -20,6 +20,8 @@ import { EFFECTS } from "../domain/effects.js";
 // human-readable trace of the call for assertions/demos.
 export function createMockTelephony() {
   const spoken = []; // [{ locale, text }]
+  const texts = []; // [{ locale, text }] — outbound SMS/WhatsApp confirmations
+  const bookings = []; // [{ callId, details }] — appointments booked at the edge
   const events = []; // full effect trace
 
   return {
@@ -27,12 +29,24 @@ export function createMockTelephony() {
       events.push(effect);
       if (effect.type === EFFECTS.SAY) {
         spoken.push({ locale: effect.locale, text: effect.text });
+      } else if (effect.type === EFFECTS.SEND_SMS) {
+        texts.push({ locale: effect.locale, text: effect.text });
+      } else if (effect.type === EFFECTS.BOOK_APPOINTMENT) {
+        bookings.push({ callId: effect.callId, details: effect.details });
       }
       return effect;
     },
     // Everything Yael said, in order.
     transcript() {
       return spoken.slice();
+    },
+    // Outbound SMS/WhatsApp messages sent during the call.
+    messages() {
+      return texts.slice();
+    },
+    // Appointments booked against the calendar/PMS during the call.
+    bookings() {
+      return bookings.slice();
     },
     // The raw effect trace (SAY, LOG, ESCALATE_EMERGENCY, …).
     effects() {

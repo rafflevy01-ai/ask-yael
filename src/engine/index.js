@@ -22,6 +22,14 @@ export {
 } from "./domain/locales.js";
 
 export { isEmergency, emergencyScript } from "./skills/triage.js";
+export {
+  BOOKING_STATUS,
+  emptyBooking,
+  advanceBooking,
+  detectAppointmentType,
+  detectDay,
+  appointmentLabel,
+} from "./skills/scheduling.js";
 
 export { createMockTelephony, createMockAsr } from "./adapters/mockTelephony.js";
 export { dentalConfig } from "./config/dental.js";

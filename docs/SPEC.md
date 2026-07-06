@@ -5,8 +5,10 @@ calls in **Hebrew, French, English, and any other language**. This document is
 the source of truth for the phased build: **dental → physical therapy →
 profession platform**.
 
-> Status: **Phase 0 (foundations / risk-busting)**. A pure, TDD conversation
-> engine skeleton lives in [`src/engine`](../src/engine). The existing marketing
+> Status: **Phase 1 (dental prototype) — in progress**. The pure, TDD
+> conversation engine (Phase 0) lives in [`src/engine`](../src/engine); the
+> Scheduling skill now drives a real multi-turn appointment booking (type + day
+> slot-filling → `BOOK_APPOINTMENT` + SMS confirmation). The existing marketing
 > site (Base44 + React/Vite) is unchanged.
 
 ---
@@ -170,11 +172,16 @@ KnowledgeBaseEntry.
 ### Phase 1 — Dental prototype (vertical #1)
 
 - Dental config pack: appointment catalogue, chair resource, dental triage
-  rules, intake schema *(seed in [`src/engine/config/dental.js`](../src/engine/config/dental.js))*.
-- Skills: Scheduling (book/reschedule/cancel), FAQ/KB, emergency triage,
-  SMS/WhatsApp confirmations, message-taking + callback, human handoff.
+  rules, intake schema *(seed in [`src/engine/config/dental.js`](../src/engine/config/dental.js);
+  appointment types now carry per-locale keywords for speech recognition)*.
+- Skills: **Scheduling — booking (done: multi-turn type+day slot-filling →
+  `BOOK_APPOINTMENT` + SMS confirmation, see
+  [`src/engine/skills/scheduling.js`](../src/engine/skills/scheduling.js))**;
+  reschedule/cancel, FAQ/KB, emergency triage (done), SMS/WhatsApp
+  confirmations (done), message-taking + callback, human handoff.
 - Calendar/PMS integration behind an adapter interface (start with one, e.g.
-  Google Calendar or a dental PMS).
+  Google Calendar or a dental PMS). *The core emits `BOOK_APPOINTMENT` as data;
+  the edge adapter is the seam.*
 - Admin dashboard MVP in this app: call logs + transcripts, calendar view,
   config editor.
 - Multilingual HE/FR/EN fully working.
@@ -213,7 +220,7 @@ Pure, framework-agnostic, and fully tested. Run `npm test`.
 src/engine/
   domain/      locales · events · effects · intents · state   (data + pure helpers)
   core/        reduce · phrases · runCall                      (pure dialog core + edge runner)
-  skills/      triage                                          (locale-aware emergency detection)
+  skills/      triage · scheduling                             (emergency detection · booking)
   adapters/    mockTelephony                                   (in-memory telephony + ASR)
   config/      dental                                          (vertical config pack — data)
   index.js     public API
@@ -236,8 +243,8 @@ const res = engine.reduce(started.state, callerUtterance("Bonjour", "fr"));
 
 Everything the engine decides is returned as **effects (data)** — `SAY`,
 `SET_LANGUAGE`, `ESCALATE_EMERGENCY`, `TRANSFER_TO_HUMAN`, `TAKE_MESSAGE`,
-`LOG`, `END_CALL` — which the edge (telephony adapter) interprets. This keeps
-the core pure and every decision unit-testable.
+`BOOK_APPOINTMENT`, `SEND_SMS`, `LOG`, `END_CALL` — which the edge (telephony
+adapter) interprets. This keeps the core pure and every decision unit-testable.
 
 ---
 
