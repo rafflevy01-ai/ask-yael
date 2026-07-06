@@ -105,8 +105,17 @@ function onRouting(state, event, locale) {
   return reply(withIntent, sideEffects, locale, route.key);
 }
 
+// activeLocale :: (State, Event) -> locale
+// The locale to speak in right now: the confirmed call locale if we have one,
+// otherwise a trustworthy ASR detection, otherwise the default.
+function activeLocale(state, event) {
+  if (state.locale) return state.locale;
+  if (isSupportedLocale(event.detectedLocale)) return event.detectedLocale;
+  return DEFAULT_LOCALE;
+}
+
 function onCallerUtterance(state, event, config) {
-  const locale = state.locale || (isSupportedLocale(event.detectedLocale) ? event.detectedLocale : DEFAULT_LOCALE);
+  const locale = activeLocale(state, event);
   const heard = appendTranscript(state, "caller", event.text);
 
   // Safety first: emergencies short-circuit every phase.
