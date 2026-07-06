@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   createVoiceProfile,
+  createVoiceProfileFromEnv,
   missingVoiceRequirements,
   isVoiceProfileReady,
   assertVoiceProfileReady,
@@ -60,6 +61,40 @@ describe("voiceProfile — finalizing voice, and reporting what is needed", () =
   it("publishes the human sign-off checklist (decisions outside code)", () => {
     expect(VOICE_FINALIZATION_CHECKLIST.length).toBeGreaterThan(0);
     expect(VOICE_FINALIZATION_CHECKLIST.some((i) => /hebrew/i.test(i))).toBe(true);
+  });
+});
+
+describe("voiceProfile — building from the runtime environment", () => {
+  it("reads the api key, per-locale voices and model overrides from env", () => {
+    const profile = createVoiceProfileFromEnv({
+      ELEVENLABS_API_KEY: "xi-key",
+      ELEVENLABS_VOICE_HE: "voice-he",
+      ELEVENLABS_VOICE_FR: "voice-fr",
+      ELEVENLABS_VOICE_EN: "voice-en",
+      ELEVENLABS_TTS_MODEL: "custom-tts",
+      ELEVENLABS_STT_MODEL: "custom-stt",
+    });
+    expect(profile.apiKey).toBe("xi-key");
+    expect(profile.voices).toEqual({ he: "voice-he", fr: "voice-fr", en: "voice-en" });
+    expect(profile.ttsModel).toBe("custom-tts");
+    expect(profile.sttModel).toBe("custom-stt");
+    expect(isVoiceProfileReady(profile)).toBe(true);
+  });
+
+  it("defaults the models and is not ready on an empty environment", () => {
+    const profile = createVoiceProfileFromEnv({});
+    expect(profile.ttsModel).toBe(DEFAULT_TTS_MODEL);
+    expect(profile.sttModel).toBe(DEFAULT_STT_MODEL);
+    expect(isVoiceProfileReady(profile)).toBe(false);
+  });
+
+  it("honours a single fallback voice from env", () => {
+    const profile = createVoiceProfileFromEnv({
+      ELEVENLABS_API_KEY: "k",
+      ELEVENLABS_VOICE_FALLBACK: "one-voice",
+    });
+    expect(profile.fallbackVoiceId).toBe("one-voice");
+    expect(isVoiceProfileReady(profile)).toBe(true);
   });
 });
 

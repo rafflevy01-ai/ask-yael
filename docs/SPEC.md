@@ -256,7 +256,7 @@ src/engine/
   skills/      triage · scheduling · amendment · faq           (emergency · booking · reschedule/cancel · knowledge base)
   adapters/    mockTelephony · mockCalendar                    (in-memory telephony/ASR + Calendar/PMS)
                elevenLabsTelephony · googleCalendar · dentalPms (live voice + calendar/PMS adapters)
-  config/      dental · voiceProfile · knowledgeBase           (vertical config pack · voice selection · FAQ generator)
+  config/      dental · voiceProfile · knowledgeBase · liveConfig   (vertical config pack · voice selection · FAQ generator · live wiring)
   e2e/         livePipeline                                    (end-to-end verification across the live pipeline)
   index.js     public API
 ```
@@ -295,7 +295,19 @@ decision unit-testable.
    **what is still needed** to finalize voice (`missingVoiceRequirements` /
    `assertVoiceProfileReady`, plus the human `VOICE_FINALIZATION_CHECKLIST`):
    an API key, a chosen voice id per locale (he/fr/en), model confirmation, and
-   sign-off on the Hebrew quality + cost spike.
+   sign-off on the Hebrew quality + cost spike. Secrets are supplied at runtime
+   via `createVoiceProfileFromEnv` (reads `ELEVENLABS_API_KEY`,
+   `ELEVENLABS_VOICE_{HE,FR,EN}`, `ELEVENLABS_VOICE_FALLBACK`,
+   `ELEVENLABS_TTS_MODEL`, `ELEVENLABS_STT_MODEL`) so nothing is committed.
+   **Wiring the live edges** is done once in
+   [`src/engine/config/liveConfig.js`](../src/engine/config/liveConfig.js):
+   `createLiveReceptionist({ env })` assembles the live ElevenLabs telephony +
+   ASR and the dental-PMS calendar adapter from the environment, gated on
+   readiness; `describeLiveReadiness` / `missingLiveConfig` /
+   `assertLiveConfigReady` report exactly which inputs (voice, PMS credentials,
+   and the `TELEPHONY_CARRIER` / `TELEPHONY_PHONE_NUMBER` decision) are still
+   outstanding before a real call. Construction performs no network I/O — the
+   deferred `flush()` on each adapter is where live calls fire.
 2. **Calendar/PMS** — **resolved: a dedicated dental PMS** is the pilot booking
    backend (adapter implemented in
    [`src/engine/adapters/dentalPms.js`](../src/engine/adapters/dentalPms.js);

@@ -49,6 +49,7 @@ export {
 } from "./adapters/elevenLabsTelephony.js";
 export {
   createVoiceProfile,
+  createVoiceProfileFromEnv,
   missingVoiceRequirements,
   isVoiceProfileReady,
   assertVoiceProfileReady,
@@ -65,6 +66,12 @@ export {
   createDentalPmsClient,
 } from "./adapters/dentalPms.js";
 export { dentalConfig, dentalClinicProfile } from "./config/dental.js";
+export {
+  createLiveReceptionist,
+  describeLiveReadiness,
+  missingLiveConfig,
+  assertLiveConfigReady,
+} from "./config/liveConfig.js";
 export { buildKnowledgeBase, FAQ_TOPIC_IDS } from "./config/knowledgeBase.js";
 
 export {

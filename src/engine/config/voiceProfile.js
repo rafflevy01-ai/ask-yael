@@ -43,6 +43,32 @@ export function createVoiceProfile(options = {}) {
   });
 }
 
+// createVoiceProfileFromEnv :: (env) -> VoiceProfile
+// Build a voice profile from runtime environment variables, keeping the secret
+// (the API key) and the human-chosen voice ids OUT of source control. This is
+// the deployment-time counterpart to `createVoiceProfile`: production passes the
+// process environment, tests pass a plain object. Recognised variables:
+//   - ELEVENLABS_API_KEY        the ElevenLabs API key (runtime secret)
+//   - ELEVENLABS_VOICE_HE/FR/EN the chosen native voice id per locale
+//   - ELEVENLABS_VOICE_FALLBACK a single voice used when a locale is unset
+//   - ELEVENLABS_TTS_MODEL      TTS model override (defaults to the multilingual model)
+//   - ELEVENLABS_STT_MODEL      STT model override (defaults to the scribe model)
+export function createVoiceProfileFromEnv(env = {}) {
+  const source = env || {};
+  const voices = {};
+  for (const locale of REQUIRED_VOICE_LOCALES) {
+    const value = source[`ELEVENLABS_VOICE_${locale.toUpperCase()}`];
+    if (value) voices[locale] = value;
+  }
+  return createVoiceProfile({
+    apiKey: source.ELEVENLABS_API_KEY || null,
+    voices,
+    fallbackVoiceId: source.ELEVENLABS_VOICE_FALLBACK || null,
+    ttsModel: source.ELEVENLABS_TTS_MODEL || DEFAULT_TTS_MODEL,
+    sttModel: source.ELEVENLABS_STT_MODEL || DEFAULT_STT_MODEL,
+  });
+}
+
 // missingVoiceRequirements :: (VoiceProfile) -> [string]
 // The concrete inputs still needed before the voice can be finalized, as
 // human-readable items. An empty array means the profile is production-ready.
