@@ -44,3 +44,14 @@ npm run build
 The build output is written to `dist/`. Serve it with any static file server or
 reverse proxy (for example Nginx, Caddy, or `npm run preview` for a quick local
 check) on your Linux cloud server.
+
+## Deploy to Cloudflare
+
+For a full Cloudflare deployment — static site on **Pages**, an API on **Pages
+Functions**, and a **D1** database as the call store — see
+[`docs/DEPLOY_CLOUDFLARE.md`](./docs/DEPLOY_CLOUDFLARE.md). One command does it
+all (build, provision the database + KV, apply migrations, set secrets, deploy):
+
+```
+npm run cf:deploy
+```

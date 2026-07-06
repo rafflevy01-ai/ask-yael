@@ -81,3 +81,10 @@ export {
   CALL_OUTCOMES,
 } from "./admin/callLog.js";
 export { demoCallRecords } from "./admin/demoCalls.js";
+export {
+  CALL_COLUMNS,
+  INSERT_CALL_SQL,
+  SELECT_CALLS_SQL,
+  serializeCallRecord,
+  deserializeCallRow,
+} from "./store/d1Store.js";

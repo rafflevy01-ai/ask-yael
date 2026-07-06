@@ -29,3 +29,7 @@ dist-ssr
 
 .env
 .vite
+
+# Cloudflare local dev secrets (copy from .dev.vars.example)
+.dev.vars
+.wrangler

@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   demoCallRecords,
@@ -6,6 +7,7 @@ import {
   upcomingAppointments,
   dentalConfig,
 } from "@/engine";
+import { fetchCallRecords } from "@/lib/callSource";
 import OverviewTab from "@/components/admin/OverviewTab";
 import CallsTab from "@/components/admin/CallsTab";
 import CalendarTab from "@/components/admin/CalendarTab";
@@ -13,13 +15,22 @@ import ConfigTab from "@/components/admin/ConfigTab";
 
 // Customer-facing admin dashboard (Phase-1 MVP).
 //
-// It is fed entirely by the conversation engine: `demoCallRecords()` folds
-// scripted calls through the pure core, and the same `summarize` /
-// `upcomingAppointments` aggregators the engine ships power the charts, call log
-// and calendar. A live deployment swaps the demo source for the real call store
-// the telephony worker writes — the dashboard components stay unchanged.
+// It is fed by the conversation engine's aggregators (`summarize` /
+// `upcomingAppointments`). The call records come from the live Cloudflare D1
+// store via `/api/calls` (see functions/api/calls.js) and degrade gracefully to
+// the engine's `demoCallRecords()` when the API is unavailable — so the same
+// dashboard works in local `npm run dev` and in a full Cloudflare deployment
+// without any component change.
 export default function Admin() {
-  const records = useMemo(() => demoCallRecords(), []);
+  const { data } = useQuery({
+    queryKey: ["call-records"],
+    queryFn: ({ signal }) => fetchCallRecords({ signal }),
+    // Never leave the dashboard empty while loading: start from demo data.
+    placeholderData: { records: demoCallRecords(), source: "demo" },
+  });
+
+  const records = data?.records ?? [];
+  const source = data?.source ?? "demo";
   const summary = useMemo(() => summarize(records), [records]);
   const appointments = useMemo(() => upcomingAppointments(records), [records]);
 
@@ -32,6 +43,9 @@ export default function Admin() {
           <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
             Live view of the calls Yael handled, the appointments she booked, and how your
             receptionist is configured.
+            {source === "demo" && (
+              <span className="ml-1 italic">Showing sample data until the first live call.</span>
+            )}
           </p>
         </header>
 
