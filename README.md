@@ -1,8 +1,6 @@
-**Welcome to your Base44 project** 
+# Ask Yael
 
 **About**
-
-View and Edit  your app on [Base44.com](http://Base44.com) 
 
 Yael is an automated multilingual receptionist (Hebrew / French / English / any
 language). The product spec and phased development path (dental → physical
@@ -10,36 +8,39 @@ therapy → profession platform) live in [`docs/SPEC.md`](./docs/SPEC.md). The
 Phase-0 pure, test-driven conversation engine lives in
 [`src/engine`](./src/engine) — run it with `npm test`.
 
-This project contains everything you need to run your app locally.
+This repository contains the marketing/landing site (React + Vite) and the
+framework-agnostic conversation engine. It has no proprietary platform
+dependencies and can be hosted on any standard Linux cloud server (or any static
+host) after building.
 
-**Edit the code in your local development environment**
+## Prerequisites
 
-Any change pushed to the repo will also be reflected in the Base44 Builder.
+1. Clone the repository using the project's Git URL.
+2. Navigate to the project directory.
+3. Install dependencies: `npm install`.
 
-**Prerequisites:** 
+## Local development
 
-1. Clone the repository using the project's Git URL 
-2. Navigate to the project directory
-3. Install dependencies: `npm install`
-4. Create an `.env.local` file and set the right environment variables
+Run the app:
 
 ```
-VITE_BASE44_APP_ID=your_app_id
-VITE_BASE44_APP_BASE_URL=your_backend_url
-
-e.g.
-VITE_BASE44_APP_ID=cbef744a8545c389ef439ea6
-VITE_BASE44_APP_BASE_URL=https://my-to-do-list-81bfaad7.base44.app
+npm run dev
 ```
 
-Run the app: `npm run dev`
+Run the conversation-engine tests:
 
-**Publish your changes**
+```
+npm test
+```
 
-Open [Base44.com](http://Base44.com) and click on Publish.
+## Build & deploy
 
-**Docs & Support**
+Produce a static production build:
 
-Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
+```
+npm run build
+```
 
-Support: [https://app.base44.com/support](https://app.base44.com/support)
+The build output is written to `dist/`. Serve it with any static file server or
+reverse proxy (for example Nginx, Caddy, or `npm run preview` for a quick local
+check) on your Linux cloud server.

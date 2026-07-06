@@ -14,7 +14,7 @@ profession platform**.
 > `CANCEL_APPOINTMENT`, `SEND_SMS`, `REQUEST_CALLBACK`, …) that edge adapters
 > (mock telephony + a mock Calendar/PMS) execute. Full HE/FR/EN throughout. The
 > remaining Phase-1 work is at the edges (real telephony/ASR-TTS + PMS providers)
-> and the admin dashboard MVP in the marketing app; the Base44 + React/Vite site
+> and the admin dashboard MVP in the marketing app; the React/Vite site
 > is otherwise unchanged.
 
 ---
@@ -130,7 +130,7 @@ Telephony (SIP/Twilio/Vonage)
         → Skills: Scheduling | Intake | FAQ/KB | Triage | Messaging | Handoff
           → Integrations: Calendar/PMS, SMS/WhatsApp, Payment, CRM
       → NLG → TTS (per-locale voice) → caller
-  → Event log / Audit store → Admin dashboard (this React/Base44 app)
+  → Event log / Audit store → Admin dashboard (this React/Vite app)
 ```
 
 - **Conversation core = pure functions:** `reduce(State, Event) → { State, [Effect] }`.

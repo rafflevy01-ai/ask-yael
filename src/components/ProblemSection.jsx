@@ -67,27 +67,10 @@ function MissedCallsCard({ isVisible, tp }) {
   );
 }
 
-const INSTANT_NOTIF_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/332dc40be_Your_task_is_to_recreate_a_lad_Nano_Banana_2_59670.png";
-const CLINIC_NOTIF_IMG = "https://media.base44.com/images/public/6a2ab0818c0d050752d1521b/f9a210da0_Create_a_picture_similar_to_th_Nano_Banana_2_18435copie.png";
-
 function InstantNotificationCard({ tp, isRtl }) {
-  const [imgLoaded, setImgLoaded] = useState(false);
   return (
-    <div className="ps-card" style={{ position:"relative", background:"#1a1a1a" }}>
-      <img
-        src={INSTANT_NOTIF_IMG}
-        alt="Woman receiving SMS notification"
-        onLoad={() => setImgLoaded(true)}
-        style={{
-          position:"absolute", inset:0,
-          width:"100%", height:"100%",
-          objectFit:"cover",
-          objectPosition:"center 40%",
-          opacity: imgLoaded ? 1 : 0,
-          transition:"opacity 0.4s ease",
-        }}
-      />
-      <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.15)", zIndex:1 }} />
+    <div className="ps-card" style={{ position:"relative", background:"linear-gradient(155deg, #1F1147 0%, #4A2C6B 45%, #7A3E8E 100%)" }}>
+      <div style={{ position:"absolute", inset:0, background:"radial-gradient(75% 55% at 78% 30%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 60%)", zIndex:1 }} />
       
       {/* SMS bubble on right side */}
       <div style={{
@@ -137,23 +120,9 @@ function InstantNotificationCard({ tp, isRtl }) {
 }
 
 function ClinicNotificationCard({ tp, isRtl }) {
-  const [imgLoaded, setImgLoaded] = useState(false);
   return (
-    <div className="ps-card" style={{ position:"relative", background:"#1a1a1a" }}>
-      <img
-        src={CLINIC_NOTIF_IMG}
-        alt="Receptionist receiving clinic notification"
-        onLoad={() => setImgLoaded(true)}
-        style={{
-          position:"absolute", inset:0,
-          width:"100%", height:"100%",
-          objectFit:"cover",
-          objectPosition:"center 30%",
-          opacity: imgLoaded ? 1 : 0,
-          transition:"opacity 0.4s ease",
-        }}
-      />
-      <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.2)", zIndex:1 }} />
+    <div className="ps-card" style={{ position:"relative", background:"linear-gradient(155deg, #0E2A3B 0%, #14536B 48%, #2E8BA6 100%)" }}>
+      <div style={{ position:"absolute", inset:0, background:"radial-gradient(75% 55% at 25% 25%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 60%)", zIndex:1 }} />
       
       {/* Notification bubble on right side */}
       <div style={{
