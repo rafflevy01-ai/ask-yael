@@ -112,7 +112,8 @@ export function assertLiveConfigReady(env = {}) {
 //   - the live ElevenLabs telephony (TTS) + ASR (STT) adapters,
 //   - the dedicated dental PMS calendar adapter backed by its real REST client.
 // The result drops straight into `runCall` ({ config, telephony, calendar })
-// and exposes `asr` for the media gateway to transcribe caller audio.
+// and exposes `asr` for the media gateway to transcribe caller audio. Returns
+// { config, voiceProfile, telephony, asr, calendar, carrier, phoneNumber }.
 //
 // Options:
 //   - env:       the environment (defaults to an empty object; pass process.env
