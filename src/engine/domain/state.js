@@ -10,6 +10,9 @@ export const PHASES = Object.freeze({
   LANGUAGE_SELECTION: "language_selection",
   ROUTING: "routing",
   BOOKING: "booking",
+  RESCHEDULING: "rescheduling",
+  CANCELLING: "cancelling",
+  MESSAGE: "message",
   ENDED: "ended",
 });
 
@@ -21,6 +24,7 @@ export function initialState() {
     locale: null, // unknown until detected or selected
     intent: null,
     booking: null, // in-progress appointment slots (see skills/scheduling.js)
+    amendment: null, // in-progress reschedule/cancel slots (see skills/amendment.js)
     transcript: [], // [{ role: "caller" | "yael", text }]
   });
 }

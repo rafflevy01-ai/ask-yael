@@ -171,6 +171,116 @@ describe("reduce — booking flow (Scheduling skill)", () => {
   });
 });
 
+describe("reduce — reschedule flow (Amendment skill)", () => {
+  const engine = () => createEngine(dentalConfig);
+  const started = (eng) => {
+    let s = eng.initialState();
+    s = eng.reduce(s, callStarted("call-resc")).state;
+    s = eng.reduce(s, callerUtterance("English please")).state;
+    return s;
+  };
+
+  it("collects name, current day and new day, then reschedules with an SMS", () => {
+    const eng = engine();
+    let res = eng.reduce(started(eng), callerUtterance("I need to reschedule my appointment"));
+    expect(res.state.intent).toBe(INTENTS.RESCHEDULE);
+    expect(res.state.phase).toBe(PHASES.RESCHEDULING);
+    expect(res.state.amendment.awaiting).toBe("name");
+
+    res = eng.reduce(res.state, callerUtterance("Dana Cohen"));
+    expect(res.state.amendment.awaiting).toBe("day");
+
+    res = eng.reduce(res.state, callerUtterance("tuesday"));
+    expect(res.state.amendment.awaiting).toBe("new_day");
+
+    res = eng.reduce(res.state, callerUtterance("friday"));
+    expect(res.state.phase).toBe(PHASES.ROUTING);
+    expect(res.state.amendment).toBeNull();
+
+    const moved = firstOf(res.effects, EFFECTS.RESCHEDULE_APPOINTMENT);
+    expect(moved).toBeDefined();
+    expect(moved.details.day).toBe("tuesday");
+    expect(moved.details.newDay).toBe("friday");
+    expect(firstOf(res.effects, EFFECTS.SEND_SMS)).toBeDefined();
+  });
+});
+
+describe("reduce — cancel flow (Amendment skill)", () => {
+  const engine = () => createEngine(dentalConfig);
+  const started = (eng) => {
+    let s = eng.initialState();
+    s = eng.reduce(s, callStarted("call-cancel")).state;
+    s = eng.reduce(s, callerUtterance("English please")).state;
+    return s;
+  };
+
+  it("collects name and day, then cancels with an SMS confirmation", () => {
+    const eng = engine();
+    let res = eng.reduce(started(eng), callerUtterance("I want to cancel"));
+    expect(res.state.intent).toBe(INTENTS.CANCEL);
+    expect(res.state.phase).toBe(PHASES.CANCELLING);
+
+    res = eng.reduce(res.state, callerUtterance("Avi Levi"));
+    res = eng.reduce(res.state, callerUtterance("wednesday"));
+    expect(res.state.phase).toBe(PHASES.ROUTING);
+
+    const cancelled = firstOf(res.effects, EFFECTS.CANCEL_APPOINTMENT);
+    expect(cancelled).toBeDefined();
+    expect(cancelled.details.day).toBe("wednesday");
+    expect(firstOf(res.effects, EFFECTS.SEND_SMS)).toBeDefined();
+  });
+});
+
+describe("reduce — FAQ flow (Knowledge Base skill)", () => {
+  const engine = () => createEngine(dentalConfig);
+  const started = (eng) => {
+    let s = eng.initialState();
+    s = eng.reduce(s, callStarted("call-faq")).state;
+    s = eng.reduce(s, callerUtterance("English please")).state;
+    return s;
+  };
+
+  it("answers a known question from the knowledge base", () => {
+    const eng = engine();
+    const res = eng.reduce(started(eng), callerUtterance("what are your opening hours?"));
+    expect(res.state.intent).toBe(INTENTS.ASK);
+    const said = firstOf(res.effects, EFFECTS.SAY);
+    expect(said.text).toContain("Sunday to Thursday");
+  });
+
+  it("answers an address question from the knowledge base", () => {
+    const eng = engine();
+    const res = eng.reduce(started(eng), callerUtterance("where are you located?"));
+    expect(res.state.intent).toBe(INTENTS.ASK);
+    const said = firstOf(res.effects, EFFECTS.SAY);
+    expect(said.text).toContain("Herzl");
+  });
+});
+
+describe("reduce — message-taking + callback", () => {
+  const engine = () => createEngine(dentalConfig);
+  const started = (eng) => {
+    let s = eng.initialState();
+    s = eng.reduce(s, callStarted("call-msg")).state;
+    s = eng.reduce(s, callerUtterance("English please")).state;
+    return s;
+  };
+
+  it("prompts for a message then captures it and requests a callback", () => {
+    const eng = engine();
+    let res = eng.reduce(started(eng), callerUtterance("can you have someone call me back?"));
+    expect(res.state.intent).toBe(INTENTS.MESSAGE);
+    expect(res.state.phase).toBe(PHASES.MESSAGE);
+    expect(firstOf(res.effects, EFFECTS.TAKE_MESSAGE)).toBeDefined();
+
+    res = eng.reduce(res.state, callerUtterance("Please tell Dr. Levi the crown fell off."));
+    expect(res.state.phase).toBe(PHASES.ROUTING);
+    const callback = firstOf(res.effects, EFFECTS.REQUEST_CALLBACK);
+    expect(callback).toBeDefined();
+    expect(callback.message).toContain("crown fell off");
+  });
+});
+
 describe("reduce — purity", () => {
   it("does not mutate the input state", () => {
     const start = initialState();

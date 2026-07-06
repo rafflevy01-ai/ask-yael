@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { runCall } from "./runCall.js";
 import { createMockTelephony } from "../adapters/mockTelephony.js";
+import { createMockCalendar } from "../adapters/mockCalendar.js";
 import { callStarted, callerUtterance, callEnded } from "../domain/events.js";
 import { EFFECTS } from "../domain/effects.js";
 import { PHASES } from "../domain/state.js";
@@ -54,5 +55,30 @@ describe("runCall — end-to-end dental call simulation", () => {
     expect(escalation).toBeDefined();
     expect(escalation.locale).toBe("fr");
     expect(escalation.script).toContain("15");
+  });
+
+  it("applies a booking to the Calendar/PMS adapter, then cancels it", () => {
+    const telephony = createMockTelephony();
+    const calendar = createMockCalendar();
+    const { state } = runCall({
+      config: dentalConfig,
+      telephony,
+      calendar,
+      events: [
+        callStarted("call-cal"),
+        callerUtterance("English please"),
+        callerUtterance("book a cleaning for monday"),
+        // Now cancel the same appointment.
+        callerUtterance("I need to cancel"),
+        callerUtterance("Dana Cohen"),
+        callerUtterance("monday"),
+        callEnded(),
+      ],
+    });
+
+    expect(state.phase).toBe(PHASES.ENDED);
+    // The calendar saw a book then a cancel; the appointment is no longer active.
+    expect(calendar.operations().map((o) => o.op)).toEqual(["book", "cancel"]);
+    expect(calendar.appointments()).toHaveLength(0);
   });
 });

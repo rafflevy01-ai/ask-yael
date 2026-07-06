@@ -7,11 +7,14 @@
 
 import { createEngine } from "./reduce.js";
 
-// runCall :: ({ config, telephony, events }) -> { state, transcript, effects }
+// runCall :: ({ config, telephony, calendar?, events }) -> { state, transcript, effects }
 // - config:    a vertical config pack (e.g. dentalConfig)
 // - telephony: an adapter exposing perform(effect) (see mockTelephony)
+// - calendar:  an optional Calendar/PMS adapter exposing perform(effect); when
+//              provided, appointment effects are also applied to it (see
+//              mockCalendar). This is the seam a real PMS plugs into.
 // - events:    ordered list of input events (CALL_STARTED, utterances, …)
-export function runCall({ config = {}, telephony, events = [] }) {
+export function runCall({ config = {}, telephony, calendar = null, events = [] }) {
   const engine = createEngine(config);
 
   let state = engine.initialState();
@@ -20,6 +23,7 @@ export function runCall({ config = {}, telephony, events = [] }) {
     state = result.state;
     for (const effect of result.effects) {
       telephony.perform(effect);
+      if (calendar) calendar.perform(effect);
     }
   }
 

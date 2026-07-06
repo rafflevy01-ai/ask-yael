@@ -14,7 +14,8 @@ reduce(State, Event, Config) -> { State, [Effect] }
 
 - **No I/O in the core.** Decisions come out as **effects (data)** — `SAY`,
   `SET_LANGUAGE`, `ESCALATE_EMERGENCY`, `TRANSFER_TO_HUMAN`, `TAKE_MESSAGE`,
-  `BOOK_APPOINTMENT`, `SEND_SMS`, `LOG`, `END_CALL` — which an edge adapter
+  `REQUEST_CALLBACK`, `BOOK_APPOINTMENT`, `RESCHEDULE_APPOINTMENT`,
+  `CANCEL_APPOINTMENT`, `SEND_SMS`, `LOG`, `END_CALL` — which an edge adapter
   interprets.
 - **Immutable state.** Helpers return frozen copies; the reducer never mutates
   its input.
@@ -28,8 +29,8 @@ reduce(State, Event, Config) -> { State, [Effect] }
 ```
 domain/    locales · events · effects · intents · state   (data + pure helpers)
 core/      reduce · phrases · runCall                      (pure dialog core + edge runner)
-skills/    triage · scheduling                             (emergency detection · booking)
-adapters/  mockTelephony                                   (in-memory telephony + ASR)
+skills/    triage · scheduling · amendment · faq           (emergency · booking · reschedule/cancel · knowledge base)
+adapters/  mockTelephony · mockCalendar                    (in-memory telephony/ASR + Calendar/PMS)
 config/    dental                                          (vertical config pack — data)
 index.js   public API
 ```

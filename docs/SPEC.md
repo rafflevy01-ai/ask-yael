@@ -6,10 +6,16 @@ the source of truth for the phased build: **dental → physical therapy →
 profession platform**.
 
 > Status: **Phase 1 (dental prototype) — in progress**. The pure, TDD
-> conversation engine (Phase 0) lives in [`src/engine`](../src/engine); the
-> Scheduling skill now drives a real multi-turn appointment booking (type + day
-> slot-filling → `BOOK_APPOINTMENT` + SMS confirmation). The existing marketing
-> site (Base44 + React/Vite) is unchanged.
+> conversation engine (Phase 0) lives in [`src/engine`](../src/engine). The
+> Phase-1 skills now drive real multi-turn conversations: **Scheduling**
+> (booking), **Amendment** (reschedule/cancel), **FAQ/Knowledge-Base**,
+> emergency **Triage**, **message-taking + callback**, and human handoff — each
+> emitting effects-as-data (`BOOK_APPOINTMENT`, `RESCHEDULE_APPOINTMENT`,
+> `CANCEL_APPOINTMENT`, `SEND_SMS`, `REQUEST_CALLBACK`, …) that edge adapters
+> (mock telephony + a mock Calendar/PMS) execute. Full HE/FR/EN throughout. The
+> remaining Phase-1 work is at the edges (real telephony/ASR-TTS + PMS providers)
+> and the admin dashboard MVP in the marketing app; the Base44 + React/Vite site
+> is otherwise unchanged.
 
 ---
 
@@ -172,18 +178,28 @@ KnowledgeBaseEntry.
 ### Phase 1 — Dental prototype (vertical #1)
 
 - Dental config pack: appointment catalogue, chair resource, dental triage
-  rules, intake schema *(seed in [`src/engine/config/dental.js`](../src/engine/config/dental.js);
-  appointment types now carry per-locale keywords for speech recognition)*.
+  rules, intake schema, and a per-clinic knowledge base *(seed in
+  [`src/engine/config/dental.js`](../src/engine/config/dental.js); appointment
+  types carry per-locale keywords for speech recognition, and the knowledge base
+  carries per-locale FAQ keywords + answers)*.
 - Skills: **Scheduling — booking (done: multi-turn type+day slot-filling →
   `BOOK_APPOINTMENT` + SMS confirmation, see
   [`src/engine/skills/scheduling.js`](../src/engine/skills/scheduling.js))**;
-  reschedule/cancel, FAQ/KB, emergency triage (done), SMS/WhatsApp
-  confirmations (done), message-taking + callback, human handoff.
-- Calendar/PMS integration behind an adapter interface (start with one, e.g.
-  Google Calendar or a dental PMS). *The core emits `BOOK_APPOINTMENT` as data;
-  the edge adapter is the seam.*
+  **reschedule/cancel (done: multi-turn name+day(+new day) slot-filling →
+  `RESCHEDULE_APPOINTMENT` / `CANCEL_APPOINTMENT` + SMS, see
+  [`src/engine/skills/amendment.js`](../src/engine/skills/amendment.js))**;
+  **FAQ/KB (done: knowledge-base lookup with locale-aware answers, see
+  [`src/engine/skills/faq.js`](../src/engine/skills/faq.js))**; emergency triage
+  (done), SMS/WhatsApp confirmations (done), **message-taking + callback (done:
+  captures the message → `REQUEST_CALLBACK`)**, human handoff (done).
+- Calendar/PMS integration behind an adapter interface — *the core emits
+  `BOOK_APPOINTMENT` / `RESCHEDULE_APPOINTMENT` / `CANCEL_APPOINTMENT` as data;
+  a mock adapter
+  ([`src/engine/adapters/mockCalendar.js`](../src/engine/adapters/mockCalendar.js))
+  applies them and is wired through `runCall`. A live PMS/Google-Calendar
+  provider implements the same tiny interface (open decision §5.2).*
 - Admin dashboard MVP in this app: call logs + transcripts, calendar view,
-  config editor.
+  config editor. *(Next — consumes the engine's `LOG` / booking effects.)*
 - Multilingual HE/FR/EN fully working.
 - **Exit criteria:** pilot in one dental clinic; measured no-show reduction &
   containment rate.
@@ -220,8 +236,8 @@ Pure, framework-agnostic, and fully tested. Run `npm test`.
 src/engine/
   domain/      locales · events · effects · intents · state   (data + pure helpers)
   core/        reduce · phrases · runCall                      (pure dialog core + edge runner)
-  skills/      triage · scheduling                             (emergency detection · booking)
-  adapters/    mockTelephony                                   (in-memory telephony + ASR)
+  skills/      triage · scheduling · amendment · faq           (emergency · booking · reschedule/cancel · knowledge base)
+  adapters/    mockTelephony · mockCalendar                    (in-memory telephony/ASR + Calendar/PMS)
   config/      dental                                          (vertical config pack — data)
   index.js     public API
 ```
@@ -243,8 +259,10 @@ const res = engine.reduce(started.state, callerUtterance("Bonjour", "fr"));
 
 Everything the engine decides is returned as **effects (data)** — `SAY`,
 `SET_LANGUAGE`, `ESCALATE_EMERGENCY`, `TRANSFER_TO_HUMAN`, `TAKE_MESSAGE`,
-`BOOK_APPOINTMENT`, `SEND_SMS`, `LOG`, `END_CALL` — which the edge (telephony
-adapter) interprets. This keeps the core pure and every decision unit-testable.
+`REQUEST_CALLBACK`, `BOOK_APPOINTMENT`, `RESCHEDULE_APPOINTMENT`,
+`CANCEL_APPOINTMENT`, `SEND_SMS`, `LOG`, `END_CALL` — which the edge (telephony
+and Calendar/PMS adapters) interprets. This keeps the core pure and every
+decision unit-testable.
 
 ---
 

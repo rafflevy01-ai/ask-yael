@@ -30,6 +30,14 @@ export {
   detectDay,
   appointmentLabel,
 } from "./skills/scheduling.js";
+export {
+  AMENDMENT_KINDS,
+  AMENDMENT_STATUS,
+  emptyAmendment,
+  advanceAmendment,
+} from "./skills/amendment.js";
+export { findFaqAnswer, matchFaqEntry } from "./skills/faq.js";
 
 export { createMockTelephony, createMockAsr } from "./adapters/mockTelephony.js";
+export { createMockCalendar } from "./adapters/mockCalendar.js";
 export { dentalConfig } from "./config/dental.js";

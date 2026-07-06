@@ -12,7 +12,10 @@ export const EFFECTS = Object.freeze({
   ESCALATE_EMERGENCY: "ESCALATE_EMERGENCY",
   TRANSFER_TO_HUMAN: "TRANSFER_TO_HUMAN",
   TAKE_MESSAGE: "TAKE_MESSAGE",
+  REQUEST_CALLBACK: "REQUEST_CALLBACK",
   BOOK_APPOINTMENT: "BOOK_APPOINTMENT",
+  RESCHEDULE_APPOINTMENT: "RESCHEDULE_APPOINTMENT",
+  CANCEL_APPOINTMENT: "CANCEL_APPOINTMENT",
   SEND_SMS: "SEND_SMS",
   LOG: "LOG",
   END_CALL: "END_CALL",
@@ -40,10 +43,34 @@ export const transferToHuman = (reason) => ({
 // Capture a message for callback.
 export const takeMessage = (locale) => ({ type: EFFECTS.TAKE_MESSAGE, locale });
 
+// A caller's message was captured — request a human callback (executed at the
+// edge: create a task/ticket for staff). `message` is the transcribed content.
+export const requestCallback = (locale, message) => ({
+  type: EFFECTS.REQUEST_CALLBACK,
+  locale,
+  message,
+});
+
 // Book a confirmed appointment against the calendar/PMS (executed at the edge).
 // `details` carries the collected slots, e.g. { appointmentType, day }.
 export const bookAppointment = (callId, details) => ({
   type: EFFECTS.BOOK_APPOINTMENT,
+  callId,
+  details,
+});
+
+// Move an existing appointment to a new day (executed at the edge). `details`
+// carries the identifying slots + the new day, e.g. { name, day, newDay }.
+export const rescheduleAppointment = (callId, details) => ({
+  type: EFFECTS.RESCHEDULE_APPOINTMENT,
+  callId,
+  details,
+});
+
+// Cancel an existing appointment (executed at the edge). `details` carries the
+// identifying slots, e.g. { name, day }.
+export const cancelAppointment = (callId, details) => ({
+  type: EFFECTS.CANCEL_APPOINTMENT,
   callId,
   details,
 });

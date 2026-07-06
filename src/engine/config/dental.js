@@ -95,4 +95,88 @@ export const dentalConfig = Object.freeze({
     Object.freeze({ field: "phone", required: true }),
     Object.freeze({ field: "healthFund", required: false }), // Clalit/Maccabi/…
   ]),
+
+  // Per-clinic knowledge base for the FAQ skill (see skills/faq.js). Each entry
+  // carries per-locale `keywords` (to recognise the question from free speech)
+  // and a localised `answer`. Adding an FAQ or a language is a data change here.
+  knowledgeBase: Object.freeze([
+    Object.freeze({
+      id: "hours",
+      keywords: Object.freeze({
+        en: Object.freeze(["hours", "open", "opening", "close", "closing"]),
+        fr: Object.freeze(["horaires", "ouvert", "ouverture", "fermé", "fermeture"]),
+        he: Object.freeze(["שעות", "פתוח", "פתיחה", "סגור", "סגירה"]),
+      }),
+      answer: Object.freeze({
+        en: "We're open Sunday to Thursday, 8am to 6pm, and closed on Friday and Saturday.",
+        fr: "Nous sommes ouverts du dimanche au jeudi, de 8h à 18h, et fermés le vendredi et le samedi.",
+        he: "אנחנו פתוחים ראשון עד חמישי, מ-8:00 עד 18:00, וסגורים בשישי ושבת.",
+      }),
+    }),
+    Object.freeze({
+      id: "address",
+      keywords: Object.freeze({
+        en: Object.freeze(["where", "address", "located", "location", "directions"]),
+        fr: Object.freeze(["où", "adresse", "situé", "emplacement", "itinéraire"]),
+        he: Object.freeze(["איפה", "כתובת", "ממוקם", "מיקום", "הגעה"]),
+      }),
+      answer: Object.freeze({
+        en: "We're at 12 Herzl Street, Tel Aviv, on the second floor.",
+        fr: "Nous sommes au 12 rue Herzl, Tel Aviv, au deuxième étage.",
+        he: "אנחנו ברחוב הרצל 12, תל אביב, בקומה השנייה.",
+      }),
+    }),
+    Object.freeze({
+      id: "parking",
+      keywords: Object.freeze({
+        en: Object.freeze(["parking", "park", "garage"]),
+        fr: Object.freeze(["parking", "stationnement", "garer"]),
+        he: Object.freeze(["חניה", "חנייה", "לחנות"]),
+      }),
+      answer: Object.freeze({
+        en: "There's a paid parking garage next door, and free street parking after 7pm.",
+        fr: "Il y a un parking payant à côté, et un stationnement gratuit dans la rue après 19h.",
+        he: "יש חניון בתשלום ליד, וחניה חופשית ברחוב אחרי 19:00.",
+      }),
+    }),
+    Object.freeze({
+      id: "pricing",
+      keywords: Object.freeze({
+        en: Object.freeze(["how much", "price", "cost", "fee", "pay"]),
+        fr: Object.freeze(["combien", "prix", "coût", "tarif", "payer"]),
+        he: Object.freeze(["כמה עולה", "מחיר", "עלות", "תעריף", "לשלם"]),
+      }),
+      answer: Object.freeze({
+        en: "A check-up and cleaning starts at 250 shekels; other treatments are quoted after the exam.",
+        fr: "Un contrôle avec détartrage commence à 250 shekels ; les autres soins sont chiffrés après l'examen.",
+        he: "בדיקה וניקוי אבנית מתחילים ב-250 שקלים; טיפולים אחרים מתומחרים לאחר הבדיקה.",
+      }),
+    }),
+    Object.freeze({
+      id: "insurance",
+      keywords: Object.freeze({
+        en: Object.freeze(["insurance", "health fund", "kupah", "clalit", "maccabi", "coverage"]),
+        fr: Object.freeze(["assurance", "mutuelle", "caisse", "couverture"]),
+        he: Object.freeze(["ביטוח", "קופת חולים", "כללית", "מכבי", "כיסוי"]),
+      }),
+      answer: Object.freeze({
+        en: "We work with Clalit, Maccabi, Meuhedet and Leumit; bring your health-fund card to your visit.",
+        fr: "Nous travaillons avec Clalit, Maccabi, Meuhedet et Leumit ; apportez votre carte de caisse maladie.",
+        he: "אנחנו עובדים עם כללית, מכבי, מאוחדת ולאומית; הביאו את כרטיס קופת החולים לביקור.",
+      }),
+    }),
+    Object.freeze({
+      id: "what_to_bring",
+      keywords: Object.freeze({
+        en: Object.freeze(["what to bring", "bring", "documents", "id", "prepare"]),
+        fr: Object.freeze(["quoi apporter", "apporter", "documents", "pièce", "préparer"]),
+        he: Object.freeze(["מה להביא", "להביא", "מסמכים", "תעודה", "להתכונן"]),
+      }),
+      answer: Object.freeze({
+        en: "Please bring a photo ID, your health-fund card, and a list of any medications you take.",
+        fr: "Merci d'apporter une pièce d'identité, votre carte de caisse maladie et la liste de vos médicaments.",
+        he: "אנא הביאו תעודה מזהה, כרטיס קופת חולים, ורשימה של תרופות שאתם נוטלים.",
+      }),
+    }),
+  ]),
 });

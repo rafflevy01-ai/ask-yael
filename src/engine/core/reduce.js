@@ -19,6 +19,13 @@ import {
   appointmentLabel,
   BOOKING_STATUS,
 } from "../skills/scheduling.js";
+import {
+  advanceAmendment,
+  emptyAmendment,
+  AMENDMENT_KINDS,
+  AMENDMENT_STATUS,
+} from "../skills/amendment.js";
+import { findFaqAnswer } from "../skills/faq.js";
 
 // Spoken hints used to recognise a language choice from free text, e.g. the
 // caller answering the menu with "English please" or "עברית".
@@ -92,13 +99,10 @@ function onLanguageSelection(state, event, locale) {
   return { state: acc.state, effects: acc.effects };
 }
 
-// Map a routed intent to its reply key and any accompanying side-effect.
-// BOOK is handled separately by the multi-turn Scheduling skill (onBooking).
+// Map a routed intent to its reply key and any accompanying side-effect. Only
+// the single-turn intents live here; BOOK / RESCHEDULE / CANCEL / ASK / MESSAGE
+// are handled by their dedicated skill handlers below.
 const INTENT_ROUTES = Object.freeze({
-  [INTENTS.RESCHEDULE]: { key: "reschedule" },
-  [INTENTS.CANCEL]: { key: "cancel" },
-  [INTENTS.ASK]: { key: "faq" },
-  [INTENTS.MESSAGE]: { key: "takeMessage", effect: (locale) => Fx.takeMessage(locale) },
   [INTENTS.HANDOFF]: { key: "handoff", effect: () => Fx.transferToHuman("caller_requested") },
   [INTENTS.UNKNOWN]: { key: "fallback" },
 });
@@ -134,10 +138,114 @@ function onBooking(state, prevBooking, config, locale, text) {
   return reply(next, effects, locale, "bookingConfirmed", vars);
 }
 
+// onAmendment drives the reschedule/cancel slot-filling machine. It folds the
+// caller's utterance into the amendment, then either asks for the next missing
+// slot (name / current day / new day) or, once complete, emits the
+// RESCHEDULE_APPOINTMENT or CANCEL_APPOINTMENT + SMS confirmation effects and
+// returns to general routing.
+const AMENDMENT_PROMPT = Object.freeze({
+  [AMENDMENT_KINDS.RESCHEDULE]: {
+    [AMENDMENT_STATUS.ASK_NAME]: "rescheduleAskName",
+    [AMENDMENT_STATUS.ASK_DAY]: "rescheduleAskDay",
+    [AMENDMENT_STATUS.ASK_NEW_DAY]: "rescheduleAskNewDay",
+    phase: PHASES.RESCHEDULING,
+    intent: INTENTS.RESCHEDULE,
+  },
+  [AMENDMENT_KINDS.CANCEL]: {
+    [AMENDMENT_STATUS.ASK_NAME]: "cancelAskName",
+    [AMENDMENT_STATUS.ASK_DAY]: "cancelAskDay",
+    phase: PHASES.CANCELLING,
+    intent: INTENTS.CANCEL,
+  },
+});
+
+function onAmendment(state, prevAmendment, locale, text) {
+  const { amendment, status } = advanceAmendment(prevAmendment, locale, text);
+  const meta = AMENDMENT_PROMPT[amendment.kind];
+
+  if (status !== AMENDMENT_STATUS.COMPLETE) {
+    const next = patch(state, { intent: meta.intent, phase: meta.phase, amendment });
+    return reply(next, [], locale, meta[status]);
+  }
+
+  // COMPLETE — confirm, apply against the calendar/PMS, and text the confirmation.
+  const next = patch(state, { intent: meta.intent, phase: PHASES.ROUTING, amendment: null });
+  if (amendment.kind === AMENDMENT_KINDS.RESCHEDULE) {
+    const vars = { day: amendment.day, newDay: amendment.newDay };
+    const effects = [
+      Fx.log({ kind: "appointment_rescheduled", callId: state.callId, details: amendment }),
+      Fx.rescheduleAppointment(state.callId, {
+        name: amendment.name,
+        day: amendment.day,
+        newDay: amendment.newDay,
+        locale,
+      }),
+      Fx.sendSms(locale, phrase(locale, "smsReschedule", vars)),
+    ];
+    return reply(next, effects, locale, "rescheduleConfirmed", vars);
+  }
+
+  const vars = { day: amendment.day };
+  const effects = [
+    Fx.log({ kind: "appointment_cancelled", callId: state.callId, details: amendment }),
+    Fx.cancelAppointment(state.callId, {
+      name: amendment.name,
+      day: amendment.day,
+      locale,
+    }),
+    Fx.sendSms(locale, phrase(locale, "smsCancel", vars)),
+  ];
+  return reply(next, effects, locale, "cancelConfirmed", vars);
+}
+
+// onFaq answers a question from the per-clinic knowledge base, falling back to a
+// generic reply when nothing matches.
+function onFaq(state, locale, config, text) {
+  const answer = findFaqAnswer(text, locale, config);
+  const withIntent = patch(state, { intent: INTENTS.ASK, phase: PHASES.ROUTING });
+  if (answer) {
+    const heard = appendTranscript(withIntent, "yael", answer);
+    return {
+      state: heard,
+      effects: [Fx.log({ kind: "faq_answered", locale }), Fx.say(locale, answer)],
+    };
+  }
+  return reply(withIntent, [], locale, "faq");
+}
+
+// onMessageStart prompts the caller for their message and enters the MESSAGE
+// phase; onMessageCapture then records the message and requests a callback.
+function onMessageStart(state, locale) {
+  const next = patch(state, { intent: INTENTS.MESSAGE, phase: PHASES.MESSAGE });
+  return reply(next, [Fx.takeMessage(locale)], locale, "takeMessage");
+}
+
+function onMessageCapture(state, locale, text) {
+  const message = typeof text === "string" ? text.trim() : "";
+  const next = patch(state, { intent: INTENTS.MESSAGE, phase: PHASES.ROUTING });
+  const effects = [
+    Fx.log({ kind: "callback_requested", callId: state.callId, message }),
+    Fx.requestCallback(locale, message),
+  ];
+  return reply(next, effects, locale, "messageCaptured");
+}
+
 function onRouting(state, event, locale, config) {
   const intent = detectIntent(event.text, locale);
   if (intent === INTENTS.BOOK) {
     return onBooking(state, emptyBooking(), config, locale, event.text);
+  }
+  if (intent === INTENTS.RESCHEDULE) {
+    return onAmendment(state, emptyAmendment(AMENDMENT_KINDS.RESCHEDULE), locale, event.text);
+  }
+  if (intent === INTENTS.CANCEL) {
+    return onAmendment(state, emptyAmendment(AMENDMENT_KINDS.CANCEL), locale, event.text);
+  }
+  if (intent === INTENTS.ASK) {
+    return onFaq(state, locale, config, event.text);
+  }
+  if (intent === INTENTS.MESSAGE) {
+    return onMessageStart(state, locale);
   }
   const route = INTENT_ROUTES[intent] || INTENT_ROUTES[INTENTS.UNKNOWN];
   const withIntent = patch(state, { intent });
@@ -167,9 +275,18 @@ function onCallerUtterance(state, event, config) {
     return onLanguageSelection(heard, event, locale);
   }
 
-  // Continue an in-progress booking conversation before general routing.
+  // Continue an in-progress multi-turn skill before general routing.
   if (heard.phase === PHASES.BOOKING && heard.booking) {
     return onBooking(heard, heard.booking, config, locale, event.text);
+  }
+  if (
+    (heard.phase === PHASES.RESCHEDULING || heard.phase === PHASES.CANCELLING) &&
+    heard.amendment
+  ) {
+    return onAmendment(heard, heard.amendment, locale, event.text);
+  }
+  if (heard.phase === PHASES.MESSAGE) {
+    return onMessageCapture(heard, locale, event.text);
   }
 
   return onRouting(heard, event, locale, config);
